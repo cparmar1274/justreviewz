@@ -88,7 +88,6 @@ public class ReportIncidentService {
 				reportResult.put("result", "Username already registered.");
 			}
 		} catch (Exception ex) {
-			Logger.logMsg(Logger.ERROR, ex.getMessage(), "Error while getting clientIDs", "Error");
 			reportResult.put("success", false);
 			reportResult.put("result", "Error while crateing user.");
 		}
