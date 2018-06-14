@@ -34,7 +34,6 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.sun.media.jfxmedia.logging.Logger;
 
 @Service
 public class ReportIncidentService {
@@ -91,7 +90,6 @@ public class ReportIncidentService {
 				reportResult.put("result", "Username already registered.");
 			}
 		} catch (Exception ex) {
-			Logger.logMsg(Logger.ERROR, ex.getMessage(), "Error while getting clientIDs", "Error");
 			reportResult.put("success", false);
 			reportResult.put("result", "Error while crateing user.");
 		}
