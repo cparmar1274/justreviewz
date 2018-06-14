@@ -97,20 +97,20 @@ public class ReportIncidentService {
 
 	public Map<String, Object> getUser(String userNameField, String userNameValue) {
 		Map<String, Object> reportResult = new HashMap<String, Object>();
-
+		String clientID = null;
+		ReviewManagerUser newUser = null;
+		try{
 		SearchResponse searchResponse = elasticService.getObjectBasedOnClientUserName(RMUtil.USER_INDEX,
 				RMUtil.USER_TYPE,userNameField, userNameValue);
 		Gson gson = new Gson();
 		JsonObject jsonData = null;
-		String clientID = null;
-		ReviewManagerUser newUser = null;
 		if (searchResponse != null && searchResponse.getHits().totalHits > 0) {
 			for (SearchHit searchHit : searchResponse.getHits().getHits()) {
 				jsonData = gson.fromJson(searchHit.getSourceAsString(), JsonObject.class);
 				clientID = searchHit.getId();
 			}
 			newUser = RMUtil.getUserObject(jsonData);
-		}
+		} }catch(Exception ex){ex.printStackTrace();}
 		reportResult.put("id", clientID);
 		reportResult.put("result", newUser);
 		return reportResult;
