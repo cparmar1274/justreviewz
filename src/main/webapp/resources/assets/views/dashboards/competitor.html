@@ -1,0 +1,123 @@
+<div class="page-header m-b-0">
+  <div class="row">
+    <div class="col-md-4">
+      <h1><i class="page-header-icon ion-podium"></i>Competitor <span class="text-muted font-weight-light">Dashboard</span></h1>
+    </div>
+  </div>
+</div>
+
+<div ng-controller="CompetitorCtrl as competitor">
+ <div class="alert alert-success alert-dark" ng-show="competitor.message">
+              <button type="button" class="hide" data-dismiss="alert">x</button>
+              {{competitor.messageText}}
+</div>
+<div class="page-wide-block">
+      <div class="box m-b-0 valign-middle bg-white">
+
+        <div class="box-cell row p-a-4">
+          <div class="font-size-18 font-weight-light">
+            Your Performance <div> <add-stars rating="{{competitor.rating}}" reviewType ="{{competitor.reviewType}}"></add-stars></div>
+          </div>
+        </div>
+
+        <!-- Balance chart -->
+        <div class="box-cell row p-a-4">
+            <div class="font-size-18"><small class="font-weight-light text-muted">Total Reviews </small><strong>468</strong></div>
+        </div>
+      </div>
+</div>
+</p>
+<div class="row">
+<div class="col-md-12">
+		<!-- Latest transactions -->
+<div class="panel">
+  <div class="panel-title">
+    Your Competitors
+    <div class="panel-heading-controls">
+      <a href data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-primary">
+      		Add Competitor</a>
+    </div>
+  </div>
+
+  <hr class="m-a-0">
+<div class="panel-body">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Business Name</th>
+          <th class="text-xs-right">Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <tr ng-repeat="competitor in competitor.competitors">
+          <td>{{competitor.businessName}}</td>
+          <td class="text-xs-right"><add-stars rating="{{competitor.rating}}" type="{{competitor.positiveReview}}"></add-stars></td>
+        </tr>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="panel-footer text-muted ">
+  Last updated on Friday
+</div>
+</div>
+
+
+<!-- / Latest transactions -->
+	</div>
+
+
+
+<!-- / Latest transactions -->
+</div>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">X</button>
+					<h4 class="modal-title" id="myModalLabel">{{competitor.addCompetitorTitle}}</h4>
+				</div>
+				<div class="modal-body">
+
+					<form >
+						<fieldset class="form-group">
+							<label for="form-group-input-1">Business Name</label> 
+							<input required type="text" ng-model="competitor.businessName" class="form-control" id="form-group-input-1"
+								placeholder="Enter name of your competitor">
+						</fieldset>
+						<fieldset class="form-group">
+							<label for="form-group-input-2">Address</label> 
+							<input required type="text" ng-model="competitor.businessStreet" class="form-control" placeholder="Street Name">
+						</fieldset>
+						<div class="row">
+						  <div class="col-md-4"><input required type="text" ng-model="competitor.businessCity" class="form-control" placeholder="City"></div>
+						  <div class="col-md-3"><input required type="text" ng-model="competitor.businessPostal" class="form-control" placeholder="Postal Code"></div>
+						  <div class="col-md-3">
+						  <!-- <input required type="text" ng-model="competitor.businessProvince" class="form-control" placeholder="Province"> -->
+						  <select class="custom-select form-control"  ng-model="competitor.businessProvince"
+					     		ng-options="option.name for option in competitor.businessProvinceList track by option.code">
+							</select>
+						  </div>
+						  <div class="col-md-2"><input required type="text" ng-disabled="true" ng-model="competitor.businessCountry" class="form-control" placeholder="Country"></div>
+					   </div>
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary"
+						ng-click="competitor.addCompetitor()">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
