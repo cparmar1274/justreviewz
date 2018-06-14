@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -16,6 +21,7 @@ import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -27,10 +33,18 @@ import org.springframework.stereotype.Service;
 public class ElasticService {
 
 	public RestHighLevelClient elasticClient;
-
+	
+	
 	public ElasticService() {
-		this.elasticClient = new RestHighLevelClient(RestClient.builder(new HttpHost(System.getenv("ELASTIC_SEARCH_IP"),
-				Integer.valueOf(System.getenv("ELASTIC_SEARCH_PORT")), "http")));
+		final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+		credentialsProvider.setCredentials(AuthScope.ANY,new UsernamePasswordCredentials("pszy1vgpf6", "2116w02js5"));
+
+		this.elasticClient = new RestHighLevelClient(RestClient.builder(new HttpHost("pepper-5577325.us-east-1.bonsaisearch.net",443,"https")).setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
+            @Override
+            public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
+                return httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+            }
+        }));
 	}
 
 	public IndexResponse addObject(String reviewIndex, String reviewType, Map<String, Object> jsonMap) {
