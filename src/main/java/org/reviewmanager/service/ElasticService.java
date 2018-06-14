@@ -29,7 +29,7 @@ public class ElasticService {
 	public RestHighLevelClient elasticClient;
 
 	public ElasticService() {
-		this.elasticClient = new RestHighLevelClient(RestClient.builder(new HttpHost("https://pszy1vgpf6:2116w02js5@pepper-5577325.us-east-1.bonsaisearch.net")));
+		this.elasticClient = new RestHighLevelClient(RestClient.builder(new HttpHost("pszy1vgpf6:2116w02js5@pepper-5577325.us-east-1.bonsaisearch.net",9200,"https")));
 	}
 
 	public IndexResponse addObject(String reviewIndex, String reviewType, Map<String, Object> jsonMap) {
