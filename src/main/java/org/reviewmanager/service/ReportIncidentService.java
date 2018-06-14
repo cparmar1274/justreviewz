@@ -32,7 +32,6 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.sun.media.jfxmedia.logging.Logger;
 
 @Service
 public class ReportIncidentService {
