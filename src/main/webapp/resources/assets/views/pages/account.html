@@ -69,7 +69,7 @@
           </fieldset>
           <fieldset class="form-group form-group-lg">
             <label for="account-email">E-mail</label>
-            <input required type="email" class="form-control"  name="accountEmail" ng-model="account.account.accountEmail"  placeholder="Enter email">
+            <input required type="email" class="form-control" ng-disabled="true" name="accountEmail" ng-model="account.account.accountEmail"  placeholder="Enter email">
             <span class="text-danger" ng-hide="profileForm.accountEmail.$valid">Invalid Email</span>
           </fieldset>
   		  <fieldset class="form-group">
@@ -140,20 +140,21 @@
 
     <form class="p-x-1" name="passwordForm">
       <fieldset class="form-group form-group-lg">
-        <label for="account-password">Old password</label>
+        <label for="account-password">Current Password</label>
         <input required ng-minlength="6" ng-maxlenght="12" type="password" class="form-control" name="oldPassword" id="account-password" ng-model="account.credentials.oldPassword">
        <span class="text-danger" ng-hide="passwordForm.oldPassword.$valid">Please enter valid password value.</span>
       </fieldset>
       <fieldset class="form-group form-group-lg">
-        <label for="account-new-password">New password</label>
+        <label for="account-new-password">New Password</label>
         <input required ng-minlength="6" ng-maxlenght="12" type="password" class="form-control" name="newPassword" id="account-new-password" ng-model="account.credentials.newPassword">
         <span class="text-danger" ng-hide="passwordForm.newPassword.$valid">Please enter valid password value.</span>
-        <small class="text-muted">Minimum 6 characters</small>
+        <small class="text-muted pull-right">Minimum 6 characters</small>
       </fieldset>
       <fieldset class="form-group form-group-lg">
-        <label for="account-new-password-repeat">Verify password</label>
+        <label for="account-new-password-repeat">Verify New Password</label>
         <input required ng-minlength="6" ng-maxlenght="12" name="password" type="password" class="form-control" id="account-new-password-repeat" ng-model="account.credentials.newPasswordAgain">
      	<span class="text-danger" ng-hide="passwordForm.password.$valid">Please enter valid password value.</span>
+     	<small class="text-muted pull-right">Minimum 6 characters</small>
       </fieldset>
       <button type="submit" ng-disabled="passwordForm.$invalid" ng-click="account.updatePassword()"  class="btn btn-lg btn-primary m-t-3">Change password</button>
     </form>
@@ -205,10 +206,20 @@
   </uib-tab>
   
    <uib-tab heading="Subscription">
-
-   <div class="row">
+   
+   <div class="panel">
+   <div class="panel-heading">
+      Billing Information
+    </div>
+	   <div class="panel-body">
+	   		<span>Card Detail : <i class="fa fa-credit-card"></i>&nbsp;&nbsp;XXXX&nbsp;-&nbsp;XXXX&nbsp;-&nbsp;XXXX&nbsp;-&nbsp;{{account.subscription.billing.last4}}</span>
+	   		<p><span>Expiry Date : <i class="fa fa-calendar"></i>&nbsp;&nbsp;{{account.subscription.billing.expiryDate}}</span>
+	   </div>
+	   <div class="panel-footer">
+	   
+	   <div class="row">
     <div class="col-md-6">
-	<button class="btn btn-primary" id="customButton">Billing Information</button>
+	<button class="btn btn-sm btn-primary" id="customButton">Update Billing</button>
 
 <script>
 var handler = StripeCheckout.configure({
@@ -227,7 +238,8 @@ document.getElementById('customButton').addEventListener('click', function(e) {
     //description: 'Manage your customer review(s)',
     currency: 'cad',
     allowRememberMe:true,
-    panelLabel:'Update Billing Details'
+    panelLabel:'Update Billing Details',
+    email: angular.element(document.getElementById("accountCtrlID")).scope().account.account.accountEmail
   });
   e.preventDefault();
 });
@@ -237,12 +249,16 @@ window.addEventListener('popstate', function() {
   handler.close();
 });
 </script>
-    
-    <button ng-click="account.startMembership()" class="btn btn-primary">Start Membership</button>
-	<button ng-click="account.endMembership()" class="btn btn-danger">Cancel Membership</button>
+    <button ng-hide="account.subscriptionActive"  ng-click="account.startMembership()" class="btn btn-sm btn-primary">Start Membership</button>
+	<button ng-show="account.subscriptionActive"  ng-click="account.endMembership()" class="btn btn-sm btn-danger">Cancel Membership</button>
 	</div>
 	
 	</div>
+	   
+	   </div>
+   </div>
+
+   
     
     <div class="row container-fluid">
     <!-- Table Start -->
@@ -251,7 +267,7 @@ window.addEventListener('popstate', function() {
       Payment History
     </div>
   <div class="panel-body">
-    <div class="table-primary">
+    <div class="table">
       <table datatable="ng" dt-options="account.subscription.dtOptions" class="table table-striped table-bordered" >
         <thead>
           <tr>

@@ -7,7 +7,8 @@
     var self = this;
     
     self.businessName = "SIT Automation";
-    
+    self.totalReviews = 0;
+    self.totalRating = 0;
  
     
   }

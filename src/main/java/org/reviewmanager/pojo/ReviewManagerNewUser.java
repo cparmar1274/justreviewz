@@ -282,7 +282,8 @@ public class ReviewManagerNewUser {
 		String password = new BCryptPasswordEncoder().encode(this.getPassword());
 		ReviewManagerUser user = new ReviewManagerUser(this.getUsername(),password, true, true, true, true, authorities);
 		user.setAddress(this.getAddress());
-		user.setSubscription(this.getSubscription());
+		user.setSubscription(false);
+		user.setClientId(this.getClientId());
 		user.setClientEmail(this.getClientEmail());
 		user.setClientName(this.getClientName());
 		user.setClientType(this.getClientType());

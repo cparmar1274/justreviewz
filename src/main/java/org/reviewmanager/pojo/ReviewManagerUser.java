@@ -53,7 +53,7 @@ public class ReviewManagerUser extends User {
 	public boolean notifyAddedAsCompetitor;
 	
 	@JsonProperty("subscription")
-	public Subscription subscription;
+	public boolean subscription;
 	
 	@JsonProperty("createdOn")
 	public Date createdOn;
@@ -67,6 +67,7 @@ public class ReviewManagerUser extends User {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.createdOn = new Date();
 		this.modifiedOn = this.createdOn;
+		this.subscription = false;
 	}
 
 	public String getClientId() {
@@ -150,11 +151,11 @@ public class ReviewManagerUser extends User {
 		this.notifyNewReport = notifyNewReport;
 	}
 
-	public Subscription getSubscription() {
+	public boolean getSubscription() {
 		return subscription;
 	}
 
-	public void setSubscription(Subscription subscription) {
+	public void setSubscription(boolean subscription) {
 		this.subscription = subscription;
 	}
 
@@ -204,11 +205,10 @@ public class ReviewManagerUser extends User {
 		result = prime * result + (notifyAddedAsCompetitor ? 1231 : 1237);
 		result = prime * result + (notifyNewReport ? 1231 : 1237);
 		result = prime * result + (notifyNewReview ? 1231 : 1237);
-		result = prime * result + ((subscription == null) ? 0 : subscription.hashCode());
+		result = prime * result + (subscription ? 1231 : 1237);
 		result = prime * result + ((yelpUrl == null) ? 0 : yelpUrl.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -270,10 +270,7 @@ public class ReviewManagerUser extends User {
 			return false;
 		if (notifyNewReview != other.notifyNewReview)
 			return false;
-		if (subscription == null) {
-			if (other.subscription != null)
-				return false;
-		} else if (!subscription.equals(other.subscription))
+		if (subscription != other.subscription)
 			return false;
 		if (yelpUrl == null) {
 			if (other.yelpUrl != null)
@@ -282,6 +279,8 @@ public class ReviewManagerUser extends User {
 			return false;
 		return true;
 	}
+
+	
 
 
 	

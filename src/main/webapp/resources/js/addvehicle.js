@@ -28,8 +28,19 @@
             		self.reportVehicle.incidentImage = files[0];
             	}
             	
-            	self.reportVehicle.validateVehicleNumer = function(){
-            		
+            	self.reportVehicle.bulkUpload = function(){
+            		var fd = new FormData();
+                    fd.append("file", self.reportVehicle.incidentImage);
+                    
+                    $http.post("bulkUpload", fd, {
+                        withCredentials: true,
+                        headers: {
+                            'Content-Type': undefined
+                        },
+                        transformRequest: angular.identity
+                    }).success(function(data, status, headers, config) {
+                    	
+                    });
             	}
             	
             	self.reportVehicle.reportIncident = function () {
@@ -45,7 +56,8 @@
                     		  "province":self.reportVehicle.selectedProvince,
                     		  "country":self.reportVehicle.country
                       	};
-                      console.log(self.reportVehicle,params);
+                      
+                      
                      $http.post("reportIncident", params).then(function(response) { 
                          console.log(response);
                      });

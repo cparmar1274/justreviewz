@@ -1,5 +1,9 @@
 package org.reviewmanager.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +11,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.reviewmanager.pojo.BusinessObject;
 import org.reviewmanager.pojo.ReviewManagerUser;
@@ -23,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.stripe.Stripe;
@@ -47,13 +54,37 @@ public class ReportController {
 	public ModelAndView reportDriverPage(HttpServletRequest request) {
 		return new ModelAndView("views/reportincident");
 	}
+	
+	
+	@RequestMapping(value = "/bulkUpload", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> reportIncident(HttpServletRequest request,
+			@RequestParam(name="file",required=false) MultipartFile file) {
+		Map<String, Object> responseData = new HashMap<String, Object>();
+		try {
+			
+			File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + 
+                    file.getOriginalFilename());
+			file.transferTo(tmpFile);
+			List<String> reviews = FileUtils.readLines(tmpFile,"UTF-8");
+			for(String review : reviews)
+				responseData.putAll(reviewService.addReview(review));
+			responseData.put("success", true);
+		} catch (Exception ex) {
+			responseData.put("error", "Error while adding review");
+			responseData.put("success", false);
+			reviewService.logError("ReportController","reportIncident",ex.getMessage());
+		}
+		return responseData;
+	}
 
 	@RequestMapping(value = "/reportIncident", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> reportIncident(HttpServletRequest request,
 			@RequestBody(required = false) ReviewObject reviewObject) {
 		Map<String, Object> responseData = new HashMap<String, Object>();
 		try {
-			responseData.putAll(reviewService.addReview(reviewObject));
+			Map<String,Object> data= reviewService.addReview(reviewObject);
+			if(data!=null)
+			{responseData.putAll(data);}
 			responseData.put("success", true);
 		} catch (Exception ex) {
 			responseData.put("error", "Error while adding review");
@@ -97,14 +128,11 @@ public class ReportController {
 			@RequestParam(required = false) Map<String, Object> params) {
 		Map<String, Object> responseData = new HashMap<String, Object>();
 		try {
-			Stripe.apiKey = "sk_test_VHkhTicB0u0O9eWWlLQVhyuo";
+			
 			ReviewManagerUser user = (ReviewManagerUser) reviewService
 					.getUser("username", RMUtil.getSessionedUser().getUsername()).get("result");
-			Map<String, Object> invoiceParams = new HashMap<String, Object>();
-			invoiceParams.put("customer", RMUtil.getSessionedUser().getClientId());
-			invoiceParams.put("limit", "10");
-			InvoiceCollection invoiceList = Invoice.list(invoiceParams);
-			responseData.put("invoice", invoiceList.getData());
+			responseData.put("invoice",reviewService.getInvoiceDetail());
+			responseData.put("billing", reviewService.getBillingDetail());
 			responseData.put("data", user);
 			responseData.put("success", true);
 		} catch (Exception ex) {
@@ -219,8 +247,6 @@ public class ReportController {
 			if (params.containsKey("yelpPageUrl"))
 				user.setYelpUrl(params.get("yelpPageUrl").toString());
 
-			// update password newPassword
-
 			// update notification
 			if (params.containsKey("addedYouAsCompetitorNotify"))
 				user.setNotifyAddedAsCompetitor((boolean) params.get("addedYouAsCompetitorNotify"));
@@ -236,6 +262,27 @@ public class ReportController {
 			responseData.put("error", "Error while updating profile");
 			responseData.put("success", false);
 			reviewService.logError("ReportController","updateProfile",ex.getMessage());
+		}
+		return responseData;
+	}
+	
+	@RequestMapping(value="/changePassword",method=RequestMethod.POST)
+	public @ResponseBody Map<String,Object> changePassword(HttpServletRequest request,@RequestBody(required = false) Map<String, Object> params){
+		Map<String, Object> responseData = new HashMap<String, Object>();
+		try {
+			String newPasswordAgain=params.containsKey("newPasswordAgain")?params.get("newPasswordAgain").toString():StringUtils.EMPTY;
+			String newPassword=params.containsKey("newPassword")?params.get("newPassword").toString():StringUtils.EMPTY;
+			String oldPassword=params.containsKey("oldPassword")?params.get("oldPassword").toString():StringUtils.EMPTY;
+			
+			if(newPasswordAgain==StringUtils.EMPTY || newPassword==StringUtils.EMPTY || oldPassword==StringUtils.EMPTY || !newPasswordAgain.equalsIgnoreCase(newPassword)){
+				throw new Exception("password doesn't match");}
+			
+			Map<String, Object> mapData = reviewService.changePassword(newPassword,oldPassword);
+			responseData.putAll(mapData);
+		} catch (Exception ex) {
+			responseData.put("result", "Error while changing password");
+			responseData.put("success", false);
+			reviewService.logError("ReportController","changePassword",ex.getMessage());
 		}
 		return responseData;
 	}
@@ -313,14 +360,31 @@ public class ReportController {
 		try {
 			Stripe.apiKey = "sk_test_VHkhTicB0u0O9eWWlLQVhyuo";
 			Customer customer = Customer.retrieve(RMUtil.getSessionedUser().getClientId());
+			
 			if (customer.getSubscriptions().getData().isEmpty()) {
+				Subscription subscription = reviewService.createSubscription();
+				responseData.put("subscription_ends", subscription.getTrialEnd());
+			}
+			
 				Subscription sub = reviewService.startSubscription();
-				responseData.put("result", "Customer subscription is started.");
-			} else
-			responseData.put("result", "Customer subscription is active");
-			responseData.put("success", true);
+				if(sub!=null)
+				{
+					Map<String, Object> data = reviewService.getUser("username",
+							String.valueOf(RMUtil.getSessionedUser().getUsername()));
+					String clientID = String.valueOf(data.get("id"));
+					RMUtil.getSessionedUser().setSubscription(true);
+					responseData.putAll(reviewService.updateUser(clientID, RMUtil.getSessionedUser()));
+					responseData.put("result", "Customer subscription re-activated.");
+					responseData.put("success", true);
+				}
+				else
+				{
+					responseData.put("result", "Error while starting subscription");
+					responseData.put("success", false);
+				}
+			
 		} catch (Exception ex) {
-			responseData.put("error", "Error while starting subscription");
+			responseData.put("result", "Error while starting subscription");
 			responseData.put("success", false);
 			reviewService.logError("ReportController","startSubscription",ex.getMessage());
 		}
@@ -333,8 +397,17 @@ public class ReportController {
 		Map<String, Object> responseData = new HashMap<String, Object>();
 		try {
 			Subscription sub = reviewService.cancelSubscription();
-			responseData.put("result", "Your subscription is cancelled But you can still access the service untill end of your billing period.");
-			responseData.put("success", true);
+			if(sub!=null)
+			{
+				Map<String, Object> data = reviewService.getUser("username",
+						String.valueOf(RMUtil.getSessionedUser().getUsername()));
+				String clientID = String.valueOf(data.get("id"));
+				RMUtil.getSessionedUser().setSubscription(false);
+				responseData.putAll(reviewService.updateUser(clientID, RMUtil.getSessionedUser()));
+				responseData.put("result", "Your subscription is cancelled But you can still access the service untill end of your billing period.");
+				responseData.put("success", true);
+			
+			}
 		} catch (Exception ex) {
 			responseData.put("error","Error while cancelling subscription");
 			responseData.put("success", false);

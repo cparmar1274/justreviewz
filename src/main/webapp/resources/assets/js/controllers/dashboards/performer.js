@@ -4,7 +4,8 @@
   //
   function PerformerCtrl($http) {
     var self = this;
-    self.rating = "3.5";
+    self.rating = angular.element(document.getElementById("mainControllerID")).scope().main.totalRating;
+    self.totalReviews = angular.element(document.getElementById("mainControllerID")).scope().main.totalReviews;
     self.reviewType = "true";
     self.competitors = [{name:"Hakka Ren",rating:"4"}];
     self.performers = [{name:"Swiss Chalet",rating:"4.5"}];

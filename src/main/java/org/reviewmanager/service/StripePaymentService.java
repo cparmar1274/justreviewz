@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.stripe.Stripe;
+import com.stripe.model.Card;
 import com.stripe.model.Customer;
+import com.stripe.model.ExternalAccountCollection;
+import com.stripe.model.Invoice;
+import com.stripe.model.InvoiceCollection;
 import com.stripe.model.Subscription;
 
 @Service
@@ -30,6 +34,25 @@ public class StripePaymentService {
 		}
 		return customer;
 	}
+	
+	public Subscription createSubscription() {
+		Stripe.apiKey = RMUtil.STRIPE_API_KEY;
+		Subscription subscription = null;
+		try {
+			Map<String, Object> item = new HashMap<>();
+			item.put("plan", "review_analytics_monthly");
+			Map<String, Object> items = new HashMap<>();
+			items.put("0", item);
+			Map<String, Object> params = new HashMap<>();
+			params.put("customer", RMUtil.getSessionedUser().getClientId());
+			params.put("trial_period_days", "15");
+			params.put("items", items);
+			subscription = Subscription.create(params);
+		} catch (Exception e) {
+			this.logError("StripePaymentService", "cancelSubscription", e.getMessage());
+		}
+		return subscription;
+	}
 
 	public Subscription cancelSubscription() {
 		Stripe.apiKey = RMUtil.STRIPE_API_KEY;
@@ -47,21 +70,22 @@ public class StripePaymentService {
 
 	public Subscription startSubscription() {
 		Stripe.apiKey = RMUtil.STRIPE_API_KEY;
-		Subscription subscription = null;
+		Subscription subscriptions = null;
 		try {
-			Map<String, Object> item = new HashMap<>();
-			item.put("plan", "review_analytics_monthly");
-			Map<String, Object> items = new HashMap<>();
-			items.put("0", item);
-			Map<String, Object> params = new HashMap<>();
-			params.put("customer", RMUtil.getSessionedUser().getClientId());
-			params.put("billing_cycle_anchor", RMUtil.getBillingCycleAnchor());
-			params.put("items", items);
-			subscription = Subscription.create(params);
+			
+			Customer customer = Customer.retrieve(RMUtil.getSessionedUser().getClientId());
+			
+			for(Subscription subscription : customer.getSubscriptions().getData())
+			{
+				Map<String, Object> params = new HashMap<>();
+				params.put("cancel_at_period_end", false);
+				subscriptions = subscription.update(params);
+			}
+			
 		} catch (Exception  e) {
 			this.logError("StripePaymentService", "startSubscription", e.getMessage());
 		}
-		return subscription;
+		return subscriptions;
 	}
 
 	public Customer createStripeUser(String clientEmail) {
@@ -85,5 +109,44 @@ public class StripePaymentService {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public Map<String,Object> getInvoiceDetail() {
+		Stripe.apiKey = RMUtil.STRIPE_API_KEY;
+		Map<String,Object> data = new HashMap<String,Object>();
+		InvoiceCollection invoiceList = null;
+		Map<String, Object> invoiceParams = new HashMap<String, Object>();
+		invoiceParams.put("customer", RMUtil.getSessionedUser().getClientId());
+		invoiceParams.put("limit", "10");
+		try {
+			invoiceList =  Invoice.list(invoiceParams);
+			for(Invoice invoice : invoiceList.getData()){
+				data.put(invoice.getId(),invoice);
+			}
+		} catch (Exception e) {
+			this.logError("StripePaymentService", "getInvoiceDetail", e.getMessage());
+		}
+		return data;
+	}
+
+	public Map<String,Object>  getBillingDetail() {
+		Map<String,Object> data = new HashMap<String,Object>();
+		Stripe.apiKey = RMUtil.STRIPE_API_KEY;
+		ExternalAccountCollection sourceData = null;
+		try {
+			Customer customer = Customer.retrieve(RMUtil.getSessionedUser().getClientId());
+			sourceData = customer.getSources();
+			if(!sourceData.getData().isEmpty()){
+				Card card = (Card) sourceData.getData().get(0);
+				data.put("last4", card.getLast4());
+				data.put("expiryDate",card.getExpMonth()+"/"+card.getExpYear());
+				data.put("brand", card.getBrand());
+				data.put("country", card.getCountry());
+			}
+		} catch (Exception e) {
+			this.logError("StripePaymentService", "getBillingDetail", e.getMessage());
+		}
+		
+		return data;
 	}
 }

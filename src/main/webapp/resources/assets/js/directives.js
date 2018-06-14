@@ -122,7 +122,7 @@
 				  },
 		  link : function(scope,$element,$attrs){
 			  var actionItem = '<div class="row">'+
-			  						'<div class="col-md-10">'+
+			  						'<div class="col-md-12">'+
 			  							'<div class="widget-comments-item">'+
 								            '<div class="widget-comments-header">'+
 								              '<a href="#" title="">'+$attrs.postedby+'</a>'+
@@ -135,15 +135,11 @@
 								            '</div>'+
 								            '<div class="widget-comments-footer">'+
 								            moment($attrs.posteddate).fromNow()+
+								            '<span>&nbsp;'+$attrs.postedby +'&nbsp;' + $attrs.postedemail+'</span>'+
+								            '<a class="pull-right" style="cursor: pointer;" onclick="removeActionItem(\''+$attrs.reviewid+'\')"><i class="fa fa-minus-square"></i>&nbsp;Remove</a>'+
 								           '</div>'+
 								       '</div>'+
 								    '</div>'+
-								  '<div class="col-md-1">'+
-						          	'<span>'+$attrs.postedby+'</span>'+
-						          '</div>'+
-						          '<div class="col-md-1">'+
-						          	'<a style="cursor: pointer;" onclick="removeActionItem(\''+$attrs.reviewid+'\')"><i class="fa fa-times"></i>&nbsp;Remove</a>'+
-						          '</div>'+
 						        '</div>';
 			  $element.html(actionItem);
 		  }
@@ -172,8 +168,8 @@
 				        '<small id="'+reviewId+'_message" class="pull-right text-success"></small>'+
 				      '</div>'+
 				      '<div class="panel-footer">'+
-			            '<button type="button" onclick="addReviewItem(\''+reviewId+'\')" class="btn btn-xs btn-outline m-r-1 m-l-1"><i class="fa fa-exclamation-triangle text-info"></i>&nbsp;&nbsp;Add to Action Items </button>'+
-			            '<button type="button" onclick="shareItem(\''+reviewId+'\')"  class="btn btn-xs btn-outline"><i class="fa fa-thumbs-up text-warning"></i>&nbsp;&nbsp;Share</button>'+
+			            '<button type="button" onclick="addReviewItem(\''+reviewId+'\')" class="btn btn-xs btn-outline m-r-1 m-l-1"><i class="fa fa-plus-square text-info"></i>&nbsp;&nbsp;Add to Action Item </button>'+
+			            '<button type="button" onclick="shareItem(\''+reviewId+'\')"  class="btn btn-xs btn-outline"><i class="fa fa-share-square text-warning"></i>&nbsp;&nbsp;Share</button>'+
 			            '<span class="pull-right">'+moment($attrs.posteddate).fromNow()+'</span>'
 			         '</div>'+
 			     '</div>';

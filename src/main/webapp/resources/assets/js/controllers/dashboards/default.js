@@ -33,7 +33,7 @@
 			gridTextColor : '#fff',
 			dateFormat:function(d){ return moment(d).format('MMMM D YYYY'); },
 			//xLabels : "Month",
-			yLabelFormat:function(d){console.log(d); return d;},
+			yLabelFormat:function(d){return d.toPrecision(3);},
 			xLabelFormat: function(d) {
 				return moment(d).format('MMMM D YYYY');
 		      }
@@ -59,6 +59,10 @@
 		      self.negativeReview = response.data.data.totalNegative;
 		      self.neutralReview = response.data.data.totalNeutral;
 		      morrisChart.setData(response.data.pie);
+
+		      //set rating and reviews count
+		      angular.element(document.getElementById("mainControllerID")).scope().main.totalReviews = self.positiveReview + self.negativeReview + self.neutralReview;
+		      angular.element(document.getElementById("mainControllerID")).scope().main.totalRating = self.rating;
 		});
 		
 		

@@ -8,7 +8,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.search.sort.SortOrder;
 import org.reviewmanager.pojo.BusinessObject;
-import org.reviewmanager.pojo.LabelValue;
 import org.reviewmanager.pojo.ReviewManagerNewUser;
 import org.reviewmanager.pojo.ReviewManagerUser;
 import org.reviewmanager.pojo.ReviewObject;
@@ -27,9 +26,16 @@ public class ReviewService {
 	
 	@Autowired
 	public StripePaymentService stripePaymentService; 
+	
+	public Map<String, Object> addReview(String reviewObject) {
+		Map<String,Object> data = new HashMap<String,Object>();
+		return this.addReview(RMUtil.convertToReview(reviewObject));
+	}
 
 	public Map<String, Object> addReview(ReviewObject reviewObject) {
-		// update Dashboard and Trending
+		
+		if(reviewObject==null) return null;
+		
 		reportIncidentService.updateDashboardAndTrending(reviewObject);
 		
 		return reportIncidentService.addReview(reviewObject);
@@ -120,6 +126,23 @@ public class ReviewService {
 
 	public Customer createStripeUser(String clientEmail) {
 		return stripePaymentService.createStripeUser(clientEmail);
+	}
+
+	public Map<String,Object> getInvoiceDetail() {
+		return stripePaymentService.getInvoiceDetail();
+	}
+
+	public Map<String,Object> getBillingDetail() {
+		return stripePaymentService.getBillingDetail();
+	}
+
+	public Map<String, Object> changePassword(String newPassword, String oldPassword) {
+		return reportIncidentService.changePassword(newPassword,oldPassword);
+	}
+
+	public Subscription createSubscription() {
+		return stripePaymentService.createSubscription();
+		
 	}
 
 }

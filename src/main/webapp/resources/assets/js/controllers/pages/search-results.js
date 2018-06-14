@@ -13,6 +13,7 @@ function shareItem(reviewId){
 		if($stateParams.searchText!=undefined && $stateParams.searchText!=null)
 			self.searchText = $stateParams.searchText;
 		
+		self.searchData = [];
 		self.searchGoodData =[];
 		self.searchBadData =[];
 		
@@ -113,13 +114,10 @@ function shareItem(reviewId){
 				 }}).then(
       	    		function(response){
       	    			if(response.data.success==true){
-      	    				self.searchGoodData = [];
-      	    				self.searchBadData = [];
+      	    				self.searchData = [];
       	    				angular.forEach(response.data.data,function(data){
-      	    					  if(data.positiveReview==true)
-      	          	    			self.searchGoodData.push(data);
-      	    					  else
-      	          	    			self.searchBadData.push(data);
+      	          	    			self.searchData.push(data);
+      	    					  
       	    				}); 
       	    			
       	    			self.totalResults = response.data.recordsTotal;

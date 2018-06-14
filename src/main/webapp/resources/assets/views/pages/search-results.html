@@ -69,22 +69,22 @@
 	Page Size
  -->
 <uib-tabset template-url="px/pages/search-results.html" px-tab-resize>
-  <uib-tab heading="Good Reviews">
- 	 <div ng-repeat="data in searchReview.searchGoodData">
+  <uib-tab heading="Public Reviews">
+ 	 <div ng-repeat="data in searchReview.searchData">
       <search-result reviewId="{{data.reviewId}}" reviewContent="{{data.reviewContent}}" rating="{{data.totalStars}}" postedBy="{{data.postedBy}}" postedDate="{{data.postedDate}}" reviewType={{data.positiveReview}}></search-result>
 	</div>
   </uib-tab>
-  <uib-tab heading="Bad Reviews : Take Immediate Action">
+  <!-- <uib-tab heading="Bad Reviews : Take Immediate Action">
 	 <div ng-repeat="data in searchReview.searchBadData">
       <search-result reviewId="{{data.reviewId}}" reviewContent="{{data.reviewContent}}" rating="{{data.totalStars}}" postedBy="{{data.postedBy}}" postedDate="{{data.postedDate}}" reviewType={{data.positiveReview}}></search-result>
 	</div>
-  </uib-tab>
+  </uib-tab> -->
 </uib-tabset>
 
 <!--  pagination -->
      <!-- Page size -->
     <div class="row m-b-2" ng-show="searchReview.totalResults!=0">
-	    <div class="col-md-2 text-muted font-size-12">
+	    <div class="col-md-11 text-muted font-size-12">
 	    	<nav class="pagination pagination-sm m-a-0" ng-show="searchReview.totalResults!=0">
 			    <li ng-disable="true"><button class="btn btn-primary btn-sm" ng-click="searchReview.previousPage()" ng-disabled="searchReview.previousEnabled">Previous</button></li>
 			    <li ng-repeat="page in searchReview.nextPages" style="margin-right:3px"><button class="btn btn-primary btn-sm" ng-disabled="searchReview.pageDisabled(page)" ng-click="searchReview.changePage(page)" id="page_{{page}}">{{page}}</button></li>

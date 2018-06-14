@@ -53,6 +53,17 @@ public class ReviewObject {
 		// TODO Auto-generated constructor stub
 	}
 
+	public ReviewObject(String clientName,String postedEmail,String streetName,String city,String zipCode,String province,String country,String rating,String postedDate,String reviewContent){
+		super();
+		this.clientName = clientName;
+		this.clientUserName = clientName;
+		this.postedEmail = postedEmail;
+		this.postedDetail = streetName+" "+city+" "+zipCode+" "+province+" "+country;
+		this.totalStars = Double.parseDouble(rating);
+		this.postedDate = postedDate;
+		this.reviewContent = reviewContent;
+	}
+	
 	public ReviewObject(String clientName, String postedBy, String postedDate, Double totalStars,
 			String reviewContent,String clientUserName) {
 		super();

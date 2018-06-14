@@ -45,7 +45,7 @@
 </head>
 
 <!-- ControllerAs syntax -->
-<body ng-controller="MainCtrl as main">
+<body id="mainControllerID" ng-controller="MainCtrl as main">
 
   <!-- Main view  -->
   <ui-view class="px-navbar-fixed"></ui-view>

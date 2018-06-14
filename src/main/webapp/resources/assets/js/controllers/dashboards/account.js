@@ -12,6 +12,7 @@
 		self.credentials = {};
 		self.notification = {};
 		self.subscription = {};
+		self.subscriptionActive = false;
 		
 		self.account.accountName = '';
 		self.account.accountEmail = ''; 
@@ -67,9 +68,9 @@
 		self.credentials.oldPassword = '';
 		self.updatePassword = function(){
 			//console.log(self.credentials);
-			$http.post('updateProfile',self.credentials).then(function(response) {
+			$http.post('changePassword',self.credentials).then(function(response) {
 				if(response.data.success==true)
-					self.displayMessage('Credentials updated successfully');
+					self.displayMessage(response.data.result);
 					else
 					self.displayMessage(response.data.result,'error');
     	    });
@@ -111,7 +112,7 @@
 		// DataTables configurable options
 	    self.dtOptions = DTOptionsBuilder.newOptions()
 	        .withDisplayLength(10)
-	        .withOption('bLengthChange', true);
+	        .withOption('bLengthChange', false);
 		
 		self.updateForm = function(rep){
 			if(rep.notifyAddedAsCompetitor!=undefined)
@@ -138,14 +139,17 @@
 			self.account.businessCity = rep.address.city;
 			if(rep.address.postalCode!=undefined)
 			self.account.businessPostal = rep.address.postalCode;
+			
+			self.subscriptionActive = rep.subscription;
 		}
 		
+		self.getAccountDetail = function(){
 		$http.get('getAccountDetail').then(function(response) {
 			if(response.data.success==true)
 			{	
+				self.subscription.billing = response.data.billing;
 				self.subscription.paymentinfo = [];
 				angular.forEach(response.data.invoice,function(invoice){
-					//console.log(invoice);
 					self.subscription.paymentinfo.push({
 						'number':invoice.number,
 						'billingDate': moment(invoice.periodEnd*1000).format('ll'),
@@ -158,11 +162,17 @@
 				self.displayMessage(response.data.result,'error');
 			}
 		});
-		
+		}
 		self.startMembership = function(){
 			$http.post('startSubscription').then(function(response){
 				if(response.data.success==true)
-				self.displayMessage(response.data.result);
+				{
+					self.subscriptionActive = true;
+					if(response.data.subscription_ends!=undefined) {
+						self.displayMessage("Congratulations ! Your subscripation has been started with trial period ending on "+ moment(response.data.subscription_ends*1000).format('LL'));
+					} else {
+					self.displayMessage(response.data.result);}
+				}
 				else
 				self.displayMessage(response.data.result,'error');
 			});
@@ -170,7 +180,10 @@
 		self.endMembership = function(){
 			$http.post('endSubscription').then(function(response){
 				if(response.data.success==true)
+					{
+					self.subscriptionActive = false;
 					self.displayMessage(response.data.result);
+					}
 					else
 					self.displayMessage(response.data.result,'error');
 					    });
@@ -181,13 +194,18 @@
 		{
 		    $http.post('charge',token).then(function(response){
 		    	if(response.data.success==true)
-					self.displayMessage(response.data.result);
+					{
+		    		self.displayMessage(response.data.result);
+		    		self.getAccountDetail();
+					}
 					else
-					self.displayMessage(response.data.result,'error');
+					{self.displayMessage(response.data.result,'error');}
 			    });
 
 		}
 		
+		
+		self.getAccountDetail();
 	
 	}
 	 angular.module('pixeladmin')

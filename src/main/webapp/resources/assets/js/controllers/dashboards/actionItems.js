@@ -14,16 +14,21 @@ function removeActionItem(reviewId){
 		
 		self.removeActionItem = function(reviewId) {
 			$http.post("removeActionItem",{"reviewId":reviewId}).then(function(response){
-				console.log(response);
 				self.message = true;
 				self.messageText = response.data.result=="DELETED"?"Action Item removed successfully":"Action does not exits.It may be already removed or being removed. Please try after sometime.";
-				self.init();
+				angular.forEach(self.actionItems,function(item){
+					if(item.reviewId==reviewId)
+						self.actionItems.pop(item);
+				});
 			});
 		}
 		
+		self.downloadPDF = function(){ alert('download PDF');}
+		self.shareActionItems = function(){ alert('share action Item');}
+		
 		self.init = function(){
 			$http.get("getActionItems").then(function(response){
-				self.actionItems = [];
+				
 				angular.forEach(response.data.data,function(data){
 					self.actionItems.push(data);
 				});

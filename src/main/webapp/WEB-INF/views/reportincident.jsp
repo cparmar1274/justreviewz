@@ -22,6 +22,28 @@
 	<div class="wrapper" ng-controller="ReportController">
 		
 		<div class="container" style="margin-top:1%">
+		
+		<div class="panel">
+		  <div class="panel-heading">Bulk Reviews Upload</div>
+			<div class="panel-body">
+			<form name="bulkUpload" novalidate>
+			<div class="form-group">
+					<input type="file"
+						onchange="angular.element(this).scope().reportVehicle.uploadFile(this.files)"
+						class="form-control-file" id="exampleInputFile"
+						aria-describedby="fileHelp"> <small id="fileHelp"
+						class="form-text text-muted">Please upload incident
+						related images If you have.</small>
+				</div>
+				<button type="submit" ng-disabled="bulkUpload.$invalid"
+					ng-click="reportVehicle.bulkUpload()" class="btn btn-danger">Bulk Upload</button>
+			</form></div>
+			</div>
+		
+		
+		    <div class="panel">
+		    <div class="panel-heading">Single Review Upload</div>
+			<div class="panel-body">
 			<form name="myForm" novalidate>
 				<div class="form-group">
 					<div layout="row">
@@ -94,17 +116,12 @@
 							placeholder="Enter Review Content" rows="3"></textarea> </md-input-container>
 					</div>
 				</div>
-				<div class="form-group">
-					<input type="file"
-						onchange="angular.element(this).scope().reportVehicle.uploadFile(this.files)"
-						class="form-control-file" id="exampleInputFile"
-						aria-describedby="fileHelp"> <small id="fileHelp"
-						class="form-text text-muted">Please upload incident
-						related images If you have.</small>
-				</div>
+				
 				<button type="submit" ng-disabled="myForm.$invalid"
-					ng-click="reportVehicle.reportIncident()" class="btn btn-danger">Report Incident</button>
+					ng-click="reportVehicle.reportIncident()" class="btn btn-danger">Add Review</button>
 			</form>
+			</div></div>
+			
 		</div>
 
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"

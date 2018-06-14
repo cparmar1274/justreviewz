@@ -4,24 +4,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.joda.time.DateTime;
 import org.reviewmanager.pojo.Address;
 import org.reviewmanager.pojo.ApplicationError;
 import org.reviewmanager.pojo.ReviewManagerUser;
+import org.reviewmanager.pojo.ReviewObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 public class RMUtil {
+	
+	
 	
 	public static final String STRIPE_API_KEY = "sk_test_VHkhTicB0u0O9eWWlLQVhyuo";
 
@@ -51,6 +55,7 @@ public class RMUtil {
 	
 	public static final String ERROR_INDEX = "error_index";
 	public static final String ERROR_TYPE = "error_type";
+
 
 	public static ReviewManagerUser getSessionedUser() {
 		ReviewManagerUser sessionedUser = null;
@@ -94,12 +99,10 @@ public class RMUtil {
 		Gson gson = new Gson();
 
 		Address address = gson.fromJson(jsonData.get("address").toString(), Address.class);
-		// Subscription subscription =
-		// gson.fromJson(jsonData.get("subscription").toString(),Subscription.class);
 
 		reviewUser.setAddress(address);
 		reviewUser.setClientId(jsonData.get("clientId").getAsString());
-		// reviewUser.setSubscription(subscription);
+		 reviewUser.setSubscription(jsonData.get("subscription").getAsBoolean());
 		reviewUser.setClientEmail(jsonData.get("clientEmail").getAsString());
 		reviewUser.setClientName(jsonData.get("clientName").getAsString());
 		reviewUser.setClientType(jsonData.get("clientType").getAsString());
@@ -137,11 +140,22 @@ public class RMUtil {
 	}
 
 	public static long getBillingCycleAnchor() {
-		Date date = new Date();
-		date = DateUtils.setDays(date, 1);
-		date = DateUtils.addMonths(date, +1);
-		System.out.println(date);
-		return date.getTime()*1000;
+		DateTime date = new DateTime();
+		//date.plusDays(15);
+		return date.getMillis();
 	}
 
+	
+	public static BCryptPasswordEncoder getBCrypt(){
+		return new BCryptPasswordEncoder();
+	}
+
+	public static ReviewObject convertToReview(String reviewObjectString) {
+		String[] reviewArray = reviewObjectString.split("#");
+		ReviewObject reviewObject = null;
+		//cparmar123#cccchirag@gmail.com#35 Kingsbridge garden circle#Mississauga#L5R3Z5#Ontario#Canada#3.5#2018-06-13#Its a busy place. 
+		if(reviewArray.length>=10)
+		 reviewObject = new ReviewObject(reviewArray[0],reviewArray[1],reviewArray[2],reviewArray[3],reviewArray[4],reviewArray[5],reviewArray[6],reviewArray[7],reviewArray[8],reviewArray[9]);
+		return reviewObject;
+	}
 }

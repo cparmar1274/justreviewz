@@ -28,10 +28,13 @@ import org.reviewmanager.pojo.ReviewObject;
 import org.reviewmanager.pojo.Trending;
 import org.reviewmanager.utility.RMUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.sun.media.jfxmedia.logging.Logger;
 
 @Service
 public class ReportIncidentService {
@@ -78,7 +81,7 @@ public class ReportIncidentService {
 			SearchResponse searchResponse = elasticService.getObjectBasedOnField(RMUtil.USER_INDEX, RMUtil.USER_TYPE,
 					"username", newUserRequest.getUsername());
 			if (searchResponse == null || searchResponse.getHits().totalHits == 0) {
-
+				
 				IndexResponse indexResponse = elasticService.addObject(RMUtil.USER_INDEX, RMUtil.USER_TYPE,
 						newUser.getReviewManagerUserMap());
 				reportResult.put("result", indexResponse.getResult());
@@ -88,6 +91,7 @@ public class ReportIncidentService {
 				reportResult.put("result", "Username already registered.");
 			}
 		} catch (Exception ex) {
+			Logger.logMsg(Logger.ERROR, ex.getMessage(), "Error while getting clientIDs", "Error");
 			reportResult.put("success", false);
 			reportResult.put("result", "Error while crateing user.");
 		}
@@ -97,20 +101,20 @@ public class ReportIncidentService {
 
 	public Map<String, Object> getUser(String userNameField, String userNameValue) {
 		Map<String, Object> reportResult = new HashMap<String, Object>();
-		String clientID = null;
-		ReviewManagerUser newUser = null;
-		try{
+
 		SearchResponse searchResponse = elasticService.getObjectBasedOnClientUserName(RMUtil.USER_INDEX,
 				RMUtil.USER_TYPE,userNameField, userNameValue);
 		Gson gson = new Gson();
 		JsonObject jsonData = null;
+		String clientID = null;
+		ReviewManagerUser newUser = null;
 		if (searchResponse != null && searchResponse.getHits().totalHits > 0) {
 			for (SearchHit searchHit : searchResponse.getHits().getHits()) {
 				jsonData = gson.fromJson(searchHit.getSourceAsString(), JsonObject.class);
 				clientID = searchHit.getId();
 			}
 			newUser = RMUtil.getUserObject(jsonData);
-		} }catch(Exception ex){ex.printStackTrace();}
+		}
 		reportResult.put("id", clientID);
 		reportResult.put("result", newUser);
 		return reportResult;
@@ -394,6 +398,28 @@ public class ReportIncidentService {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	public Map<String, Object> changePassword(String newPassword, String oldPassword) {
+		SearchResponse searchResponse = elasticService.getObjectBasedOnClientUserName(RMUtil.USER_INDEX,
+				RMUtil.USER_TYPE,"clientId", RMUtil.getSessionedUser().getClientId());
+		Map<String,Object> data = null,resultData = new HashMap<String,Object>();
+		String objectId = null;
+		for(SearchHit search :searchResponse.getHits().getHits()){
+			data = search.getSourceAsMap();
+			objectId = search.getId();
+			if(BCrypt.checkpw(oldPassword, data.get("password").toString())){
+				data.put("modifiedOn", new Date());
+				data.put("password", RMUtil.getBCrypt().encode(newPassword));
+				UpdateResponse updateResponse = elasticService.updateObject(RMUtil.USER_INDEX, RMUtil.USER_TYPE, objectId, data);
+				resultData.put("result", "password updated successfully");
+				resultData.put("success", true);
+			}else{
+				resultData.put("result", "old password doesn't match with our records. please try again.");
+				resultData.put("success", false);
+			}
+		}
+		return resultData;
 	}
 
 }
