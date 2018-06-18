@@ -1,0 +1,30 @@
+<ol class="breadcrumb page-breadcrumb">
+  <li><a href="index.html">Home</a></li>
+  <li class="active">Action Items</li>
+</ol>
+<div id="actionItemCtrlID" ng-controller="ActionItemsCtrl as actionItem" ng-init="actionItem.init()">
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-11 text-xs-center text-md-left text-nowrap">
+            <h1><i class="page-header-icon ion-android-done-all"></i>Review <span class="text-muted font-weight-light">Action Items</span></h1>
+        </div>
+        <hr class="page-wide-block visible-xs visible-sm">
+        <div class="col-md-1">
+	        <span style="cursor: pointer;" ng-click="actionItem.downloadPDF()"><i class="page-header-icon fa fa-file-pdf-o"></i></span>
+	        <span style="cursor: pointer;" ng-click="actionItem.shareActionItems()"><i class="page-header-icon fa fa-share-square"></i></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="alert alert-success alert-dark" ng-show="actionItem.message">
+              <button type="button" class="hide" data-dismiss="alert">x</button>
+              {{actionItem.messageText}}
+</div>
+<div class="panel">
+	<div ng-repeat="data in actionItem.actionItems">
+      <action-item reviewId="{{data.reviewId}}" reviewContent="{{data.reviewContent}}" rating="{{data.totalStars}}" postedBy="{{data.postedBy}}" postedEmail="{{data.postedEmail}}" postedDate="{{data.postedDate}}" reviewType={{data.positiveReview}}></action-item>
+	</div>
+<div class="panel-footer" style="text-align:center;">Load more action items</div>
+</div>
+</div>
