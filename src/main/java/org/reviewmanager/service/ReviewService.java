@@ -139,6 +139,10 @@ public class ReviewService {
 	public Map<String, Object> changePassword(String newPassword, String oldPassword) {
 		return reportIncidentService.changePassword(newPassword,oldPassword);
 	}
+	
+	public Map<String, Object> resetPassword(String clientEmail) {
+		return reportIncidentService.resetPassword(clientEmail);
+	}
 
 	public Subscription createSubscription() {
 		return stripePaymentService.createSubscription();

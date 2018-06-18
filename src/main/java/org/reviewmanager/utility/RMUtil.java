@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
@@ -28,6 +29,8 @@ public class RMUtil {
 	
 	
 	public static final String STRIPE_API_KEY = "sk_test_VHkhTicB0u0O9eWWlLQVhyuo";
+	
+	public static final Integer PASSWORD_LENGTH = 20;
 
 	// Manage Review
 	public static final String REVIEW_INDEX = "review_index";
@@ -55,6 +58,8 @@ public class RMUtil {
 	
 	public static final String ERROR_INDEX = "error_index";
 	public static final String ERROR_TYPE = "error_type";
+
+	public static final String REVIEW_STRING_SPLITTER = "#";
 
 
 	public static ReviewManagerUser getSessionedUser() {
@@ -151,11 +156,19 @@ public class RMUtil {
 	}
 
 	public static ReviewObject convertToReview(String reviewObjectString) {
-		String[] reviewArray = reviewObjectString.split("#");
+		String[] reviewArray = reviewObjectString.split(RMUtil.REVIEW_STRING_SPLITTER);
 		ReviewObject reviewObject = null;
-		//cparmar123#cccchirag@gmail.com#35 Kingsbridge garden circle#Mississauga#L5R3Z5#Ontario#Canada#3.5#2018-06-13#Its a busy place. 
 		if(reviewArray.length>=10)
 		 reviewObject = new ReviewObject(reviewArray[0],reviewArray[1],reviewArray[2],reviewArray[3],reviewArray[4],reviewArray[5],reviewArray[6],reviewArray[7],reviewArray[8],reviewArray[9]);
 		return reviewObject;
+	}
+
+	public static String generateRandomPasswordText() {
+		String[] charArray = new String[]{"A","B","C","1","D","E","{","F","G","H","2","I","J","K","L","M","N","3","O","P","Q","R","S","$","T","U","V","W","}","X","Y","Z","a","b","c","d","9","e","f","g","h","i","j","k","l","6","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+		Random random = new Random();
+		 StringBuffer password = new StringBuffer();
+		for(int i=0;i<RMUtil.PASSWORD_LENGTH;i++)
+			password.append(charArray[random.nextInt(charArray.length)]);
+		return password.toString();
 	}
 }

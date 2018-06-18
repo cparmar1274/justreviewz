@@ -6,7 +6,7 @@
   function MainCtrl($rootScope) {
     var self = this;
     
-    self.businessName = "Review Analytics";
+    self.businessName = "SIT Automation";
     self.totalReviews = 0;
     self.totalRating = 0;
  

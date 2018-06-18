@@ -22,7 +22,7 @@
       .state('pages.main', {
         url: '',
         templateUrl: 'public/views/main.html',
-        data: { pageTitle: 'Main page' },
+        data: { pageTitle: 'Review Analytics : Authenticate' },
         resolve: {
             loadPlugin: function ($ocLazyLoad) {
               return $ocLazyLoad.load([
@@ -34,7 +34,7 @@
       .state('pages.second', {
         url: '/requestOnboarding',
         templateUrl: 'public/views/newaccount.html',
-        data: { pageTitle: 'Second page' },
+        data: { pageTitle: 'Review Analytics : Request Onboarding' },
         resolve: {
             loadPlugin: function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -58,7 +58,19 @@
                 ]);
               },
             },
-      });
+      })
+      .state('pages.third', {
+          url: '/forgotPassword',
+          templateUrl: 'public/views/forgotPassword.html',
+          data: { pageTitle: 'Review Analytics : Forgot Password ?' },
+          resolve: {
+              loadPlugin: function ($ocLazyLoad) {
+                  return $ocLazyLoad.load([
+                    'public/js/controllers/forgotPassword.js'
+                  ]);
+                },
+              },
+        });
   };
 
   function run($rootScope, $state) {

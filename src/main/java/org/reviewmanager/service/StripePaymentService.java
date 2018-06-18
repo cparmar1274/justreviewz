@@ -121,7 +121,8 @@ public class StripePaymentService {
 		try {
 			invoiceList =  Invoice.list(invoiceParams);
 			for(Invoice invoice : invoiceList.getData()){
-				data.put(invoice.getId(),invoice);
+				if(invoice.getTotal()>0)
+					data.put(invoice.getId(),invoice);
 			}
 		} catch (Exception e) {
 			this.logError("StripePaymentService", "getInvoiceDetail", e.getMessage());

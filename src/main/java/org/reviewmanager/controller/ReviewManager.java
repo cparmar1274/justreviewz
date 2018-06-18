@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.reviewmanager.pojo.ReviewManagerNewUser;
+import org.reviewmanager.pojo.ReviewManagerUser;
 import org.reviewmanager.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -61,25 +62,43 @@ public class ReviewManager {
 		return new ModelAndView("redirect:/login?logout");
 	}
 
+	@RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> forgotPassword(HttpServletRequest request,
+			@RequestBody(required = false) Map<String, Object> params) {
+		Map<String, Object> responseData = new HashMap<String, Object>();
+		try {
+			
+			Map<String, Object> clientData = reviewService.resetPassword(params.get("clientEmail").toString());
+			if (clientData.get("result") != null) {
+				responseData.putAll(clientData);
+			} else {
+				responseData.put("result", "User does not exists.");
+			}
+			
+		} catch (Exception ex) {
+			responseData.put("result", "Error while resetting password. please try again after sometime.");
+		}
+		return responseData;
+	}
+
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> addUser(HttpServletRequest request,
 			@RequestBody(required = false) ReviewManagerNewUser newUserRequest) {
 		Map<String, Object> responseData = new HashMap<String, Object>();
 		try {
-			
-			Map<String,Object> clientData = reviewService.getUser("clientEmail", newUserRequest.getClientEmail());
-			if(clientData.get("result")==null)
-			{
-			Customer customer = reviewService.createStripeUser(newUserRequest.getClientEmail());
-			newUserRequest.setClientId(customer.getId());
-			responseData.put("data", reviewService.addUser(newUserRequest)); 
+
+			Map<String, Object> clientData = reviewService.getUser("clientEmail", newUserRequest.getClientEmail());
+			if (clientData.get("result") == null) {
+				Customer customer = reviewService.createStripeUser(newUserRequest.getClientEmail());
+				newUserRequest.setClientId(customer.getId());
+				responseData.put("data", reviewService.addUser(newUserRequest));
 			} else {
 				responseData.put("data", "User already exists.");
 			}
 		} catch (Exception ex) {
 			responseData.put("error", "Error while creating user.");
 			responseData.put("success", false);
-			reviewService.logError("ReviewManager","addUser",ex.getMessage());
+			reviewService.logError("ReviewManager", "addUser", ex.getMessage());
 		}
 		return responseData;
 	}

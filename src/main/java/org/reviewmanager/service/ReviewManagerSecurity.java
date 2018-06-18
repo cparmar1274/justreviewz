@@ -27,7 +27,7 @@ public class ReviewManagerSecurity extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests().antMatchers("/report/**").authenticated().and().formLogin().loginPage("/login")
 				.failureUrl("/login?error").permitAll().usernameParameter("username").passwordParameter("password")
-				.and().rememberMe().userDetailsService(reviewManagerUserService).rememberMeParameter("remember-me")
+				.and().rememberMe().rememberMeParameter("remember-me").userDetailsService(reviewManagerUserService)
 				.and().logout().logoutUrl("/home/logout").logoutSuccessUrl("/login?logout").invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID").permitAll().and().exceptionHandling().accessDeniedPage("/access_denied")
 				.and().csrf().disable();

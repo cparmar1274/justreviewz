@@ -4,8 +4,8 @@
   //
 
   function MainCtrl() {
-    this.companyName = 'Review Analytics';
-    this.username = '';
+    this.companyName = 'SIT Deployments';
+    this.username = 'Help';
     this.error = "";
     
     this.states = [

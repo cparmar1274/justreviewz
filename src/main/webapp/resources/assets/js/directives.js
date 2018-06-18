@@ -169,7 +169,8 @@
 				      '</div>'+
 				      '<div class="panel-footer">'+
 			            '<button type="button" onclick="addReviewItem(\''+reviewId+'\')" class="btn btn-xs btn-outline m-r-1 m-l-1"><i class="fa fa-plus-square text-info"></i>&nbsp;&nbsp;Add to Action Item </button>'+
-			            '<button type="button" onclick="shareItem(\''+reviewId+'\')"  class="btn btn-xs btn-outline"><i class="fa fa-share-square text-warning"></i>&nbsp;&nbsp;Share</button>'+
+			            '<button type="button" onclick="shareItem(\''+reviewId+'\')"  class="btn btn-xs btn-outline m-r-1"><i class="fa fa-share-alt text-info"></i>&nbsp;&nbsp;Share</button>'+
+			            '<button type="button" onclick="shareItem(\''+reviewId+'\')"  class="btn btn-xs btn-outline"><i class="fa fa-share-square text-info"></i>&nbsp;&nbsp;Reply</button>'+
 			            '<span class="pull-right">'+moment($attrs.posteddate).fromNow()+'</span>'
 			         '</div>'+
 			     '</div>';

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
@@ -29,7 +30,6 @@ import org.reviewmanager.pojo.Trending;
 import org.reviewmanager.utility.RMUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -398,6 +398,27 @@ public class ReportIncidentService {
 		}
 	}
 
+	
+	public Map<String, Object> resetPassword(String clientEmail) {
+		SearchResponse searchResponse = elasticService.getObjectBasedOnClientUserName(RMUtil.USER_INDEX,
+				RMUtil.USER_TYPE,"clientEmail",clientEmail);
+		Map<String,Object> data = null,resultData = new HashMap<String,Object>();
+		String objectId = null;
+		String newPasswordText = RMUtil.generateRandomPasswordText();
+		for(SearchHit search :searchResponse.getHits().getHits()){
+			data = search.getSourceAsMap();
+			objectId = search.getId();
+			data.put("modifiedOn", new Date());
+			String newPassword = RMUtil.getBCrypt().encode(newPasswordText);
+			data.put("password", newPassword);
+			UpdateResponse updateResponse = elasticService.updateObject(RMUtil.USER_INDEX, RMUtil.USER_TYPE, objectId, data);
+			resultData.put("result", "password reset successfully");
+			resultData.put("newPassword",newPasswordText);
+			resultData.put("success", true);
+		}
+		return resultData;
+	}
+	
 	public Map<String, Object> changePassword(String newPassword, String oldPassword) {
 		SearchResponse searchResponse = elasticService.getObjectBasedOnClientUserName(RMUtil.USER_INDEX,
 				RMUtil.USER_TYPE,"clientId", RMUtil.getSessionedUser().getClientId());

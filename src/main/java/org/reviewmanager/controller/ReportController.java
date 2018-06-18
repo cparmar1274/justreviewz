@@ -2,18 +2,22 @@ package org.reviewmanager.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.reviewmanager.pojo.BusinessObject;
 import org.reviewmanager.pojo.ReviewManagerUser;
 import org.reviewmanager.pojo.ReviewObject;
@@ -34,8 +38,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.stripe.Stripe;
 import com.stripe.model.Customer;
-import com.stripe.model.Invoice;
-import com.stripe.model.InvoiceCollection;
 import com.stripe.model.Subscription;
 
 @Controller
@@ -65,9 +67,30 @@ public class ReportController {
 			File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") + 
                     file.getOriginalFilename());
 			file.transferTo(tmpFile);
-			List<String> reviews = FileUtils.readLines(tmpFile,"UTF-8");
-			for(String review : reviews)
-				responseData.putAll(reviewService.addReview(review));
+			
+			 FileInputStream excelFile = new FileInputStream(tmpFile);
+	            Workbook workbook = new XSSFWorkbook(excelFile);
+	            Sheet datatypeSheet = workbook.getSheetAt(0);
+	            Iterator<Row> iterator = datatypeSheet.iterator();
+	            int rowCount = 0;
+	            while (iterator.hasNext()) {
+	            	if(rowCount==0) iterator.next();
+	                Row currentRow = iterator.next();
+	                Iterator<Cell> cellIterator = currentRow.iterator();
+	                
+	                String cellString = StringUtils.EMPTY;
+	                while (cellIterator.hasNext()) {
+	                		Cell currentCell = cellIterator.next();
+	                        	cellString += currentCell.toString() + RMUtil.REVIEW_STRING_SPLITTER;
+
+	                }
+	                responseData.putAll(reviewService.addReview(cellString)); 
+	                rowCount++;
+	            }
+			
+			/*for(String review : reviews)
+				
+			*/
 			responseData.put("success", true);
 		} catch (Exception ex) {
 			responseData.put("error", "Error while adding review");
