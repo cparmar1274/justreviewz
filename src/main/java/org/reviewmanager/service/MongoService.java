@@ -20,12 +20,12 @@ public class MongoService {
 	public DB mongoDB;
 	
 	public MongoService(){
-		MongoClientURI mongoURI = new MongoClientURI("mongodb://cparmar123:chirag123@ds163300.mlab.com:63300");
+		MongoClientURI mongoURI = new MongoClientURI("mongodb://heroku_px47wwg0:chirag123@ds163300.mlab.com:63300");
 		mongoClient =  new MongoClient(mongoURI);
 		mongoDB = mongoClient.getDB("heroku_px47wwg0");
 		
 		//create Index
-		mongoDB.getCollection(RMUtil.REVIEW_INDEX).createIndex(new BasicDBObject().append("reviewContent", "text"));
+		//mongoDB.getCollection(RMUtil.REVIEW_INDEX).createIndex(new BasicDBObject().append("reviewContent", "text"));
 	}
 	
 	public WriteResult addObject(String tableName,DBObject searchQuery,DBObject document){
