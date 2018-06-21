@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class ReviewManagerUserService implements UserDetailsService {
 
 	@Autowired(required = true)
-	@Qualifier(value="mongo")
+	@Qualifier(value="elastic")
 	ReviewServiceInterface userService;
 
 	@Override
