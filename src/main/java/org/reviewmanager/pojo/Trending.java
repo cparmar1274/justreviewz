@@ -57,7 +57,7 @@ public class Trending {
 	public boolean analyseReview(String reviewContent,Double averageRating){
 		TrendingKeyword trending= null; String keyword = null;
 		for(String key : reviewContent.split(" ")){
-			keyword = key.replaceAll("[^a-zA-Z0-9]", "");
+			keyword = key.replaceAll("[^a-zA-Z0-9$+]", "");
 			if(keyword.length() <4) continue;
 			trending = new TrendingKeyword(keyword, 1, averageRating);
 			if(this.trendingKeywords.containsKey(keyword.toLowerCase())){

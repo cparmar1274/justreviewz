@@ -12,10 +12,10 @@
 	<context:component-scan base-package="org.reviewmanager.service"	annotation-config="true" />
 	
 	<mvc:annotation-driven />
-	<mvc:resources location="resources/js/" mapping="js/**" />
-	<mvc:resources location="resources/css/" mapping="css/**" />
-	<mvc:resources location="resources/assets/" mapping="assets/**" />
-	<mvc:resources location="resources/public/" mapping="public/**" />
+	<mvc:resources location="RESOURCES/js/" mapping="js/**" />
+	<mvc:resources location="RESOURCES/css/" mapping="css/**" />
+	<mvc:resources location="RESOURCES/assets/" mapping="assets/**" />
+	<mvc:resources location="RESOURCES/public/" mapping="public/**" />
 	
 	<mvc:interceptors>
 	  <mvc:interceptor>

@@ -1,7 +1,9 @@
 package org.reviewmanager.service;
 
+import org.reviewmanager.interfaces.ReviewServiceInterface;
 import org.reviewmanager.pojo.ReviewManagerUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,7 +13,8 @@ import org.springframework.stereotype.Service;
 public class ReviewManagerUserService implements UserDetailsService {
 
 	@Autowired(required = true)
-	ReportIncidentService userService;
+	@Qualifier(value="mongo")
+	ReviewServiceInterface userService;
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

@@ -61,6 +61,9 @@ public class RMUtil {
 
 	public static final String REVIEW_STRING_SPLITTER = "#";
 
+	public static final String PERFORMER_INDEX = "performer_index";
+
+	public static final String NOTIFICATION_INDEX = "notification_index";
 
 	public static ReviewManagerUser getSessionedUser() {
 		ReviewManagerUser sessionedUser = null;

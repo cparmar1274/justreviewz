@@ -15,11 +15,9 @@ function removeActionItem(reviewId){
 		self.removeActionItem = function(reviewId) {
 			$http.post("removeActionItem",{"reviewId":reviewId}).then(function(response){
 				self.message = true;
-				self.messageText = response.data.result=="DELETED"?"Action Item removed successfully":"Action does not exits.It may be already removed or being removed. Please try after sometime.";
-				angular.forEach(self.actionItems,function(item){
-					if(item.reviewId==reviewId)
-						self.actionItems.pop(item);
-				});
+				self.messageText = response.data.success==true?"Action Item removed successfully":"Action does not exits.It may be already removed or being removed. Please try after sometime.";
+				self.actionItems = [];
+				self.init();
 			});
 		}
 		

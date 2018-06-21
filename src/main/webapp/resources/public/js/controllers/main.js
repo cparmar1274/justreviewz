@@ -7,6 +7,7 @@
     this.companyName = 'SIT Deployments';
     this.username = 'Help';
     this.error = "";
+    this.engineVersion = "v1.0.5-beta";
     
     this.states = [
         { name: 'Alberta' ,id: 'AB'},

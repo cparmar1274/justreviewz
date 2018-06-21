@@ -3,6 +3,7 @@ package org.reviewmanager.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,16 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.reviewmanager.pojo.BusinessObject;
+import org.reviewmanager.pojo.Notification;
 import org.reviewmanager.pojo.ReviewManagerUser;
 import org.reviewmanager.pojo.ReviewObject;
 import org.reviewmanager.pojo.Trending;
 import org.reviewmanager.pojo.TrendingKeyword;
+import org.reviewmanager.service.ReviewNotificationService;
 import org.reviewmanager.service.ReviewService;
 import org.reviewmanager.utility.RMUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,9 @@ public class ReportController {
 
 	@Autowired
 	public ReviewService reviewService;
+	
+	@Autowired
+	public ReviewNotificationService notificationService;
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexPage(HttpServletRequest request) {
@@ -88,7 +93,9 @@ public class ReportController {
 	                rowCount++;
 	            }
 			
-			/*for(String review : reviews)
+	           notificationService.addNotification(new Notification(RMUtil.getSessionedUser().getUsername(), "New ("+rowCount+") reviews are available.", false,new Date())); 
+			/*fo
+			 * r(String review : reviews)
 				
 			*/
 			responseData.put("success", true);
@@ -109,6 +116,7 @@ public class ReportController {
 			if(data!=null)
 			{responseData.putAll(data);}
 			responseData.put("success", true);
+			 notificationService.addNotification(new Notification(RMUtil.getSessionedUser().getUsername(), "New (1) reviews are available.", false,new Date()));
 		} catch (Exception ex) {
 			responseData.put("error", "Error while adding review");
 			responseData.put("success", false);
@@ -173,7 +181,7 @@ public class ReportController {
 		try {
 			Map<String, Object> mapData = reviewService.getDashboardChartData(RMUtil.getSessionedUser().getUsername());
 			responseData.put("data", mapData.get("result"));
-			responseData.put("pie", mapData.get("pie"));
+			responseData.putAll(mapData);
 			responseData.put("success", true);
 		} catch (Exception ex) {
 			responseData.put("result", "Error while retrieving dashboard data. Please try again.");
@@ -226,6 +234,7 @@ public class ReportController {
 			Map<String, Object> mapData = reviewService.addCompetitor(businessObject);
 			responseData.put("success", true);
 			responseData.put("result", mapData);
+			notificationService.addNotification(new Notification(RMUtil.getSessionedUser().getUsername(), "Someone added your business as competitor.", false,new Date()));
 		} catch (Exception ex) {
 			responseData.put("error", "Error while adding competitor");
 			responseData.put("success", false);
@@ -243,7 +252,8 @@ public class ReportController {
 			Map<String, Object> data = reviewService.getUser("username",
 					String.valueOf(RMUtil.getSessionedUser().getUsername()));
 			String clientID = String.valueOf(data.get("id"));
-			ReviewManagerUser user = RMUtil.getSessionedUser();
+			ReviewManagerUser user = (ReviewManagerUser) data.get("result");
+			
 
 			// update profile
 			if (params.containsKey("accountEmail"))
@@ -333,6 +343,7 @@ public class ReportController {
 		try {
 			String reviewId = params.get("reviewId").toString();
 			Map<String, Object> mapData = reviewService.addActionItem(reviewId);
+			notificationService.addNotification(new Notification(RMUtil.getSessionedUser().getUsername(), "You have added action item", false,new Date()));
 			responseData.putAll(mapData);
 		} catch (Exception ex) {
 			responseData.put("error", "Error while adding action item");
@@ -375,6 +386,44 @@ public class ReportController {
 		}
 		return responseData;
 	}
+	
+	@RequestMapping(value = "/getNotifications", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> getNotifications(HttpServletRequest request,
+			@RequestParam(required = false) Map<String, Object> params) {
+		Map<String, Object> responseData = new HashMap<String, Object>();
+		try {
+			List<Notification> notficiatoins = notificationService.getNotificatoin(RMUtil.getSessionedUser().getUsername());
+			if (notficiatoins!=null && !notficiatoins.isEmpty()) {
+				responseData.put("data", notficiatoins);
+				responseData.put("success", true);
+			} else
+				responseData.put("success", false);
+		} catch (Exception ex) {
+			responseData.put("error", ex.getMessage());
+			responseData.put("success", false);
+		}
+		return responseData;
+	}
+	
+	@RequestMapping(value = "/markNotification", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> markNotification(HttpServletRequest request,
+			@RequestBody(required = false) Map<String, Object> params) {
+		Map<String, Object> responseData = new HashMap<String, Object>();
+		try {
+			String notificationId = params.get("notificationID").toString();
+			Map<String,Object> notficiatoins = notificationService.markAsRead(notificationId);
+			if (notficiatoins!=null ) {
+				responseData.put("data", notficiatoins);
+				responseData.put("success", true);
+			} else
+				responseData.put("success", false);
+		} catch (Exception ex) {
+			responseData.put("error", ex.getMessage());
+			responseData.put("success", false);
+		}
+		return responseData;
+	}
+	
 
 	@PostMapping("/startSubscription")
 	public @ResponseBody Map<String, Object> startSubscriptioncharge(HttpServletRequest request,
@@ -395,8 +444,10 @@ public class ReportController {
 					Map<String, Object> data = reviewService.getUser("username",
 							String.valueOf(RMUtil.getSessionedUser().getUsername()));
 					String clientID = String.valueOf(data.get("id"));
-					RMUtil.getSessionedUser().setSubscription(true);
-					responseData.putAll(reviewService.updateUser(clientID, RMUtil.getSessionedUser()));
+					ReviewManagerUser user = (ReviewManagerUser) data.get("result");
+					user.setSubscription(true);
+					responseData.putAll(reviewService.updateUser(clientID, user));
+					notificationService.addNotification(new Notification(RMUtil.getSessionedUser().getUsername(), "Your subscription has been re-activated.", false,new Date()));
 					responseData.put("result", "Customer subscription re-activated.");
 					responseData.put("success", true);
 				}
@@ -425,11 +476,12 @@ public class ReportController {
 				Map<String, Object> data = reviewService.getUser("username",
 						String.valueOf(RMUtil.getSessionedUser().getUsername()));
 				String clientID = String.valueOf(data.get("id"));
-				RMUtil.getSessionedUser().setSubscription(false);
-				responseData.putAll(reviewService.updateUser(clientID, RMUtil.getSessionedUser()));
+				ReviewManagerUser user = (ReviewManagerUser) data.get("result");
+				user.setSubscription(false);
+				responseData.putAll(reviewService.updateUser(clientID, user));
 				responseData.put("result", "Your subscription is cancelled But you can still access the service untill end of your billing period.");
 				responseData.put("success", true);
-			
+				notificationService.addNotification(new Notification(RMUtil.getSessionedUser().getUsername(), "Your subscription has been cancelled.", false,new Date()));
 			}
 		} catch (Exception ex) {
 			responseData.put("error","Error while cancelling subscription");
@@ -447,6 +499,7 @@ public class ReportController {
 			String token = card.get("id").toString();
 			Customer customer = reviewService.billingInformation(token);
 			responseData.put("result", "Your billing information is updated.");
+			notificationService.addNotification(new Notification(RMUtil.getSessionedUser().getUsername(), "Your billing information is updated.", false,new Date()));
 			responseData.put("success", true);
 		} catch (Exception ex) {
 			responseData.put("error", "Error while updationg billing details");

@@ -179,10 +179,26 @@
 	  };
   }
   
+  function notification(){
+	  return {
+		  link : function(scope,$element,$attrs){
+			  
+			  var notify = '<div class="widget-notifications-item">'+
+	            '<div class="widget-notifications-title text-danger">'+$attrs.clientusername+'</div>'+
+	            '<div class="widget-notifications-description">'+$attrs.notificationtext+'</div>'+
+	            '<div class="widget-notifications-date">'+$attrs.notificationtime+'</div>'+
+	            '<div onclick="markNotification(\''+$attrs.notificationid+'\')" style="cursor:pointer;" class="widget-notifications-icon '+($attrs.read=="true" ? 'ion-email' : 'ion-email-unread')+' bg-warning"></div>'+
+	            '</div>';
+			  $element.html(notify);
+		  }
+	  };
+  }
+  
   angular.module('pixeladmin')
     .directive('pageTitle', [ '$rootScope', pageTitleDirective ])
     .directive('addStars', addStars)
     .directive('actionItem',actionItem)
+    .directive('notification',notification)
     .directive('searchResult', searchResult);
 
 })();

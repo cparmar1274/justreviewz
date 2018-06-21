@@ -36,41 +36,17 @@
 
   <ul class="nav navbar-nav navbar-right">
     <li class="dropdown">
-      <a href="https://stackoverflow.com" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="px-navbar-icon fa fa-bullhorn font-size-24"></i>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="px-navbar-icon ion-email-unread font-size-24"></i>
         <span class="px-navbar-icon-label">Notifications</span>
-        <span class="px-navbar-label label label-success font-size-12">5</span>
+        <span ng-hide="main.newNotification==0" class="px-navbar-label label label-success font-size-12">{{main.newNotification}}</span>
+        
       </a>
       <div class="dropdown-menu p-a-0" style="width: 300px;">
-        <perfect-scrollbar style="height: 280px; position: relative;">
-          <div class="widget-notifications-item">
-            <div class="widget-notifications-title text-danger">SYSTEM</div>
-            <div class="widget-notifications-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
-            <div class="widget-notifications-date">12h ago</div>
-            <div class="widget-notifications-icon fa fa-hdd-o bg-danger"></div>
+        <perfect-scrollbar style="height: 280px; position: relative;background-color: white;">
+          <div ng-repeat="notification in main.notifications">
+              <notification notificationId="{{notification.notificationId}}" clientUserName="{{notification.clientUserName}}" notificationText="{{notification.notificationText}}" notificationTime="{{notification.notificationTime}}" read="{{notification.isRead}}"></notification>
           </div>
-          
-          <div class="widget-notifications-item">
-            <div class="widget-notifications-title text-danger">SYSTEM</div>
-            <div class="widget-notifications-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
-            <div class="widget-notifications-date">12h ago</div>
-            <div class="widget-notifications-icon fa fa-hdd-o bg-danger"></div>
-          </div>
-          
-          <div class="widget-notifications-item">
-            <div class="widget-notifications-title text-danger">SYSTEM</div>
-            <div class="widget-notifications-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
-            <div class="widget-notifications-date">12h ago</div>
-            <div class="widget-notifications-icon fa fa-hdd-o bg-danger"></div>
-          </div>
-          
-          <div class="widget-notifications-item">
-            <div class="widget-notifications-title text-danger">SYSTEM</div>
-            <div class="widget-notifications-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
-            <div class="widget-notifications-date">12h ago</div>
-            <div class="widget-notifications-icon fa fa-hdd-o bg-danger"></div>
-          </div>
-          
         </perfect-scrollbar>
 
         <a href="#" class="widget-more-link">MORE NOTIFICATIONS</a>

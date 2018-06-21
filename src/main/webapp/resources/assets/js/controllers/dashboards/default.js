@@ -76,6 +76,8 @@
 				self.trendingKeywords = response.data.data;
 		});
 		
+	
+		
 	}
 
 	angular.module('pixeladmin').controller('DefaultDashboardChartsCtrl',

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.reviewmanager.pojo.ReviewManagerNewUser;
-import org.reviewmanager.pojo.ReviewManagerUser;
 import org.reviewmanager.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.stripe.Stripe;
 import com.stripe.model.Customer;
 
 @Controller
@@ -91,12 +89,13 @@ public class ReviewManager {
 			if (clientData.get("result") == null) {
 				Customer customer = reviewService.createStripeUser(newUserRequest.getClientEmail());
 				newUserRequest.setClientId(customer.getId());
-				responseData.put("data", reviewService.addUser(newUserRequest));
+				responseData.putAll(reviewService.addUser(newUserRequest));
 			} else {
-				responseData.put("data", "User already exists.");
+				responseData.put("result", "User already exists.");
+				responseData.put("success", false);
 			}
 		} catch (Exception ex) {
-			responseData.put("error", "Error while creating user.");
+			responseData.put("result", "Error while creating user.");
 			responseData.put("success", false);
 			reviewService.logError("ReviewManager", "addUser", ex.getMessage());
 		}

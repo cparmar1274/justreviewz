@@ -33,8 +33,7 @@ import org.springframework.stereotype.Service;
 public class ElasticService {
 
 	public RestHighLevelClient elasticClient;
-	
-	
+
 	public ElasticService() {
 		final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
 		credentialsProvider.setCredentials(AuthScope.ANY,new UsernamePasswordCredentials("pszy1vgpf6", "2116w02js5"));

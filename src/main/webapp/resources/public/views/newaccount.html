@@ -1,8 +1,8 @@
  <div class="container" ng-controller="WizardValidationCtrl as ctrl">
     
     <div class="panel">
-    
-    <px-wizard class="panel-wizard" instance="ctrl.$wizard" on-finished="ctrl.finish">
+    <!--  -->
+    <px-wizard class="panel-wizard" instance="ctrl.$wizard" on-finished="ctrl.userCreated">
       <div class="wizard-wrapper">
         <ul class="wizard-steps">
           <li data-target="#wizard-account" class="active">
@@ -30,7 +30,7 @@
             </span>
           </li> -->
           <li data-target="#wizard-finish">
-            <span class="wizard-step-number">4</span>
+            <span class="wizard-step-number">3</span>
             <span class="wizard-step-complete"><i class="fa fa-check"></i></span>
             <span class="wizard-step-caption">
               Finish
@@ -217,12 +217,16 @@
 
         </form> / wizardCreditCard -->
         <div class="wizard-pane" id="wizard-finish">
-
           <div class="text-xs-center m-y-4">
             <i class="ion-checkmark-round text-success font-size-52 line-height-1"></i>
             <h4 class="font-weight-semibold font-size-20 m-x-0 m-t-1 m-b-0">We're almost done</h4>
-            <button type="button" class="btn btn-primary m-t-4" data-wizard-action="finish">Finish</button>
+            <!-- data-wizard-action="finish" -->
+            <button id="finishButton" ng-hide="ctrl.createFinish" type="button" class="btn btn-primary m-t-4" ng-click="ctrl.finish()" >Finish</button>
+            <button id="backButton" ng-hide="ctrl.createError" type="button" class="btn btn-primary m-t-4" ng-click="ctrl.errorBack()" >Go Back</button>
+            <button id="loginButton" ng-hide="ctrl.createSuccess" type="button" class="btn btn-primary m-t-4" ng-click="ctrl.login()" >Login Now</button>
           </div>
+
+ 		  
 
         </div> <!-- / #wizard-finish -->
       </div>

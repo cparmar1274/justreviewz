@@ -106,6 +106,10 @@
 
     this.data = {};
     this.$wizard = null;
+    
+    self.createError = true;
+    self.createSuccess = true;
+    self.createFinish = false;
 
    this.hasErrs = function(form,field,err){
 	   var fields = field.split("|");
@@ -130,22 +134,58 @@
     }
 
     this.back = function() {
-      self.$wizard('goPrev');
+    	self.$wizard('goPrev');
+    }
+    
+    this.errorBack = function(){
+    	self.createFinish = false;
+        self.createError =  true;
+        self.createSuccess = true;
+        
+        var $pane = self.$wizard('getActivePane');
+        $pane.find('.ion-close-circled').removeClass('ion-close-circled').addClass('ion-checkmark-round');
+        $pane.find('h4').text("We're almost done");
+        
+    	self.back();
+    }
+    
+    this.login = function(){
+    	//redirect to login
     }
 
+    this.userCreated = function(result){
+    	 var $pane = self.$wizard('getActivePane');
+    	$pane.find('.ion-close-circled').removeClass('ion-close-circled').addClass('ion-checkmark-circled');
+        $pane.find('h4').text('Thank You! '+(result=="CREATED" ? " You can access the service now with your credentials" : result));
+        $pane.find('button').remove();
+        
+        self.createFinish = true;
+        self.createError =  true;
+        self.createSuccess = false;
+        self.$wizard().finish();
+    }
+    
     this.finish = function() {
       var $pane = self.$wizard('getActivePane');
-
-      $pane.find('.ion-checkmark-round').removeClass('ion-checkmark-round').addClass('ion-checkmark-circled');
-      $pane.find('h4').text('Thank You!');
-      $pane.find('button').remove();
+      
+      console.log(self.$wizard);
 
       console.log(self.data);
       var province = self.data.address.province;
       self.data.address.province = province.name;
       self.data.clientId = 999;
       $http.post('addUser',self.data).then(function(response) { 
-          console.log(response);
+          if(response.data.success==true)
+          {   self.userCreated(response.data.result);
+           }
+          else{
+        	  $pane.find('.ion-checkmark-round').removeClass('ion-checkmark-round').addClass('ion-close-circled');
+              $pane.find('h4').text('Error! '+response.data.result);
+              self.createFinish = true;
+              self.createError =  false;
+              self.createSuccess = true;
+          }
+          
       });
       
     };

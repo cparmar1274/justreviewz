@@ -7,12 +7,14 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.search.sort.SortOrder;
+import org.reviewmanager.interfaces.ReviewServiceInterface;
 import org.reviewmanager.pojo.BusinessObject;
 import org.reviewmanager.pojo.ReviewManagerNewUser;
 import org.reviewmanager.pojo.ReviewManagerUser;
 import org.reviewmanager.pojo.ReviewObject;
 import org.reviewmanager.utility.RMUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.stripe.model.Customer;
@@ -22,25 +24,27 @@ import com.stripe.model.Subscription;
 public class ReviewService {
 
 	@Autowired
-	public ReportIncidentService reportIncidentService;
+	@Qualifier(value="mongo")
+	public ReviewServiceInterface reportIncidentService;
 	
 	@Autowired
 	public StripePaymentService stripePaymentService; 
 	
 	public Map<String, Object> addReview(String reviewObject) {
-		Map<String,Object> data = new HashMap<String,Object>();
 		return this.addReview(RMUtil.convertToReview(reviewObject));
 	}
 
 	public Map<String, Object> addReview(ReviewObject reviewObject) {
-		
+		Map<String,Object> data = new HashMap<String,Object>();
 		if(reviewObject==null) return null;
+		data.putAll(reportIncidentService.addReview(reviewObject));
 		
-		reportIncidentService.updateDashboardAndTrending(reviewObject);
+		if(!Boolean.parseBoolean(data.get("updateOfExisting").toString()))
+				data.putAll(reportIncidentService.updateDashboardAndTrending(reviewObject));
 		
-		return reportIncidentService.addReview(reviewObject);
+		return data;
 	}
-
+	
 	public Map<String, Object> getReviews(String username, Integer startIndex, Integer pageSize, String searchText,
 			String sortType) {
 		Map<String, Object> mapData = new HashMap<String, Object>();
