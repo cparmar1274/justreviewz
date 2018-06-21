@@ -20,7 +20,7 @@ public class MongoService {
 	public DB mongoDB;
 	
 	public MongoService(){
-		MongoClientURI mongoURI = new MongoClientURI("mongodb://heroku_px47wwg0:chirag123@ds163300.mlab.com:63300/heroku_px47wwg0");
+		MongoClientURI mongoURI = new MongoClientURI("mongodb://cparmar123:chirag123@ds163300.mlab.com:63300/heroku_px47wwg0");
 		mongoClient =  new MongoClient(mongoURI);
 		mongoDB = mongoClient.getDB(mongoURI.getDatabase());
 		

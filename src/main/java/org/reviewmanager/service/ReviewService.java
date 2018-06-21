@@ -24,7 +24,7 @@ import com.stripe.model.Subscription;
 public class ReviewService {
 
 	@Autowired
-	@Qualifier(value="elastic")
+	@Qualifier(value="mongo")
 	public ReviewServiceInterface reportIncidentService;
 	
 	@Autowired
