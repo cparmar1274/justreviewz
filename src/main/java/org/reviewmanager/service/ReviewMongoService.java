@@ -173,7 +173,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 
 		BasicDBObject searchQuery = new BasicDBObject().append("clientUserName", username);
 		if (!reviewContent.isEmpty())
-			searchQuery.append("$text",new BasicDBObject().append("$search", reviewContent) );
+			searchQuery.append("reviewContent",new BasicDBObject().append("$regex", ".*"+reviewContent+".*") );
 
 		DBCursor cursor = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery);
 		BasicDBObject sortObj = new BasicDBObject().append(sortBy, SortOrder.ASC == sortType ? 1 : -1);
