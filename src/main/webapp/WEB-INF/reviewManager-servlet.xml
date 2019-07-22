@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd">
+
+	<context:component-scan base-package="org.reviewmanager.controller"	annotation-config="true" />
+	<context:component-scan base-package="org.reviewmanager.service"	annotation-config="true" />	
+	<mvc:annotation-driven />
+	<mvc:resources location="resources/js/" mapping="landing/js/**" cache-period="21600" />
+	<mvc:resources location="resources/css/" mapping="landing/css/**" cache-period="21600"/>
+	<mvc:resources location="resources/assets/" mapping="landing/assets/**" cache-period="21600" />
+	<mvc:resources location="resources/public/" mapping="landing/public/**" cache-period="21600"/>
+	
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+</beans>
+
+
+

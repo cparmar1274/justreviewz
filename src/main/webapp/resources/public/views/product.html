@@ -1,0 +1,191 @@
+<div class="container" ng-controller="ProductReviewCtrl as productCtrl">
+	
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel">
+						<div class="panel-title ">
+							<div class="row">
+								<div class="col-md-7">
+									<span class="font-size-28">{{productCtrl.product.productName}}</span>
+									<div class="text text-default">
+										<i>{{productCtrl.product.productDetail}}</i>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+						<div class="panel-subtitle">{{productCtrl.product.productType}}</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- <md-tabs md-dynamic-height md-border-bottom> -->
+				<div class="col-md-6">
+					<div class="panel">
+						<div class="panel-title">
+							Reviews
+							<button type="button" ng-click="productCtrl.stateReview()"
+								class="btn btn-primary  pull-right">
+								<i class="fa fa-pen"></i>&nbsp;Write Review
+							</button>
+							<br> <small class="text text-default">{{productCtrl.totalReviews}}
+								Reviews</small>
+
+
+						</div>
+
+						<div class="panel-subtitle">
+							<div class="row">
+								<div class="pull-right">
+									<md-input-container> <md-select
+										ng-model="productCtrl.sortingOrder"
+										placeholder="Latest Reviews First"
+										ng-change="productCtrl.load()"> <md-option
+										ng-value="opt" ng-repeat="opt in productCtrl.sortingOptions">{{
+									opt }}</md-option> </md-select> </md-input-container>
+								</div>
+							</div>
+						</div>
+
+						<hr class="m-a-0">
+						<div class="panel-body">
+							<!-- <div class="row">
+                            <div class="pull-right">
+                                <md-input-container>
+                                    <md-select ng-model="productCtrl.sortingOrder" placeholder="Latest Reviews First" ng-change="productCtrl.loadReviews()">
+                                        <md-option ng-value="opt" ng-repeat="opt in productCtrl.sortingOptions">{{ opt }}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div> -->
+							<div ng-hide="productCtrl.totalReviews"
+								class="alert alert-primary" role="alert">
+								<strong> None so far !</strong> Be the first one to post review.
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<div class="input-group">
+										<input type="text" class="form-control"
+											ng-model="productCtrl.searchReviewText"
+											ng-change="productCtrl.searchReview()"
+											placeholder="Search Review"> <i
+											class="input-group-addon ion-search"></i>
+									</div>
+									&nbsp;<small class="pull-right text text-default"
+										ng-bind="productCtrl.searchReviewMessage"></small>
+								</div>
+
+							</div>
+
+							<div ng-repeat="review in productCtrl.reviewList">
+								<review-block reviewObject="{{review}}"></review-block>
+							</div>
+						</div>
+						<div  ng-click="productCtrl.loadMoreReviews()" class="panel-footer text-center">
+							<span class="text text-right">Load 50 more ...</span>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-md-6">
+					<div class="panel ">
+					<div class="panel-title ">Details</div>
+					<div class="panel-subtitle text-default ">About {{productCtrl.product.productName}}</div>
+					
+						<div class="panel-body">
+							<div class="row" ng-repeat="(propertyKey,propertyValue) in productCtrl.product.productProperties">
+											    	<div class="col-md-6 ">
+											    		{{propertyKey}}
+											    	</div>
+											    	<div class="col-md-6">
+											    	{{propertyValue}}
+											    	</div>
+											</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-md-6">
+
+					<div class="panel">
+						<div class="panel-title">
+							Queries
+							<button type="button" ng-click="productCtrl.stateAsk()"
+								class="btn btn-primary pull-right">Submit Query</button>
+							<br> <small class="text text-default">{{productCtrl.totalQueries}}
+								Queries</small>
+						</div>
+						<hr class="m-a-0">
+						<div class="panel-body">
+
+							<div ng-hide="productCtrl.totalQueries"
+								class="alert alert-primary" role="alert">
+								<strong> None so far !</strong> Be the first one to ask.
+							</div>
+							<div class="box-container">
+								<div ng-repeat="query in productCtrl.queries | orderBy :'postedDate' ">
+										<div class="panel-title">{{query.question}}
+										<span class="pull-right text-default">{{query.postedDate
+											| date}}</span> </div> 
+										{{query.answer}}
+								</div>
+
+							</div>
+
+						</div>
+						<div ng-click="productCtrl.loadMoreQueries()" class="panel-footer text-center">
+							<span class="text text-right">Load 50 more ...</span>
+						</div>
+					</div>
+
+				</div>
+				<!--   </md-tabs> -->
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel">
+						<div class="panel-title ">
+							Would you like to subscribe the updates from <strong>
+								{{productCtrl.productName}} </strong> ?
+						</div>
+						<div class="panel-body">
+							<form name="form" novalidate>
+
+
+								<div class="row">
+									<div class="col-md-6">
+										<input type="email" class="form-control" name="uEmail"
+											required ng-model="productCtrl.subscribeEmail"
+											placeholder="Please share your email with us.">
+									</div>
+									<div class="col-md-6">
+										<button ng-click="productCtrl.subscribe()"
+											ng-disabled="form.$invalid" class="btn btn-danger ">Subscribe</button>
+									</div>
+								</div>
+								<div class="row m-t-2">
+									<div class="col-md-12"
+										ng-show="form.$submitted || form.uEmail.$touched">
+										<span class="text text-danger"
+											ng-show="form.uEmail.$error.required">Please share
+											your email with us.</span> <span class="text text-danger"
+											ng-show="form.uEmail.$error.email">Invalid Email.</span>
+									</div>
+								</div>
+
+							</form>
+
+							<span ng-hide="productCtrl.subscribeStatus"
+								class="text text-success m-t-2"> Congratulation! Your
+								subscription has been confirmed. </span>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+</div>

@@ -1,0 +1,9 @@
+//createMapFile//src/main/webapp/resources/public/js/app.js=true
+//createMapFile//src/main/webapp/resources/public/js/config.js=false
+//includeSource//src/main/webapp/resources/public/js/app.js=true
+//includeSource//src/main/webapp/resources/public/js/config.js=false
+//minifier//src/main/webapp/resources/public/js/app.js=GoogleClosureComiler
+//minifier//src/main/webapp/resources/public/js/config.js=GoogleClosureComiler
+//optWhitespaceOnly//src/main/webapp/resources/public/js/app.js=optWhitespaceOnly
+//optWhitespaceOnly//src/main/webapp/resources/public/js/config.js=optAdvanced
+eclipse.preferences.version=1

@@ -1,0 +1,53 @@
+
+<div class="text text-default" ng-controller="WriteReviewCtrl as reviewCtrl" 
+layout="column" ng-cloak>
+	<div ng-if="reviewCtrl.type === 'local'">
+		<div class="row" style="margin-left: 0px">
+			<a href ui-sref="public.landing({index:0})">Home </a> / <a href ui-sref="public.main({clientId: reviewCtrl.clientId,type: reviewCtrl.type })">{{reviewCtrl.clientName}}</a> / Write Review
+		</div>
+		<div ng-hide="!reviewCtrl.reviewMessage" class="row text text-default m-t-2 alert alert-success" role="alert">
+			<span>{{reviewCtrl.reviewMessage}}</span> Go back to <a href ui-sref="public.main({clientId: reviewCtrl.clientId,type: reviewCtrl.type })">{{reviewCtrl.clientName}}</a>
+		</div>
+	</div>
+	<div ng-if="reviewCtrl.type === 'product'">
+		<div class="row" style="margin-left: 0px">
+			<a href ui-sref="public.landing({index:0})">Home </a> / <a href ui-sref="public.product({productId: reviewCtrl.clientId,type: reviewCtrl.type })">{{reviewCtrl.clientName}}</a> / Write Review
+		</div>
+		<div ng-hide="!reviewCtrl.reviewMessage" class="row text text-default m-t-2 alert alert-success" role="alert">
+			<span>{{reviewCtrl.reviewMessage}}</span> Go back to <a href ui-sref="public.product({productId: reviewCtrl.clientId,type: reviewCtrl.type })">{{reviewCtrl.clientName}}</a>
+		</div>
+	</div>
+	<div class="row">
+		<md-card> <md-card-title> <md-card-title-text> <span class="md-headline">Write Review</span> <span class="md-subhead text-success">Tell us in brief about your experience at <strong>{{reviewCtrl.clientName}}</strong>.
+		</span> </md-card-title-text> </md-card-title> <md-card-content md-layout="padding"> <md-input-container class="md-block"> <label>Tell us everything</label> <textarea required ng-model="reviewCtrl.reviewText" md-maxlength="5000" rows="5" md-select-on-focus></textarea> </md-input-container> <md-input-container>
+		<label>First Name</label> <input required ng-model="reviewCtrl.firstName"> </md-input-container> </md-input-container> <md-input-container> <label>Last Name</label> <input required ng-model="reviewCtrl.lastName"> </md-input-container> <md-input-container> <label>Email</label> 
+		<input required	ng-model="reviewCtrl.email" type="email"> </md-input-container>
+		<div class="row">
+			<div class="col-md-2">
+				<div star rating-value="ratingVal" max="max" on-hover="onHover" on-leave="onLeave" readonly="false" style="zoom: 2;"></div>
+			</div>
+			<div class="col-md-10">
+				<button type="button" ng-disabled="!reviewCtrl.reviewText || !reviewCtrl.firstName || !reviewCtrl.lastName || !reviewCtrl.email" ng-click="reviewCtrl.postReview()" class="pull-right btn btn-primary btn-md">
+					<i class="fa fa-pencil"></i>&nbsp;Submit Review
+				</button>
+			</div>
+		</div>
+		</md-card-content> </md-card>
+	</div>
+	<!-- <div class="alert alert-success  m-t-2" role="alert">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="alert-heading">Tell us everything !</h4>
+			<p>You can tell us what happened. Be it good or bad - We will
+				make sure that your feedback is received by the business and the
+				public.</p>
+			<p>We will share your email id with the business ( of course,
+				with your consent and only when requested by business to give you
+				compensation) so that you can receive compensation.</p>
+			<hr>
+			<p class="mb-0">Whenever you need to, Please make sure you post
+				reviews unbiased and genuine.</p>
+		</div> -->
+</div>

@@ -1,0 +1,67 @@
+<!-- Header -->
+
+	<div class="navbar-header">
+		<a class="navbar-brand px-demo-brand" ui-sref="public.landing({index:0})">
+				{{main.businessName}}
+		</a> 
+		
+
+	</div>
+
+<!-- Navbar togglers -->
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#px-demo-navbar-collapse" aria-expanded="false"><i class="navbar-toggle-icon"></i></button>
+
+<div class="collapse navbar-collapse" id="px-demo-navbar-collapse">
+  <!-- <ul class="nav navbar-nav">
+    <li class="dropdown">
+      <a href class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bookmark m-r-1"></i>Action Items</a>
+      <div class="dropdown-multi-column">
+        <ul class="dropdown-menu dropdown-column col-md-4">
+          <li class="dropdown-header">Business</li>
+          <li class="px-nav-item" ui-sref-active="active"><a href ui-sref="dashboards.default"><i class="px-nav-icon ion-ios-pulse-strong"></i><span class="px-nav-label">Dashboard</span></a></li>
+          <li class="px-nav-item" ui-sref-active="active"><a href ui-sref="pages.search-results({searchText: ''})"><i class="px-nav-icon ion-chatbubbles"></i> <span class="px-nav-label">Manage Reviews</span></a></li>
+          <li class="px-nav-item" ui-sref-active="active"><a href ui-sref="pages.action-items"><i class="px-nav-icon ion-android-done-all"></i> <span class="px-nav-label">Action Items</span></a></li>
+          
+        </ul>
+        <ul class="dropdown-menu dropdown-column col-md-4">
+          <li class="dropdown-header">Performance</li>
+          <li class="px-nav-item" ui-sref-active="active"><a href ui-sref="dashboards.competitor"><i class="px-nav-icon ion-podium"></i><span class="px-nav-label">Your Competitors</span></a></li>
+          <li class="px-nav-item" ui-sref-active="active"><a href ui-sref="dashboards.performer"><i class="px-nav-icon ion-trophy"></i><span class="px-nav-label">Top Performers</span></a></li>
+        </ul>
+        <ul class="dropdown-menu dropdown-column col-md-4">
+          <li class="dropdown-header"><i class="dropdown-icon fa fa-group"></i>&nbsp;&nbsp;Report</li>
+          <li><a href="#"> <i class="dropdown-icon fa fa-file"></i>&nbsp;&nbsp;Weekly Report</a></li>
+          <li><a href="#"><i class="px-nav-icon ion-android-globe"></i> <span class="px-nav-label">Promote Business</span></a></li>
+          <li class="px-nav-item" ui-sref-active="active"><a href ui-sref="pages.support-center"><span class="px-nav-label"> <i class="dropdown-icon fa  fa-info"></i>&nbsp;&nbsp;Help</span></a></li>
+        </ul>
+      </div>
+    </li>
+  
+  </ul> -->
+
+  <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+      <a href class="dropdown-toggle" data-toggle="dropdown">
+        <i class="px-navbar-icon ion-email-unread font-size-24"></i>
+        <span class="px-navbar-icon-label">Notifications</span>
+        <span ng-hide="main.newNotification==0" class="px-navbar-label label label-success font-size-12">{{main.newNotification}}</span>
+        
+      </a>
+      <div class="dropdown-menu p-a-0" style="width: 300px;">
+        <perfect-scrollbar style="height: 280px; position: relative;" class="panel">
+          <div class="box cell" ng-repeat="notification in main.notifications">
+              <notification notificationId="{{notification.notificationId}}" clientUserName="{{notification.clientUserName}}" notificationText="{{notification.notificationText}}" notificationTime="{{notification.notificationTime}}" read="{{notification.isRead}}"></notification>
+          </div>
+        </perfect-scrollbar>
+
+<!--         <a href="#" class="widget-more-link">MORE NOTIFICATIONS</a> -->
+      </div>
+    </li>
+
+    
+    <li><a ui-sref="pages.account"><i class="dropdown-icon fa fa-user-circle"></i>&nbsp;&nbsp;Account</a></li>
+    <li><a href="../home/logout"><i class="dropdown-icon fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+    
+
+  </ul>
+</div><!-- /.navbar-collapse -->

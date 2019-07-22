@@ -1,0 +1,68 @@
+<ol class="breadcrumb page-breadcrumb">
+	<li><a href="index.html">Home</a></li>
+	<li class="active">Manage Queries</li>
+</ol>
+<div id="searchReviewID"
+	ng-controller="SearchReviewCtrl as searchReview"
+	ng-init="searchReview.loadQueries()">
+	<div class="page-header">
+		<div class="row">
+			<div class="col-md-11 text-xs-center text-md-left text-nowrap">
+				<h1>
+					<i class="page-header-icon ion-android-clipboard"></i>Manage <span
+						class="text-default font-weight-light">Public Queries</span>
+				</h1>
+			</div>
+			<hr class="page-wide-block visible-xs visible-sm">
+
+		</div>
+	</div>
+
+	<div class="panel"
+		ng-repeat="query in searchReview.queries | orderBy :'postedDate' ">
+		<div class="panel-body">
+			<span class="text-default">{{query.question}}</span><span
+				class="pull-right text-default">&nbsp; {{query.postedDate |
+				date}}</span><br> <span class="text-default">{{query.answer}}</span> <span
+				class="btn btn-primary pull-right"
+				ng-click="searchReview.openQuery(query)">Answer It</span>
+		</div>
+	</div>
+
+
+	<div id="modal-success" class="modal fade in">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">X&nbsp;</button>
+					<h4 class="modal-title" id="myModalLabel">Reply Query</h4>
+				</div>
+				<div class="modal-body">
+					<span id="reviewBoxContentId" ng-hide="true"></span>
+					<div class="panel">
+						<div class="panel-title">
+							<span class="text text-default" id="reviewBoxContentPosterName"></span>
+							<br> <small><span class="text text-default"
+								id="reviewBoxContentPosterEmail"></span> </small>
+						</div>
+						<div class="panel-subtitle">
+							<span id="reviewBoxContentText"></span>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label for="comment">Send Reply</label>
+								<textarea class="form-control" placeholder="write reply..."
+									required ng-model="searchReview.queryAnswer" md-maxlength="500"
+									rows="3"></textarea>
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary"
+						ng-click="searchReview.replyQuery()" data-dismiss="modal">Post
+						Query Answer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,94 @@
+<div class="container"
+	ng-controller="RegisterBusinessCtrl as regBusinessCtrl" layout="column"
+	ng-cloak >
+	<div class="row m-b-2">
+		<a href ui-sref="public.landing({index:0})">Home </a> /  Register New Product
+	</div>
+	<div class="row">
+		<div class="panel">
+			<div class="panel-title"> <mark>Register New Product</mark>
+			</div>
+			<hr>
+			<div class="panel-body">
+				<div class="row">
+					<form id="onboardingFormId" name="userForm">
+						<md-input-container class="md-block"> <label>Product
+							Name</label> <input required ng-model="regBusinessCtrl.productName"
+							placeholder="Enter product name"> </md-input-container>
+
+						<md-input-container class="md-block"> <label>Product
+							Detail</label> <input required ng-model="regBusinessCtrl.productDetail"
+							placeholder="Enter product details"> </md-input-container>
+
+						<!-- <md-input-container class="md-block"> <label>Product
+							Type</label> <input required
+							ng-model="regBusinessCtrl.productProperties.productType"
+							placeholder="Enter comma seperated product types"> </md-input-container> -->
+
+						<div class="row"
+							ng-repeat="property in regBusinessCtrl.properties">
+							<div class="col-md-10">
+								<md-input-container class="md-block"> <label
+									for="{{$index}}">{{property}}</label> <input required
+									id="{{$index}}" placeholder="Enter {{property}}"> </md-input-container>
+							</div>
+							<div class="col-md-2" style="margin-top: 20px">
+								<button class="btn btn-md btn-default"
+									ng-click="regBusinessCtrl.removeProperty(property)">Remove
+									Property</button>
+							</div>
+						</div>
+
+						<div class="row">
+							
+							<div class="col-md-6">
+		<span ng-hide="!regBusinessCtrl.productMessage"
+		class="m-t-2 alert alert-success" role="alert">{{regBusinessCtrl.productMessage}}Go back to <a href
+			ui-sref="public.product({productId: regBusinessCtrl.clientId,type: regBusinessCtrl.type })">{{regBusinessCtrl.productName}}</a>
+	</span> 
+	</div>
+							<div class="col-md-6">
+								<button ng-disabled="userForm.$invalid"
+									ng-click="regBusinessCtrl.createProduct()"
+									class="btn btn-md btn-primary pull-right ">Submit
+									Product Request</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<hr>
+				<div class="row">
+					<form id="onboardingFormId2" name="propertyForm">
+						<div class="row">
+							<div class="col-md-12">
+								<span class="text text-default"> Add More Properties to
+									form </span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<md-input-container class="md-block"> <label>Enter
+									Property Name</label> <input required
+									ng-model="regBusinessCtrl.propertyName"> </md-input-container>
+							</div>
+							<div class="col-md-6" style="margin-top: 20px">
+								<button ng-disabled="propertyForm.$invalid"
+									class="btn btn-md btn-default"
+									ng-click="regBusinessCtrl.addProperty()">Add Property</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<div ng-hide="regBusinessCtrl.onboardRequestStatus"
+					class="alert alert-success" role="alert">
+					<strong>Congratulation!</strong> We have received your request.
+					Once approved it will be available on our portal for user to search
+					and write review.
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,132 @@
+<div class="page-header m-b-0">
+    <div class="row">
+        <div class="col-md-4">
+            <h1>
+				<i class="page-header-icon ion-android-globe"></i>Promote Business<span
+					class="text-default font-weight-light">&nbsp;Dashboard</span>
+			</h1>
+        </div>
+    </div>
+</div>
+<link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet"></link>
+<div ng-controller="PromoteBusinessCtrl as promoteBusiness">
+    <br>
+    <div class="row">
+    <div class="col-md-12">
+        <div class="panel text-center">
+                <div class="panel-body">
+                   <div class="row ">
+                  <span class="font-size-28">{{promoteBusiness.promotionRequestCounter}}</span>
+                </div>  Public Request Counter for Promotions
+                <span class="text text-default pull-right">Last Request made {{promoteBusiness.promotionRequestMade}}</span>
+                </div>
+                <div class="panel-footer">
+                	<a href ng-click="promoteBusiness.resetCounter()">Reset Counter</a>
+                </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel">
+                <div class="panel-title">
+                    Promotions
+                    <button ng-click="promoteBusiness.openPromotion()" class="btn btn-md btn-primary pull-right">Create Promotion</button>
+                </div>
+
+                <hr class="m-a-0">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Promotion Title</th>
+                                    <th>Detail</th>
+                                    <th>Expiry Date</th>
+                                    <th>Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="promotion in promoteBusiness.promotions">
+                                    <td>{{promotion.promotionTitle}}</td>
+                                    <td>{{promotion.promotionDetail}}</td>
+                                    <td>{{promotion.promotionEndDate}}</td>
+                                    <td><span ng-click="promoteBusiness.openPromotion(promotion)"><icon class="fa fa-edit"></icon></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="panel">
+                <div class="panel-title">
+                    Customers
+                             <button ng-click="promoteBusiness.openDiscounts()" class="btn btn-md btn-primary pull-right">Send Emails</button>
+          
+                </div>
+                <hr class="m-a-0">
+                <div class="panel-body">
+                    <table datatable="ng" dt-options="promoteBusiness.dtOptions" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="business in promoteBusiness.businessObjects">
+                                <td>
+                                    <span class="text-default">{{business.email}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="promotionModal" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">X&nbsp;</button>
+                    <h4 class="modal-title" id="myModalLabel">Create Promotion</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form class="panel-body">
+			<fieldset class="form-group">
+                            <label for="promotionTimeFrameId">Promotion Time Frame</label>
+                            <input type="text" id="promotionTimeFrameId" name="promotionTimeFrame" class="form-control pull-right">
+                        </fieldset>
+                        
+			<fieldset class="form-group">
+                            <label for="form-group-input-1">Promotion Title</label>
+                            <input type="text" class="form-control" ng-model="promoteBusiness.promoteTitle" id="form-group-input-1" placeholder="Example input">
+                        </fieldset>
+                        
+                         <fieldset class="form-group">
+                            <label for="form-group-input-2">Promotion Description</label>
+                            <textarea type="text" class="form-control" ng-model="promoteBusiness.promoteDesc" id="form-group-input-2" rows="10" placeholder="Another input"></textarea>
+                        </fieldset>
+                        
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" ng-click="promoteBusiness.createPromotion()" data-dismiss="modal">Create Promotion</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" >
+$(document).ready(function() {
+	$('input[name="promotionTimeFrame"]').daterangepicker();
+	});
+</script>
+</div>

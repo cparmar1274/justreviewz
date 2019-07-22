@@ -1,0 +1,264 @@
+<div id="publicSiteControllerId" ng-controller="PublicReviewCtrl as reviewCtrl" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel">
+						<div class="panel-title ">
+							<div class="row">
+								<div class="col-md-7">
+									<span class="font-size-28">{{reviewCtrl.clientName}}</span> <i>
+										<span ng-hide="!type"
+										ng-repeat="type in reviewCtrl.clientType"
+										class="text text-weight-bold">{{type}} <span>&nbsp;</span>
+									</span>
+									</i>
+									<div class="text text-default">
+										<i class="fa fa-map-marker">&nbsp;</i>{{reviewCtrl.address}}
+									</div>
+									<hr>
+									<div class="font-weight-bold font-size-18">
+										<add-stars rating="{{reviewCtrl.averageRating}}"></add-stars>
+									</div>
+									<span class="font-weight-light">{{reviewCtrl.totalReviews}}
+										Reviews,</span> <span class="font-weight-light">{{reviewCtrl.totalReplies}}
+										Replies,</span> <span class="font-weight-light">{{reviewCtrl.totalQueries}}
+										Queries</span>
+								</div>
+
+								<div id='map' style="height: 180px" class="col-md-5"></div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- <md-tabs md-dynamic-height md-border-bottom> -->
+				<div class="col-md-6">
+					<div class="panel">
+						<div class="panel-title">
+							Reviews
+							<button type="button" ng-click="reviewCtrl.stateReview()"
+								class="btn btn-primary  pull-right">
+								<i class="fa fa-pen"></i>&nbsp;Write Review
+							</button>
+							<br> <small class="text text-default">{{reviewCtrl.totalReviews}}
+								Reviews</small>
+
+
+						</div>
+
+						<div class="panel-subtitle">
+							<div class="row">
+								<div class="pull-right">
+									<md-input-container> <md-select
+										ng-model="reviewCtrl.sortingOrder"
+										placeholder="Latest Reviews First"
+										ng-change="reviewCtrl.loadReviews()"> <md-option
+										ng-value="opt" ng-repeat="opt in reviewCtrl.sortingOptions">{{
+									opt }}</md-option> </md-select> </md-input-container>
+								</div>
+							</div>
+						</div>
+
+						<hr class="m-a-0">
+						<div class="panel-body">
+							<!-- <div class="row">
+                            <div class="pull-right">
+                                <md-input-container>
+                                    <md-select ng-model="reviewCtrl.sortingOrder" placeholder="Latest Reviews First" ng-change="reviewCtrl.loadReviews()">
+                                        <md-option ng-value="opt" ng-repeat="opt in reviewCtrl.sortingOptions">{{ opt }}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div> -->
+							<div ng-hide="reviewCtrl.totalReviews"
+								class="alert alert-primary" role="alert">
+								<strong> None so far !</strong> Be the first one to post review.
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<div class="input-group">
+										<input type="text" class="form-control"
+											ng-model="reviewCtrl.searchReviewText"
+											ng-change="reviewCtrl.searchReview()"
+											placeholder="Search Review"> <i
+											class="input-group-addon ion-search"></i>
+									</div>
+									&nbsp;<small class="pull-right text text-default"
+										ng-bind="reviewCtrl.searchReviewMessage"></small>
+								</div>
+
+							</div>
+
+							<div ng-repeat="review in reviewCtrl.reviewList">
+								<review-block reviewObject="{{review}}"></review-block>
+							</div>
+						</div>
+						<div class="panel-footer text-center">
+							<span class="text text-right">Load 50 more ...</span>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-md-6">
+					<div class="panel">
+						<div class="panel-body">
+							<div class="row" >
+							    	<span style="margin-left:5px" class="btn btn-default btn-md" ng-repeat="phoneNumber in reviewCtrl.clientBusinessPhoneNumber">
+							    <a href="tel:{{phoneNumber}}">
+										<icon class="fa text-primary fa-phone">&nbsp;</icon>{{phoneNumber}}
+								</a></span>
+								<span class="btn btn-default btn-md" ng-hide="!reviewCtrl.clientBusinessWebsite"><a  href="{{reviewCtrl.clientBusinessWebsite}}">
+									<icon class="fa text-primary fa-globe">&nbsp;</icon>Website</a></span>
+								<span class="btn btn-default btn-md" ng-hide="!reviewCtrl.clientBusinessFacebook"><a  href="{{reviewCtrl.clientBusinessFacebook}}">
+									<icon class="fab text-primary fa-facebook-f">&nbsp;</icon>Facebook</a></span>
+							</div>
+							
+							<div class="row m-t-2">
+							<hr>
+										  <div class="panel-title">Working Hours<br>
+										  <span class="text text-success text-right" ng-show="reviewCtrl.openToday"><u>Open Today</u></span>
+									<span class="text text-danger text-right" ng-show="!reviewCtrl.openToday"><small>May be Closed. Please call to confirm.</small></span>
+										  </div>
+										<div class="panel-body">
+											<div class="row" ng-hide="!reviewCtrl.workingHours.monday"><div class="col-md-6 text-right">Monday</div><div class="col-md-6">{{reviewCtrl.workingHours.monday}}</div></div>
+											<div class="row" ng-hide="!reviewCtrl.workingHours.tuesday"><div class="col-md-6 text-right">Tuesday</div><div class="col-md-6">{{reviewCtrl.workingHours.tuesday}}</div></div>
+											<div class="row" ng-hide="!reviewCtrl.workingHours.wednesday"><div class="col-md-6 text-right">Wednesday</div><div class="col-md-6">{{reviewCtrl.workingHours.wednesday}}</div></div>
+											<div class="row" ng-hide="!reviewCtrl.workingHours.thursday"><div class="col-md-6 text-right">Thursday</div><div class="col-md-6">{{reviewCtrl.workingHours.thursday}}</div></div>
+											<div class="row" ng-hide="!reviewCtrl.workingHours.friday"><div class="col-md-6 text-right">Friday</div><div class="col-md-6">{{reviewCtrl.workingHours.friday}}</div></div>
+											<div class="row" ng-hide="!reviewCtrl.workingHours.saturday"><div class="col-md-6 text-right">Saturday</div><div class="col-md-6">{{reviewCtrl.workingHours.saturday}}</div></div>
+											<div class="row" ng-hide="!reviewCtrl.workingHours.sunday"><div class="col-md-6 text-right">Sunday</div><div class="col-md-6">{{reviewCtrl.workingHours.sunday}}</div></div>
+										</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-md-6">
+
+					<div class="panel">
+						<div class="panel-title">
+							Queries
+							<button type="button" ng-click="reviewCtrl.stateAsk()"
+								class="btn btn-primary pull-right">Submit Query</button>
+							<br> <small class="text text-default">{{reviewCtrl.totalQueries}}
+								Queries</small>
+						</div>
+						<hr class="m-a-0">
+						<div class="panel-body">
+
+							<div ng-hide="reviewCtrl.totalQueries"
+								class="alert alert-primary" role="alert">
+								<strong> None so far !</strong> Be the first one to ask.
+							</div>
+							<div class="box-container">
+								<div ng-repeat="query in reviewCtrl.queries | orderBy :'postedDate' ">
+										<div class="panel-title">{{query.question}}
+										<span class="pull-right text-default">{{query.postedDate
+											| date}}</span> </div> 
+										{{query.answer}}
+								</div>
+
+							</div>
+
+						</div>
+						<div class="panel-footer text-center">
+							<span class="text text-right">Load 50 more ...</span>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-md-6">
+					<div class="panel">
+						<div class="panel-title">
+							Promotions
+							<button type="button" ng-click="reviewCtrl.requestForPromotion()"
+								class="btn btn-primary pull-right">Request Deals</button>
+
+						</div>
+						<hr class="m-a-0">
+						<div class="panel-body">
+
+							<div ng-hide="reviewCtrl.totalPromotions"
+								class="alert alert-primary">
+								<strong>Ah ! </strong> No Promotions or Deals available at the
+								moment. Click Request Deals to request business owner for any
+								promotion or deals.
+							</div>
+
+							<div ng-show="reviewCtrl.requestPromotionMessage"
+								class="alert alert-primary">
+								<button type="button" class="close" data-dismiss="alert"></button>
+								<strong>Good News !</strong> Business Owner notified about the
+								request.
+							</div>
+
+							<div class="box-container">
+								<div ng-repeat="promote in reviewCtrl.promotions">
+									<div class=" text-success font-weight-semibold font-size-17">
+										{{promote.promotionTitle}}
+										<div class="font-size-12 text-primary pull-right">Expiry
+											Date : {{promote.promotionEndDate | date:'medium'}}</div>
+									</div>
+
+									<div class="font-size-12">{{promote.promotionDetail}}</div>
+
+									<hr>
+								</div>
+
+							</div>
+						</div>
+						<div class="panel-footer text-center">
+							<span class="text text-right">Load 50 more ...</span>
+						</div>
+					</div>
+				</div>
+				<!--   </md-tabs> -->
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel">
+						<div class="panel-title ">
+							Would you like to subscribe the updates from <strong>
+								{{reviewCtrl.clientName}} </strong> ?
+						</div>
+						<div class="panel-body">
+							<form name="form" novalidate>
+
+
+								<div class="row">
+									<div class="col-md-9">
+										<input type="email" class="form-control" name="uEmail"
+											required ng-model="reviewCtrl.subscribeEmail"
+											placeholder="Please share your email with us.">
+									</div>
+									<div class="col-md-3">
+										<button ng-click="reviewCtrl.subscribe()"
+											ng-disabled="form.$invalid" class="btn btn-default">Subscribe</button>
+									</div>
+								</div>
+								<div class="row m-t-2">
+									<div class="col-md-12"
+										ng-show="form.$submitted || form.uEmail.$touched">
+										<span class="text text-default" ng-show="form.uEmail.$error.required">Please share
+											your email with us.</span>
+										<span class="text text-default"
+											ng-show="form.uEmail.$error.email">Invalid Email.</span>
+									</div>
+								</div>
+
+							</form>
+
+							<span ng-hide="reviewCtrl.subscribeStatus"
+								class="text text-default m-t-2"> Congratulation! Your
+								subscription has been confirmed. </span>
+						</div>
+					</div>
+				</div>
+			</div>
+</div>

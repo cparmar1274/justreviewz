@@ -1,0 +1,53 @@
+<div class="container" ng-controller="RegisterBusinessCtrl as regBusinessCtrl" layout="column" ng-cloak>
+	<div class="row  m-b-2">
+		<a href ui-sref="public.landing({index:0})">Home </a> /	Register New Business
+	</div>
+	<div class="row">
+		<div class="panel">
+			<div class="panel-title">
+				<!-- <img src="public/justreviewz_logo.png" width="50" height="50"
+				class="d-inline-block align-top" alt="Just Reviewz Inc"> -->
+				<mark>Register New Business</mark>
+			</div>
+			<hr>
+			<div class="panel-body">
+				<form id="onboardingFormId" name="userForm">
+					<md-input-container class="md-block"> <label>Business Name</label> <input required ng-model="regBusinessCtrl.user.clientName"> </md-input-container>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm> <label>Email</label> <input required ng-model="regBusinessCtrl.user.clientEmail" type="email"> </md-input-container>
+						<md-input-container class="md-block" flex-gt-sm> <label>Phone Number</label> <input name="phone" required ng-model="regBusinessCtrl.user.clientBusinessPhoneNumber" ng-pattern="/^[(][0-9]{3}[)][0-9]{3}-[0-9]{4}$/" />
+						<div class="hint" ng-show="showHints">(###) ###-####</div>
+						<div ng-messages="userForm.phone.$error" ng-hide="showHints">
+							<div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
+						</div>
+						</md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm> <label>Address</label> <input required ng-model="regBusinessCtrl.user.address.streetName"> </md-input-container>
+					</div>
+					<div layout-gt-sm="row">
+						<md-input-container class="md-block" flex-gt-sm> <label>City</label> <input required ng-model="regBusinessCtrl.user.address.city"> </md-input-container>
+						<md-input-container class="md-block" flex-gt-sm> <label>State</label> <md-select ng-model="regBusinessCtrl.user.address.province"> <md-option required ng-repeat="state in regBusinessCtrl.states" value="{{state}}"> {{state}} </md-option> </md-select> </md-input-container>
+						<md-input-container class="md-block" flex-gt-sm> <label>Country</label> <md-select ng-model="regBusinessCtrl.user.address.country" ng-change="regBusinessCtrl.changeCountry()"> <md-option required ng-repeat="country in regBusinessCtrl.countries"
+							value="{{country}}"> {{country}} </md-option> </md-select> </md-input-container>
+						<md-input-container class="md-block" flex-gt-sm> <label>Postal Code</label> <input required name="postalCode" ng-model="regBusinessCtrl.user.address.postalCode" placeholder="XXXXXX" required ng-pattern="/^[a-zA-Z0-9]*$/" md-maxlength="6">
+						<div ng-messages="userForm.postalCode.$error" role="alert" multiple>
+							<div ng-message="required" class="my-message">You must supply a postal code.</div>
+							<div ng-message="pattern" class="my-message">XXXXXX - That doesn't look like a valid postal code.</div>
+							<div ng-message="md-maxlength" class="my-message">Postal code length error - That doesn't look like a valid postal code.</div>
+						</div>
+						</md-input-container>
+					</div>
+					<md-input-container class="md-block"> <label>Detail</label> <textarea required ng-model="regBusinessCtrl.user.clientType" md-maxlength="150" rows="5" md-select-on-focus></textarea> </md-input-container>
+					<hr>
+					<button ng-disabled="userForm.$invalid" ng-click="regBusinessCtrl.submitRequest()" class="btn btn-md btn-primary pull-right ">Submit Request</button>
+				</form>
+			</div>
+			<div class="panel-footer">
+				<div ng-hide="regBusinessCtrl.onboardRequestStatus" class="alert alert-success" role="alert">
+					<strong>Congratulation!</strong> We have received your request. Once approved it will be available on our portal for user to search and write review.
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

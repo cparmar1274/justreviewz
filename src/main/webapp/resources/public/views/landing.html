@@ -1,0 +1,121 @@
+<div class="container" ng-controller="LandingCtrl as ctrl" >
+	<div class="row" style="margin-top: 10%; margin-bottom: 10%">
+		<div id="owl-carousel-autoheight" class=" owl-carousel ">
+			<div class="carousel-item " id="business_item" data-hash="business">
+				<md-content class="md-padding " layout-xs="column" style="background: none;" layout="row">
+				<div class="col-md-8" style="color: #000 !important;">
+					<md-autocomplete id="custom-template1" md-no-cache="true" md-selected-item="ctrl.selectedBusiness" md-search-text="ctrl.searchBusiness" md-selected-item-change="ctrl.businessSelected(item)" md-items="item in ctrl.businessSearch(ctrl.searchBusiness,'business')" md-item-text="item.clientName"
+						md-min-length="0" placeholder="Search Business..." md-autofocus=true md-menu-class="autocomplete-custom-template" md-menu-container-class="custom-container"> <md-item-template>
+					<div class="widget-comments-item" style="line-height: 1.5;">
+						<!-- <img class="widget-comments-avatar" alt="{{item.name}}"
+									src="{{item.image_url}}"> -->
+						<div class="widget-comments-header text-default">
+							{{item.clientName}} <span class="text text-primary"><span ng-repeat="type in item.clientType">{{type.title}}<span>&nbsp;</span></span> </span>
+						</div>
+						<div class="widget-comments-text">
+							<span class="text text-success" ng-repeat="addr in item.addressMap">&nbsp;{{addr}}&nbsp;</span> <br> <span class="text text-danger"> <i class="fa fa-phone"></i>&nbsp;{{item.clientBusinessPhoneNumber}}
+							</span> <br>
+						</div>
+					</div>
+					</md-item-template> <md-not-found> No Business found. </md-not-found> </md-autocomplete>
+				</div>
+				<div class="col-md-4" style="color: #000 !important;">
+					<md-autocomplete flex required md-no-cache="true" md-selected-item="ctrl.selectedLocation" md-items="item in ctrl.locationSearch(ctrl.searchLocation,'location')" placeholder="Select Location" md-search-text="ctrl.searchLocation" md-item-text="item.city"> <span
+						md-highlight-text="ctrl.searchLocation">{{item.city}}, {{item.provinceCode}} {{item.country}}</span> <md-item-template>
+					<p>
+						{{item.city}} <span class="text text-default"><small>{{item.provinceCode}} {{item.country}}</small></span>
+					</p>
+					</md-item-template> <md-not-found> No Location found. </md-not-found> </md-autocomplete>
+				</div>
+				</md-content>
+				<md-progress-linear ng-show="ctrl.showMessage" class="md-success" md-mode="indeterminate"></md-progress-linear>
+				<div class="row text-center text " style="font-size: 16px; margin-bottom: 5%">
+					<div class="text text-warning col-md-12">
+						<Strong>Tip</Strong> You can search business by name or keyword. i.e car wash, tax, pet store
+					</div>
+				</div>
+			</div>
+			<div class="carousel-item " id="product_item" data-hash="product">
+				<div class="row text-center" style="font-size: 18px; margin-bottom: 2%">
+					<!--  Product Review -->
+				</div>
+				<md-content class="md-padding " layout-xs="column" style="background: none;" layout="row">
+				<div class="col-md-12" style="color: #000 !important;">
+					<md-autocomplete id="custom-template2" md-no-cache="true" md-selected-item="ctrl.selectedProduct" md-search-text="ctrl.searchProduct" md-selected-item-change="ctrl.productSelected(item)" md-items="item in ctrl.productSearch(ctrl.searchProduct,'product')" md-item-text="item.productName"
+						md-min-length="0" placeholder="Search Product..." md-autofocus=true md-menu-class="autocomplete-custom-template" md-menu-container-class="custom-container"> <md-item-template>
+					<div class="widget-comments-item" style="line-height: 1.5;">
+						<!-- <img class="widget-comments-avatar" alt="{{item.productName}}"
+									src="public/justreviewz_logo.png"> -->
+						<div class="widget-comments-header text-default">{{item.productName}}</div>
+						<div class="widget-comments-text">
+							{{item.productDetail}} <br>
+						</div>
+					</div>
+					</md-item-template> <md-not-found> No Business found. </md-not-found> </md-autocomplete>
+				</div>
+				</md-content>
+				<md-progress-linear ng-show="ctrl.showMessage" class="md-success" md-mode="indeterminate"></md-progress-linear>
+				<div class="row text-center text" style="font-size: 16px; margin-bottom: 5%">
+					<div class="text text-warning col-md-12">
+						<Strong>Tip !</Strong> You can search product by name or keyword. i.e home care, body care, pet care
+					</div>
+				</div>
+			</div>
+			<div class="carousel-item " id="notfound_item" data-hash="notfound">
+				<div class="panel text text-default text-center" style="border: none;">
+					<div class="panel-title">
+						<span class="text">Could not found what you looking for ? </span>
+					</div>
+					<div class="panel-subtitle">
+						<span class="text">Most likely its not registered with us yet.</span>
+					</div>
+					<div class="panel-body">
+						<button class="btn btn-primary btn-ln" ui-sref="public.faqs">Register</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<blockquote class="blockquote" ng-repeat="review in ctrl.latestReview">
+				<p class="mb-0">{{review.reviewText}}</p>
+				<footer class="blockquote-footer">
+					<span style="color: darkgray;">{{review.postedBy}}</span> <cite title="Source Title">for <span ng-click="ctrl.goWriteReview(review.clientId,review.type)" style="color: darkgray;">{{review.businessName}}</span> <span style="color: darkgray;">{{review.businessAddress}}</span> on
+						{{review.reviewDate | date}}
+					</cite>
+					<add-stars rating="{{review.reviewRating}}"></add-stars>
+				</footer>
+			</blockquote>
+		</div>
+		<div class="col-md-6">
+		
+			<blockquote class="blockquote" ng-repeat="promotion in ctrl.latestPromotion">
+				<p class="mb-0"><span class="text text-default pull-right">{{promotion.promotionStartDate | date}}&nbsp;-&nbsp;{{promotion.promotionEndDate}}</span>
+				
+				<span class="text text-warning"> {{promotion.promotionTitle}}</span> 
+						<span class="text text-default"> {{promotion.promotionDetail}}</span>
+				</p>
+				<footer class="blockquote-footer">
+					<span class="text text-default ">{{promotion.businessName}}</span> 
+						 <cite title="Source Title"><span class="text  text-primary">{{promotion.businessAddress}}</span> </cite>
+				</footer>
+			</blockquote>
+		
+		</div>
+	</div>
+	<span id="indexLocation" ng-hide="true" ng-bind="ctrl.indexId"></span>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#owl-carousel-autoheight').owlCarousel({
+            items: 1,
+            margin: 10,
+            autoHeight: true,
+            //nav: true,
+            startPosition: $("#indexLocation").text(),
+            //URLhashListener:true,
+            rtl: $('html').attr('dir') === 'rtl',
+        });
+    });
+</script>
