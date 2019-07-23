@@ -81,7 +81,7 @@
 			<blockquote class="blockquote" ng-repeat="review in ctrl.latestReview">
 				<p class="mb-0">{{review.reviewText}}</p>
 				<footer class="blockquote-footer">
-					<span style="color: darkgray;">{{review.postedBy}}</span> <cite title="Source Title">for <span ng-click="ctrl.goWriteReview(review.clientId,review.type)" style="color: darkgray;">{{review.businessName}}</span> <span style="color: darkgray;">{{review.businessAddress}}</span> on
+					<span style="color: darkgray;">{{review.postedBy}}</span> <cite title="{{review.businessName}}">for <span ng-click="ctrl.goWriteReview(review.clientId,review.type)" style="color: darkgray;">{{review.businessName}}</span> <span style="color: darkgray;">{{review.businessAddress}}</span> on
 						{{review.reviewDate | date}}
 					</cite>
 					<add-stars rating="{{review.reviewRating}}"></add-stars>
@@ -91,14 +91,14 @@
 		<div class="col-md-6">
 		
 			<blockquote class="blockquote" ng-repeat="promotion in ctrl.latestPromotion">
-				<p class="mb-0"><span class="text text-default pull-right">{{promotion.promotionStartDate | date}}&nbsp;-&nbsp;{{promotion.promotionEndDate}}</span>
-				
+				<p class="mb-0">
 				<span class="text text-warning"> {{promotion.promotionTitle}}</span> 
-						<span class="text text-default"> {{promotion.promotionDetail}}</span>
+				<span class="text text-default"> {{promotion.promotionDetail}}</span><br>
+				<span class="text text-default"> <mark>from {{promotion.promotionStartDate | justreviewzdate}} &nbsp; to &nbsp;{{promotion.promotionEndDate | justreviewzdate}}</mark></span>
 				</p>
 				<footer class="blockquote-footer">
 					<span class="text text-default ">{{promotion.businessName}}</span> 
-						 <cite title="Source Title"><span class="text  text-primary">{{promotion.businessAddress}}</span> </cite>
+						 <cite title="{{promotion.businessAddress}}"><span class="text  text-primary">{{promotion.businessAddress}}</span> </cite>
 				</footer>
 			</blockquote>
 		

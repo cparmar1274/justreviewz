@@ -1,36 +1,27 @@
 
 <div class="container">
-
 	<div class="navbar-header">
-		<a class="navbar-brand px-demo-brand" ui-sref="public.landing({index:0})">
-		 <span class=" px-demo-logo"><!-- <img src="public/justreviewz_logo_nav.png" width="50" height="50"
-			class="d-inline-block align-top" alt="Just Reviewz Inc"> --></span>
-		 	<span class="text text-warning"><strong>{{main.companyName}}</strong> </span>
-		</a> 
-		
-
+		<a class="navbar-brand px-demo-brand" ui-sref="public.landing({index:0})"> <span class=" px-demo-logo">
+				<!-- <img src="public/justreviewz_logo_nav.png" width="50" height="50"
+			class="d-inline-block align-top" alt="Just Reviewz Inc"> -->
+		</span> <span class="text text-warning"><strong>{{main.companyName}}</strong> </span>
+		</a>
 	</div>
-
-	<button type="button" class="navbar-toggle collapsed"
-		data-toggle="collapse" data-target="#px-demo-navbar-collapse"
-		aria-expanded="false">
+	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#px-demo-navbar-collapse" aria-expanded="false">
 		<i class="navbar-toggle-icon"></i>
 	</button>
-
 	<div class="collapse navbar-collapse" id="px-demo-navbar-collapse">
-
 		<ul class="nav navbar-nav navbar-right">
-			<!-- <li class="dropdown"><a href ui-sref="public.howitworks"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Write Review</a></li>
-			 -->
-			<!-- <li class="dropdown"><a href ui-sref="public.background"
-				class="dropdown-toggle" data-toggle="dropdown" role="button"
-				aria-haspopup="true" aria-expanded="false">For Business</a></li> -->
-			<li class="dropdown text text-primary"><a href ui-sref="public.faqs"
-				class="dropdown-toggle" data-toggle="dropdown" role="button"
-				aria-haspopup="true" aria-expanded="false"><strong>Write Review</strong></a></li>
+			<li class="dropdown "><a href ui-sref="public.faqs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-pen m-r-1"></i>Write Review</a></li>
+			<li class="dropdown"><a href class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bookmark m-r-1"></i>Categories</a>
+				<div class="dropdown-multi-column">
+					<ul class="dropdown-menu dropdown-column col-md-4">
+						<li class="dropdown-header">Business</li>
+						<!-- <li class="px-nav-item" ui-sref-active="active"><a href ui-sref="dashboards.default"><i class="px-nav-icon ion-ios-pulse-strong"></i><span class="px-nav-label">Dashboard</span></a></li>
+						<li class="px-nav-item" ui-sref-active="active"><a href ui-sref="pages.search-results({searchText: ''})"><i class="px-nav-icon ion-chatbubbles"></i> <span class="px-nav-label">Manage Reviews</span></a></li>
+						<li class="px-nav-item" ui-sref-active="active"><a href ui-sref="pages.action-items"><i class="px-nav-icon ion-android-done-all"></i> <span class="px-nav-label">Action Items</span></a></li>
+				 -->	</ul>
+				</div></li>
 		</ul>
-
-
 	</div>
-
 </div>

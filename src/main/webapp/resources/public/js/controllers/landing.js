@@ -137,5 +137,9 @@
         };
         self.loadLatestEvent();
     }
-    angular.module("pixeladmin").controller("LandingCtrl", LandingCtrl);
+    angular.module("pixeladmin").filter('justreviewzdate', function() {
+    	  return function(a,b) {
+    		    return moment(a).calendar();
+    		  };
+    		}).controller("LandingCtrl", LandingCtrl);
 })();
