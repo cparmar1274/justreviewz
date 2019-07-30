@@ -48,12 +48,12 @@
                     clientType += item.title + "#";
                 });
                 var params = {
-                    username: item.clientName,
+                    username: item.alias,
                     password: "",
                     clientEmail: "",
-                    clientName: item.clientName,
-                    clientBusinessPhoneNumber: item.clientBusinessPhoneNumber,
-                    address: address,
+                    clientName: item.name,
+                    clientBusinessPhoneNumber: item.phone,
+                    address: item.location,
                     clientType: clientType
                 };
                 $http.post("addUser", params).then(function(data) {

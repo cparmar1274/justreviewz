@@ -13,7 +13,7 @@
 							{{item.name}} <span class="text text-primary"><span ng-repeat="type in item.categories">{{type.title}}<span>&nbsp;</span></span> </span>
 						</div>
 						<div class="widget-comments-text">
-							<span class="text text-success" ng-repeat="addr in item.display_address">&nbsp;{{addr}}&nbsp;</span> <br> <span class="text text-danger"> <i class="fa fa-phone"></i>&nbsp;{{item.display_phone}}
+							<span class="text text-success" ng-repeat="addr in item.location.display_address">&nbsp;{{addr}}&nbsp;</span> <br> <span class="text text-danger"> <i class="fa fa-phone"></i>&nbsp;{{item.display_phone}}
 							</span> <br>
 						</div>
 					</div>
