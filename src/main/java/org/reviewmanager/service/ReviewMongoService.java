@@ -33,7 +33,9 @@ import org.reviewmanager.users.BusinessUser;
 import org.reviewmanager.users.BusinessUserTemp;
 import org.reviewmanager.utility.RMUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -803,7 +805,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 					new BasicDBObject().append("reviewRating", 1));
 		else
 			result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,
-					new BasicDBObject().append("reviewDate", 11));
+					new BasicDBObject().append("reviewDate", -1));
 
 		data.put("result", result);
 		data.put("averageRating", result.stream().mapToDouble(object -> {
@@ -885,20 +887,20 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 */
 	@Override
 	public Map<String, Object> searchBusiness(String query, String type) {
-		// this.setHeaderAuthorization();
+		 this.setHeaderAuthorization();
 		Map<String, Object> businesses = new HashMap<>();
-		// businesses.putAll(restTemplate.exchange("https://api.yelp.com/v3/businesses/search?term="
-		// + query + "&location=" + type,
-		// HttpMethod.GET, new HttpEntity<>("parameters", headers),
-		// Map.class).getBody());
+		 businesses.putAll(restTemplate.exchange("https://api.yelp.com/v3/businesses/search?term="
+		 + query + "&location=" + type,
+		 HttpMethod.GET, new HttpEntity<>("parameters", headers),
+		 Map.class).getBody());
 
-		List<Document> data = mongoService.getObject(RMUtil.ONBOARDED_BUSINESS,
+		/*List<Document> data = mongoService.getObject(RMUtil.ONBOARDED_BUSINESS,
 				new BasicDBObject().append("clientName", new BasicDBObject("$regex", query).append("$options", "i")),
 				new BasicDBObject());
 		List<SearchBusinessObject> searchResults = new ArrayList<>();
 		for (Document object : data)
 			searchResults.add(RMUtil.gson.fromJson(object.toJson(), SearchBusinessObject.class));
-		businesses.put("businesses", searchResults);
+		businesses.put("businesses", searchResults);*/
 		return businesses;
 	}
 
