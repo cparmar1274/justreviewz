@@ -4,16 +4,16 @@
 			<div class="carousel-item " id="business_item" data-hash="business">
 				<md-content class="md-padding " layout-xs="column" style="background: none;" layout="row">
 				<div class="col-md-8" style="color: #000 !important;">
-					<md-autocomplete id="custom-template1" md-no-cache="true" md-selected-item="ctrl.selectedBusiness" md-search-text="ctrl.searchBusiness" md-selected-item-change="ctrl.businessSelected(item)" md-items="item in ctrl.businessSearch(ctrl.searchBusiness,'business')" md-item-text="item.clientName"
+					<md-autocomplete id="custom-template1" md-no-cache="true" md-selected-item="ctrl.selectedBusiness" md-search-text="ctrl.searchBusiness" md-selected-item-change="ctrl.businessSelected(item)" md-items="item in ctrl.businessSearch(ctrl.searchBusiness,'business')" md-item-text="item.name"
 						md-min-length="0" placeholder="Search Business..." md-autofocus=true md-menu-class="autocomplete-custom-template" md-menu-container-class="custom-container"> <md-item-template>
 					<div class="widget-comments-item" style="line-height: 1.5;">
 						<!-- <img class="widget-comments-avatar" alt="{{item.name}}"
 									src="{{item.image_url}}"> -->
 						<div class="widget-comments-header text-default">
-							{{item.clientName}} <span class="text text-primary"><span ng-repeat="type in item.clientType">{{type.title}}<span>&nbsp;</span></span> </span>
+							{{item.name}} <span class="text text-primary"><span ng-repeat="type in item.categories">{{type.title}}<span>&nbsp;</span></span> </span>
 						</div>
 						<div class="widget-comments-text">
-							<span class="text text-success" ng-repeat="addr in item.addressMap">&nbsp;{{addr}}&nbsp;</span> <br> <span class="text text-danger"> <i class="fa fa-phone"></i>&nbsp;{{item.clientBusinessPhoneNumber}}
+							<span class="text text-success" ng-repeat="addr in item.display_address">&nbsp;{{addr}}&nbsp;</span> <br> <span class="text text-danger"> <i class="fa fa-phone"></i>&nbsp;{{item.display_phone}}
 							</span> <br>
 						</div>
 					</div>
