@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * The Class BusinessUserTemp.
  */
-@JsonIgnoreProperties(ignoreUnknown = true,allowGetters=false,allowSetters=false)
+@JsonIgnoreProperties(ignoreUnknown = true, allowGetters = false, allowSetters = false)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class BusinessUserTemp {
 
@@ -50,11 +50,11 @@ public class BusinessUserTemp {
 	/** The client business url. */
 	@JsonProperty("clientBusinessUrl")
 	public String clientBusinessUrl;
-	
+
 	/** The client business phone number. */
 	@JsonProperty("clientBusinessPhoneNumber")
 	public String clientBusinessPhoneNumber;
-	
+
 	/** The working hours. */
 	@JsonProperty("workingHours")
 	public WorkingHours workingHours;
@@ -86,7 +86,7 @@ public class BusinessUserTemp {
 	/** The subscription. */
 	@JsonProperty("subscription")
 	public Subscription subscription;
-	
+
 	/**
 	 * Instantiates a new business user temp.
 	 */
@@ -109,7 +109,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the client name.
 	 *
-	 * @param clientName the new client name
+	 * @param clientName
+	 *            the new client name
 	 */
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
@@ -127,7 +128,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the client type.
 	 *
-	 * @param clientType the new client type
+	 * @param clientType
+	 *            the new client type
 	 */
 	public void setClientType(String clientType) {
 		this.clientType = clientType;
@@ -145,7 +147,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
@@ -163,7 +166,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the client email.
 	 *
-	 * @param clientEmail the new client email
+	 * @param clientEmail
+	 *            the new client email
 	 */
 	public void setClientEmail(String clientEmail) {
 		this.clientEmail = clientEmail;
@@ -181,7 +185,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the address.
 	 *
-	 * @param address the new address
+	 * @param address
+	 *            the new address
 	 */
 	public void setAddress(Address address) {
 		this.address = address;
@@ -199,7 +204,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the facebook url.
 	 *
-	 * @param facebookUrl the new facebook url
+	 * @param facebookUrl
+	 *            the new facebook url
 	 */
 	public void setFacebookUrl(String facebookUrl) {
 		this.facebookUrl = facebookUrl;
@@ -217,7 +223,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the yelp url.
 	 *
-	 * @param yelpUrl the new yelp url
+	 * @param yelpUrl
+	 *            the new yelp url
 	 */
 	public void setYelpUrl(String yelpUrl) {
 		this.yelpUrl = yelpUrl;
@@ -235,7 +242,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the notify new review.
 	 *
-	 * @param notifyNewReview the new notify new review
+	 * @param notifyNewReview
+	 *            the new notify new review
 	 */
 	public void setNotifyNewReview(boolean notifyNewReview) {
 		this.notifyNewReview = notifyNewReview;
@@ -253,7 +261,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the notify new report.
 	 *
-	 * @param notifyNewReport the new notify new report
+	 * @param notifyNewReport
+	 *            the new notify new report
 	 */
 	public void setNotifyNewReport(boolean notifyNewReport) {
 		this.notifyNewReport = notifyNewReport;
@@ -271,7 +280,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the subscription.
 	 *
-	 * @param subscription the new subscription
+	 * @param subscription
+	 *            the new subscription
 	 */
 	public void setSubscription(Subscription subscription) {
 		this.subscription = subscription;
@@ -289,7 +299,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the username.
 	 *
-	 * @param username the new username
+	 * @param username
+	 *            the new username
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -307,7 +318,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the password.
 	 *
-	 * @param password the new password
+	 * @param password
+	 *            the new password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -325,7 +337,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the notify added as competitor.
 	 *
-	 * @param notifyAddedAsCompetitor the new notify added as competitor
+	 * @param notifyAddedAsCompetitor
+	 *            the new notify added as competitor
 	 */
 	public void setNotifyAddedAsCompetitor(boolean notifyAddedAsCompetitor) {
 		this.notifyAddedAsCompetitor = notifyAddedAsCompetitor;
@@ -343,13 +356,12 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the client business url.
 	 *
-	 * @param clientBusinessUrl the new client business url
+	 * @param clientBusinessUrl
+	 *            the new client business url
 	 */
 	public void setClientBusinessUrl(String clientBusinessUrl) {
 		this.clientBusinessUrl = clientBusinessUrl;
 	}
-	
-	
 
 	/**
 	 * Gets the client business phone number.
@@ -363,7 +375,8 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the client business phone number.
 	 *
-	 * @param clientBusinessPhoneNumber the new client business phone number
+	 * @param clientBusinessPhoneNumber
+	 *            the new client business phone number
 	 */
 	public void setClientBusinessPhoneNumber(String clientBusinessPhoneNumber) {
 		this.clientBusinessPhoneNumber = clientBusinessPhoneNumber;
@@ -381,15 +394,16 @@ public class BusinessUserTemp {
 	/**
 	 * Sets the working hours.
 	 *
-	 * @param workingHours the new working hours
+	 * @param workingHours
+	 *            the new working hours
 	 */
 	public void setWorkingHours(WorkingHours workingHours) {
 		this.workingHours = workingHours;
 	}
 
-
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -415,7 +429,9 @@ public class BusinessUserTemp {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -500,8 +516,6 @@ public class BusinessUserTemp {
 			return false;
 		return true;
 	}
-	
-	
 
 	/**
 	 * Gets the user.

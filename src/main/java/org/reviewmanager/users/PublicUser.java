@@ -7,16 +7,16 @@ package org.reviewmanager.users;
 public class PublicUser {
 
 	/** The public id. */
-	public String	publicId;
-	
+	public String publicId;
+
 	/** The public name. */
-	public String	publicName;
-	
+	public String publicName;
+
 	/** The public email. */
-	public String	publicEmail;
-	
+	public String publicEmail;
+
 	/** The public contact number. */
-	public String	publicContactNumber;
+	public String publicContactNumber;
 
 	/**
 	 * Instantiates a new public user.
@@ -28,10 +28,14 @@ public class PublicUser {
 	/**
 	 * Instantiates a new public user.
 	 *
-	 * @param publicId the public id
-	 * @param publicName the public name
-	 * @param publicEmail the public email
-	 * @param publicContactNumber the public contact number
+	 * @param publicId
+	 *            the public id
+	 * @param publicName
+	 *            the public name
+	 * @param publicEmail
+	 *            the public email
+	 * @param publicContactNumber
+	 *            the public contact number
 	 */
 	public PublicUser(String publicId, String publicName, String publicEmail, String publicContactNumber) {
 		super();
@@ -53,7 +57,8 @@ public class PublicUser {
 	/**
 	 * Sets the public id.
 	 *
-	 * @param publicId the new public id
+	 * @param publicId
+	 *            the new public id
 	 */
 	public void setPublicId(String publicId) {
 		this.publicId = publicId;
@@ -71,7 +76,8 @@ public class PublicUser {
 	/**
 	 * Sets the public name.
 	 *
-	 * @param publicName the new public name
+	 * @param publicName
+	 *            the new public name
 	 */
 	public void setPublicName(String publicName) {
 		this.publicName = publicName;
@@ -89,7 +95,8 @@ public class PublicUser {
 	/**
 	 * Sets the public email.
 	 *
-	 * @param publicEmail the new public email
+	 * @param publicEmail
+	 *            the new public email
 	 */
 	public void setPublicEmail(String publicEmail) {
 		this.publicEmail = publicEmail;
@@ -107,13 +114,16 @@ public class PublicUser {
 	/**
 	 * Sets the public contact number.
 	 *
-	 * @param publicContactNumber the new public contact number
+	 * @param publicContactNumber
+	 *            the new public contact number
 	 */
 	public void setPublicContactNumber(String publicContactNumber) {
 		this.publicContactNumber = publicContactNumber;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -127,7 +137,9 @@ public class PublicUser {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

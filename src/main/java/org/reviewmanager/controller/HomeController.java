@@ -22,20 +22,18 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * The Class HomeController.
  *
- * @author Chirag Parmar { support@justreviewz.com | Developed for Just Reviewz Inc.}
+ * @author Chirag Parmar { support@justreviewz.com | Developed for Just Reviewz
+ *         Inc.}
  */
 @Controller
 @RequestMapping(value = "/home")
 public class HomeController {
-	
-	
-	
+
 	public HomeController() {
 		super();
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}
 
-	
 	@GetMapping(value = "/logout")
 	public ModelAndView logoutPage(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,7 +42,6 @@ public class HomeController {
 		}
 		return new ModelAndView("redirect:/login?logout");
 	}
-	
 
 	@RequestMapping(value = "/loginerror", method = RequestMethod.GET)
 	public ModelAndView loginerrorPage(HttpServletRequest request, HttpServletResponse response) {
@@ -54,7 +51,7 @@ public class HomeController {
 		}
 		return new ModelAndView("redirect:/login?error");
 	}
-	
+
 	@RequestMapping(value = "/loadResults", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Object> getloadData(HttpServletRequest request,
 			@RequestBody(required = false) Map<String, Object> params) {
@@ -67,7 +64,6 @@ public class HomeController {
 			String businessName = params.get("businessName").toString().toLowerCase();
 			String locationName = params.get("locationName").toString().toLowerCase();
 
-			
 		} catch (Exception ex) {
 			responseData.put("result", "Error while posting review. please try again after sometime.");
 			responseData.put("errorMessage", ex.getMessage());

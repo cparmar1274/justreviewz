@@ -11,19 +11,19 @@ public class EmailNotificationObject {
 
 	/** The send to. */
 	public String sendTo;
-	
+
 	/** The sender name. */
 	public String senderName;
-	
+
 	/** The subject. */
 	public String subject;
-	
+
 	/** The email content. */
 	public String emailContent;
-	
+
 	/** The client id. */
 	public String clientId;
-	
+
 	public EmailNotificationObject() {
 		super();
 	}
@@ -31,13 +31,19 @@ public class EmailNotificationObject {
 	/**
 	 * Instantiates a new email notification object.
 	 *
-	 * @param sendTo the send to
-	 * @param senderName the sender name
-	 * @param subject the subject
-	 * @param emailContent the email content
-	 * @param clientId the client id
+	 * @param sendTo
+	 *            the send to
+	 * @param senderName
+	 *            the sender name
+	 * @param subject
+	 *            the subject
+	 * @param emailContent
+	 *            the email content
+	 * @param clientId
+	 *            the client id
 	 */
-	public EmailNotificationObject(String sendTo, String senderName, String subject, String emailContent,String clientId) {
+	public EmailNotificationObject(String sendTo, String senderName, String subject, String emailContent,
+			String clientId) {
 		super();
 		this.sendTo = sendTo;
 		this.senderName = senderName;
@@ -58,7 +64,8 @@ public class EmailNotificationObject {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
@@ -76,7 +83,8 @@ public class EmailNotificationObject {
 	/**
 	 * Sets the send to.
 	 *
-	 * @param sendTo the new send to
+	 * @param sendTo
+	 *            the new send to
 	 */
 	public void setSendTo(String sendTo) {
 		this.sendTo = sendTo;
@@ -88,13 +96,14 @@ public class EmailNotificationObject {
 	 * @return the sender name
 	 */
 	public String getSenderName() {
-		return StringUtils.isEmpty(senderName)?"User":senderName;
+		return StringUtils.isEmpty(senderName) ? "User" : senderName;
 	}
 
 	/**
 	 * Sets the sender name.
 	 *
-	 * @param senderName the new sender name
+	 * @param senderName
+	 *            the new sender name
 	 */
 	public void setSenderName(String senderName) {
 		this.senderName = senderName;
@@ -112,7 +121,8 @@ public class EmailNotificationObject {
 	/**
 	 * Sets the subject.
 	 *
-	 * @param subject the new subject
+	 * @param subject
+	 *            the new subject
 	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
@@ -124,13 +134,15 @@ public class EmailNotificationObject {
 	 * @return the email content
 	 */
 	public String getEmailContent() {
-		return StringUtils.isEmpty(emailContent)?"You have received notification from Just Reviewz portal.":emailContent;
+		return StringUtils.isEmpty(emailContent) ? "You have received notification from Just Reviewz portal."
+				: emailContent;
 	}
 
 	/**
 	 * Sets the email content.
 	 *
-	 * @param emailContent the new email content
+	 * @param emailContent
+	 *            the new email content
 	 */
 	public void setEmailContent(String emailContent) {
 		this.emailContent = emailContent;

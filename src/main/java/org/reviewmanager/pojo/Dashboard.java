@@ -44,7 +44,7 @@ public class Dashboard {
 	/** The dashboard chart data. */
 	@JsonProperty("dashboardChartData")
 	public List<DashboardChartObject> dashboardChartData;
-	
+
 	@JsonProperty("totalUpdated")
 	public Date lastUpdated;
 
@@ -59,12 +59,18 @@ public class Dashboard {
 	/**
 	 * Instantiates a new dashboard.
 	 *
-	 * @param clientId the client id
-	 * @param totalRating the total rating
-	 * @param totalPositive the total positive
-	 * @param totalNegative the total negative
-	 * @param totalNeutral the total neutral
-	 * @param dashboardChartData the dashboard chart data
+	 * @param clientId
+	 *            the client id
+	 * @param totalRating
+	 *            the total rating
+	 * @param totalPositive
+	 *            the total positive
+	 * @param totalNegative
+	 *            the total negative
+	 * @param totalNeutral
+	 *            the total neutral
+	 * @param dashboardChartData
+	 *            the dashboard chart data
 	 */
 	public Dashboard(String clientId, Double totalRating, Integer totalPositive, Integer totalNegative,
 			Integer totalNeutral, List<DashboardChartObject> dashboardChartData) {
@@ -90,7 +96,8 @@ public class Dashboard {
 	/**
 	 * Sets the total positive.
 	 *
-	 * @param totalPositive the new total positive
+	 * @param totalPositive
+	 *            the new total positive
 	 */
 	public void setTotalPositive(Integer totalPositive) {
 		this.totalPositive = totalPositive;
@@ -108,7 +115,8 @@ public class Dashboard {
 	/**
 	 * Sets the total negative.
 	 *
-	 * @param totalNegative the new total negative
+	 * @param totalNegative
+	 *            the new total negative
 	 */
 	public void setTotalNegative(Integer totalNegative) {
 		this.totalNegative = totalNegative;
@@ -126,7 +134,8 @@ public class Dashboard {
 	/**
 	 * Sets the total neutral.
 	 *
-	 * @param totalNeutral the new total neutral
+	 * @param totalNeutral
+	 *            the new total neutral
 	 */
 	public void setTotalNeutral(Integer totalNeutral) {
 		this.totalNeutral = totalNeutral;
@@ -147,7 +156,8 @@ public class Dashboard {
 	/**
 	 * Sets the dashboard chart data.
 	 *
-	 * @param dashboardChartData the new dashboard chart data
+	 * @param dashboardChartData
+	 *            the new dashboard chart data
 	 */
 	public void setDashboardChartData(List<DashboardChartObject> dashboardChartData) {
 		this.dashboardChartData = dashboardChartData;
@@ -165,7 +175,8 @@ public class Dashboard {
 	/**
 	 * Sets the total rating.
 	 *
-	 * @param totalRating the new total rating
+	 * @param totalRating
+	 *            the new total rating
 	 */
 	public void setTotalRating(Double totalRating) {
 		this.totalRating = totalRating;
@@ -183,7 +194,8 @@ public class Dashboard {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
@@ -266,7 +278,5 @@ public class Dashboard {
 			return false;
 		return true;
 	}
-
-	
 
 }

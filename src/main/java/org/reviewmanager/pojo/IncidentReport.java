@@ -14,28 +14,28 @@ import org.reviewmanager.utility.RMUtil;
 public class IncidentReport {
 
 	/** The incident image. */
-	public File									incidentImage;
-	
+	public File incidentImage;
+
 	/** The reporter email. */
-	public String								reporterEmail;
-	
+	public String reporterEmail;
+
 	/** The vehicle number. */
-	public String								vehicleNumber;
-	
+	public String vehicleNumber;
+
 	/** The report reasons. */
-	public Map<String, Integer>	reportReasons;
-	
+	public Map<String, Integer> reportReasons;
+
 	/** The incident description. */
-	public String								incidentDescription;
-	
+	public String incidentDescription;
+
 	/** The incident city. */
-	public String								incidentCity;
-	
+	public String incidentCity;
+
 	/** The incident country. */
-	public String								incidentCountry;
-	
+	public String incidentCountry;
+
 	/** The incident date. */
-	public Date									incidentDate;
+	public Date incidentDate;
 
 	/** The severity count. */
 	public Double severityCount;
@@ -52,7 +52,8 @@ public class IncidentReport {
 	/**
 	 * Sets the incident image.
 	 *
-	 * @param incidentImage the new incident image
+	 * @param incidentImage
+	 *            the new incident image
 	 */
 	public void setIncidentImage(File incidentImage) {
 		this.incidentImage = incidentImage;
@@ -70,7 +71,8 @@ public class IncidentReport {
 	/**
 	 * Sets the reporter email.
 	 *
-	 * @param reporterEmail the new reporter email
+	 * @param reporterEmail
+	 *            the new reporter email
 	 */
 	public void setReporterEmail(String reporterEmail) {
 		this.reporterEmail = reporterEmail;
@@ -88,7 +90,8 @@ public class IncidentReport {
 	/**
 	 * Sets the vehicle number.
 	 *
-	 * @param vehicleNumber the new vehicle number
+	 * @param vehicleNumber
+	 *            the new vehicle number
 	 */
 	public void setVehicleNumber(String vehicleNumber) {
 		this.vehicleNumber = vehicleNumber;
@@ -106,7 +109,8 @@ public class IncidentReport {
 	/**
 	 * Sets the report reasons.
 	 *
-	 * @param reportReasons the new report reasons
+	 * @param reportReasons
+	 *            the new report reasons
 	 */
 	public void setReportReasons(String[] reportReasons) {
 
@@ -137,7 +141,8 @@ public class IncidentReport {
 	/**
 	 * Sets the incident description.
 	 *
-	 * @param incidentDescription the new incident description
+	 * @param incidentDescription
+	 *            the new incident description
 	 */
 	public void setIncidentDescription(String incidentDescription) {
 		this.incidentDescription = incidentDescription;
@@ -167,7 +172,8 @@ public class IncidentReport {
 	/**
 	 * Sets the incident city.
 	 *
-	 * @param incidentCity the new incident city
+	 * @param incidentCity
+	 *            the new incident city
 	 */
 	public void setIncidentCity(String incidentCity) {
 		this.incidentCity = incidentCity;
@@ -185,7 +191,8 @@ public class IncidentReport {
 	/**
 	 * Sets the incident country.
 	 *
-	 * @param incidentCountry the new incident country
+	 * @param incidentCountry
+	 *            the new incident country
 	 */
 	public void setIncidentCountry(String incidentCountry) {
 		this.incidentCountry = incidentCountry;
@@ -203,7 +210,8 @@ public class IncidentReport {
 	/**
 	 * Sets the incident date.
 	 *
-	 * @param incidentDate the new incident date
+	 * @param incidentDate
+	 *            the new incident date
 	 */
 	public void setIncidentDate(Date incidentDate) {
 		this.incidentDate = incidentDate;

@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
-@JsonAutoDetect(fieldVisibility=Visibility.ANY)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class ProductObject {
 
 	@JsonProperty("productId")
@@ -22,45 +22,58 @@ public class ProductObject {
 	public Date createdOn;
 	@JsonProperty("updatedOn")
 	public Date updatedOn;
-	public Map<String,Object> productProperties;
+	public Map<String, Object> productProperties;
+
 	public ProductObject() {
 		super();
 		this.createdOn = new Date();
 		this.updatedOn = this.createdOn;
 	}
+
 	public String getProductId() {
 		return productId;
 	}
+
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
+
 	public String getProductName() {
 		return productName;
 	}
+
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
 	public String getProductDetail() {
 		return productDetail;
 	}
+
 	public void setProductDetail(String productDetail) {
 		this.productDetail = productDetail;
 	}
+
 	public Date getCreatedOn() {
 		return createdOn;
 	}
+
 	public Date getUpdatedOn() {
 		return updatedOn;
 	}
+
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
+
 	public Map<String, Object> getProductProperties() {
 		return productProperties;
 	}
+
 	public void setProductProperties(Map<String, Object> productProperties) {
 		this.productProperties = productProperties;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -73,6 +86,7 @@ public class ProductObject {
 		result = prime * result + ((updatedOn == null) ? 0 : updatedOn.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -114,7 +128,5 @@ public class ProductObject {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

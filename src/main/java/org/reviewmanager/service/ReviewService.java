@@ -45,16 +45,16 @@ public class ReviewService {
 	/** The stripe payment service. */
 	@Autowired
 	public StripePaymentService stripePaymentService;
-	
+
 	/** The notification service. */
 	@Autowired
 	public ReviewNotificationService notificationService;
-	
 
 	/**
 	 * Adds the review.
 	 *
-	 * @param reviewObject the review object
+	 * @param reviewObject
+	 *            the review object
 	 * @return the map
 	 */
 	public Map<String, Object> addReview(String reviewObject) {
@@ -64,19 +64,21 @@ public class ReviewService {
 	/**
 	 * Adds the review.
 	 *
-	 * @param reviewObject the review object
+	 * @param reviewObject
+	 *            the review object
 	 * @return the map
 	 */
-	@CacheEvict(value="justreviewz_review",allEntries=true)
+	@CacheEvict(value = "justreviewz_review", allEntries = true)
 	public Map<String, Object> addReview(ReviewObject reviewObject) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		if (reviewObject == null)
 			return null;
-		
+
 		data.putAll(reportIncidentService.addReview(reviewObject));
-		
-		//add clientId -> emailId
-		reportIncidentService.addClientCustomer(reviewObject.getClientId(),reviewObject.getPostedEmail(),reviewObject.getPostedBy());
+
+		// add clientId -> emailId
+		reportIncidentService.addClientCustomer(reviewObject.getClientId(), reviewObject.getPostedEmail(),
+				reviewObject.getPostedBy());
 
 		return data;
 	}
@@ -84,11 +86,16 @@ public class ReviewService {
 	/**
 	 * Gets the reviews.
 	 *
-	 * @param username the username
-	 * @param startIndex the start index
-	 * @param pageSize the page size
-	 * @param searchText the search text
-	 * @param sortType the sort type
+	 * @param username
+	 *            the username
+	 * @param startIndex
+	 *            the start index
+	 * @param pageSize
+	 *            the page size
+	 * @param searchText
+	 *            the search text
+	 * @param sortType
+	 *            the sort type
 	 * @return the reviews
 	 */
 	@Cacheable("justreviewz_review")
@@ -101,7 +108,8 @@ public class ReviewService {
 		String fieldName = sortType.split(":")[0].trim();
 		String fieldDir = sortType.split(":")[1].trim();
 		data = (List<ReviewObject>) reportIncidentService
-				.getReview(searchText, username, fieldName.equalsIgnoreCase("ReviewDate") ? "reviewDate" : "reviewRating",
+				.getReview(searchText, username,
+						fieldName.equalsIgnoreCase("ReviewDate") ? "reviewDate" : "reviewRating",
 						(fieldDir.toLowerCase().equalsIgnoreCase("latest")
 								|| fieldDir.toLowerCase().equalsIgnoreCase("highest")) ? SortOrder.DESC : SortOrder.ASC)
 				.get("result");
@@ -118,7 +126,8 @@ public class ReviewService {
 	/**
 	 * Gets the dashboard chart data.
 	 *
-	 * @param username the username
+	 * @param username
+	 *            the username
 	 * @return the dashboard chart data
 	 */
 	@Cacheable("justreviewz_chartdata")
@@ -129,7 +138,8 @@ public class ReviewService {
 	/**
 	 * Gets the trending data.
 	 *
-	 * @param username the username
+	 * @param username
+	 *            the username
 	 * @return the trending data
 	 */
 	@Cacheable("justreviewz_treadingdata")
@@ -140,7 +150,8 @@ public class ReviewService {
 	/**
 	 * Gets the competitors.
 	 *
-	 * @param username the username
+	 * @param username
+	 *            the username
 	 * @return the competitors
 	 */
 	public Map<String, Object> getCompetitors(String username) {
@@ -150,7 +161,8 @@ public class ReviewService {
 	/**
 	 * Gets the performers.
 	 *
-	 * @param username the username
+	 * @param username
+	 *            the username
 	 * @return the performers
 	 */
 	public Map<String, Object> getPerformers(String username) {
@@ -160,7 +172,8 @@ public class ReviewService {
 	/**
 	 * Adds the competitor.
 	 *
-	 * @param businessObject the business object
+	 * @param businessObject
+	 *            the business object
 	 * @return the map
 	 */
 	public Map<String, Object> addCompetitor(BusinessObject businessObject) {
@@ -170,7 +183,8 @@ public class ReviewService {
 	/**
 	 * Adds the user.
 	 *
-	 * @param newUserRequest the new user request
+	 * @param newUserRequest
+	 *            the new user request
 	 * @return the map
 	 */
 	public Map<String, Object> addUser(BusinessUserTemp newUserRequest) {
@@ -180,8 +194,10 @@ public class ReviewService {
 	/**
 	 * Gets the user.
 	 *
-	 * @param userNameField the user name field
-	 * @param userNameValue the user name value
+	 * @param userNameField
+	 *            the user name field
+	 * @param userNameValue
+	 *            the user name value
 	 * @return the user
 	 */
 	public Map<String, Object> getUser(String userNameField, String userNameValue) {
@@ -191,8 +207,10 @@ public class ReviewService {
 	/**
 	 * Update user.
 	 *
-	 * @param clientId the client id
-	 * @param user the user
+	 * @param clientId
+	 *            the client id
+	 * @param user
+	 *            the user
 	 * @return the map
 	 */
 	public Map<String, Object> updateUser(String clientId, BusinessUser user) {
@@ -202,7 +220,8 @@ public class ReviewService {
 	/**
 	 * Adds the action item.
 	 *
-	 * @param reviewId the review id
+	 * @param reviewId
+	 *            the review id
 	 * @return the map
 	 */
 	public Map<String, Object> addActionItem(String reviewId) {
@@ -212,7 +231,8 @@ public class ReviewService {
 	/**
 	 * Removes the action item.
 	 *
-	 * @param reviewId the review id
+	 * @param reviewId
+	 *            the review id
 	 * @return the map
 	 */
 	public Map<String, Object> removeActionItem(String reviewId) {
@@ -222,7 +242,8 @@ public class ReviewService {
 	/**
 	 * Gets the action item.
 	 *
-	 * @param username the username
+	 * @param username
+	 *            the username
 	 * @return the action item
 	 */
 	public Map<String, Object> getActionItem(String username) {
@@ -232,7 +253,8 @@ public class ReviewService {
 	/**
 	 * Billing information.
 	 *
-	 * @param token the token
+	 * @param token
+	 *            the token
 	 * @return the customer
 	 */
 	public Customer billingInformation(String token) {
@@ -242,9 +264,12 @@ public class ReviewService {
 	/**
 	 * Log error.
 	 *
-	 * @param className the class name
-	 * @param methodName the method name
-	 * @param errorDetail the error detail
+	 * @param className
+	 *            the class name
+	 * @param methodName
+	 *            the method name
+	 * @param errorDetail
+	 *            the error detail
 	 */
 	public void logError(String className, String methodName, String errorDetail) {
 		reportIncidentService.logError(className, methodName, errorDetail);
@@ -271,7 +296,8 @@ public class ReviewService {
 	/**
 	 * Creates the stripe user.
 	 *
-	 * @param client the client
+	 * @param client
+	 *            the client
 	 * @return the customer
 	 */
 	public Customer createStripeUser(BusinessUser client) {
@@ -299,8 +325,10 @@ public class ReviewService {
 	/**
 	 * Change password.
 	 *
-	 * @param newPassword the new password
-	 * @param oldPassword the old password
+	 * @param newPassword
+	 *            the new password
+	 * @param oldPassword
+	 *            the old password
 	 * @return the map
 	 */
 	public Map<String, Object> changePassword(String newPassword, String oldPassword) {
@@ -310,7 +338,8 @@ public class ReviewService {
 	/**
 	 * Reset password.
 	 *
-	 * @param clientEmail the client email
+	 * @param clientEmail
+	 *            the client email
 	 * @return the map
 	 */
 	public Map<String, Object> resetPassword(String clientEmail) {
@@ -329,37 +358,42 @@ public class ReviewService {
 	/**
 	 * Adds the public review.
 	 *
-	 * @param reviewObject the review object
+	 * @param reviewObject
+	 *            the review object
 	 * @return the map
 	 */
-	@CacheEvict(value="justreviewz_reply",allEntries=true)
+	@CacheEvict(value = "justreviewz_reply", allEntries = true)
 	public Map<String, Object> addPublicReview(ReviewObject reviewObject) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("result", this.addReview(reviewObject));
 		data.put("success", true);
-		notificationService.addNotification(new Notification(reviewObject.getClientId(), reviewObject.getPostedBy()+" posted review", false, new Date()));
+		notificationService.addNotification(new Notification(reviewObject.getClientId(),
+				reviewObject.getPostedBy() + " posted review", false, new Date()));
 		return data;
 	}
 
 	/**
 	 * Gets the public reviews.
 	 *
-	 * @param reviewClient the review client
-	 * @param sortingOrder the sorting order
+	 * @param reviewClient
+	 *            the review client
+	 * @param sortingOrder
+	 *            the sorting order
 	 * @return the public reviews
 	 */
 	@Cacheable("justreviewz_reply")
 	public Map<String, Object> getPublicReviews(ReviewObject reviewClient, String sortingOrder) {
-		return reportIncidentService.getPublicReviews(reviewClient,sortingOrder);
+		return reportIncidentService.getPublicReviews(reviewClient, sortingOrder);
 	}
 
 	/**
 	 * Gets the public replies.
 	 *
-	 * @param publicReview the public review
+	 * @param publicReview
+	 *            the public review
 	 * @return the public replies
 	 */
-	@Cacheable(value="justreviewz_reply",key="#publicReview.hashCode()")
+	@Cacheable(value = "justreviewz_reply", key = "#publicReview.hashCode()")
 	public Map<String, Object> getPublicReplies(ReviewObject publicReview) {
 		return reportIncidentService.getPublicReplies(publicReview);
 	}
@@ -367,8 +401,10 @@ public class ReviewService {
 	/**
 	 * Like comment.
 	 *
-	 * @param reviewId the review id
-	 * @param likeFlag the like flag
+	 * @param reviewId
+	 *            the review id
+	 * @param likeFlag
+	 *            the like flag
 	 * @return the map
 	 */
 	public Map<String, Object> likeComment(Integer reviewId, Integer likeFlag) {
@@ -378,8 +414,10 @@ public class ReviewService {
 	/**
 	 * Dislike comment.
 	 *
-	 * @param reviewId the review id
-	 * @param likeFlag the like flag
+	 * @param reviewId
+	 *            the review id
+	 * @param likeFlag
+	 *            the like flag
 	 * @return the map
 	 */
 	public Map<String, Object> dislikeComment(Integer reviewId, Integer likeFlag) {
@@ -389,45 +427,53 @@ public class ReviewService {
 	/**
 	 * Search business.
 	 *
-	 * @param query the query
-	 * @param type the type
+	 * @param query
+	 *            the query
+	 * @param type
+	 *            the type
 	 * @return the map
 	 */
 	public Map<String, Object> searchBusiness(String query, String type) {
-		return reportIncidentService.searchBusiness(query,type);
+		return reportIncidentService.searchBusiness(query, type);
 	}
-	 
+
 	/**
 	 * Search location.
 	 *
-	 * @param query the query
-	 * @param type the type
+	 * @param query
+	 *            the query
+	 * @param type
+	 *            the type
 	 * @return the map
 	 */
 	public Map<String, Object> searchLocation(String query, String type) {
-		return reportIncidentService.searchLocation(query,type);
+		return reportIncidentService.searchLocation(query, type);
 	}
 
 	/**
 	 * Adds the public query.
 	 *
-	 * @param queryObject the query object
+	 * @param queryObject
+	 *            the query object
 	 * @return the map
 	 */
-	@CacheEvict(value="justreviewz_query",allEntries=true)
+	@CacheEvict(value = "justreviewz_query", allEntries = true)
 	public Map<String, Object> addPublicQuery(QueryObject queryObject) {
-		notificationService.addNotification(new Notification(queryObject.getClientId(), queryObject.getPostedBy()+" asked query.", false, new Date()));
-		reportIncidentService.addClientCustomer(queryObject.getClientId(),queryObject.getPostedEmail(),queryObject.getPostedBy());
+		notificationService.addNotification(new Notification(queryObject.getClientId(),
+				queryObject.getPostedBy() + " asked query.", false, new Date()));
+		reportIncidentService.addClientCustomer(queryObject.getClientId(), queryObject.getPostedEmail(),
+				queryObject.getPostedBy());
 		return reportIncidentService.addPublicQuery(queryObject);
 	}
 
 	/**
 	 * Gets the public query.
 	 *
-	 * @param queryObject the query object
+	 * @param queryObject
+	 *            the query object
 	 * @return the public query
 	 */
-	@Cacheable(value="justreviewz_query",key="#queryObject.hashCode()")
+	@Cacheable(value = "justreviewz_query", key = "#queryObject.hashCode()")
 	public Map<String, Object> getPublicQuery(QueryObject queryObject) {
 		return reportIncidentService.getPublicQuery(queryObject);
 	}
@@ -435,86 +481,99 @@ public class ReviewService {
 	/**
 	 * Gets the business customers.
 	 *
-	 * @param clientId the client id
+	 * @param clientId
+	 *            the client id
 	 * @return the business customers
 	 */
-	@Cacheable(value="justreviewz_customerbase")
-	public Map<String,Integer> getBusinessCustomers(String clientId) {
+	@Cacheable(value = "justreviewz_customerbase")
+	public Map<String, Integer> getBusinessCustomers(String clientId) {
 		return reportIncidentService.getBusinessCustomers(clientId);
 	}
 
 	/**
 	 * Gets the promotion.
 	 *
-	 * @param promotionObject the promotion object
-	 * @param filter the filter
+	 * @param promotionObject
+	 *            the promotion object
+	 * @param filter
+	 *            the filter
 	 * @return the promotion
 	 */
-	public Map<String,Object> getPromotion(PromotionObject promotionObject,boolean filter) {
-		return reportIncidentService.getPromotion(promotionObject,filter);
+	public Map<String, Object> getPromotion(PromotionObject promotionObject, boolean filter) {
+		return reportIncidentService.getPromotion(promotionObject, filter);
 	}
 
 	/**
 	 * Adds the promotion.
 	 *
-	 * @param promotionObject the promotion object
+	 * @param promotionObject
+	 *            the promotion object
 	 * @return the map
 	 */
-	public Map<String,Object> addPromotion(PromotionObject promotionObject) {
+	public Map<String, Object> addPromotion(PromotionObject promotionObject) {
 		return reportIncidentService.addPromotion(promotionObject);
 	}
 
 	/**
 	 * Gets the promotion counter.
 	 *
-	 * @param promotionCounterObject the promotion counter object
+	 * @param promotionCounterObject
+	 *            the promotion counter object
 	 * @return the promotion counter
 	 */
-	public Map<String,Object> getPromotionCounter(PromotionCounterObject promotionCounterObject) {
+	public Map<String, Object> getPromotionCounter(PromotionCounterObject promotionCounterObject) {
 		return reportIncidentService.getPromotionCounter(promotionCounterObject);
 	}
-	
+
 	/**
 	 * Request promotion.
 	 *
-	 * @param promotionCounterObject the promotion counter object
-	 * @param resetFlag the reset flag
+	 * @param promotionCounterObject
+	 *            the promotion counter object
+	 * @param resetFlag
+	 *            the reset flag
 	 * @return the map
 	 */
-	public Map<String,Object> requestPromotion(PromotionCounterObject promotionCounterObject,boolean resetFlag) {
-		return reportIncidentService.requestPromotion(promotionCounterObject,resetFlag);
+	public Map<String, Object> requestPromotion(PromotionCounterObject promotionCounterObject, boolean resetFlag) {
+		return reportIncidentService.requestPromotion(promotionCounterObject, resetFlag);
 	}
 
 	/**
 	 * Adds the client customer.
 	 *
-	 * @param clientId the client id
-	 * @param email the email
+	 * @param clientId
+	 *            the client id
+	 * @param email
+	 *            the email
 	 * @return the map
 	 */
-	public Map<String,Object> addClientCustomer(String clientId, String email) {
-		notificationService.addNotification(new Notification(clientId, email +" subscribed your updates.", false, new Date()));
-		return reportIncidentService.addClientCustomer(clientId, email,email);
+	public Map<String, Object> addClientCustomer(String clientId, String email) {
+		notificationService
+				.addNotification(new Notification(clientId, email + " subscribed your updates.", false, new Date()));
+		return reportIncidentService.addClientCustomer(clientId, email, email);
 	}
-	
+
 	/**
 	 * Removes the client customer.
 	 *
-	 * @param clientId the client id
-	 * @param email the email
+	 * @param clientId
+	 *            the client id
+	 * @param email
+	 *            the email
 	 * @return the map
 	 */
-	public Map<String,Object> removeClientCustomer(String clientId, String email) {
-		return reportIncidentService.removeClientCustomer(clientId, email,email);
+	public Map<String, Object> removeClientCustomer(String clientId, String email) {
+		return reportIncidentService.removeClientCustomer(clientId, email, email);
 	}
 
 	/**
 	 * Register new business.
 	 *
-	 * @param searchBusinessObject the search business object
+	 * @param searchBusinessObject
+	 *            the search business object
 	 * @return the map
 	 */
-	public Map<String,Object> registerNewBusiness(SearchBusinessObject searchBusinessObject) {
+	public Map<String, Object> registerNewBusiness(SearchBusinessObject searchBusinessObject) {
 		return reportIncidentService.registerNewBusiness(searchBusinessObject);
 	}
 
@@ -522,7 +581,7 @@ public class ReviewService {
 		return reportIncidentService.getReviewId(reviewId);
 	}
 
-	public Map<String,Object> sendDiscount(EmailNotificationObject emailObject) {
+	public Map<String, Object> sendDiscount(EmailNotificationObject emailObject) {
 		return reportIncidentService.sendDiscount(emailObject);
 	}
 
@@ -530,17 +589,16 @@ public class ReviewService {
 		return stripePaymentService.getSubscriptionStatus();
 	}
 
-	public Map<String,Object> postProduct(ProductObject productObject) {
+	public Map<String, Object> postProduct(ProductObject productObject) {
 		return reportIncidentService.postProduct(productObject);
 	}
 
-	public Map<String,Object> getProduct(ProductObject productObject) {
+	public Map<String, Object> getProduct(ProductObject productObject) {
 		return reportIncidentService.getProduct(productObject);
 	}
 
 	public ProductObject getProductById(String productId) {
-		return reportIncidentService.getProductById("productId",productId);
+		return reportIncidentService.getProductById("productId", productId);
 	}
-
 
 }

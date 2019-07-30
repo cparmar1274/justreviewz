@@ -26,8 +26,11 @@ public class ReviewManagerUserService implements UserDetailsService {
 	@Qualifier(value = "mongo")
 	ReviewServiceInterface userService;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.security.core.userdetails.UserDetailsService#
+	 * loadUserByUsername(java.lang.String)
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

@@ -37,7 +37,8 @@ public class Subscription {
 	/**
 	 * Sets the credit card number.
 	 *
-	 * @param creditCardNumber the new credit card number
+	 * @param creditCardNumber
+	 *            the new credit card number
 	 */
 	public void setCreditCardNumber(String creditCardNumber) {
 		this.creditCardNumber = creditCardNumber;
@@ -55,7 +56,8 @@ public class Subscription {
 	/**
 	 * Sets the postal code.
 	 *
-	 * @param postalCode the new postal code
+	 * @param postalCode
+	 *            the new postal code
 	 */
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
@@ -73,7 +75,8 @@ public class Subscription {
 	/**
 	 * Sets the cvv number.
 	 *
-	 * @param cvvNumber the new cvv number
+	 * @param cvvNumber
+	 *            the new cvv number
 	 */
 	public void setCvvNumber(String cvvNumber) {
 		this.cvvNumber = cvvNumber;
@@ -91,13 +94,16 @@ public class Subscription {
 	/**
 	 * Sets the billing cycle.
 	 *
-	 * @param billingCycle the new billing cycle
+	 * @param billingCycle
+	 *            the new billing cycle
 	 */
 	public void setBillingCycle(String billingCycle) {
 		this.billingCycle = billingCycle;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -111,7 +117,9 @@ public class Subscription {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

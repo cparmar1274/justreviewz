@@ -29,7 +29,8 @@ public class StripePaymentService {
 	/**
 	 * Billing information.
 	 *
-	 * @param token the token
+	 * @param token
+	 *            the token
 	 * @return the customer
 	 */
 	public Customer billingInformation(String token) {
@@ -116,7 +117,8 @@ public class StripePaymentService {
 	/**
 	 * Creates the stripe user.
 	 *
-	 * @param client the client
+	 * @param client
+	 *            the client
 	 * @return the customer
 	 */
 	public Customer createStripeUser(BusinessUser client) {
@@ -135,9 +137,12 @@ public class StripePaymentService {
 	/**
 	 * Log error.
 	 *
-	 * @param className   the class name
-	 * @param methodName  the method name
-	 * @param errorDetail the error detail
+	 * @param className
+	 *            the class name
+	 * @param methodName
+	 *            the method name
+	 * @param errorDetail
+	 *            the error detail
 	 */
 	public void logError(String className, String methodName, String errorDetail) {
 		try {

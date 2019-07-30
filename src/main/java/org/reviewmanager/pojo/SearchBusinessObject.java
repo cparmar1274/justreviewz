@@ -52,7 +52,8 @@ public class SearchBusinessObject {
 	/**
 	 * Sets the client name.
 	 *
-	 * @param clientName the new client name
+	 * @param clientName
+	 *            the new client name
 	 */
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
@@ -70,7 +71,8 @@ public class SearchBusinessObject {
 	/**
 	 * Sets the client type.
 	 *
-	 * @param clientType the new client type
+	 * @param clientType
+	 *            the new client type
 	 */
 	public void setClientType(String clientType) {
 		this.clientType = clientType;
@@ -88,7 +90,8 @@ public class SearchBusinessObject {
 	/**
 	 * Sets the client email.
 	 *
-	 * @param clientEmail the new client email
+	 * @param clientEmail
+	 *            the new client email
 	 */
 	public void setClientEmail(String clientEmail) {
 		this.clientEmail = clientEmail;
@@ -106,7 +109,8 @@ public class SearchBusinessObject {
 	/**
 	 * Sets the client business phone number.
 	 *
-	 * @param clientBusinessPhoneNumber the new client business phone number
+	 * @param clientBusinessPhoneNumber
+	 *            the new client business phone number
 	 */
 	public void setClientBusinessPhoneNumber(String clientBusinessPhoneNumber) {
 		this.clientBusinessPhoneNumber = clientBusinessPhoneNumber;
@@ -124,13 +128,16 @@ public class SearchBusinessObject {
 	/**
 	 * Sets the address.
 	 *
-	 * @param address the new address
+	 * @param address
+	 *            the new address
 	 */
 	public void setAddress(Address address) {
 		this.address = address;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -145,7 +152,9 @@ public class SearchBusinessObject {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -185,5 +194,4 @@ public class SearchBusinessObject {
 		return true;
 	}
 
-	
 }

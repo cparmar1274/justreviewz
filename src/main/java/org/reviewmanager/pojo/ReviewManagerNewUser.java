@@ -16,66 +16,66 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * The Class ReviewManagerNewUser.
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
-@JsonAutoDetect(fieldVisibility=Visibility.ANY)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class ReviewManagerNewUser {
 
 	/** The username. */
 	@JsonProperty("username")
 	public String username;
-	
+
 	/** The password. */
 	@JsonProperty("password")
 	public String password;
-	
+
 	/** The client name. */
 	@JsonProperty("clientName")
 	public String clientName;
-	
+
 	/** The client type. */
 	@JsonProperty("clientType")
 	public String clientType;
-	
+
 	/** The client id. */
 	@JsonProperty("clientId")
 	public String clientId;
-	
+
 	/** The client email. */
 	@JsonProperty("clientEmail")
 	public String clientEmail;
-	
+
 	/** The client business url. */
 	@JsonProperty("clientBusinessUrl")
 	public String clientBusinessUrl;
-	
+
 	/** The address. */
 	@JsonProperty("address")
 	public Address address;
-	
+
 	/** The facebook url. */
 	@JsonProperty("facebookUrl")
 	public String facebookUrl;
-	
+
 	/** The yelp url. */
 	@JsonProperty("yelpUrl")
 	public String yelpUrl;
-	
+
 	/** The notify new review. */
 	@JsonProperty("notifyNewReview")
 	public boolean notifyNewReview;
-	
+
 	/** The notify new report. */
 	@JsonProperty("notifyNewReport")
 	public boolean notifyNewReport;
-	
+
 	/** The notify added as competitor. */
 	@JsonProperty("notifyAddedAsCompetitor")
 	public boolean notifyAddedAsCompetitor;
-	
+
 	/** The subscription. */
 	@JsonProperty("subscription")
 	public Subscription subscription;
-	
+
 	/**
 	 * Instantiates a new review manager new user.
 	 */
@@ -96,7 +96,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the client name.
 	 *
-	 * @param clientName the new client name
+	 * @param clientName
+	 *            the new client name
 	 */
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
@@ -114,7 +115,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the client type.
 	 *
-	 * @param clientType the new client type
+	 * @param clientType
+	 *            the new client type
 	 */
 	public void setClientType(String clientType) {
 		this.clientType = clientType;
@@ -132,7 +134,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
@@ -150,7 +153,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the client email.
 	 *
-	 * @param clientEmail the new client email
+	 * @param clientEmail
+	 *            the new client email
 	 */
 	public void setClientEmail(String clientEmail) {
 		this.clientEmail = clientEmail;
@@ -168,7 +172,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the address.
 	 *
-	 * @param address the new address
+	 * @param address
+	 *            the new address
 	 */
 	public void setAddress(Address address) {
 		this.address = address;
@@ -186,7 +191,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the facebook url.
 	 *
-	 * @param facebookUrl the new facebook url
+	 * @param facebookUrl
+	 *            the new facebook url
 	 */
 	public void setFacebookUrl(String facebookUrl) {
 		this.facebookUrl = facebookUrl;
@@ -204,7 +210,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the yelp url.
 	 *
-	 * @param yelpUrl the new yelp url
+	 * @param yelpUrl
+	 *            the new yelp url
 	 */
 	public void setYelpUrl(String yelpUrl) {
 		this.yelpUrl = yelpUrl;
@@ -222,7 +229,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the notify new review.
 	 *
-	 * @param notifyNewReview the new notify new review
+	 * @param notifyNewReview
+	 *            the new notify new review
 	 */
 	public void setNotifyNewReview(boolean notifyNewReview) {
 		this.notifyNewReview = notifyNewReview;
@@ -240,7 +248,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the notify new report.
 	 *
-	 * @param notifyNewReport the new notify new report
+	 * @param notifyNewReport
+	 *            the new notify new report
 	 */
 	public void setNotifyNewReport(boolean notifyNewReport) {
 		this.notifyNewReport = notifyNewReport;
@@ -258,13 +267,12 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the subscription.
 	 *
-	 * @param subscription the new subscription
+	 * @param subscription
+	 *            the new subscription
 	 */
 	public void setSubscription(Subscription subscription) {
 		this.subscription = subscription;
 	}
-
-	
 
 	/**
 	 * Gets the username.
@@ -278,7 +286,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the username.
 	 *
-	 * @param username the new username
+	 * @param username
+	 *            the new username
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -296,7 +305,8 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the password.
 	 *
-	 * @param password the new password
+	 * @param password
+	 *            the new password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -314,14 +324,13 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the notify added as competitor.
 	 *
-	 * @param notifyAddedAsCompetitor the new notify added as competitor
+	 * @param notifyAddedAsCompetitor
+	 *            the new notify added as competitor
 	 */
 	public void setNotifyAddedAsCompetitor(boolean notifyAddedAsCompetitor) {
 		this.notifyAddedAsCompetitor = notifyAddedAsCompetitor;
 	}
 
-	
-	
 	/**
 	 * Gets the client business url.
 	 *
@@ -334,16 +343,16 @@ public class ReviewManagerNewUser {
 	/**
 	 * Sets the client business url.
 	 *
-	 * @param clientBusinessUrl the new client business url
+	 * @param clientBusinessUrl
+	 *            the new client business url
 	 */
 	public void setClientBusinessUrl(String clientBusinessUrl) {
 		this.clientBusinessUrl = clientBusinessUrl;
 	}
 
-	
-	
-	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -367,7 +376,9 @@ public class ReviewManagerNewUser {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -450,9 +461,10 @@ public class ReviewManagerNewUser {
 	 */
 	public ReviewManagerUser getUser() {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("USER")); 
+		authorities.add(new SimpleGrantedAuthority("USER"));
 		String password = new BCryptPasswordEncoder().encode(this.getPassword());
-		ReviewManagerUser user = new ReviewManagerUser(this.getUsername(),password, true, true, true, true, authorities);
+		ReviewManagerUser user = new ReviewManagerUser(this.getUsername(), password, true, true, true, true,
+				authorities);
 		user.setAddress(this.getAddress());
 		user.setSubscription(false);
 		user.setClientId(this.getClientId());
@@ -462,11 +474,10 @@ public class ReviewManagerNewUser {
 		user.setNotifyAddedAsCompetitor(this.isNotifyAddedAsCompetitor());
 		user.setNotifyNewReport(this.isNotifyNewReport());
 		user.setNotifyNewReview(this.isNotifyNewReview());
-		user.setClientBusinessUrl(this.getClientBusinessUrl()==null ? "": this.getClientBusinessUrl());
-		user.setYelpUrl(this.getYelpUrl()==null ? "" : this.getYelpUrl());
-		user.setFacebookUrl(this.getFacebookUrl()==null ? "" : this.getFacebookUrl());
+		user.setClientBusinessUrl(this.getClientBusinessUrl() == null ? "" : this.getClientBusinessUrl());
+		user.setYelpUrl(this.getYelpUrl() == null ? "" : this.getYelpUrl());
+		user.setFacebookUrl(this.getFacebookUrl() == null ? "" : this.getFacebookUrl());
 		return user;
 	}
-	
 
 }

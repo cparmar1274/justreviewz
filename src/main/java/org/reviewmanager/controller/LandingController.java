@@ -44,7 +44,7 @@ import io.netty.util.internal.StringUtil;
  * The Class PublicController.
  */
 @Controller
-@RequestMapping({"/","/landing"})
+@RequestMapping({ "/", "/landing" })
 public class LandingController {
 
 	/** The review service. */
@@ -67,12 +67,11 @@ public class LandingController {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}
 
-	
 	@RequestMapping(value = "/")
 	public ModelAndView publics(HttpServletRequest request) {
 		return new ModelAndView("redirect:/landing/public");
 	}
-	
+
 	/**
 	 * Review auth.
 	 *

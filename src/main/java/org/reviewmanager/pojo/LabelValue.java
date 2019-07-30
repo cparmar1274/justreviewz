@@ -7,19 +7,21 @@ package org.reviewmanager.pojo;
 public class LabelValue {
 
 	/** The name. */
-	public String   name;
-	
+	public String name;
+
 	/** The label. */
-	public String	label;
-	
+	public String label;
+
 	/** The value. */
-	public String	value;
+	public String value;
 
 	/**
 	 * Instantiates a new label value.
 	 *
-	 * @param label the label
-	 * @param value the value
+	 * @param label
+	 *            the label
+	 * @param value
+	 *            the value
 	 */
 	public LabelValue(String label, String value) {
 		super();
@@ -31,9 +33,12 @@ public class LabelValue {
 	/**
 	 * Instantiates a new label value.
 	 *
-	 * @param name the name
-	 * @param label the label
-	 * @param value the value
+	 * @param name
+	 *            the name
+	 * @param label
+	 *            the label
+	 * @param value
+	 *            the value
 	 */
 	public LabelValue(String name, String label, String value) {
 		super();
@@ -54,7 +59,8 @@ public class LabelValue {
 	/**
 	 * Sets the label.
 	 *
-	 * @param label the new label
+	 * @param label
+	 *            the new label
 	 */
 	public void setLabel(String label) {
 		this.label = label;
@@ -72,7 +78,8 @@ public class LabelValue {
 	/**
 	 * Sets the value.
 	 *
-	 * @param value the new value
+	 * @param value
+	 *            the new value
 	 */
 	public void setValue(String value) {
 		this.value = value;
@@ -90,13 +97,16 @@ public class LabelValue {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -109,7 +119,9 @@ public class LabelValue {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -138,7 +150,5 @@ public class LabelValue {
 			return false;
 		return true;
 	}
-
-	
 
 }

@@ -71,7 +71,8 @@ public class BusinessController {
 	/**
 	 * Index page.
 	 *
-	 * @param request the request
+	 * @param request
+	 *            the request
 	 * @return the model and view
 	 */
 	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
@@ -82,7 +83,8 @@ public class BusinessController {
 	/**
 	 * Report driver page.
 	 *
-	 * @param request the request
+	 * @param request
+	 *            the request
 	 * @return the model and view
 	 */
 	@RequestMapping(value = "/addReview", method = RequestMethod.GET)
@@ -93,8 +95,10 @@ public class BusinessController {
 	/**
 	 * Report incident.
 	 *
-	 * @param request the request
-	 * @param file    the file
+	 * @param request
+	 *            the request
+	 * @param file
+	 *            the file
 	 * @return the map
 	 */
 	@RequestMapping(value = "/bulkUpload", method = RequestMethod.POST)
@@ -141,8 +145,10 @@ public class BusinessController {
 	/**
 	 * Report incident.
 	 *
-	 * @param request      the request
-	 * @param reviewObject the review object
+	 * @param request
+	 *            the request
+	 * @param reviewObject
+	 *            the review object
 	 * @return the map
 	 */
 	@RequestMapping(value = "/reportIncident", method = RequestMethod.POST)
@@ -164,7 +170,6 @@ public class BusinessController {
 		return responseData;
 	}
 
-	
 	@RequestMapping(value = "/getAsk", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> getAsk(HttpServletRequest request,
 			@RequestBody(required = false) QueryObject queryObject) {
@@ -182,8 +187,10 @@ public class BusinessController {
 	/**
 	 * Gets the reviews.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the reviews
 	 */
 	@RequestMapping(value = "/getReviews", method = RequestMethod.GET)
@@ -220,8 +227,10 @@ public class BusinessController {
 	/**
 	 * Gets the account detail.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the account detail
 	 */
 	@RequestMapping(value = "/getAccountDetail", method = RequestMethod.GET)
@@ -249,8 +258,10 @@ public class BusinessController {
 	/**
 	 * Gets the dashboard chart data.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the dashboard chart data
 	 */
 	@RequestMapping(value = "/getDashboardChartData", method = RequestMethod.GET)
@@ -274,8 +285,10 @@ public class BusinessController {
 	/**
 	 * Gets the trending data.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the trending data
 	 */
 	@RequestMapping(value = "/getTrendingData", method = RequestMethod.GET)
@@ -300,8 +313,10 @@ public class BusinessController {
 	/**
 	 * Gets the competitors.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the competitors
 	 */
 	@RequestMapping(value = "/getCompetitors", method = RequestMethod.GET)
@@ -324,8 +339,10 @@ public class BusinessController {
 	/**
 	 * Adds the competitor.
 	 *
-	 * @param request        the request
-	 * @param businessObject the business object
+	 * @param request
+	 *            the request
+	 * @param businessObject
+	 *            the business object
 	 * @return the map
 	 */
 	@RequestMapping(value = "/addCompetitor", method = RequestMethod.POST)
@@ -349,8 +366,10 @@ public class BusinessController {
 	/**
 	 * Update profile.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the map
 	 */
 	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
@@ -365,8 +384,7 @@ public class BusinessController {
 			BusinessUser user = (BusinessUser) data.get("result");
 
 			// update profile
-			if (params.containsKey("accountEmail"))
-			{
+			if (params.containsKey("accountEmail")) {
 				user.setClientEmail(params.get("accountEmail").toString());
 				RMUtil.getSessionedUser().setClientEmail(user.getClientEmail());
 			}
@@ -422,8 +440,10 @@ public class BusinessController {
 	/**
 	 * Change password.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the map
 	 */
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
@@ -457,8 +477,10 @@ public class BusinessController {
 	/**
 	 * Gets the performers.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the performers
 	 */
 	@RequestMapping(value = "/getPerformers", method = RequestMethod.GET)
@@ -481,8 +503,10 @@ public class BusinessController {
 	/**
 	 * Adds the action item.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the map
 	 */
 	@RequestMapping(value = "/addActionItem", method = RequestMethod.POST)
@@ -505,8 +529,10 @@ public class BusinessController {
 	/**
 	 * Removes the action item.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the map
 	 */
 	@RequestMapping(value = "/removeActionItem", method = RequestMethod.POST)
@@ -529,8 +555,10 @@ public class BusinessController {
 	/**
 	 * Gets the action items.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the action items
 	 */
 	@RequestMapping(value = "/getActionItems", method = RequestMethod.GET)
@@ -554,8 +582,10 @@ public class BusinessController {
 	/**
 	 * Gets the notifications.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the notifications
 	 */
 	@RequestMapping(value = "/getNotifications", method = RequestMethod.GET)
@@ -580,8 +610,10 @@ public class BusinessController {
 	/**
 	 * Mark notification.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the map
 	 */
 	@RequestMapping(value = "/markNotification", method = RequestMethod.POST)
@@ -606,8 +638,10 @@ public class BusinessController {
 	/**
 	 * Start subscriptioncharge.
 	 *
-	 * @param request the request
-	 * @param card    the card
+	 * @param request
+	 *            the request
+	 * @param card
+	 *            the card
 	 * @return the map
 	 */
 	@PostMapping("/startSubscription")
@@ -651,8 +685,10 @@ public class BusinessController {
 	/**
 	 * End subscriptioncharge.
 	 *
-	 * @param request the request
-	 * @param card    the card
+	 * @param request
+	 *            the request
+	 * @param card
+	 *            the card
 	 * @return the map
 	 */
 	@PostMapping("/endSubscription")
@@ -684,8 +720,10 @@ public class BusinessController {
 	/**
 	 * Charge.
 	 *
-	 * @param request the request
-	 * @param card    the card
+	 * @param request
+	 *            the request
+	 * @param card
+	 *            the card
 	 * @return the map
 	 */
 	@PostMapping("/charge")
@@ -709,8 +747,10 @@ public class BusinessController {
 	/**
 	 * Reply review.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the map
 	 */
 	@RequestMapping(value = "/replyReview", method = RequestMethod.POST)
@@ -735,8 +775,10 @@ public class BusinessController {
 	/**
 	 * Reply ask.
 	 *
-	 * @param request     the request
-	 * @param queryObject the query object
+	 * @param request
+	 *            the request
+	 * @param queryObject
+	 *            the query object
 	 * @return the map
 	 */
 	@RequestMapping(value = "/replyAsk", method = RequestMethod.POST)
@@ -757,8 +799,10 @@ public class BusinessController {
 	/**
 	 * Load replies.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the map
 	 */
 	@RequestMapping(value = "/loadReplies", method = RequestMethod.POST)
@@ -780,8 +824,10 @@ public class BusinessController {
 	/**
 	 * Load business.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the map
 	 */
 	@RequestMapping(value = "/loadBusiness", method = RequestMethod.GET)
@@ -800,8 +846,10 @@ public class BusinessController {
 	/**
 	 * Load promotions.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the map
 	 */
 	@RequestMapping(value = "/loadPromotions", method = RequestMethod.GET)
@@ -822,8 +870,10 @@ public class BusinessController {
 	/**
 	 * Reset promotion counter.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the map
 	 */
 	@RequestMapping(value = "/resetPromotionCounter", method = RequestMethod.GET)
@@ -845,8 +895,10 @@ public class BusinessController {
 	/**
 	 * Gets the promotion counter.
 	 *
-	 * @param request the request
-	 * @param params  the params
+	 * @param request
+	 *            the request
+	 * @param params
+	 *            the params
 	 * @return the promotion counter
 	 */
 	@RequestMapping(value = "/getPromotionCounter", method = RequestMethod.GET)
@@ -867,8 +919,10 @@ public class BusinessController {
 	/**
 	 * Load promotions.
 	 *
-	 * @param request         the request
-	 * @param promotionObject the promotion object
+	 * @param request
+	 *            the request
+	 * @param promotionObject
+	 *            the promotion object
 	 * @return the map
 	 */
 	@RequestMapping(value = "/createPromotion", method = RequestMethod.POST)
@@ -877,7 +931,9 @@ public class BusinessController {
 		Map<String, Object> responseData = new HashMap<String, Object>();
 		try {
 			promotionObject.setBusinessName(RMUtil.getSessionedUser().getClientName());
-			promotionObject.setBusinessAddress(RMUtil.getSessionedUser().getAddress().getCity()+" ,"+RMUtil.getSessionedUser().getAddress().getProvince()+" "+RMUtil.getSessionedUser().getAddress().getCountry());
+			promotionObject.setBusinessAddress(RMUtil.getSessionedUser().getAddress().getCity() + " ,"
+					+ RMUtil.getSessionedUser().getAddress().getProvince() + " "
+					+ RMUtil.getSessionedUser().getAddress().getCountry());
 			promotionObject.setClientId(RMUtil.getSessionedUser().getClientId());
 			responseData.put("result", reviewService.addPromotion(promotionObject));
 		} catch (Exception ex) {

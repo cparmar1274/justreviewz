@@ -31,14 +31,13 @@ class Product {
 		return true;
 	}
 
-	
-	
 }
+
 public class Tester {
-	
+
 	public static void main(String[] args) throws ParseException {
-		int j=0;
-		while(j<=100) {
+		int j = 0;
+		while (j <= 100) {
 			System.out.println(RMUtil.generateRandomPasswordText());
 			j++;
 		}

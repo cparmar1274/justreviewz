@@ -17,19 +17,19 @@ public class TrendingKeyword {
 
 	/** The keyword. */
 	@JsonProperty("keyword")
-	public String		keyword;
-	
+	public String keyword;
+
 	/** The count. */
 	@JsonProperty("count")
-	public Integer	count;
-	
+	public Integer count;
+
 	/** The average rating. */
 	@JsonProperty("averageRating")
-	public Double		averageRating;
-	
+	public Double averageRating;
+
 	/** The positive review. */
 	@JsonProperty(value = "positiveReview")
-	public boolean	positiveReview;
+	public boolean positiveReview;
 
 	/**
 	 * Instantiates a new trending keyword.
@@ -41,9 +41,12 @@ public class TrendingKeyword {
 	/**
 	 * Instantiates a new trending keyword.
 	 *
-	 * @param keyword the keyword
-	 * @param count the count
-	 * @param averageRating the average rating
+	 * @param keyword
+	 *            the keyword
+	 * @param count
+	 *            the count
+	 * @param averageRating
+	 *            the average rating
 	 */
 	public TrendingKeyword(String keyword, Integer count, Double averageRating) {
 		super();
@@ -64,7 +67,8 @@ public class TrendingKeyword {
 	/**
 	 * Sets the keyword.
 	 *
-	 * @param keyword the new keyword
+	 * @param keyword
+	 *            the new keyword
 	 */
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
@@ -82,7 +86,8 @@ public class TrendingKeyword {
 	/**
 	 * Sets the count.
 	 *
-	 * @param count the new count
+	 * @param count
+	 *            the new count
 	 */
 	public void setCount(Integer count) {
 		this.count = count;
@@ -100,7 +105,8 @@ public class TrendingKeyword {
 	/**
 	 * Sets the average rating.
 	 *
-	 * @param averageRating the new average rating
+	 * @param averageRating
+	 *            the new average rating
 	 */
 	public void setAverageRating(Double averageRating) {
 		this.averageRating = averageRating;
@@ -118,13 +124,16 @@ public class TrendingKeyword {
 	/**
 	 * Sets the positive review.
 	 *
-	 * @param positiveReview the new positive review
+	 * @param positiveReview
+	 *            the new positive review
 	 */
 	public void setPositiveReview(boolean positiveReview) {
 		this.positiveReview = positiveReview;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -138,7 +147,9 @@ public class TrendingKeyword {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

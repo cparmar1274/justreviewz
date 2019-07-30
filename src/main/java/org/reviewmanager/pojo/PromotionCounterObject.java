@@ -15,14 +15,14 @@ public class PromotionCounterObject {
 	/** The client id. */
 	@JsonProperty("clientId")
 	public String clientId;
-	
+
 	/** The promotion request counter. */
 	@JsonProperty("promotionRequestCounter")
 	public Integer promotionRequestCounter;
-	
+
 	/** The update time. */
 	public Date updateTime;
-	
+
 	/**
 	 * Instantiates a new promotion counter object.
 	 */
@@ -31,12 +31,14 @@ public class PromotionCounterObject {
 		this.promotionRequestCounter = 0;
 		this.updateTime = new Date();
 	}
-	
+
 	/**
 	 * Instantiates a new promotion counter object.
 	 *
-	 * @param clientId the client id
-	 * @param promotionRequestCounter the promotion request counter
+	 * @param clientId
+	 *            the client id
+	 * @param promotionRequestCounter
+	 *            the promotion request counter
 	 */
 	public PromotionCounterObject(String clientId, Integer promotionRequestCounter) {
 		super();
@@ -44,7 +46,7 @@ public class PromotionCounterObject {
 		this.promotionRequestCounter = promotionRequestCounter;
 		this.updateTime = new Date();
 	}
-	
+
 	/**
 	 * Gets the client id.
 	 *
@@ -53,16 +55,17 @@ public class PromotionCounterObject {
 	public String getClientId() {
 		return clientId;
 	}
-	
+
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
-	
+
 	/**
 	 * Gets the promotion request counter.
 	 *
@@ -71,16 +74,17 @@ public class PromotionCounterObject {
 	public Integer getPromotionRequestCounter() {
 		return promotionRequestCounter;
 	}
-	
+
 	/**
 	 * Sets the promotion request counter.
 	 *
-	 * @param promotionRequestCounter the new promotion request counter
+	 * @param promotionRequestCounter
+	 *            the new promotion request counter
 	 */
 	public void setPromotionRequestCounter(Integer promotionRequestCounter) {
 		this.promotionRequestCounter = promotionRequestCounter;
 	}
-	
+
 	/**
 	 * Incr promotion request counter.
 	 */
@@ -88,8 +92,10 @@ public class PromotionCounterObject {
 		this.promotionRequestCounter++;
 		this.updateTime = new Date();
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -101,8 +107,10 @@ public class PromotionCounterObject {
 		result = prime * result + ((updateTime == null) ? 0 : updateTime.hashCode());
 		return result;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -131,7 +139,5 @@ public class PromotionCounterObject {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

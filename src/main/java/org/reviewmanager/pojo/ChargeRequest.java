@@ -10,27 +10,27 @@ public class ChargeRequest {
 	 * The Enum Currency.
 	 */
 	public enum Currency {
-		
+
 		/** The usd. */
-		USD, 
- /** The cad. */
- CAD;
+		USD,
+		/** The cad. */
+		CAD;
 	}
 
 	/** The description. */
-	private String		description;
-	
+	private String description;
+
 	/** The amount. */
-	private int				amount;
-	
+	private int amount;
+
 	/** The currency. */
-	private Currency	currency;
-	
+	private Currency currency;
+
 	/** The stripe email. */
-	private String		stripeEmail;
-	
+	private String stripeEmail;
+
 	/** The stripe token. */
-	private String		stripeToken;
+	private String stripeToken;
 
 	/**
 	 * Instantiates a new charge request.
@@ -52,7 +52,8 @@ public class ChargeRequest {
 	/**
 	 * Sets the description.
 	 *
-	 * @param description the new description
+	 * @param description
+	 *            the new description
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -70,7 +71,8 @@ public class ChargeRequest {
 	/**
 	 * Sets the amount.
 	 *
-	 * @param amount the new amount
+	 * @param amount
+	 *            the new amount
 	 */
 	public void setAmount(int amount) {
 		this.amount = amount;
@@ -88,7 +90,8 @@ public class ChargeRequest {
 	/**
 	 * Sets the currency.
 	 *
-	 * @param currency the new currency
+	 * @param currency
+	 *            the new currency
 	 */
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
@@ -106,7 +109,8 @@ public class ChargeRequest {
 	/**
 	 * Sets the stripe email.
 	 *
-	 * @param stripeEmail the new stripe email
+	 * @param stripeEmail
+	 *            the new stripe email
 	 */
 	public void setStripeEmail(String stripeEmail) {
 		this.stripeEmail = stripeEmail;
@@ -124,13 +128,16 @@ public class ChargeRequest {
 	/**
 	 * Sets the stripe token.
 	 *
-	 * @param stripeToken the new stripe token
+	 * @param stripeToken
+	 *            the new stripe token
 	 */
 	public void setStripeToken(String stripeToken) {
 		this.stripeToken = stripeToken;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -145,7 +152,9 @@ public class ChargeRequest {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

@@ -26,7 +26,6 @@ import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class MongoService.
@@ -46,42 +45,48 @@ public class MongoService {
 	public MongoService() {
 
 		try {
-			
-			String database = "review_analytics"; // the name of the database in which the user is defined
+
+			String database = "review_analytics"; // the name of the database in
+													// which the user is defined
 			MongoClientURI uri = new MongoClientURI("mongodb://localhost:27017/?authSource=db1");
 			mongoClient = new MongoClient(uri);
 			mongoDB = mongoClient.getDatabase(database);
 			// create Index
 			mongoDB.getCollection(RMUtil.REVIEW_INDEX).createIndex(new BasicDBObject().append("reviewContent", "text"));
 		} catch (Exception ex) {
-			System.out.println("MongoDB not started. "+ex.getMessage());
+			System.out.println("MongoDB not started. " + ex.getMessage());
 		}
 	}
 
 	/**
 	 * Adds the object.
 	 *
-	 * @param tableName the table name
-	 * @param searchQuery the search query
-	 * @param document the document
+	 * @param tableName
+	 *            the table name
+	 * @param searchQuery
+	 *            the search query
+	 * @param document
+	 *            the document
 	 * @return the write result
 	 */
 	public UpdateResult addObject(String tableName, BasicDBObject searchQuery, BasicDBObject document) {
 		MongoCollection<Document> mongoTable = mongoDB.getCollection(tableName);
 		UpdateOptions updateOption = new UpdateOptions().upsert(true);
-		return mongoTable.updateOne(searchQuery, document,updateOption);
+		return mongoTable.updateOne(searchQuery, document, updateOption);
 	}
 
-	public List<Document> getObject(String tableName, BasicDBObject searchQuery,BasicDBObject sort) {
+	public List<Document> getObject(String tableName, BasicDBObject searchQuery, BasicDBObject sort) {
 		MongoCollection<Document> mongoTable = mongoDB.getCollection(tableName);
-    	 return Lists.newArrayList(mongoTable.find(searchQuery).sort(sort).iterator());
+		return Lists.newArrayList(mongoTable.find(searchQuery).sort(sort).iterator());
 	}
 
 	/**
 	 * Delete object.
 	 *
-	 * @param tableName the table name
-	 * @param searchQuery the search query
+	 * @param tableName
+	 *            the table name
+	 * @param searchQuery
+	 *            the search query
 	 * @return the write result
 	 */
 	public DeleteResult deleteObject(String tableName, BasicDBObject searchQuery) {

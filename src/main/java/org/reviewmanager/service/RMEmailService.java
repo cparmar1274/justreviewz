@@ -21,8 +21,7 @@ public class RMEmailService {
 
 	/** The executor service. */
 	public ExecutorService executorService = Executors.newFixedThreadPool(10);
-	
-	
+
 	/**
 	 * Instantiates a new RM email service.
 	 */
@@ -33,7 +32,8 @@ public class RMEmailService {
 	/**
 	 * Send email notification.
 	 *
-	 * @param emailNotificationObject the email notification object
+	 * @param emailNotificationObject
+	 *            the email notification object
 	 * @return the map
 	 */
 	public Map<String, Object> sendEmailNotification(EmailNotificationObject emailNotificationObject) {
@@ -47,14 +47,14 @@ public class RMEmailService {
 				email.setSSLOnConnect(true);
 				email.setHostName("mail.privateemail.com");
 				email.addTo(emailNotificationObject.getSendTo(), emailNotificationObject.getSenderName());
-				
-				  // embed the image and get the content id
-			  URL url = new URL("http://www.justreviewz.com/public/justreviewz_logo_nav.png");
-			  String cid = email.embed(url, "Just Reviewz Inc");
-			  
+
+				// embed the image and get the content id
+				URL url = new URL("http://www.justreviewz.com/public/justreviewz_logo_nav.png");
+				String cid = email.embed(url, "Just Reviewz Inc");
+
 				email.setFrom("support@justreviewz.com", "Just Reviewz Inc");
 				email.setSubject(emailNotificationObject.getSubject());
-				email.setHtmlMsg(getMessageType(emailNotificationObject,cid));
+				email.setHtmlMsg(getMessageType(emailNotificationObject, cid));
 				email.send();
 				return "send";
 			});
@@ -68,31 +68,33 @@ public class RMEmailService {
 	/**
 	 * Gets the message type.
 	 *
-	 * @param emailNotificationObject the email notification object
+	 * @param emailNotificationObject
+	 *            the email notification object
 	 * @return the message type
 	 */
-	public String getMessageType(EmailNotificationObject emailNotificationObject,String cid) {
-		return RMUtil.getEmailTemplate(emailNotificationObject,cid);
-		
+	public String getMessageType(EmailNotificationObject emailNotificationObject, String cid) {
+		return RMUtil.getEmailTemplate(emailNotificationObject, cid);
+
 	}
-	
-	/*public static void main(String[] args) {
-		try {
-			RMEmailService service = new RMEmailService();
-			HtmlEmail email = new HtmlEmail();
-			EmailNotificationObject emailNotificationObject = new EmailNotificationObject("chirag-parmar@live.com", "chriag Parmar", "test", "test", "cus_E5E9ReZkKslVjq");
-			email.setSmtpPort(465);
-			email.setAuthenticator(new DefaultAuthenticator("support@justreviewz.com", "4jej$c2q(H"));
-			email.setSSLOnConnect(true);
-			email.setHostName("mail.privateemail.com");
-			email.addTo(emailNotificationObject.getSendTo(), emailNotificationObject.getSenderName());
-			email.setFrom("support@justreviewz.com", "Just Reviewz Inc");
-			email.setSubject(emailNotificationObject.getSubject());
-			email.setHtmlMsg(service.getMessageType(emailNotificationObject));
-			email.send();
-			
-		}catch(Exception ex) {
-			
-		}
-	}*/
+
+	/*
+	 * public static void main(String[] args) { try { RMEmailService service =
+	 * new RMEmailService(); HtmlEmail email = new HtmlEmail();
+	 * EmailNotificationObject emailNotificationObject = new
+	 * EmailNotificationObject("chirag-parmar@live.com", "chriag Parmar",
+	 * "test", "test", "cus_E5E9ReZkKslVjq"); email.setSmtpPort(465);
+	 * email.setAuthenticator(new
+	 * DefaultAuthenticator("support@justreviewz.com", "4jej$c2q(H"));
+	 * email.setSSLOnConnect(true); email.setHostName("mail.privateemail.com");
+	 * email.addTo(emailNotificationObject.getSendTo(),
+	 * emailNotificationObject.getSenderName());
+	 * email.setFrom("support@justreviewz.com", "Just Reviewz Inc");
+	 * email.setSubject(emailNotificationObject.getSubject());
+	 * email.setHtmlMsg(service.getMessageType(emailNotificationObject));
+	 * email.send();
+	 * 
+	 * }catch(Exception ex) {
+	 * 
+	 * } }
+	 */
 }

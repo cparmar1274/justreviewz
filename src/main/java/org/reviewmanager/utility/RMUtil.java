@@ -93,7 +93,8 @@ public class RMUtil {
 	/**
 	 * Gets the search page sizes.
 	 *
-	 * @param numberOfPages the number of pages
+	 * @param numberOfPages
+	 *            the number of pages
 	 * @return the search page sizes
 	 */
 	public static String getSearchPageSizes(Integer numberOfPages) {
@@ -113,7 +114,8 @@ public class RMUtil {
 	/**
 	 * Gets the map.
 	 *
-	 * @param obj the obj
+	 * @param obj
+	 *            the obj
 	 * @return the map
 	 */
 	public static Map<String, Object> getMap(Object obj) {
@@ -125,7 +127,8 @@ public class RMUtil {
 	/**
 	 * Gets the user object.
 	 *
-	 * @param jsonData the json data
+	 * @param jsonData
+	 *            the json data
 	 * @return the user object
 	 */
 	public static BusinessUser getUserObject(JsonObject jsonData) {
@@ -155,11 +158,9 @@ public class RMUtil {
 			reviewUser.setClientBusinessUrl(jsonData.get("clientBusinessUrl").getAsString());
 
 			reviewUser.setClientBusinessPhoneNumber(jsonData.get("clientBusinessPhoneNumber") != null
-					? jsonData.get("clientBusinessPhoneNumber").getAsString()
-					: StringUtils.EMPTY);
+					? jsonData.get("clientBusinessPhoneNumber").getAsString() : StringUtils.EMPTY);
 			reviewUser.setWorkingHours(jsonData.get("workingHours") != null
-					? RMUtil.gson.fromJson(jsonData.get("workingHours"), WorkingHours.class)
-					: new WorkingHours());
+					? RMUtil.gson.fromJson(jsonData.get("workingHours"), WorkingHours.class) : new WorkingHours());
 			return reviewUser;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -170,9 +171,12 @@ public class RMUtil {
 	/**
 	 * Gets the application error.
 	 *
-	 * @param className   the class name
-	 * @param methodName  the method name
-	 * @param errorDetail the error detail
+	 * @param className
+	 *            the class name
+	 * @param methodName
+	 *            the method name
+	 * @param errorDetail
+	 *            the error detail
 	 * @return the application error
 	 */
 	public static Map<String, Object> getApplicationError(String className, String methodName, String errorDetail) {
@@ -184,8 +188,10 @@ public class RMUtil {
 	/**
 	 * Checks if is month same.
 	 *
-	 * @param ratingDate the rating date
-	 * @param postedDate the posted date
+	 * @param ratingDate
+	 *            the rating date
+	 * @param postedDate
+	 *            the posted date
 	 * @return true, if is month same
 	 */
 	public static boolean isMonthSame(Date ratingDate, Date postedDate) {
@@ -229,7 +235,8 @@ public class RMUtil {
 	/**
 	 * Convert to review.
 	 *
-	 * @param reviewObjectString the review object string
+	 * @param reviewObjectString
+	 *            the review object string
 	 * @return the review object
 	 */
 	public static ReviewObject convertToReview(String reviewObjectString) {
@@ -247,10 +254,10 @@ public class RMUtil {
 	 * @return the string
 	 */
 	public static String generateRandomPasswordText() {
-		String[] charArray = new String[] { "A", "B", "C", "1", "D", "E", "{", "F", "G", "H", "2","%", "I", "J", "K", "L",
-				"M","_", "N", "3","+","=", "O", "P","[", "Q", "R", "S", "$","(","T", "U", "V",")", "W", "}", "X","~", "Y", "Z", "a", "b", "c", "d",
-				"9", "e","]", "f", "g", "h", "i", "j", "k", "l","@", "6", "m", "n", "o", "p","!", "q", "r", "s","#", "t", "u", "v", "w",
-				"x","-", "y", "z" };
+		String[] charArray = new String[] { "A", "B", "C", "1", "D", "E", "{", "F", "G", "H", "2", "%", "I", "J", "K",
+				"L", "M", "_", "N", "3", "+", "=", "O", "P", "[", "Q", "R", "S", "$", "(", "T", "U", "V", ")", "W", "}",
+				"X", "~", "Y", "Z", "a", "b", "c", "d", "9", "e", "]", "f", "g", "h", "i", "j", "k", "l", "@", "6", "m",
+				"n", "o", "p", "!", "q", "r", "s", "#", "t", "u", "v", "w", "x", "-", "y", "z" };
 		Random random = new Random();
 		StringBuffer password = new StringBuffer();
 		for (int i = 0; i < RMUtil.PASSWORD_LENGTH; i++)
@@ -261,8 +268,10 @@ public class RMUtil {
 	/**
 	 * Checks if is expired.
 	 *
-	 * @param promotionStartDate the promotion start date
-	 * @param promotionEndDate   the promotion end date
+	 * @param promotionStartDate
+	 *            the promotion start date
+	 * @param promotionEndDate
+	 *            the promotion end date
 	 * @return true, if is expired
 	 */
 	public static boolean isExpired(String promotionStartDate, String promotionEndDate) {
@@ -278,14 +287,15 @@ public class RMUtil {
 	/**
 	 * Gets the email template.
 	 *
-	 * @param emailNotificationObject the email notification object
+	 * @param emailNotificationObject
+	 *            the email notification object
 	 * @return the email template
 	 */
 	public static String getEmailTemplate(EmailNotificationObject emailNotificationObject, String cid) {
 		StringBuffer stringBuffer = new StringBuffer();
 
-		stringBuffer.append(
-				"<div style='display: block;border: 1px solid #e2e2e2;background-color:#51bf99!important;box-shadow: none;padding: 20px;font-family: Tahoma, Geneva, sans-serif;'>")
+		stringBuffer
+				.append("<div style='display: block;border: 1px solid #e2e2e2;background-color:#51bf99!important;box-shadow: none;padding: 20px;font-family: Tahoma, Geneva, sans-serif;'>")
 				.append("<div style='padding: 10px;'>")
 				.append("<img src='cid:" + cid
 						+ "' width='50' height='50' class='d-inline-block align-top' alt='Just Reviewz Inc'> Just Reviewz Inc.")
@@ -293,7 +303,8 @@ public class RMUtil {
 				.append("<span>Dear ").append(emailNotificationObject.getSenderName()).append("</span><br><br>")
 				.append("<span>").append(emailNotificationObject.getEmailContent()).append("</span>").append("</div>")
 				.append("<div style='padding: 20px;font-size:12px;color:#efefef !important'>")
-				.append("This message was sent from Just Reviewz Inc and intended for ").append(emailNotificationObject.getSendTo())
+				.append("This message was sent from Just Reviewz Inc and intended for ")
+				.append(emailNotificationObject.getSendTo())
 				.append(". If you prefer not to receive any communication emails from Just Reviewz.")
 				.append("Please <a href='http://www.justreviewz.com/unsubscribe?email=")
 				.append(emailNotificationObject.getSendTo()).append("&clientId=")

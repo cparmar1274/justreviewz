@@ -29,10 +29,14 @@ public class Notification {
 	/**
 	 * Instantiates a new notification.
 	 *
-	 * @param clientId the client id
-	 * @param notificationText the notification text
-	 * @param isRead the is read
-	 * @param notificationTime the notification time
+	 * @param clientId
+	 *            the client id
+	 * @param notificationText
+	 *            the notification text
+	 * @param isRead
+	 *            the is read
+	 * @param notificationTime
+	 *            the notification time
 	 */
 	public Notification(String clientId, String notificationText, boolean isRead, Date notificationTime) {
 		super();
@@ -54,7 +58,8 @@ public class Notification {
 	/**
 	 * Sets the notification id.
 	 *
-	 * @param notificationId the new notification id
+	 * @param notificationId
+	 *            the new notification id
 	 */
 	public void setNotificationId(String notificationId) {
 		this.notificationId = notificationId;
@@ -72,7 +77,8 @@ public class Notification {
 	/**
 	 * Sets the notification text.
 	 *
-	 * @param notificationText the new notification text
+	 * @param notificationText
+	 *            the new notification text
 	 */
 	public void setNotificationText(String notificationText) {
 		this.notificationText = notificationText;
@@ -90,7 +96,8 @@ public class Notification {
 	/**
 	 * Sets the read.
 	 *
-	 * @param isRead the new read
+	 * @param isRead
+	 *            the new read
 	 */
 	public void setRead(boolean isRead) {
 		this.isRead = isRead;
@@ -108,7 +115,8 @@ public class Notification {
 	/**
 	 * Sets the notification time.
 	 *
-	 * @param notificationTime the new notification time
+	 * @param notificationTime
+	 *            the new notification time
 	 */
 	public void setNotificationTime(Date notificationTime) {
 		this.notificationTime = notificationTime.toString();
@@ -126,13 +134,16 @@ public class Notification {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -147,7 +158,9 @@ public class Notification {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

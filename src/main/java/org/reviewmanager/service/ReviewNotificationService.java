@@ -33,7 +33,8 @@ public class ReviewNotificationService {
 	/**
 	 * Adds the notification.
 	 *
-	 * @param notification the notification
+	 * @param notification
+	 *            the notification
 	 * @return the map
 	 */
 	public Map<String, Object> addNotification(Notification notification) {
@@ -48,12 +49,14 @@ public class ReviewNotificationService {
 	/**
 	 * Gets the notificatoin.
 	 *
-	 * @param userName the user name
+	 * @param userName
+	 *            the user name
 	 * @return the notificatoin
 	 */
 	public List<Notification> getNotificatoin(String userName) {
 		BasicDBObject dbObject = new BasicDBObject().append("clientId", userName);
-		List<Document> cursor = mongoService.getObject(RMUtil.NOTIFICATION_INDEX, dbObject,new BasicDBObject().append("notificationTime", -1));
+		List<Document> cursor = mongoService.getObject(RMUtil.NOTIFICATION_INDEX, dbObject,
+				new BasicDBObject().append("notificationTime", -1));
 		List<Notification> nofitications = new ArrayList<Notification>();
 		Notification notification = null;
 		Gson gosn = new Gson();
@@ -68,19 +71,21 @@ public class ReviewNotificationService {
 	/**
 	 * Mark as read.
 	 *
-	 * @param notificationId the notification id
+	 * @param notificationId
+	 *            the notification id
 	 * @return the map
 	 */
 	public Map<String, Object> markAsRead(String notificationId) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		BasicDBObject searchQuery = new BasicDBObject().append("_id", new ObjectId(notificationId));
-		List<Document> cursor = mongoService.getObject(RMUtil.NOTIFICATION_INDEX, searchQuery,new BasicDBObject());
+		List<Document> cursor = mongoService.getObject(RMUtil.NOTIFICATION_INDEX, searchQuery, new BasicDBObject());
 		Gson gosn = new Gson();
 
 		for (Document dbObj : cursor) {
 			Notification notification = gosn.fromJson(dbObj.toString(), Notification.class);
 			notification.setRead(true);
-			UpdateResult result = mongoService.addObject(RMUtil.NOTIFICATION_INDEX, searchQuery, new BasicDBObject(notification.getMap()));
+			UpdateResult result = mongoService.addObject(RMUtil.NOTIFICATION_INDEX, searchQuery,
+					new BasicDBObject(notification.getMap()));
 			data.put("result", result);
 		}
 		return data;

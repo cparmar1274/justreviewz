@@ -57,7 +57,6 @@ public class ReviewMongoService implements ReviewServiceInterface {
 
 	/** The mongo service. */
 
-
 	/** The place service. */
 	@Autowired(required = true)
 	public PlacesService placeService;
@@ -72,7 +71,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 
 	@Autowired(required = true)
 	public MongoService mongoService;
-	
+
 	/** The rest template. */
 	public RestTemplate restTemplate;
 
@@ -129,7 +128,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.reviewmanager.interfaces.ReviewServiceInterface#addPublicQuery(org.
+	 * @see
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#addPublicQuery(org.
 	 * reviewmanager.pojo.QueryObject)
 	 */
 	@Override
@@ -155,7 +155,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.reviewmanager.interfaces.ReviewServiceInterface#getPublicQuery(org.
+	 * @see
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getPublicQuery(org.
 	 * reviewmanager.pojo.QueryObject)
 	 */
 	@Override
@@ -163,7 +164,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		Map<String, Object> reportResult = new HashMap<String, Object>();
 		BasicDBObject document = new BasicDBObject();
 		document.putAll(RMUtil.getMap(queryObject));
-		List<Document> cursor = mongoService.getObject(RMUtil.QUERY_INDEX, document,new BasicDBObject().append("postedDate", -1));
+		List<Document> cursor = mongoService.getObject(RMUtil.QUERY_INDEX, document,
+				new BasicDBObject().append("postedDate", -1));
 		QueryObject object = null;
 		List<QueryObject> queryObjects = new ArrayList<>();
 		for (Document searchHit : cursor) {
@@ -182,7 +184,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.reviewmanager.interfaces.ReviewServiceInterface#addCompetitor(org.
+	 * @see
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#addCompetitor(org.
 	 * reviewmanager.pojo.BusinessObject)
 	 */
 	@Override
@@ -203,9 +206,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#addUser(org.reviewmanager
-	 * .users.BusinessUserTemp)
+	 * @see org.reviewmanager.interfaces.ReviewServiceInterface#addUser(org.
+	 * reviewmanager .users.BusinessUserTemp)
 	 */
 	@Override
 	public Map<String, Object> addUser(BusinessUserTemp newUserRequest) {
@@ -238,8 +240,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#getUser(java.lang.String,
-	 * java.lang.String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getUser(java.lang.
+	 * String, java.lang.String)
 	 */
 	@Override
 	public Map<String, Object> getUser(String userNameField, String userNameValue) {
@@ -250,7 +252,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		BusinessUser newUser = null;
 		try {
 			BasicDBObject searchQuery = new BasicDBObject().append(userNameField, userNameValue);
-			List<Document> cursor = mongoService.getObject(RMUtil.USER_INDEX, searchQuery,new BasicDBObject());
+			List<Document> cursor = mongoService.getObject(RMUtil.USER_INDEX, searchQuery, new BasicDBObject());
 
 			for (Document searchHit : cursor) {
 				jsonData = gson.fromJson(searchHit.toString(), JsonObject.class);
@@ -271,8 +273,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#getCompetitor(java.lang.
-	 * String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getCompetitor(java.
+	 * lang. String)
 	 */
 	@Override
 	public Map<String, Object> getCompetitor(String username) {
@@ -280,7 +282,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", username);
 
-		List<Document> cursor = mongoService.getObject(RMUtil.COMPETITOR_INDEX, searchQuery,new BasicDBObject());
+		List<Document> cursor = mongoService.getObject(RMUtil.COMPETITOR_INDEX, searchQuery, new BasicDBObject());
 
 		List<BusinessObject> searchReview = new LinkedList<BusinessObject>();
 		BusinessObject searchReviewObj = null;
@@ -298,8 +300,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#getPerformers(java.lang.
-	 * String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getPerformers(java.
+	 * lang. String)
 	 */
 	@Override
 	public Map<String, Object> getPerformers(String username) {
@@ -307,7 +309,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", username);
 
-		List<Document> cursor = mongoService.getObject(RMUtil.PERFORMER_INDEX, searchQuery,new BasicDBObject());
+		List<Document> cursor = mongoService.getObject(RMUtil.PERFORMER_INDEX, searchQuery, new BasicDBObject());
 		List<BusinessObject> searchReview = new LinkedList<BusinessObject>();
 		BusinessObject searchReviewObj = null;
 		Gson gson = new Gson();
@@ -323,7 +325,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.reviewmanager.interfaces.ReviewServiceInterface#getReview(java.lang.
+	 * @see
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getReview(java.lang.
 	 * String, java.lang.String, java.lang.String,
 	 * org.elasticsearch.search.sort.SortOrder)
 	 */
@@ -336,10 +339,10 @@ public class ReviewMongoService implements ReviewServiceInterface {
 
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", username);
 		if (!reviewContent.isEmpty())
-			searchQuery.append("$regex", reviewContent).append("$options","i");
-		
+			searchQuery.append("$regex", reviewContent).append("$options", "i");
+
 		BasicDBObject sortObj = new BasicDBObject().append(sortBy, SortOrder.ASC == sortType ? 1 : -1);
-		List<Document> cursor = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,sortObj);
+		List<Document> cursor = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery, sortObj);
 		for (Document dbObj : cursor) {
 			try {
 				searchReviewObj = gson.fromJson(dbObj.toJson(), ReviewObject.class);
@@ -359,8 +362,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#getDashboardObject(java.
-	 * lang.String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getDashboardObject(
+	 * java. lang.String)
 	 */
 	@Override
 	public Map<String, Object> getDashboardObject(String clientId) {
@@ -370,7 +373,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		String id = null;
 
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", clientId);
-		List<Document> cursor = mongoService.getObject(RMUtil.DASHBOARD_INDEX, searchQuery,new BasicDBObject());
+		List<Document> cursor = mongoService.getObject(RMUtil.DASHBOARD_INDEX, searchQuery, new BasicDBObject());
 
 		for (Document dbObject : cursor) {
 			dashboardObj = gson.fromJson(dbObject.toJson(), Dashboard.class);
@@ -412,8 +415,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#getTrendingData(java.lang
-	 * .String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getTrendingData(java.
+	 * lang .String)
 	 */
 	@Override
 	public Map<String, Object> getTrendingData(String clientId) {
@@ -423,7 +426,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		Gson gson = new Gson();
 
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", clientId);
-		List<Document> cursor = mongoService.getObject(RMUtil.TRENDING_INDEX, searchQuery,new BasicDBObject());
+		List<Document> cursor = mongoService.getObject(RMUtil.TRENDING_INDEX, searchQuery, new BasicDBObject());
 		for (Document dbObject : cursor) {
 			trending = gson.fromJson(dbObject.toString(), Trending.class);
 		}
@@ -471,7 +474,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 						reviewObject.getReviewRating().toString()));
 				dashboard.setDashboardChartData(dashboardChartData);
 			} else {
-				dashboard.setTotalNegative(reviewObject.isNegativeReview() ? dashboard.getTotalNegative()+1
+				dashboard.setTotalNegative(reviewObject.isNegativeReview() ? dashboard.getTotalNegative() + 1
 						: dashboard.getTotalNegative());
 				dashboard.setTotalPositive(reviewObject.isPositiveReview() ? dashboard.getTotalPositive() + 1
 						: dashboard.getTotalPositive());
@@ -560,9 +563,9 @@ public class ReviewMongoService implements ReviewServiceInterface {
 
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", user.getClientId()).append("username",
 				user.getUsername());
-		
+
 		UpdateResult result = mongoService.addObject(RMUtil.USER_INDEX, searchQuery, document);
-		
+
 		data.put("result", result);
 		return data;
 	}
@@ -571,23 +574,22 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#addActionItem(java.lang.
-	 * String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#addActionItem(java.
+	 * lang. String)
 	 */
 	@Override
 	public Map<String, Object> addActionItem(String reviewId) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		BasicDBObject searchQuery = new BasicDBObject().append("reviewId", reviewId);
-		List<Document> dbData = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,new BasicDBObject());
+		List<Document> dbData = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery, new BasicDBObject());
 		for (Document obj : dbData) {
 			Map<String, Object> objMap = obj;
 			BasicDBObject document = new BasicDBObject();
 			document.putAll(objMap);
 
 			BasicDBObject docQuery = new BasicDBObject().append("clientId", obj.get("clientId"))
-					.append("reviewText", obj.get("reviewText"))
-					.append("reviewDate", obj.get("reviewDate")).append("postedBy", obj.get("postedBy"))
-					.append("reviewRating", obj.get("reviewRating"));
+					.append("reviewText", obj.get("reviewText")).append("reviewDate", obj.get("reviewDate"))
+					.append("postedBy", obj.get("postedBy")).append("reviewRating", obj.get("reviewRating"));
 
 			UpdateResult result = mongoService.addObject(RMUtil.ACTION_ITEM_INDEX, docQuery, document);
 			data.put("result", objMap.get("_id").toString() + " Action item already added.");
@@ -601,8 +603,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#removeActionItem(java.
-	 * lang.String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#removeActionItem(
+	 * java. lang.String)
 	 */
 	@Override
 	public Map<String, Object> removeActionItem(String reviewId) {
@@ -618,14 +620,15 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#getActionItem(java.lang.
-	 * String, java.lang.String, java.lang.String,
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getActionItem(java.
+	 * lang. String, java.lang.String, java.lang.String,
 	 * org.elasticsearch.search.sort.SortOrder)
 	 */
 	@Override
 	public Map<String, Object> getActionItem(String reviewContent, String username, String sortBy, SortOrder sortType) {
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", username);
-		List<Document> actionItems = mongoService.getObject(RMUtil.ACTION_ITEM_INDEX, searchQuery,new BasicDBObject().append(sortBy, 1));
+		List<Document> actionItems = mongoService.getObject(RMUtil.ACTION_ITEM_INDEX, searchQuery,
+				new BasicDBObject().append(sortBy, 1));
 
 		Map<String, Object> reportResult = new HashMap<String, Object>();
 
@@ -647,7 +650,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.reviewmanager.interfaces.ReviewServiceInterface#logError(java.lang.
+	 * @see
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#logError(java.lang.
 	 * String, java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -662,14 +666,14 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#resetPassword(java.lang.
-	 * String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#resetPassword(java.
+	 * lang. String)
 	 */
 	@Override
 	public Map<String, Object> resetPassword(String clientEmail) {
 
 		BasicDBObject searchQuery = new BasicDBObject().append("username", clientEmail);
-		List<Document> searchResponse = mongoService.getObject(RMUtil.USER_INDEX, searchQuery,new BasicDBObject());
+		List<Document> searchResponse = mongoService.getObject(RMUtil.USER_INDEX, searchQuery, new BasicDBObject());
 
 		Map<String, Object> data = null, resultData = new HashMap<String, Object>();
 		String newPasswordText = RMUtil.generateRandomPasswordText();
@@ -700,14 +704,14 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#changePassword(java.lang.
-	 * String, java.lang.String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#changePassword(java.
+	 * lang. String, java.lang.String)
 	 */
 	@Override
 	public Map<String, Object> changePassword(String newPassword, String oldPassword) {
 
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", RMUtil.getSessionedUser().getClientId());
-		List<Document> searchResponse = mongoService.getObject(RMUtil.USER_INDEX, searchQuery,new BasicDBObject());
+		List<Document> searchResponse = mongoService.getObject(RMUtil.USER_INDEX, searchQuery, new BasicDBObject());
 
 		Map<String, Object> data = null, resultData = new HashMap<String, Object>();
 		for (Document search : searchResponse) {
@@ -733,7 +737,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.reviewmanager.interfaces.ReviewServiceInterface#addPublicReview(org.
+	 * @see
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#addPublicReview(org.
 	 * reviewmanager.pojo.ReviewObject)
 	 */
 	@Override
@@ -761,12 +766,13 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	/**
 	 * Gets the total objects.
 	 *
-	 * @param indexName the index name
+	 * @param indexName
+	 *            the index name
 	 * @return the total objects
 	 */
 	private Integer getTotalObjects(String indexName) {
 		BasicDBObject searchQuery = new BasicDBObject();
-		List<Document> result = mongoService.getObject(indexName, searchQuery,new BasicDBObject());
+		List<Document> result = mongoService.getObject(indexName, searchQuery, new BasicDBObject());
 		return result.size() + 1;
 	}
 
@@ -787,13 +793,17 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		List<Document> result = null;
 
 		if (sortingOrder.toLowerCase().contains("oldest"))
-			result=  mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,new BasicDBObject().append("reviewDate", 1));
+			result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,
+					new BasicDBObject().append("reviewDate", 1));
 		else if (sortingOrder.toLowerCase().contains("highest"))
-			result= mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,new BasicDBObject().append("reviewRating", -1));
+			result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,
+					new BasicDBObject().append("reviewRating", -1));
 		else if (sortingOrder.toLowerCase().contains("lowest"))
-			result= mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,new BasicDBObject().append("reviewRating", 1));
+			result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,
+					new BasicDBObject().append("reviewRating", 1));
 		else
-			result= mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,new BasicDBObject().append("reviewDate", 11));
+			result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,
+					new BasicDBObject().append("reviewDate", 11));
 
 		data.put("result", result);
 		data.put("averageRating", result.stream().mapToDouble(object -> {
@@ -817,7 +827,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		BasicDBObject searchQuery = new BasicDBObject().append("replyTo", publicReview.getReviewId());
-		List<Document> result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,new BasicDBObject().append("reviewDate", 1));
+		List<Document> result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,
+				new BasicDBObject().append("reviewDate", 1));
 		data.put("result", result);
 		data.put("total", result.size());
 		data.put("success", true);
@@ -828,14 +839,14 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#likeComment(java.lang.
-	 * Integer, java.lang.Integer)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#likeComment(java.
+	 * lang. Integer, java.lang.Integer)
 	 */
 	@Override
 	public Map<String, Object> likeComment(Integer reviewId, Integer likeFlag) {
 
 		BasicDBObject searchQuery = new BasicDBObject().append("reviewId", reviewId.toString());
-		List<Document> result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,new BasicDBObject());
+		List<Document> result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery, new BasicDBObject());
 		ReviewObject publicReviewObject = null;
 		if (result.size() > 0) {
 			String dbObj = RMUtil.gson.toJson(result.get(0));
@@ -849,13 +860,13 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#dislikeComment(java.lang.
-	 * Integer, java.lang.Integer)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#dislikeComment(java.
+	 * lang. Integer, java.lang.Integer)
 	 */
 	@Override
 	public Map<String, Object> dislikeComment(Integer reviewId, Integer likeFlag) {
 		BasicDBObject searchQuery = new BasicDBObject().append("reviewId", reviewId.toString());
-		List<Document> result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery,new BasicDBObject());
+		List<Document> result = mongoService.getObject(RMUtil.REVIEW_INDEX, searchQuery, new BasicDBObject());
 		ReviewObject publicReviewObject = null;
 		if (result.size() > 0) {
 			String dbObj = RMUtil.gson.toJson(result.get(0));
@@ -869,20 +880,23 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#searchBusiness(java.lang.
-	 * String, java.lang.String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#searchBusiness(java.
+	 * lang. String, java.lang.String)
 	 */
 	@Override
 	public Map<String, Object> searchBusiness(String query, String type) {
-		//this.setHeaderAuthorization();
-		 Map<String, Object> businesses = new HashMap<>();
-		//businesses.putAll(restTemplate.exchange("https://api.yelp.com/v3/businesses/search?term=" + query + "&location=" + type,
-			//	HttpMethod.GET, new HttpEntity<>("parameters", headers), Map.class).getBody());
-	    
-		
-		List<Document> data = mongoService.getObject(RMUtil.ONBOARDED_BUSINESS,new BasicDBObject().append("clientName",new BasicDBObject("$regex", query).append("$options","i")),new BasicDBObject());
+		// this.setHeaderAuthorization();
+		Map<String, Object> businesses = new HashMap<>();
+		// businesses.putAll(restTemplate.exchange("https://api.yelp.com/v3/businesses/search?term="
+		// + query + "&location=" + type,
+		// HttpMethod.GET, new HttpEntity<>("parameters", headers),
+		// Map.class).getBody());
+
+		List<Document> data = mongoService.getObject(RMUtil.ONBOARDED_BUSINESS,
+				new BasicDBObject().append("clientName", new BasicDBObject("$regex", query).append("$options", "i")),
+				new BasicDBObject());
 		List<SearchBusinessObject> searchResults = new ArrayList<>();
-		for (Document object : data) 
+		for (Document object : data)
 			searchResults.add(RMUtil.gson.fromJson(object.toJson(), SearchBusinessObject.class));
 		businesses.put("businesses", searchResults);
 		return businesses;
@@ -892,8 +906,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#searchLocation(java.lang.
-	 * String, java.lang.String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#searchLocation(java.
+	 * lang. String, java.lang.String)
 	 */
 	@Override
 	public Map<String, Object> searchLocation(String query, String type) {
@@ -904,14 +918,14 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#getBusinessCustomers(java
-	 * .lang.String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getBusinessCustomers(
+	 * java .lang.String)
 	 */
 	@Override
 	public Map<String, Integer> getBusinessCustomers(String clientId) {
 		Map<String, Integer> data = new HashMap<String, Integer>();
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", clientId);
-		List<Document> result = mongoService.getObject(RMUtil.CLIENT_CUSTOMER_INDEX, searchQuery,new BasicDBObject());
+		List<Document> result = mongoService.getObject(RMUtil.CLIENT_CUSTOMER_INDEX, searchQuery, new BasicDBObject());
 		String email = null;
 		for (Document object : result) {
 			Integer count = 1;
@@ -925,14 +939,15 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.reviewmanager.interfaces.ReviewServiceInterface#getPromotion(org.
+	 * @see
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getPromotion(org.
 	 * reviewmanager.pojo.PromotionObject, boolean)
 	 */
 	@Override
 	public Map<String, Object> getPromotion(PromotionObject promotionObject, boolean filter) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", promotionObject.getClientId());
-		List<Document> result = mongoService.getObject(RMUtil.PROMOTION_INDEX, searchQuery,new BasicDBObject());
+		List<Document> result = mongoService.getObject(RMUtil.PROMOTION_INDEX, searchQuery, new BasicDBObject());
 		PromotionObject promoteObject = null;
 		List<PromotionObject> promoteList = new ArrayList<>();
 		for (Document object : result) {
@@ -951,7 +966,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.reviewmanager.interfaces.ReviewServiceInterface#addPromotion(org.
+	 * @see
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#addPromotion(org.
 	 * reviewmanager.pojo.PromotionObject)
 	 */
 	@Override
@@ -978,14 +994,14 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#getPromotionCounter(org.
-	 * reviewmanager.pojo.PromotionCounterObject)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#getPromotionCounter(
+	 * org. reviewmanager.pojo.PromotionCounterObject)
 	 */
 	@Override
 	public Map<String, Object> getPromotionCounter(PromotionCounterObject promotionCounterObject) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		BasicDBObject searchDoc = new BasicDBObject().append("clientId", promotionCounterObject.getClientId());
-		List<Document> result = mongoService.getObject(RMUtil.PROMOTION_COUNTER_INDEX, searchDoc,new BasicDBObject());
+		List<Document> result = mongoService.getObject(RMUtil.PROMOTION_COUNTER_INDEX, searchDoc, new BasicDBObject());
 		PromotionCounterObject promotionObject = null;
 		for (Document dbObject : result) {
 			promotionObject = RMUtil.gson.fromJson(dbObject.toJson(), PromotionCounterObject.class);
@@ -1006,7 +1022,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		BasicDBObject searchDoc = new BasicDBObject().append("clientId", promotionCounterObject.getClientId());
-		List<Document> result = mongoService.getObject(RMUtil.PROMOTION_COUNTER_INDEX, searchDoc,new BasicDBObject());
+		List<Document> result = mongoService.getObject(RMUtil.PROMOTION_COUNTER_INDEX, searchDoc, new BasicDBObject());
 		PromotionCounterObject promotionObject = null;
 		for (Document dbObject : result) {
 			promotionObject = RMUtil.gson.fromJson(dbObject.toJson(), PromotionCounterObject.class);
@@ -1030,8 +1046,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#addClientCustomer(java.
-	 * lang.String, java.lang.String, java.lang.String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#addClientCustomer(
+	 * java. lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Map<String, Object> addClientCustomer(String clientId, String postedEmail, String postedBy) {
@@ -1051,8 +1067,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#removeClientCustomer(java
-	 * .lang.String, java.lang.String, java.lang.String)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#removeClientCustomer(
+	 * java .lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public Map<String, Object> removeClientCustomer(String clientId, String postedEmail, String postedBy) {
@@ -1072,8 +1088,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.reviewmanager.interfaces.ReviewServiceInterface#registerNewBusiness(org.
-	 * reviewmanager.pojo.SearchBusinessObject)
+	 * org.reviewmanager.interfaces.ReviewServiceInterface#registerNewBusiness(
+	 * org. reviewmanager.pojo.SearchBusinessObject)
 	 */
 	@Override
 	public Map<String, Object> registerNewBusiness(SearchBusinessObject searchBusinessObject) {
@@ -1096,7 +1112,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 
 		// update dashboards
 		ExecutorService executeService = Executors.newCachedThreadPool();
-		List<Document> cursor = mongoService.getObject(RMUtil.REVIEW_INDEX, new BasicDBObject(),new BasicDBObject());
+		List<Document> cursor = mongoService.getObject(RMUtil.REVIEW_INDEX, new BasicDBObject(), new BasicDBObject());
 		for (Document review : cursor) {
 			final ReviewObject reviewObject = RMUtil.gson.fromJson(review.toJson(), ReviewObject.class);
 
@@ -1108,7 +1124,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	}
 
 	private void refreshTreanding() {
-		List<Document> treandingData = mongoService.getObject(RMUtil.TRENDING_INDEX, new BasicDBObject(),new BasicDBObject());
+		List<Document> treandingData = mongoService.getObject(RMUtil.TRENDING_INDEX, new BasicDBObject(),
+				new BasicDBObject());
 		Trending tread = null;
 		for (Document treading : treandingData) {
 			tread = RMUtil.gson.fromJson(RMUtil.gson.toJson(treading), Trending.class);
@@ -1119,7 +1136,8 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	}
 
 	private void refreshDashboard() {
-		List<Document> dashboardCursor = mongoService.getObject(RMUtil.DASHBOARD_INDEX, new BasicDBObject(),new BasicDBObject());
+		List<Document> dashboardCursor = mongoService.getObject(RMUtil.DASHBOARD_INDEX, new BasicDBObject(),
+				new BasicDBObject());
 		Dashboard dashboardObject = null;
 		for (Document dashboard : dashboardCursor) {
 			dashboardObject = RMUtil.gson.fromJson(RMUtil.gson.toJson(dashboard), Dashboard.class);
@@ -1133,7 +1151,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	public ReviewObject getReviewId(String reviewId) {
 		BasicDBObject searchObject = new BasicDBObject();
 		searchObject.append("reviewId", reviewId);
-		List<Document> cursor = mongoService.getObject(RMUtil.REVIEW_INDEX, searchObject,new BasicDBObject());
+		List<Document> cursor = mongoService.getObject(RMUtil.REVIEW_INDEX, searchObject, new BasicDBObject());
 		ReviewObject reviewObject = null;
 		for (Document review : cursor) {
 			reviewObject = RMUtil.gson.fromJson(review.toJson(), ReviewObject.class);
@@ -1158,36 +1176,38 @@ public class ReviewMongoService implements ReviewServiceInterface {
 
 	@Override
 	public Map<String, Object> postProduct(ProductObject productObject) {
-		Map<String,Object> data = new HashMap<String,Object>();
-		
+		Map<String, Object> data = new HashMap<String, Object>();
+
 		productObject.setProductId(productObject.getProductName().trim().toLowerCase().replaceAll(" ", "_"));
 		BasicDBObject searchObject = new BasicDBObject();
-		searchObject.append("productId", productObject.getProductId()).append("productName", productObject.getProductName());
-		
+		searchObject.append("productId", productObject.getProductId()).append("productName",
+				productObject.getProductName());
+
 		BasicDBObject productData = new BasicDBObject();
 		productData.putAll(RMUtil.getMap(productObject));
-		data.put("result",mongoService.addObject(RMUtil.PRODUCT_INDEX, searchObject, productData));
+		data.put("result", mongoService.addObject(RMUtil.PRODUCT_INDEX, searchObject, productData));
 		data.put("clientId", productObject.getProductId());
 		return data;
 	}
-	
+
 	@Override
 	public Map<String, Object> getProduct(ProductObject productObject) {
-		Map<String,Object> data = new HashMap<String,Object>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		List<ProductObject> products = new ArrayList<ProductObject>();
-		if(StringUtils.isEmpty(productObject.getProductId()))
+		if (StringUtils.isEmpty(productObject.getProductId()))
 			productObject.setProductId(String.valueOf(this.getTotalObjects(RMUtil.PRODUCT_INDEX)));
-		
+
 		BasicDBObject searchObject = new BasicDBObject();
-		searchObject.append("productName", new BasicDBObject("$regex", productObject.getProductName()).append("$options","i"));
-		
-		List<Document> cursor=mongoService.getObject(RMUtil.PRODUCT_INDEX, searchObject,new BasicDBObject());
+		searchObject.append("productName",
+				new BasicDBObject("$regex", productObject.getProductName()).append("$options", "i"));
+
+		List<Document> cursor = mongoService.getObject(RMUtil.PRODUCT_INDEX, searchObject, new BasicDBObject());
 		ProductObject product = null;
-		for(Document dbObject:cursor) {
+		for (Document dbObject : cursor) {
 			product = RMUtil.gson.fromJson(dbObject.toJson(), ProductObject.class);
 			products.add(product);
 		}
-		data.put("result",products);
+		data.put("result", products);
 		return data;
 	}
 
@@ -1196,35 +1216,35 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		BasicDBObject searchObject = new BasicDBObject();
 		searchObject.append(property, productId);
 		ProductObject product = null;
-		List<Document> cursor=mongoService.getObject(RMUtil.PRODUCT_INDEX, searchObject,new BasicDBObject());
-		for(Document dbObject:cursor) {
+		List<Document> cursor = mongoService.getObject(RMUtil.PRODUCT_INDEX, searchObject, new BasicDBObject());
+		for (Document dbObject : cursor) {
 			product = RMUtil.gson.fromJson(dbObject.toJson(), ProductObject.class);
 		}
 		return product;
 	}
-	
-	
 
 	/*
 	 * public static void main(String[] args) {
 	 * 
 	 * ReviewMongoService reviewService = new ReviewMongoService(); MongoService
 	 * mongoService = new MongoService(); Gson gson = new
-	 * GsonBuilder().registerTypeAdapter(Date.class,new JsonDeserializer<Date>() {
-	 * SimpleDateFormat dateformat = new
+	 * GsonBuilder().registerTypeAdapter(Date.class,new JsonDeserializer<Date>()
+	 * { SimpleDateFormat dateformat = new
 	 * SimpleDateFormat("MMM dd, yyyy, hh:mm:ss a",Locale.US);
 	 * 
 	 * @Override public Date deserialize(JsonElement json, Type typeOfT,
-	 * JsonDeserializationContext context) throws JsonParseException { try { return
-	 * dateformat.parse(json.getAsString()); } catch (ParseException e) {
-	 * System.out.println("Error while parsing date :"+json.getAsString()); return
-	 * null; } }
+	 * JsonDeserializationContext context) throws JsonParseException { try {
+	 * return dateformat.parse(json.getAsString()); } catch (ParseException e) {
+	 * System.out.println("Error while parsing date :"+json.getAsString());
+	 * return null; } }
 	 * 
 	 * 
-	 * }).create(); List<Document> cursor = mongoService.getObject(RMUtil.REVIEW_INDEX,
-	 * new BasicDBObject()); ReviewObject reviewObject = null; for (DBObject review
-	 * : cursor.toArray()) { try { reviewObject = gson.fromJson(gson.toJson(review),
-	 * ReviewObject.class); reviewService.updateDashboard(); }catch(Exception e) {
+	 * }).create(); List<Document> cursor =
+	 * mongoService.getObject(RMUtil.REVIEW_INDEX, new BasicDBObject());
+	 * ReviewObject reviewObject = null; for (DBObject review :
+	 * cursor.toArray()) { try { reviewObject =
+	 * gson.fromJson(gson.toJson(review), ReviewObject.class);
+	 * reviewService.updateDashboard(); }catch(Exception e) {
 	 * e.printStackTrace(); } }
 	 * 
 	 * }

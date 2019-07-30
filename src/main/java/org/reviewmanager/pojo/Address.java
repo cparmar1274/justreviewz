@@ -18,32 +18,37 @@ public class Address {
 
 	/** The street name. */
 	@JsonProperty("streetName")
-	public String	streetName;
-	
+	public String streetName;
+
 	/** The city. */
 	@JsonProperty("city")
-	public String	city;
-	
+	public String city;
+
 	/** The postal code. */
 	@JsonProperty("postalCode")
-	public String	postalCode;
-	
+	public String postalCode;
+
 	/** The province. */
 	@JsonProperty("province")
-	public String	province;
-	
+	public String province;
+
 	/** The country. */
 	@JsonProperty("country")
-	public String	country;
+	public String country;
 
 	/**
 	 * Instantiates a new address.
 	 *
-	 * @param streetName the street name
-	 * @param city the city
-	 * @param postalCode the postal code
-	 * @param province the province
-	 * @param country the country
+	 * @param streetName
+	 *            the street name
+	 * @param city
+	 *            the city
+	 * @param postalCode
+	 *            the postal code
+	 * @param province
+	 *            the province
+	 * @param country
+	 *            the country
 	 */
 	public Address(String streetName, String city, String postalCode, String province, String country) {
 		super();
@@ -74,7 +79,8 @@ public class Address {
 	/**
 	 * Sets the street name.
 	 *
-	 * @param streetName the new street name
+	 * @param streetName
+	 *            the new street name
 	 */
 	public void setStreetName(String streetName) {
 		this.streetName = streetName;
@@ -92,7 +98,8 @@ public class Address {
 	/**
 	 * Sets the city.
 	 *
-	 * @param city the new city
+	 * @param city
+	 *            the new city
 	 */
 	public void setCity(String city) {
 		this.city = city;
@@ -110,7 +117,8 @@ public class Address {
 	/**
 	 * Sets the postal code.
 	 *
-	 * @param postalCode the new postal code
+	 * @param postalCode
+	 *            the new postal code
 	 */
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
@@ -128,7 +136,8 @@ public class Address {
 	/**
 	 * Sets the province.
 	 *
-	 * @param province the new province
+	 * @param province
+	 *            the new province
 	 */
 	public void setProvince(String province) {
 		this.province = province;
@@ -146,7 +155,8 @@ public class Address {
 	/**
 	 * Sets the country.
 	 *
-	 * @param country the new country
+	 * @param country
+	 *            the new country
 	 */
 	public void setCountry(String country) {
 		this.country = country;
@@ -167,7 +177,9 @@ public class Address {
 		return data;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -182,7 +194,9 @@ public class Address {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

@@ -56,7 +56,8 @@ public class BusinessObject {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
@@ -65,11 +66,16 @@ public class BusinessObject {
 	/**
 	 * Instantiates a new business object.
 	 *
-	 * @param clientId the client id
-	 * @param businessName the business name
-	 * @param rating the rating
-	 * @param address the address
-	 * @param positiveReview the positive review
+	 * @param clientId
+	 *            the client id
+	 * @param businessName
+	 *            the business name
+	 * @param rating
+	 *            the rating
+	 * @param address
+	 *            the address
+	 * @param positiveReview
+	 *            the positive review
 	 */
 	public BusinessObject(String clientId, String businessName, Double rating, Address address,
 			boolean positiveReview) {
@@ -93,7 +99,8 @@ public class BusinessObject {
 	/**
 	 * Sets the business name.
 	 *
-	 * @param businessName the new business name
+	 * @param businessName
+	 *            the new business name
 	 */
 	public void setBusinessName(String businessName) {
 		this.businessName = businessName;
@@ -111,7 +118,8 @@ public class BusinessObject {
 	/**
 	 * Sets the rating.
 	 *
-	 * @param rating the new rating
+	 * @param rating
+	 *            the new rating
 	 */
 	public void setRating(Double rating) {
 		this.rating = rating;
@@ -129,7 +137,8 @@ public class BusinessObject {
 	/**
 	 * Sets the address.
 	 *
-	 * @param address the new address
+	 * @param address
+	 *            the new address
 	 */
 	public void setAddress(Address address) {
 		this.address = address;
@@ -147,7 +156,8 @@ public class BusinessObject {
 	/**
 	 * Sets the positive review.
 	 *
-	 * @param positiveReview the new positive review
+	 * @param positiveReview
+	 *            the new positive review
 	 */
 	public void setPositiveReview(boolean positiveReview) {
 		this.positiveReview = positiveReview;
@@ -162,7 +172,9 @@ public class BusinessObject {
 		return RMUtil.getMap(this);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -177,7 +189,9 @@ public class BusinessObject {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

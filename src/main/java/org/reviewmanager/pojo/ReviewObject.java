@@ -14,8 +14,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * The Class ReviewObject.
  */
-@JsonIgnoreProperties(ignoreUnknown = true,allowGetters=true,allowSetters=true)
-@JsonAutoDetect(fieldVisibility=Visibility.ANY,getterVisibility=Visibility.NONE,setterVisibility=Visibility.ANY)
+@JsonIgnoreProperties(ignoreUnknown = true, allowGetters = true, allowSetters = true)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.ANY)
 public class ReviewObject {
 
 	/** The review id. */
@@ -55,8 +55,8 @@ public class ReviewObject {
 	/** The review text. */
 	@JsonProperty(value = "reviewText")
 	public String reviewText;
-	
-	@JsonProperty(value="type")
+
+	@JsonProperty(value = "type")
 	public String type;
 
 	/** The positive review. */
@@ -74,13 +74,13 @@ public class ReviewObject {
 	/** The reply to. */
 	@JsonProperty(value = "replyText")
 	public String replyText;
-	
-	@JsonProperty(value="replyDate")
+
+	@JsonProperty(value = "replyDate")
 	public Date replyDate;
-	
+
 	@JsonProperty("businessName")
 	public String businessName;
-	
+
 	@JsonProperty("businessAddress")
 	public String businessAddress;
 
@@ -105,17 +105,27 @@ public class ReviewObject {
 	/**
 	 * Instantiates a new review object.
 	 *
-	 * @param clientId the client id
-	 * @param postedEmail the posted email
-	 * @param streetName the street name
-	 * @param city the city
-	 * @param zipCode the zip code
-	 * @param province the province
-	 * @param country the country
-	 * @param rating the rating
-	 * @param reviewContent the review content
+	 * @param clientId
+	 *            the client id
+	 * @param postedEmail
+	 *            the posted email
+	 * @param streetName
+	 *            the street name
+	 * @param city
+	 *            the city
+	 * @param zipCode
+	 *            the zip code
+	 * @param province
+	 *            the province
+	 * @param country
+	 *            the country
+	 * @param rating
+	 *            the rating
+	 * @param reviewContent
+	 *            the review content
 	 */
-	public ReviewObject(String clientId, String postedEmail, String rating, String reviewContent,String businessName,String businessAddress) {
+	public ReviewObject(String clientId, String postedEmail, String rating, String reviewContent, String businessName,
+			String businessAddress) {
 		super();
 		this.clientId = clientId;
 		this.postedEmail = postedEmail;
@@ -138,14 +148,13 @@ public class ReviewObject {
 	/**
 	 * Sets the posted by.
 	 *
-	 * @param postedBy the new posted by
+	 * @param postedBy
+	 *            the new posted by
 	 */
 	public void setPostedBy(String postedBy) {
 		this.postedBy = postedBy;
 	}
 
-	
-	
 	public String getType() {
 		return type;
 	}
@@ -175,7 +184,8 @@ public class ReviewObject {
 	/**
 	 * Sets the review rating.
 	 *
-	 * @param reviewRating the new review rating
+	 * @param reviewRating
+	 *            the new review rating
 	 */
 	public void setReviewRating(Double reviewRating) {
 		this.reviewRating = reviewRating;
@@ -193,7 +203,8 @@ public class ReviewObject {
 	/**
 	 * Sets the review text.
 	 *
-	 * @param reviewText the new review text
+	 * @param reviewText
+	 *            the new review text
 	 */
 	public void setReviewText(String reviewText) {
 		this.reviewText = reviewText.trim();
@@ -211,7 +222,8 @@ public class ReviewObject {
 	/**
 	 * Sets the review id.
 	 *
-	 * @param reviewId the new review id
+	 * @param reviewId
+	 *            the new review id
 	 */
 	public void setReviewId(String reviewId) {
 		this.reviewId = reviewId;
@@ -229,13 +241,12 @@ public class ReviewObject {
 	/**
 	 * Sets the posted email.
 	 *
-	 * @param postedEmail the new posted email
+	 * @param postedEmail
+	 *            the new posted email
 	 */
 	public void setPostedEmail(String postedEmail) {
 		this.postedEmail = postedEmail;
 	}
-
-	
 
 	/**
 	 * Gets the posted type.
@@ -249,7 +260,8 @@ public class ReviewObject {
 	/**
 	 * Sets the posted type.
 	 *
-	 * @param postedType the new posted type
+	 * @param postedType
+	 *            the new posted type
 	 */
 	public void setPostedType(String postedType) {
 		this.postedType = postedType;
@@ -263,13 +275,12 @@ public class ReviewObject {
 	public boolean isPositiveReview() {
 		return this.reviewRating > RMUtil.POSITIVE_REVIEW_THRESHOLD;
 	}
-	
-	
 
 	/**
 	 * Sets the review date.
 	 *
-	 * @param reviewDate the new review date
+	 * @param reviewDate
+	 *            the new review date
 	 */
 	public void setReviewDate(Date reviewDate) {
 		this.reviewDate = reviewDate;
@@ -278,7 +289,8 @@ public class ReviewObject {
 	/**
 	 * Sets the positive review.
 	 *
-	 * @param positiveReview the new positive review
+	 * @param positiveReview
+	 *            the new positive review
 	 */
 	public void setPositiveReview(boolean positiveReview) {
 		this.positiveReview = positiveReview;
@@ -296,7 +308,8 @@ public class ReviewObject {
 	/**
 	 * Sets the neutral review.
 	 *
-	 * @param neutralReview the new neutral review
+	 * @param neutralReview
+	 *            the new neutral review
 	 */
 	public void setNeutralReview(boolean neutralReview) {
 		this.neutralReview = neutralReview;
@@ -314,7 +327,8 @@ public class ReviewObject {
 	/**
 	 * Sets the negative review.
 	 *
-	 * @param negativeReview the new negative review
+	 * @param negativeReview
+	 *            the new negative review
 	 */
 	public void setNegativeReview(boolean negativeReview) {
 		this.negativeReview = negativeReview;
@@ -341,7 +355,8 @@ public class ReviewObject {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
@@ -359,13 +374,12 @@ public class ReviewObject {
 	/**
 	 * Sets the public id.
 	 *
-	 * @param publicId the new public id
+	 * @param publicId
+	 *            the new public id
 	 */
 	public void setPublicId(String publicId) {
 		this.publicId = publicId;
 	}
-
-
 
 	/**
 	 * Gets the like.
@@ -379,7 +393,8 @@ public class ReviewObject {
 	/**
 	 * Sets the like.
 	 *
-	 * @param like the new like
+	 * @param like
+	 *            the new like
 	 */
 	public void setLike(Integer like) {
 		this.like = like;
@@ -397,13 +412,12 @@ public class ReviewObject {
 	/**
 	 * Sets the dislike.
 	 *
-	 * @param dislike the new dislike
+	 * @param dislike
+	 *            the new dislike
 	 */
 	public void setDislike(Integer dislike) {
 		this.dislike = dislike;
 	}
-	
-	
 
 	public String getReplyText() {
 		return replyText;
@@ -440,7 +454,8 @@ public class ReviewObject {
 	/**
 	 * Manage like.
 	 *
-	 * @param likeFlag the like flag
+	 * @param likeFlag
+	 *            the like flag
 	 * @return the integer
 	 */
 	public Integer manageLike(Integer likeFlag) {
@@ -460,7 +475,8 @@ public class ReviewObject {
 	/**
 	 * Manage dis like.
 	 *
-	 * @param likeFlag the like flag
+	 * @param likeFlag
+	 *            the like flag
 	 * @return the integer
 	 */
 	public Integer manageDisLike(Integer likeFlag) {
@@ -600,8 +616,5 @@ public class ReviewObject {
 			return false;
 		return true;
 	}
-
-	
-	
 
 }

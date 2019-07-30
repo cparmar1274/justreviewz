@@ -22,9 +22,9 @@ import com.google.gson.reflect.TypeToken;
  */
 @Service
 public class PlacesService {
-	
+
 	/** The places. */
-	public List<PlaceObject> places = new ArrayList<>(); 
+	public List<PlaceObject> places = new ArrayList<>();
 
 	/**
 	 * Instantiates a new places service.
@@ -41,23 +41,24 @@ public class PlacesService {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Gets the places.
 	 *
-	 * @param query the query
+	 * @param query
+	 *            the query
 	 * @return the places
 	 */
 	@Cacheable("justreviewz_places")
-	public Map<String,Object> getPlaces(String query) {
-		Map<String,Object> data = new HashMap<>();
-		if(!query.equalsIgnoreCase("GJ6BPALL1274"))
-			data.put("businesses",places.stream().filter(obj -> obj.toString().toLowerCase().contains(query.trim().toLowerCase())).collect(Collectors.toList()));
+	public Map<String, Object> getPlaces(String query) {
+		Map<String, Object> data = new HashMap<>();
+		if (!query.equalsIgnoreCase("GJ6BPALL1274"))
+			data.put("businesses",
+					places.stream().filter(obj -> obj.toString().toLowerCase().contains(query.trim().toLowerCase()))
+							.collect(Collectors.toList()));
 		else
 			data.put("businesses", places);
 		return data;
 	}
-	
-	
-	
+
 }

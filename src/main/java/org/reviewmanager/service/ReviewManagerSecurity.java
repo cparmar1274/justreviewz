@@ -37,18 +37,18 @@ public class ReviewManagerSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+
 		http.csrf().disable();
 		http.userDetailsService(reviewManagerUserService);
-		
+
 		http.authorizeRequests().antMatchers("/business**").authenticated();
-		
-		//http.formLogin().and().rememberMe();
-		http.formLogin().loginPage("/login").failureUrl("/login?error").permitAll()
-		.and().rememberMe().rememberMeParameter("remember-me")   
-		.and().logout().logoutUrl("/home/logout").logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID","remember-me").permitAll()
-		.and().exceptionHandling().accessDeniedPage("/access_denied");
-		
+
+		// http.formLogin().and().rememberMe();
+		http.formLogin().loginPage("/login").failureUrl("/login?error").permitAll().and().rememberMe()
+				.rememberMeParameter("remember-me").and().logout().logoutUrl("/home/logout")
+				.logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID", "remember-me").permitAll().and()
+				.exceptionHandling().accessDeniedPage("/access_denied");
+
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).maximumSessions(1);
 	}
 

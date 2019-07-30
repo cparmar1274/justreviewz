@@ -1,6 +1,5 @@
 package org.reviewmanager.pojo;
 
-
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -39,10 +38,14 @@ public class DashboardChartObject {
 	/**
 	 * Instantiates a new dashboard chart object.
 	 *
-	 * @param ratingDate the rating date
-	 * @param googleRating the google rating
-	 * @param facebookRating the facebook rating
-	 * @param yelpRating the yelp rating
+	 * @param ratingDate
+	 *            the rating date
+	 * @param googleRating
+	 *            the google rating
+	 * @param facebookRating
+	 *            the facebook rating
+	 * @param yelpRating
+	 *            the yelp rating
 	 */
 	public DashboardChartObject(Date ratingDate, String googleRating, String facebookRating, String yelpRating) {
 		super();
@@ -64,7 +67,8 @@ public class DashboardChartObject {
 	/**
 	 * Sets the rating date.
 	 *
-	 * @param ratingDate the new rating date
+	 * @param ratingDate
+	 *            the new rating date
 	 */
 	public void setRatingDate(Date ratingDate) {
 		this.ratingDate = ratingDate;
@@ -82,7 +86,8 @@ public class DashboardChartObject {
 	/**
 	 * Sets the google rating.
 	 *
-	 * @param googleRating the new google rating
+	 * @param googleRating
+	 *            the new google rating
 	 */
 	public void setGoogleRating(String googleRating) {
 		this.googleRating = googleRating;
@@ -100,7 +105,8 @@ public class DashboardChartObject {
 	/**
 	 * Sets the facebook rating.
 	 *
-	 * @param facebookRating the new facebook rating
+	 * @param facebookRating
+	 *            the new facebook rating
 	 */
 	public void setFacebookRating(String facebookRating) {
 		this.facebookRating = facebookRating;
@@ -118,7 +124,8 @@ public class DashboardChartObject {
 	/**
 	 * Sets the yelp rating.
 	 *
-	 * @param yelpRating the new yelp rating
+	 * @param yelpRating
+	 *            the new yelp rating
 	 */
 	public void setYelpRating(String yelpRating) {
 		this.yelpRating = yelpRating;
@@ -134,7 +141,9 @@ public class DashboardChartObject {
 				+ Double.parseDouble(this.googleRating)) / 3).substring(0, 3);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -149,7 +158,9 @@ public class DashboardChartObject {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

@@ -13,8 +13,10 @@ public interface ReviewInterface {
 	/**
 	 * Gets the reviews.
 	 *
-	 * @param businessName the business name
-	 * @param reviewContent the review content
+	 * @param businessName
+	 *            the business name
+	 * @param reviewContent
+	 *            the review content
 	 * @return the reviews
 	 */
 	public Map<String, ReviewObject> getReviews(String businessName, String reviewContent);
@@ -22,10 +24,14 @@ public interface ReviewInterface {
 	/**
 	 * Adds the review.
 	 *
-	 * @param reviewContent the review content
-	 * @param clientName the client name
-	 * @param totalStars the total stars
-	 * @param postedBy the posted by
+	 * @param reviewContent
+	 *            the review content
+	 * @param clientName
+	 *            the client name
+	 * @param totalStars
+	 *            the total stars
+	 * @param postedBy
+	 *            the posted by
 	 * @return the map
 	 */
 	public Map<String, Object> addReview(String reviewContent, String clientName, String totalStars, String postedBy);
@@ -33,8 +39,10 @@ public interface ReviewInterface {
 	/**
 	 * Edits the review.
 	 *
-	 * @param businessName the business name
-	 * @param updatedReviewContent the updated review content
+	 * @param businessName
+	 *            the business name
+	 * @param updatedReviewContent
+	 *            the updated review content
 	 * @return the map
 	 */
 	public Map<String, Object> editReview(String businessName, String updatedReviewContent);
@@ -42,8 +50,10 @@ public interface ReviewInterface {
 	/**
 	 * Delete review.
 	 *
-	 * @param businessName the business name
-	 * @param reviewID the review ID
+	 * @param businessName
+	 *            the business name
+	 * @param reviewID
+	 *            the review ID
 	 * @return the map
 	 */
 	public Map<String, Object> deleteReview(String businessName, String reviewID);

@@ -5,50 +5,60 @@ package org.reviewmanager.pojo;
  * The Class PlaceObject.
  */
 public class PlaceObject {
-        
+
 	/** The city. */
 	String city;
-	
+
 	/** The province. */
 	String province;
-	
+
 	/** The country. */
 	String country;
-	
+
 	/** The province code. */
 	String provinceCode;
-	
+
 	/** The postal code. */
 	String postalCode;
-	
+
 	/** The area. */
 	String area;
-	
+
 	/** The latitude. */
 	String latitude;
-	
+
 	/** The longitude. */
 	String longitude;
-	
+
 	/** The area code. */
 	String areaCode;
-	
+
 	/** The time zone. */
 	String timeZone;
-	
+
 	/**
 	 * Instantiates a new place object.
 	 *
-	 * @param city the city
-	 * @param province the province
-	 * @param country the country
-	 * @param province_code the province code
-	 * @param postalCode the postal code
-	 * @param area the area
-	 * @param latitude the latitude
-	 * @param longitude the longitude
-	 * @param area_code the area code
-	 * @param timeZone the time zone
+	 * @param city
+	 *            the city
+	 * @param province
+	 *            the province
+	 * @param country
+	 *            the country
+	 * @param province_code
+	 *            the province code
+	 * @param postalCode
+	 *            the postal code
+	 * @param area
+	 *            the area
+	 * @param latitude
+	 *            the latitude
+	 * @param longitude
+	 *            the longitude
+	 * @param area_code
+	 *            the area code
+	 * @param timeZone
+	 *            the time zone
 	 */
 	public PlaceObject(String city, String province, String country, String province_code, String postalCode,
 			String area, String latitude, String longitude, String area_code, String timeZone) {
@@ -64,7 +74,7 @@ public class PlaceObject {
 		this.areaCode = area_code;
 		this.timeZone = timeZone;
 	}
-	
+
 	/**
 	 * Gets the city.
 	 *
@@ -73,16 +83,17 @@ public class PlaceObject {
 	public String getCity() {
 		return city;
 	}
-	
+
 	/**
 	 * Sets the city.
 	 *
-	 * @param city the new city
+	 * @param city
+	 *            the new city
 	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
-	
+
 	/**
 	 * Gets the province.
 	 *
@@ -91,16 +102,17 @@ public class PlaceObject {
 	public String getProvince() {
 		return province;
 	}
-	
+
 	/**
 	 * Sets the province.
 	 *
-	 * @param province the new province
+	 * @param province
+	 *            the new province
 	 */
 	public void setProvince(String province) {
 		this.province = province;
 	}
-	
+
 	/**
 	 * Gets the country.
 	 *
@@ -109,11 +121,12 @@ public class PlaceObject {
 	public String getCountry() {
 		return country;
 	}
-	
+
 	/**
 	 * Sets the country.
 	 *
-	 * @param country the new country
+	 * @param country
+	 *            the new country
 	 */
 	public void setCountry(String country) {
 		this.country = country;
@@ -127,16 +140,17 @@ public class PlaceObject {
 	public String getPostalCode() {
 		return postalCode;
 	}
-	
+
 	/**
 	 * Sets the postal code.
 	 *
-	 * @param postalCode the new postal code
+	 * @param postalCode
+	 *            the new postal code
 	 */
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-	
+
 	/**
 	 * Gets the area.
 	 *
@@ -145,16 +159,17 @@ public class PlaceObject {
 	public String getArea() {
 		return area;
 	}
-	
+
 	/**
 	 * Sets the area.
 	 *
-	 * @param area the new area
+	 * @param area
+	 *            the new area
 	 */
 	public void setArea(String area) {
 		this.area = area;
 	}
-	
+
 	/**
 	 * Gets the latitude.
 	 *
@@ -163,16 +178,17 @@ public class PlaceObject {
 	public String getLatitude() {
 		return latitude;
 	}
-	
+
 	/**
 	 * Sets the latitude.
 	 *
-	 * @param latitude the new latitude
+	 * @param latitude
+	 *            the new latitude
 	 */
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	
+
 	/**
 	 * Gets the longitude.
 	 *
@@ -181,11 +197,12 @@ public class PlaceObject {
 	public String getLongitude() {
 		return longitude;
 	}
-	
+
 	/**
 	 * Sets the longitude.
 	 *
-	 * @param longitude the new longitude
+	 * @param longitude
+	 *            the new longitude
 	 */
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
@@ -199,16 +216,17 @@ public class PlaceObject {
 	public String getTimeZone() {
 		return timeZone;
 	}
-	
+
 	/**
 	 * Sets the time zone.
 	 *
-	 * @param timeZone the new time zone
+	 * @param timeZone
+	 *            the new time zone
 	 */
 	public void setTimeZone(String timeZone) {
 		this.timeZone = timeZone;
 	}
-	
+
 	/**
 	 * Gets the province code.
 	 *
@@ -217,16 +235,17 @@ public class PlaceObject {
 	public String getProvinceCode() {
 		return provinceCode;
 	}
-	
+
 	/**
 	 * Sets the province code.
 	 *
-	 * @param provinceCode the new province code
+	 * @param provinceCode
+	 *            the new province code
 	 */
 	public void setProvinceCode(String provinceCode) {
 		this.provinceCode = provinceCode;
 	}
-	
+
 	/**
 	 * Gets the area code.
 	 *
@@ -235,17 +254,20 @@ public class PlaceObject {
 	public String getAreaCode() {
 		return areaCode;
 	}
-	
+
 	/**
 	 * Sets the area code.
 	 *
-	 * @param areaCode the new area code
+	 * @param areaCode
+	 *            the new area code
 	 */
 	public void setAreaCode(String areaCode) {
 		this.areaCode = areaCode;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -264,8 +286,10 @@ public class PlaceObject {
 		result = prime * result + ((timeZone == null) ? 0 : timeZone.hashCode());
 		return result;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -329,13 +353,15 @@ public class PlaceObject {
 			return false;
 		return true;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return city +" "+ province +" "+ country +" "+ provinceCode +" "+ postalCode;
+		return city + " " + province + " " + country + " " + provinceCode + " " + postalCode;
 	}
 
 }

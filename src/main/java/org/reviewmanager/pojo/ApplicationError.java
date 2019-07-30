@@ -37,11 +37,16 @@ public class ApplicationError {
 	/**
 	 * Instantiates a new application error.
 	 *
-	 * @param userID the user ID
-	 * @param className the class name
-	 * @param methodName the method name
-	 * @param errorDetail the error detail
-	 * @param errorDate the error date
+	 * @param userID
+	 *            the user ID
+	 * @param className
+	 *            the class name
+	 * @param methodName
+	 *            the method name
+	 * @param errorDetail
+	 *            the error detail
+	 * @param errorDate
+	 *            the error date
 	 */
 	public ApplicationError(String userID, String className, String methodName, String errorDetail, Date errorDate) {
 		super();
@@ -61,7 +66,9 @@ public class ApplicationError {
 		return RMUtil.getMap(this);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -76,7 +83,9 @@ public class ApplicationError {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

@@ -17,79 +17,86 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * The Class ReviewManagerUser.
  */
-@JsonIgnoreProperties({"password","accountNonExpired","accountNonLocked","credentialsNonExpired","enabled"})
-@JsonAutoDetect(fieldVisibility=Visibility.NONE,getterVisibility=Visibility.ANY)
+@JsonIgnoreProperties({ "password", "accountNonExpired", "accountNonLocked", "credentialsNonExpired", "enabled" })
+@JsonAutoDetect(fieldVisibility = Visibility.NONE, getterVisibility = Visibility.ANY)
 public class ReviewManagerUser extends User {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The client name. */
 	@JsonProperty("clientName")
 	public String clientName;
-	
+
 	/** The client type. */
 	@JsonProperty("clientType")
 	public String clientType;
-	
+
 	/** The client id. */
 	@JsonProperty("clientId")
 	public String clientId;
-	
+
 	/** The client email. */
 	@JsonProperty("clientEmail")
 	public String clientEmail;
-	
+
 	/** The client business url. */
 	@JsonProperty("clientBusinessUrl")
 	public String clientBusinessUrl;
-	
+
 	/** The address. */
 	@JsonProperty("address")
 	public Address address;
-	
+
 	/** The facebook url. */
 	@JsonProperty("facebookUrl")
 	public String facebookUrl;
-	
+
 	/** The yelp url. */
 	@JsonProperty("yelpUrl")
 	public String yelpUrl;
-	
+
 	/** The notify new review. */
 	@JsonProperty("notifyNewReview")
 	public boolean notifyNewReview;
-	
+
 	/** The notify new report. */
 	@JsonProperty("notifyNewReport")
 	public boolean notifyNewReport;
-	
+
 	/** The notify added as competitor. */
 	@JsonProperty("notifyAddedAsCompetitor")
 	public boolean notifyAddedAsCompetitor;
-	
+
 	/** The subscription. */
 	@JsonProperty("subscription")
 	public boolean subscription;
-	
+
 	/** The created on. */
 	@JsonProperty("createdOn")
 	public Date createdOn;
-	
+
 	/** The modified on. */
 	@JsonProperty("modifiedOn")
 	public Date modifiedOn;
-	
+
 	/**
 	 * Instantiates a new review manager user.
 	 *
-	 * @param username the username
-	 * @param password the password
-	 * @param enabled the enabled
-	 * @param accountNonExpired the account non expired
-	 * @param credentialsNonExpired the credentials non expired
-	 * @param accountNonLocked the account non locked
-	 * @param authorities the authorities
+	 * @param username
+	 *            the username
+	 * @param password
+	 *            the password
+	 * @param enabled
+	 *            the enabled
+	 * @param accountNonExpired
+	 *            the account non expired
+	 * @param credentialsNonExpired
+	 *            the credentials non expired
+	 * @param accountNonLocked
+	 *            the account non locked
+	 * @param authorities
+	 *            the authorities
 	 */
 	public ReviewManagerUser(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
@@ -112,12 +119,12 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
-
 
 	/**
 	 * Gets the client name.
@@ -131,7 +138,8 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the client name.
 	 *
-	 * @param clientName the new client name
+	 * @param clientName
+	 *            the new client name
 	 */
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
@@ -149,12 +157,13 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the client type.
 	 *
-	 * @param clientType the new client type
+	 * @param clientType
+	 *            the new client type
 	 */
 	public void setClientType(String clientType) {
 		this.clientType = clientType;
 	}
-	
+
 	/**
 	 * Gets the client business url.
 	 *
@@ -167,7 +176,8 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the client business url.
 	 *
-	 * @param clientBusinessUrl the new client business url
+	 * @param clientBusinessUrl
+	 *            the new client business url
 	 */
 	public void setClientBusinessUrl(String clientBusinessUrl) {
 		this.clientBusinessUrl = clientBusinessUrl;
@@ -185,7 +195,8 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the client email.
 	 *
-	 * @param clientEmail the new client email
+	 * @param clientEmail
+	 *            the new client email
 	 */
 	public void setClientEmail(String clientEmail) {
 		this.clientEmail = clientEmail;
@@ -203,7 +214,8 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the address.
 	 *
-	 * @param address the new address
+	 * @param address
+	 *            the new address
 	 */
 	public void setAddress(Address address) {
 		this.address = address;
@@ -221,7 +233,8 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the facebook url.
 	 *
-	 * @param facebookUrl the new facebook url
+	 * @param facebookUrl
+	 *            the new facebook url
 	 */
 	public void setFacebookUrl(String facebookUrl) {
 		this.facebookUrl = facebookUrl;
@@ -239,7 +252,8 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the yelp url.
 	 *
-	 * @param yelpUrl the new yelp url
+	 * @param yelpUrl
+	 *            the new yelp url
 	 */
 	public void setYelpUrl(String yelpUrl) {
 		this.yelpUrl = yelpUrl;
@@ -257,7 +271,8 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the notify new review.
 	 *
-	 * @param notifyNewReview the new notify new review
+	 * @param notifyNewReview
+	 *            the new notify new review
 	 */
 	public void setNotifyNewReview(boolean notifyNewReview) {
 		this.notifyNewReview = notifyNewReview;
@@ -275,7 +290,8 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the notify new report.
 	 *
-	 * @param notifyNewReport the new notify new report
+	 * @param notifyNewReport
+	 *            the new notify new report
 	 */
 	public void setNotifyNewReport(boolean notifyNewReport) {
 		this.notifyNewReport = notifyNewReport;
@@ -293,7 +309,8 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the subscription.
 	 *
-	 * @param subscription the new subscription
+	 * @param subscription
+	 *            the new subscription
 	 */
 	public void setSubscription(boolean subscription) {
 		this.subscription = subscription;
@@ -307,17 +324,15 @@ public class ReviewManagerUser extends User {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	/**
 	 * Gets the review manager user map.
 	 *
 	 * @return the review manager user map
 	 */
-	public Map<String,Object> getReviewManagerUserMap(){
+	public Map<String, Object> getReviewManagerUserMap() {
 		return RMUtil.getMap(this);
 	}
-	
-	
 
 	/**
 	 * Checks if is notify added as competitor.
@@ -331,7 +346,8 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the notify added as competitor.
 	 *
-	 * @param notifyAddedAsCompetitor the new notify added as competitor
+	 * @param notifyAddedAsCompetitor
+	 *            the new notify added as competitor
 	 */
 	public void setNotifyAddedAsCompetitor(boolean notifyAddedAsCompetitor) {
 		this.notifyAddedAsCompetitor = notifyAddedAsCompetitor;
@@ -358,13 +374,16 @@ public class ReviewManagerUser extends User {
 	/**
 	 * Sets the modified on.
 	 *
-	 * @param modifiedOn the new modified on
+	 * @param modifiedOn
+	 *            the new modified on
 	 */
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.security.core.userdetails.User#hashCode()
 	 */
 	@Override
@@ -388,8 +407,11 @@ public class ReviewManagerUser extends User {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.security.core.userdetails.User#equals(java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.security.core.userdetails.User#equals(java.lang.
+	 * Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -460,13 +482,5 @@ public class ReviewManagerUser extends User {
 			return false;
 		return true;
 	}
-
-	
-
-
-	
-
-	
-	
 
 }

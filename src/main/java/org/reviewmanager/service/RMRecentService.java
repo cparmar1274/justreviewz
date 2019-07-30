@@ -17,16 +17,16 @@ public class RMRecentService {
 
 	/** The latest reviews. */
 	public Queue<ReviewObject> latestReviews;
-	
+
 	/** The latest queries. */
 	public Queue<QueryObject> latestQueries;
-	
+
 	/** The latest promotions. */
 	public Queue<PromotionObject> latestPromotions;
-	
+
 	/** The Constant RECENT_COUNTER. */
 	public static final Integer RECENT_COUNTER = 25;
-	
+
 	/**
 	 * Instantiates a new RM recent service.
 	 */
@@ -36,37 +36,43 @@ public class RMRecentService {
 		latestQueries = new LinkedList<QueryObject>();
 		latestPromotions = new LinkedList<PromotionObject>();
 	}
-	
+
 	/**
 	 * Adds the review object.
 	 *
-	 * @param reviewObject the review object
+	 * @param reviewObject
+	 *            the review object
 	 * @return the review object
 	 */
 	public boolean addReviewObject(ReviewObject reviewObject) {
-		if(latestReviews.size()>=RECENT_COUNTER) latestReviews.remove();
+		if (latestReviews.size() >= RECENT_COUNTER)
+			latestReviews.remove();
 		return latestReviews.add(reviewObject);
 	}
-	
+
 	/**
 	 * Adds the query object.
 	 *
-	 * @param queryObject the query object
+	 * @param queryObject
+	 *            the query object
 	 * @return the query object
 	 */
 	public boolean addQueryObject(QueryObject queryObject) {
-		if(latestQueries.size()>=RECENT_COUNTER) latestQueries.remove();
+		if (latestQueries.size() >= RECENT_COUNTER)
+			latestQueries.remove();
 		return latestQueries.add(queryObject);
 	}
-	
+
 	/**
 	 * Adds the promotion object.
 	 *
-	 * @param promotionObject the promotion object
+	 * @param promotionObject
+	 *            the promotion object
 	 * @return the promotion object
 	 */
 	public boolean addPromotionObject(PromotionObject promotionObject) {
-		if(latestPromotions.size()>=RECENT_COUNTER) latestPromotions.remove();
+		if (latestPromotions.size() >= RECENT_COUNTER)
+			latestPromotions.remove();
 		return latestPromotions.add(promotionObject);
 	}
 
@@ -96,7 +102,5 @@ public class RMRecentService {
 	public Queue<PromotionObject> getLatestPromotions() {
 		return latestPromotions;
 	}
-	
-	
-	
+
 }

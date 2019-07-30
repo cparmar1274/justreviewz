@@ -23,7 +23,7 @@ public class QueryObject {
 	/** The question. */
 	@JsonProperty("question")
 	public String question;
-	
+
 	@JsonProperty("type")
 	public String type;
 
@@ -53,16 +53,23 @@ public class QueryObject {
 	/**
 	 * Instantiates a new query object.
 	 *
-	 * @param queryId the query id
-	 * @param clientId the client id
-	 * @param question the question
-	 * @param answer the answer
-	 * @param postedBy the posted by
-	 * @param postedEmail the posted email
-	 * @param postedDate the posted date
+	 * @param queryId
+	 *            the query id
+	 * @param clientId
+	 *            the client id
+	 * @param question
+	 *            the question
+	 * @param answer
+	 *            the answer
+	 * @param postedBy
+	 *            the posted by
+	 * @param postedEmail
+	 *            the posted email
+	 * @param postedDate
+	 *            the posted date
 	 */
 	public QueryObject(String queryId, String clientId, String question, String answer, String postedBy,
-			String postedEmail, String postedDate,String type) {
+			String postedEmail, String postedDate, String type) {
 		super();
 		this.queryId = queryId;
 		this.clientId = clientId;
@@ -86,7 +93,8 @@ public class QueryObject {
 	/**
 	 * Sets the query id.
 	 *
-	 * @param queryId the new query id
+	 * @param queryId
+	 *            the new query id
 	 */
 	public void setQueryId(String queryId) {
 		this.queryId = queryId;
@@ -95,7 +103,8 @@ public class QueryObject {
 	/**
 	 * Sets the posted date.
 	 *
-	 * @param postedDate the new posted date
+	 * @param postedDate
+	 *            the new posted date
 	 */
 	public void setPostedDate(String postedDate) {
 		this.postedDate = postedDate;
@@ -113,7 +122,8 @@ public class QueryObject {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
@@ -131,7 +141,8 @@ public class QueryObject {
 	/**
 	 * Sets the question.
 	 *
-	 * @param question the new question
+	 * @param question
+	 *            the new question
 	 */
 	public void setQuestion(String question) {
 		this.question = question;
@@ -149,7 +160,8 @@ public class QueryObject {
 	/**
 	 * Sets the posted by.
 	 *
-	 * @param postedBy the new posted by
+	 * @param postedBy
+	 *            the new posted by
 	 */
 	public void setPostedBy(String postedBy) {
 		this.postedBy = postedBy;
@@ -167,7 +179,8 @@ public class QueryObject {
 	/**
 	 * Sets the posted email.
 	 *
-	 * @param postedEmail the new posted email
+	 * @param postedEmail
+	 *            the new posted email
 	 */
 	public void setPostedEmail(String postedEmail) {
 		this.postedEmail = postedEmail;
@@ -185,7 +198,8 @@ public class QueryObject {
 	/**
 	 * Sets the answer.
 	 *
-	 * @param answer the new answer
+	 * @param answer
+	 *            the new answer
 	 */
 	public void setAnswer(String answer) {
 		this.answer = answer;
@@ -203,13 +217,12 @@ public class QueryObject {
 	/**
 	 * Sets the posted date.
 	 *
-	 * @param postedDate the new posted date
+	 * @param postedDate
+	 *            the new posted date
 	 */
 	public void setPostedDate(Date postedDate) {
 		this.postedDate = postedDate.toString();
 	}
-
-	
 
 	@Override
 	public int hashCode() {
@@ -278,7 +291,9 @@ public class QueryObject {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

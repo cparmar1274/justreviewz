@@ -21,25 +21,24 @@ public class PromotionObject {
 	/** The promotion title. */
 	@JsonProperty("promotionTitle")
 	public String promotionTitle;
-	
+
 	/** The promotion detail. */
 	@JsonProperty("promotionDetail")
 	public String promotionDetail;
-	
+
 	/** The promotion start date. */
 	@JsonProperty("promotionStartDate")
 	public String promotionStartDate;
-	
+
 	/** The promotion end date. */
 	@JsonProperty("promotionEndDate")
 	public String promotionEndDate;
-	
+
 	@JsonProperty("businessName")
 	public String businessName;
-	
+
 	@JsonProperty("businessAddress")
 	public String businessAddress;
-	
 
 	/**
 	 * Instantiates a new promotion object.
@@ -52,15 +51,21 @@ public class PromotionObject {
 	/**
 	 * Instantiates a new promotion object.
 	 *
-	 * @param promotionId the promotion id
-	 * @param clientId the client id
-	 * @param promotionTitle the promotion title
-	 * @param promotionDetail the promotion detail
-	 * @param promotionStartDate the promotion start date
-	 * @param promotionEndDate the promotion end date
+	 * @param promotionId
+	 *            the promotion id
+	 * @param clientId
+	 *            the client id
+	 * @param promotionTitle
+	 *            the promotion title
+	 * @param promotionDetail
+	 *            the promotion detail
+	 * @param promotionStartDate
+	 *            the promotion start date
+	 * @param promotionEndDate
+	 *            the promotion end date
 	 */
 	public PromotionObject(String promotionId, String clientId, String promotionTitle, String promotionDetail,
-			String promotionStartDate, String promotionEndDate,String businessName,String businessAddress) {
+			String promotionStartDate, String promotionEndDate, String businessName, String businessAddress) {
 		super();
 		this.promotionId = promotionId;
 		this.clientId = clientId;
@@ -84,7 +89,8 @@ public class PromotionObject {
 	/**
 	 * Sets the promotion id.
 	 *
-	 * @param promotionId the new promotion id
+	 * @param promotionId
+	 *            the new promotion id
 	 */
 	public void setPromotionId(String promotionId) {
 		this.promotionId = promotionId;
@@ -102,7 +108,8 @@ public class PromotionObject {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
@@ -120,7 +127,8 @@ public class PromotionObject {
 	/**
 	 * Sets the promotion title.
 	 *
-	 * @param promotionTitle the new promotion title
+	 * @param promotionTitle
+	 *            the new promotion title
 	 */
 	public void setPromotionTitle(String promotionTitle) {
 		this.promotionTitle = promotionTitle;
@@ -138,7 +146,8 @@ public class PromotionObject {
 	/**
 	 * Sets the promotion detail.
 	 *
-	 * @param promotionDetail the new promotion detail
+	 * @param promotionDetail
+	 *            the new promotion detail
 	 */
 	public void setPromotionDetail(String promotionDetail) {
 		this.promotionDetail = promotionDetail;
@@ -156,7 +165,8 @@ public class PromotionObject {
 	/**
 	 * Sets the promotion start date.
 	 *
-	 * @param promotionStartDate the new promotion start date
+	 * @param promotionStartDate
+	 *            the new promotion start date
 	 */
 	public void setPromotionStartDate(String promotionStartDate) {
 		this.promotionStartDate = promotionStartDate;
@@ -174,7 +184,8 @@ public class PromotionObject {
 	/**
 	 * Sets the promotion end date.
 	 *
-	 * @param promotionEndDate the new promotion end date
+	 * @param promotionEndDate
+	 *            the new promotion end date
 	 */
 	public void setPromotionEndDate(String promotionEndDate) {
 		this.promotionEndDate = promotionEndDate;
@@ -262,7 +273,5 @@ public class PromotionObject {
 			return false;
 		return true;
 	}
-	
-	
 
 }

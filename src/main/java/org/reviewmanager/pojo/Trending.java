@@ -26,7 +26,7 @@ public class Trending {
 	/** The trending keywords. */
 	@JsonProperty("trendingKeywords")
 	public Map<String, TrendingKeyword> trendingKeywords;
-	
+
 	@JsonProperty("totalUpdated")
 	public Date lastUpdated;
 
@@ -43,8 +43,10 @@ public class Trending {
 	/**
 	 * Instantiates a new trending.
 	 *
-	 * @param clientId the client id
-	 * @param trendingKeywords the trending keywords
+	 * @param clientId
+	 *            the client id
+	 * @param trendingKeywords
+	 *            the trending keywords
 	 */
 	public Trending(String clientId, HashMap<String, TrendingKeyword> trendingKeywords) {
 		super();
@@ -56,7 +58,8 @@ public class Trending {
 	/**
 	 * Sets the trending keywords.
 	 *
-	 * @param trendingKeywords the trending keywords
+	 * @param trendingKeywords
+	 *            the trending keywords
 	 */
 	public void setTrendingKeywords(Map<String, TrendingKeyword> trendingKeywords) {
 		this.trendingKeywords = trendingKeywords;
@@ -74,8 +77,10 @@ public class Trending {
 	/**
 	 * Analyse review.
 	 *
-	 * @param reviewContent the review content
-	 * @param averageRating the average rating
+	 * @param reviewContent
+	 *            the review content
+	 * @param averageRating
+	 *            the average rating
 	 * @return true, if successful
 	 */
 	public boolean analyseReview(String reviewContent, Double averageRating) {
@@ -98,8 +103,6 @@ public class Trending {
 		}
 		return true;
 	}
-	
-	
 
 	public Date getLastUpdated() {
 		return lastUpdated;
@@ -130,7 +133,8 @@ public class Trending {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId the new client id
+	 * @param clientId
+	 *            the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
@@ -172,7 +176,5 @@ public class Trending {
 			return false;
 		return true;
 	}
-
-	
 
 }
