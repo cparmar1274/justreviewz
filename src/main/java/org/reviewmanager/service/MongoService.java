@@ -72,13 +72,6 @@ public class MongoService {
 		return mongoTable.updateOne(searchQuery, document,updateOption);
 	}
 
-	/**
-	 * Gets the object.
-	 *
-	 * @param tableName the table name
-	 * @param searchQuery the search query
-	 * @return the object
-	 */
 	public List<Document> getObject(String tableName, BasicDBObject searchQuery,BasicDBObject sort) {
 		MongoCollection<Document> mongoTable = mongoDB.getCollection(tableName);
     	 return Lists.newArrayList(mongoTable.find(searchQuery).sort(sort).iterator());
