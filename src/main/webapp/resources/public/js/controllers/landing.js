@@ -44,10 +44,10 @@
             if (item != undefined ) {
                 self.showMessage = true;
                 var clientType = "";
-                /*item.categories.forEach(function(item) {
+                item.categories.forEach(function(item) {
                     clientType += item.title + "#";
-                });*/
-                /*var params = {
+                });
+                var params = {
                     username: item.clientName,
                     password: "",
                     clientEmail: "",
@@ -55,8 +55,8 @@
                     clientBusinessPhoneNumber: item.clientBusinessPhoneNumber,
                     address: address,
                     clientType: clientType
-                };*/
-                $http.post("addUser", item).then(function(data) {
+                };
+                $http.post("addUser", params).then(function(data) {
                     self.showMessage = false;
                     if (data.data.clientID != undefined && data.data.clientID != null) self.goWriteReview(data.data.clientID);
                 });
