@@ -1,8 +1,15 @@
 package org.reviewmanager.service;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.reviewmanager.utility.RMUtil;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -11,7 +18,14 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteResult;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,7 +38,7 @@ public class MongoService {
 	public MongoClient mongoClient;
 
 	/** The mongo DB. */
-	public DB mongoDB;
+	public MongoDatabase mongoDB;
 
 	/**
 	 * Instantiates a new mongo service.
@@ -32,9 +46,11 @@ public class MongoService {
 	public MongoService() {
 
 		try {
-			MongoClientURI uri = new MongoClientURI("mongodb://127.0.0.1:27017");
+			
+			String database = "review_analytics"; // the name of the database in which the user is defined
+			MongoClientURI uri = new MongoClientURI("mongodb://localhost:27017/?authSource=db1");
 			mongoClient = new MongoClient(uri);
-			mongoDB = mongoClient.getDB("review_analytics");
+			mongoDB = mongoClient.getDatabase(database);
 			// create Index
 			mongoDB.getCollection(RMUtil.REVIEW_INDEX).createIndex(new BasicDBObject().append("reviewContent", "text"));
 		} catch (Exception ex) {
@@ -50,9 +66,10 @@ public class MongoService {
 	 * @param document the document
 	 * @return the write result
 	 */
-	public WriteResult addObject(String tableName, DBObject searchQuery, DBObject document) {
-		DBCollection mongoTable = mongoDB.getCollection(tableName);
-		return mongoTable.update(searchQuery, document, true, false);
+	public UpdateResult addObject(String tableName, BasicDBObject searchQuery, BasicDBObject document) {
+		MongoCollection<Document> mongoTable = mongoDB.getCollection(tableName);
+		UpdateOptions updateOption = new UpdateOptions().upsert(true);
+		return mongoTable.updateOne(searchQuery, document,updateOption);
 	}
 
 	/**
@@ -62,9 +79,9 @@ public class MongoService {
 	 * @param searchQuery the search query
 	 * @return the object
 	 */
-	public DBCursor getObject(String tableName, DBObject searchQuery) {
-		DBCollection mongoTable = mongoDB.getCollection(tableName);
-		return mongoTable.find(searchQuery);
+	public List<Document> getObject(String tableName, BasicDBObject searchQuery,BasicDBObject sort) {
+		MongoCollection<Document> mongoTable = mongoDB.getCollection(tableName);
+    	 return Lists.newArrayList(mongoTable.find(searchQuery).sort(sort).iterator());
 	}
 
 	/**
@@ -74,9 +91,9 @@ public class MongoService {
 	 * @param searchQuery the search query
 	 * @return the write result
 	 */
-	public WriteResult deleteObject(String tableName, DBObject searchQuery) {
-		DBCollection mongoTable = mongoDB.getCollection(tableName);
-		return mongoTable.remove(searchQuery);
+	public DeleteResult deleteObject(String tableName, BasicDBObject searchQuery) {
+		MongoCollection<Document> mongoTable = mongoDB.getCollection(tableName);
+		return mongoTable.deleteOne(searchQuery);
 	}
 
 }
