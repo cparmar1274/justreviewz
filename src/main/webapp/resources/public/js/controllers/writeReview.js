@@ -57,13 +57,13 @@
                 clientId: self.clientId,
                 reviewDate: new Date()
             };
-            window.Pace.track($http.post("postReview", params).then(function(response) {
+            $http.post("postReview", params).then(function(response) {
                 if (response.data.result.success == true) self.reviewMessage = "Your review has been posted successfully.";
                 self.reviewText = "";
                 self.firstName = "";
                 self.lastName = "";
                 self.email = "";
-            }));
+            })
         };
         self.loadClientDetail = function() {
         	$http.post("getClient", {

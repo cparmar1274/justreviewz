@@ -73,7 +73,7 @@
                  console.log("TEST",test,data);
                  self.clientId = data.data.result.clientId;
                  self.productMessage = "Product added successfully. "
-             });
+             })
         }
         
         
@@ -99,7 +99,7 @@
             $http.post("registerNewBusiness", self.user).then(function(data) {
                 self.onboardRequestStatus = false;
                 console.log(data);
-            });
+            })
         };
         self.loadLocation();
     }
