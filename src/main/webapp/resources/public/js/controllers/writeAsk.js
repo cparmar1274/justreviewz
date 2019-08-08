@@ -14,22 +14,37 @@
         self.totalReviews = 0;
         self.totalReplies = 0;
         self.reviewMessage = "";
+       
         self.clientId = "";
         if ($stateParams.clientId != undefined && $stateParams.clientId != null) self.clientId = $stateParams.clientId;
         
         self.type = "";
         if ($stateParams.type != undefined && $stateParams.type != null) self.type = $stateParams.type;
+    
+        self.queryId = "";
+        if ($stateParams.queryId != undefined && $stateParams.queryId != null) self.queryId = $stateParams.queryId;
+
+        self.answer = "";
+        if ($stateParams.answer != undefined && $stateParams.answer != null) self.answer = $stateParams.answer;
         
+        if ($stateParams.question != undefined && $stateParams.question != null) self.reviewText = $stateParams.question;
+
         self.clientName = "";
         self.clientType = "";
         self.workingHours = "";
         self.clientBusinessUrl = "";
         self.address = "";
+        
         self.stateAsk = function() {
             $state.go("public.writeAsk");
         };
+        
+        
+        console.log("Answer : ",self.answer);
+        
         self.textOptions = [ [ "strikeThrough", "ul", "ol" ], [ "redo", "undo", "clear" ], [ "insertImage", "insertLink" ], [ "wordcount", "charcount" ] ];
         self.postAsk = function() {
+        	
             if (self.reviewText == null || self.reviewText == "") {
                 return;
             }
@@ -40,7 +55,9 @@
                 postedEmail: self.email,
                 type:self.type,
                 clientId: self.clientId,
-                postedDate: new Date()
+                postedDate: new Date(),
+                queryId: self.queryId,
+                answer:self.answer
             };
             $http.post("postAsk", params).then(function(response) {
                 if (response.data.result != null) self.reviewMessage = "Your Query has been submitted successfully to " + self.clientName + ".";

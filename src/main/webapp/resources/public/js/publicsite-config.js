@@ -127,7 +127,7 @@
                 }
             }
         }).state("public.writeAsk", {
-            url: "/writeAsk/:type/:clientId",
+            url: "/writeAsk/:type/:clientId/:answer/:queryId/:question",
             templateUrl: "public/views/writeAsk.html",
             data: {
                 pageTitle: "Ask"

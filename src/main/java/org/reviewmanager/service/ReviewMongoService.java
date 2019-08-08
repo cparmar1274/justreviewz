@@ -172,7 +172,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		List<QueryObject> queryObjects = new ArrayList<>();
 		for (Document searchHit : cursor) {
 			try {
-				object = RMUtil.gson.fromJson(searchHit.toString(), QueryObject.class);
+				object = RMUtil.gson.fromJson(searchHit.toJson(), QueryObject.class);
 				queryObjects.add(object);
 			} catch (Exception ex) {
 				System.out.println("Error Serializing :" + searchHit.toString());

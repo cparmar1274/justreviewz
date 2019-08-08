@@ -67,10 +67,24 @@
                 type:'product'
             });
         };
-        self.stateAsk = function() {
+        
+        self.stateAskBlank = function() {
             $state.go("public.writeAsk", {
                 clientId: self.productId,
-                type:'product'
+                answer: null,
+                queryId: null,
+                question: null,
+                type: "product"
+            });
+        };
+        
+        self.stateAsk = function(query) {
+            $state.go("public.writeAsk", {
+                clientId: self.productId,
+                answer: query.answer,
+                queryId: query.queryId,
+                question: query.question,
+                type: "product"
             });
         };
         self.load();
