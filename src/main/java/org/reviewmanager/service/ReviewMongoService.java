@@ -257,7 +257,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 			List<Document> cursor = mongoService.getObject(RMUtil.USER_INDEX, searchQuery, new BasicDBObject());
 
 			for (Document searchHit : cursor) {
-				jsonData = gson.fromJson(searchHit.toString(), JsonObject.class);
+				jsonData = gson.fromJson(searchHit.toJson(), JsonObject.class);
 				clientID = String.valueOf(searchHit.get("clientId"));
 			}
 			newUser = RMUtil.getUserObject(jsonData);
@@ -290,7 +290,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		BusinessObject searchReviewObj = null;
 		Gson gson = new Gson();
 		for (Document searchHit : cursor) {
-			searchReviewObj = gson.fromJson(searchHit.toString(), BusinessObject.class);
+			searchReviewObj = gson.fromJson(searchHit.toJson(), BusinessObject.class);
 			searchReview.add(searchReviewObj);
 		}
 		reportResult.put("result", searchReview);
@@ -316,7 +316,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		BusinessObject searchReviewObj = null;
 		Gson gson = new Gson();
 		for (Document searchHit : cursor) {
-			searchReviewObj = gson.fromJson(searchHit.toString(), BusinessObject.class);
+			searchReviewObj = gson.fromJson(searchHit.toJson(), BusinessObject.class);
 			searchReview.add(searchReviewObj);
 		}
 		reportResult.put("result", searchReview);
@@ -430,7 +430,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", clientId);
 		List<Document> cursor = mongoService.getObject(RMUtil.TRENDING_INDEX, searchQuery, new BasicDBObject());
 		for (Document dbObject : cursor) {
-			trending = gson.fromJson(dbObject.toString(), Trending.class);
+			trending = gson.fromJson(dbObject.toJson(), Trending.class);
 		}
 
 		reportResult.put("result", trending);
