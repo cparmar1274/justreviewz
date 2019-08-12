@@ -144,7 +144,7 @@
 					<div class="panel">
 						<div class="panel-title">
 							Queries
-							<button type="button" ng-click="reviewCtrl.stateAsk()"
+							<button type="button" ng-click="reviewCtrl.stateAskBlank()"
 								class="btn btn-primary pull-right">Submit Query</button>
 							<br> <small class="text text-default">{{reviewCtrl.totalQueries}}
 								Queries</small>
@@ -156,15 +156,17 @@
 								class="alert alert-primary" role="alert">
 								<strong> None so far !</strong> Be the first one to ask.
 							</div>
-							<div class="box-container">
-								<div ng-repeat="query in reviewCtrl.queries | orderBy :'postedDate' ">
-										<div class="panel-title">{{query.question}}
-										<span class="pull-right text-default">{{query.postedDate
-											| date}}</span> </div> 
-										{{query.answer}}
-								</div>
-
+												
+							<div class="widget-tree-comments-item" style="margin-left: 0px !important;" ng-repeat="query in reviewCtrl.queries | orderBy :'postedDate' ">
+							<div class="widget-tree-comments-header">
+								<span class="text text-default" style="font-size: 14px;">{{query.question}}</span>
+								<span>&nbsp;&nbsp;{{query.postedDate | date}}</span>
+								<span ng-click="reviewCtrl.stateAsk(query)">&nbsp;&nbsp;(Change Answer)</span>
 							</div>
+							<div class="widget-tree-comments-text text-success" style="word-wrap: break-word;">{{query.answer}}
+							</div>
+						</div>
+							
 
 						</div>
 						<div class="panel-footer text-center">

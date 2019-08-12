@@ -43,6 +43,12 @@ public class QueryObject {
 	@JsonProperty("postedDate")
 	public String postedDate;
 
+	@JsonProperty("answeredBy")
+	public String answeredBy;
+
+	@JsonProperty("answeredEmail")
+	public String answeredEmail;
+
 	/**
 	 * Instantiates a new query object.
 	 */
@@ -50,35 +56,19 @@ public class QueryObject {
 		super();
 	}
 
-	/**
-	 * Instantiates a new query object.
-	 *
-	 * @param queryId
-	 *            the query id
-	 * @param clientId
-	 *            the client id
-	 * @param question
-	 *            the question
-	 * @param answer
-	 *            the answer
-	 * @param postedBy
-	 *            the posted by
-	 * @param postedEmail
-	 *            the posted email
-	 * @param postedDate
-	 *            the posted date
-	 */
-	public QueryObject(String queryId, String clientId, String question, String answer, String postedBy,
-			String postedEmail, String postedDate, String type) {
+	public QueryObject(String queryId, String clientId, String question, String type, String answer, String postedBy,
+			String postedEmail, String postedDate, String answeredBy, String answeredEmail) {
 		super();
 		this.queryId = queryId;
 		this.clientId = clientId;
 		this.question = question;
+		this.type = type;
 		this.answer = answer;
 		this.postedBy = postedBy;
 		this.postedEmail = postedEmail;
 		this.postedDate = postedDate;
-		this.type = type;
+		this.answeredBy = answeredBy;
+		this.answeredEmail = answeredEmail;
 	}
 
 	/**
@@ -93,8 +83,7 @@ public class QueryObject {
 	/**
 	 * Sets the query id.
 	 *
-	 * @param queryId
-	 *            the new query id
+	 * @param queryId the new query id
 	 */
 	public void setQueryId(String queryId) {
 		this.queryId = queryId;
@@ -103,8 +92,7 @@ public class QueryObject {
 	/**
 	 * Sets the posted date.
 	 *
-	 * @param postedDate
-	 *            the new posted date
+	 * @param postedDate the new posted date
 	 */
 	public void setPostedDate(String postedDate) {
 		this.postedDate = postedDate;
@@ -122,8 +110,7 @@ public class QueryObject {
 	/**
 	 * Sets the client id.
 	 *
-	 * @param clientId
-	 *            the new client id
+	 * @param clientId the new client id
 	 */
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
@@ -141,8 +128,7 @@ public class QueryObject {
 	/**
 	 * Sets the question.
 	 *
-	 * @param question
-	 *            the new question
+	 * @param question the new question
 	 */
 	public void setQuestion(String question) {
 		this.question = question;
@@ -160,8 +146,7 @@ public class QueryObject {
 	/**
 	 * Sets the posted by.
 	 *
-	 * @param postedBy
-	 *            the new posted by
+	 * @param postedBy the new posted by
 	 */
 	public void setPostedBy(String postedBy) {
 		this.postedBy = postedBy;
@@ -179,8 +164,7 @@ public class QueryObject {
 	/**
 	 * Sets the posted email.
 	 *
-	 * @param postedEmail
-	 *            the new posted email
+	 * @param postedEmail the new posted email
 	 */
 	public void setPostedEmail(String postedEmail) {
 		this.postedEmail = postedEmail;
@@ -198,8 +182,7 @@ public class QueryObject {
 	/**
 	 * Sets the answer.
 	 *
-	 * @param answer
-	 *            the new answer
+	 * @param answer the new answer
 	 */
 	public void setAnswer(String answer) {
 		this.answer = answer;
@@ -217,11 +200,42 @@ public class QueryObject {
 	/**
 	 * Sets the posted date.
 	 *
-	 * @param postedDate
-	 *            the new posted date
+	 * @param postedDate the new posted date
 	 */
 	public void setPostedDate(Date postedDate) {
 		this.postedDate = postedDate.toString();
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getAnsweredBy() {
+		return answeredBy;
+	}
+
+	public void setAnsweredBy(String answeredBy) {
+		this.answeredBy = answeredBy;
+	}
+
+	public String getAnsweredEmail() {
+		return answeredEmail;
+	}
+
+	public void setAnsweredEmail(String answeredEmail) {
+		this.answeredEmail = answeredEmail;
+	}
+
+	@Override
+	public String toString() {
+		return "QueryObject [queryId=" + queryId + ", clientId=" + clientId + ", question=" + question + ", type="
+				+ type + ", answer=" + answer + ", postedBy=" + postedBy + ", postedEmail=" + postedEmail
+				+ ", postedDate=" + postedDate + ", answeredBy=" + answeredBy + ", answeredEmail=" + answeredEmail
+				+ "]";
 	}
 
 	@Override
@@ -229,6 +243,8 @@ public class QueryObject {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((answer == null) ? 0 : answer.hashCode());
+		result = prime * result + ((answeredBy == null) ? 0 : answeredBy.hashCode());
+		result = prime * result + ((answeredEmail == null) ? 0 : answeredEmail.hashCode());
 		result = prime * result + ((clientId == null) ? 0 : clientId.hashCode());
 		result = prime * result + ((postedBy == null) ? 0 : postedBy.hashCode());
 		result = prime * result + ((postedDate == null) ? 0 : postedDate.hashCode());
@@ -252,6 +268,16 @@ public class QueryObject {
 			if (other.answer != null)
 				return false;
 		} else if (!answer.equals(other.answer))
+			return false;
+		if (answeredBy == null) {
+			if (other.answeredBy != null)
+				return false;
+		} else if (!answeredBy.equals(other.answeredBy))
+			return false;
+		if (answeredEmail == null) {
+			if (other.answeredEmail != null)
+				return false;
+		} else if (!answeredEmail.equals(other.answeredEmail))
 			return false;
 		if (clientId == null) {
 			if (other.clientId != null)
@@ -289,18 +315,6 @@ public class QueryObject {
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "QueryObject [queryId=" + queryId + ", clientId=" + clientId + ", question=" + question + ", answer="
-				+ answer + ", postedBy=" + postedBy + ", postedEmail=" + postedEmail + ", postedDate=" + postedDate
-				+ "]";
 	}
 
 }

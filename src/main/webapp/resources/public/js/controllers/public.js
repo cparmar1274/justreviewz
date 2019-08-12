@@ -57,10 +57,23 @@
                 type:'local'
             });
         };
-        self.stateAsk = function() {
+        self.stateAskBlank = function() {
             $state.go("public.writeAsk", {
                 clientId: self.clientId,
-                type:'local'
+                answer: null,
+                queryId: null,
+                question: null,
+                type: "local"
+            });
+        };
+        
+        self.stateAsk = function(query) {
+            $state.go("public.writeAsk", {
+                clientId: self.clientId,
+                answer: query.answer,
+                queryId: query.queryId,
+                question: query.question,
+                type: "local"
             });
         };
         self.textOptions = [ [ "strikeThrough", "ul", "ol" ], [ "redo", "undo", "clear" ], [ "insertImage", "insertLink" ], [ "wordcount", "charcount" ] ];

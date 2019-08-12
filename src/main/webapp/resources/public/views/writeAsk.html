@@ -37,9 +37,16 @@
 		
 		</md-card-title> <md-card-content md-layout="padding"> 
 		
-		<md-input-container	class="md-block"> <label>submit query</label> 
+		<md-input-container	class="md-block" ng-hide="reviewCtrl.showAnswer"> 
+		<label>submit query</label> 
 		<textarea	required ng-model="reviewCtrl.reviewText" md-maxlength="500" rows="3"	md-select-on-focus></textarea> 
 		</md-input-container> 
+		
+		<md-input-container	class="md-block" ng-show="reviewCtrl.showAnswer"> 
+		<label>{{reviewCtrl.reviewText}} answerblock</label> 
+		<textarea	required ng-model="reviewCtrl.reviewAnswer" md-maxlength="500" rows="3"	md-select-on-focus></textarea> 
+		</md-input-container> 
+		
 		<md-input-container>
 		<label>First Name</label> <input required
 			ng-model="reviewCtrl.firstName"> 
