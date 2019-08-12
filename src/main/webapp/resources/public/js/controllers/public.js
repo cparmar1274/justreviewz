@@ -176,6 +176,7 @@
                         });
                      // Add zoom and rotation controls to the map.
                         map.addControl(new mapboxgl.NavigationControl());
+                   
                         /*map.addControl(new MapboxDirections({
                             accessToken: mapboxgl.accessToken
                         }), 'top-left');*/
