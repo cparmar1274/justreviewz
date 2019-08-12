@@ -98,7 +98,7 @@ public class ReviewService {
 	 *            the sort type
 	 * @return the reviews
 	 */
-	@Cacheable("justreviewz_review")
+	//@Cacheable("justreviewz_review")
 	public Map<String, Object> getReviews(String username, Integer startIndex, Integer pageSize, String searchText,
 			String sortType) {
 		Map<String, Object> mapData = new HashMap<String, Object>();
@@ -130,7 +130,7 @@ public class ReviewService {
 	 *            the username
 	 * @return the dashboard chart data
 	 */
-	@Cacheable("justreviewz_chartdata")
+	//@Cacheable("justreviewz_chartdata")
 	public Map<String, Object> getDashboardChartData(String username) {
 		return reportIncidentService.getDashboardObject(username);
 	}
@@ -142,7 +142,7 @@ public class ReviewService {
 	 *            the username
 	 * @return the trending data
 	 */
-	@Cacheable("justreviewz_treadingdata")
+	//@Cacheable("justreviewz_treadingdata")
 	public Map<String, Object> getTrendingData(String username) {
 		return reportIncidentService.getTrendingData(username);
 	}
