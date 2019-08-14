@@ -28,55 +28,48 @@
                 self.user.province = "";
             }
         };
-        
         self.productName = "";
         self.productDetail = "";
         self.productProperties = {};
         self.properties = [];
         self.propertyName = "";
-        
         self.clientId = "";
-        self.type="product";
-        
-        self.removeProperty = function(property){
-        	console.log(property);
-        	self.properties = self.properties.filter(function(a,b,c){
-        		return a!=property;
-        	});
-        }
-        
-        self.addProperty = function(){
-        	self.properties.push(self.propertyName);
-        	self.propertyName = "";
-        }
-        self.createProduct = function(){
-        	self.productMessage = "";
-        	 var deferred = $q.defer();
-        	var productProperties = "{";
-        	var index = 0;
-        	angular.forEach(self.properties,function(prop){
-        		productProperties += "\""+prop+"\":\""+$("#"+index).val()+"\",";
-        		index++;
-        	});
-        	
-        	productProperties += "\"\":\"\"}";
-        	 var params = {
-        			 productName:self.productName,
-        			 productDetail:self.productDetail,
-        			 productProperties:JSON.parse(productProperties)
-        	 };
-        	 console.log("params",params);
-        	 $http.post("postProduct", params).then(function(data) {
-                 var test = deferred.resolve({
-                     data: data.data.result.businesses
-                 });
-                 console.log("TEST",test,data);
-                 self.clientId = data.data.result.clientId;
-                 self.productMessage = "Product added successfully. "
-             })
-        }
-        
-        
+        self.type = "product";
+        self.removeProperty = function(property) {
+            console.log(property);
+            self.properties = self.properties.filter(function(a, b, c) {
+                return a != property;
+            });
+        };
+        self.addProperty = function() {
+            self.properties.push(self.propertyName);
+            self.propertyName = "";
+        };
+        self.createProduct = function() {
+            self.productMessage = "";
+            var deferred = $q.defer();
+            var productProperties = "{";
+            var index = 0;
+            angular.forEach(self.properties, function(prop) {
+                productProperties += '"' + prop + '":"' + $("#" + index).val() + '",';
+                index++;
+            });
+            productProperties += '"":""}';
+            var params = {
+                productName: self.productName,
+                productDetail: self.productDetail,
+                productProperties: JSON.parse(productProperties)
+            };
+            console.log("params", params);
+            $http.post("postProduct", params).then(function(data) {
+                var test = deferred.resolve({
+                    data: data.data.result.businesses
+                });
+                console.log("TEST", test, data);
+                self.clientId = data.data.result.clientId;
+                self.productMessage = "Product added successfully. ";
+            });
+        };
         function retrieveData() {
             var deferred = $q.defer();
             var data = [];
@@ -99,7 +92,7 @@
             $http.post("registerNewBusiness", self.user).then(function(data) {
                 self.onboardRequestStatus = false;
                 console.log(data);
-            })
+            });
         };
         self.loadLocation();
     }

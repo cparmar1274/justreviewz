@@ -49,7 +49,6 @@
         var self = this;
         self.showErrorMessage = $("#error").text().length > 0;
         self.showLogoutMessage = $("#logout").text().length > 0;
-       
     }
     angular.module("pixeladmin").controller("MyController", MyController).controller("MainCtrl", MainCtrl);
 })();

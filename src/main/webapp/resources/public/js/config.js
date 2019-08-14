@@ -17,7 +17,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "landing/public/js/controllers/main.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "landing/public/js/controllers/main.js?v=20190814" ]);
                 }
             }
         }).state("pages.second", {
@@ -28,18 +28,18 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "landing/public/js/controllers/requestOnboarding.js?v=20190719", {
+                    return $ocLazyLoad.load([ "landing/public/js/controllers/requestOnboarding.js?v=20190814", {
                         name: "ui.select",
-                        files: [ "landing/js/libs/select.js?v=20190719" ]
+                        files: [ "landing/js/libs/select.js?v=20190814" ]
                     }, {
                         name: "px-file",
-                        files: [ "landing/js/pixeladmin/plugins/px-file.js?v=20190719", "landing/js/pixeladmin/directives/angular-px-file.js?v=20190719" ]
+                        files: [ "landing/js/pixeladmin/plugins/px-file.js?v=20190814", "landing/js/pixeladmin/directives/angular-px-file.js?v=20190814" ]
                     }, {
                         name: "px-wizard",
-                        files: [ "landing/js/pixeladmin/plugins/px-wizard.js?v=20190719", "landing/js/pixeladmin/directives/angular-px-wizard.js?v=20190719" ]
+                        files: [ "landing/js/pixeladmin/plugins/px-wizard.js?v=20190814", "landing/js/pixeladmin/directives/angular-px-wizard.js?v=20190814" ]
                     }, {
                         name: "angular-maskedinput",
-                        files: [ "landing/js/libs/jquery.maskedinput.js?v=20190719", "landing/js/pixeladmin/directives/angular-maskedinput.js?v=20190719" ]
+                        files: [ "landing/js/libs/jquery.maskedinput.js?v=20190814", "landing/js/pixeladmin/directives/angular-maskedinput.js?v=20190814" ]
                     } ]);
                 }
             }
@@ -51,7 +51,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "landing/public/js/controllers/forgotPassword.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "landing/public/js/controllers/forgotPassword.js?v=20190814" ]);
                 }
             }
         });

@@ -17,7 +17,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "public/js/controllers/landing.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "public/js/controllers/landing.js?v=20190814" ]);
                 }
             }
         }).state("public.howitworks", {
@@ -28,7 +28,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "public/js/controllers/landing.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "public/js/controllers/landing.js?v=20190814" ]);
                 }
             }
         }).state("public.background", {
@@ -39,7 +39,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "public/js/controllers/landing.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "public/js/controllers/landing.js?v=20190814" ]);
                 }
             }
         }).state("public.faqs", {
@@ -56,7 +56,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "public/js/controllers/registerBusiness.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "public/js/controllers/registerBusiness.js?v=20190814" ]);
                 }
             }
         }).state("public.registerProduct", {
@@ -67,7 +67,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "public/js/controllers/registerBusiness.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "public/js/controllers/registerBusiness.js?v=20190814" ]);
                 }
             }
         }).state("public.register", {
@@ -78,18 +78,18 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "public/js/controllers/requestOnboarding.js?v=20190719", {
+                    return $ocLazyLoad.load([ "public/js/controllers/requestOnboarding.js?v=20190814", {
                         name: "ui.select",
-                        files: [ "js/libs/select.js?v=20190719" ]
+                        files: [ "js/libs/select.js?v=20190814" ]
                     }, {
                         name: "px-file",
-                        files: [ "js/pixeladmin/plugins/px-file.js?v=20190719", "js/pixeladmin/directives/angular-px-file.js?v=20190719" ]
+                        files: [ "js/pixeladmin/plugins/px-file.js?v=20190814", "js/pixeladmin/directives/angular-px-file.js?v=20190814" ]
                     }, {
                         name: "px-wizard",
-                        files: [ "js/pixeladmin/plugins/px-wizard.js?v=20190719", "js/pixeladmin/directives/angular-px-wizard.js?v=20190719" ]
+                        files: [ "js/pixeladmin/plugins/px-wizard.js?v=20190814", "js/pixeladmin/directives/angular-px-wizard.js?v=20190814" ]
                     }, {
                         name: "angular-maskedinput",
-                        files: [ "js/libs/jquery.maskedinput.js?v=20190719", "js/pixeladmin/directives/angular-maskedinput.js?v=20190719" ]
+                        files: [ "js/libs/jquery.maskedinput.js?v=20190814", "js/pixeladmin/directives/angular-maskedinput.js?v=20190814" ]
                     } ]);
                 }
             }
@@ -101,7 +101,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "public/js/controllers/main.js?v=20190719", "public/js/controllers/public.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "public/js/controllers/main.js?v=20190814", "public/js/controllers/public.js?v=20190814" ]);
                 }
             }
         }).state("public.product", {
@@ -112,7 +112,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load(["public/js/controllers/product.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "public/js/controllers/product.js?v=20190814" ]);
                 }
             }
         }).state("public.writeReview", {
@@ -123,7 +123,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "public/js/controllers/main.js?v=20190719", "public/js/controllers/writeReview.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "public/js/controllers/main.js?v=20190814", "public/js/controllers/writeReview.js?v=20190814" ]);
                 }
             }
         }).state("public.writeAsk", {
@@ -134,7 +134,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "public/js/controllers/main.js?v=20190719", "public/js/controllers/writeAsk.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "public/js/controllers/main.js?v=20190814", "public/js/controllers/writeAsk.js?v=20190814" ]);
                 }
             }
         });

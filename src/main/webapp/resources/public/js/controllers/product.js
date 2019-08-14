@@ -3,24 +3,25 @@
         var self = this;
         self.productName = "";
         self.productId = "";
-        if ($stateParams.productId != undefined && $stateParams.productId != null) 
-        	self.productId = $stateParams.productId;
+        if ($stateParams.productId != undefined && $stateParams.productId != null) self.productId = $stateParams.productId;
         self.product = {};
         self.subscribeStatus = true;
         self.sortingOptions = [ "Latest Reviews First", "Oldest Reviews First", "Highest Rating First", "Lowest Rating First" ];
         self.searchReviewText = "";
-        self.loadProduct = function(){
-        	var params = {productId:self.productId,"productPage":"true"};
-        	$http.post("getProduct", params).then(function(data) {
-        		var product = data.data.result;
-        		 if(product.productId==self.productId)
-            	 { self.product = product;
-            	   self.productName = product.productName;
-            	 }
-                    console.log("Product",self.product);
+        self.loadProduct = function() {
+            var params = {
+                productId: self.productId,
+                productPage: "true"
+            };
+            $http.post("getProduct", params).then(function(data) {
+                var product = data.data.result;
+                if (product.productId == self.productId) {
+                    self.product = product;
+                    self.productName = product.productName;
+                }
+                console.log("Product", self.product);
             });
-        }
-        
+        };
         self.load = function() {
             $http.post("loadReview", {
                 clientId: self.productId,
@@ -32,19 +33,17 @@
                 self.averageRating = response.data.result.averageRating;
             });
         };
-        
         self.subscribe = function() {
             self.subscribeStatus = true;
             $http.post("subscribe", {
                 email: self.subscribeEmail,
                 clientId: self.product.productId,
                 clientName: self.product.productName,
-                address:self.product.productDetail
+                address: self.product.productDetail
             }).then(function(response) {
                 self.subscribeStatus = false;
             });
         };
-        
         self.loadQueries = function() {
             $http.post("getAsk", {
                 clientId: self.productId
@@ -57,17 +56,18 @@
                 self.totalQueries = self.queries.length;
             });
         };
-      
-        self.loadMoreReviews = function(){ self.load();}
-        self.loadMoreQueries = function() {  self.loadQueries();}
-        
+        self.loadMoreReviews = function() {
+            self.load();
+        };
+        self.loadMoreQueries = function() {
+            self.loadQueries();
+        };
         self.stateReview = function() {
             $state.go("public.writeReview", {
                 clientId: self.productId,
-                type:'product'
+                type: "product"
             });
         };
-        
         self.stateAskBlank = function() {
             $state.go("public.writeAsk", {
                 clientId: self.productId,
@@ -77,9 +77,7 @@
                 type: "product"
             });
         };
-        
-        self.searchReview = function(){
-
+        self.searchReview = function() {
             var filtered = 0, total = 0;
             $(".widget-tree-comments-item").filter(function(a, b, c) {
                 total++;
@@ -91,9 +89,7 @@
                 }
             });
             self.searchReviewMessage = " Showing " + filtered + " reviews ( filtered out of " + total + " reviews)";
-        
-        }
-        
+        };
         self.stateAsk = function(query) {
             $state.go("public.writeAsk", {
                 clientId: self.productId,
@@ -106,6 +102,6 @@
         self.load();
         self.loadQueries();
         self.loadProduct();
-        }
+    }
     angular.module("pixeladmin").controller("ProductReviewCtrl", ProductReviewCtrl);
 })();

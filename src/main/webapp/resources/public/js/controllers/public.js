@@ -33,7 +33,7 @@
                 email: self.subscribeEmail,
                 clientId: self.clientId,
                 clientName: self.clientName,
-                address:self.address
+                address: self.address
             }).then(function(response) {
                 self.subscribeStatus = false;
             });
@@ -54,7 +54,7 @@
         self.stateReview = function() {
             $state.go("public.writeReview", {
                 clientId: self.clientId,
-                type:'local'
+                type: "local"
             });
         };
         self.stateAskBlank = function() {
@@ -66,7 +66,6 @@
                 type: "local"
             });
         };
-        
         self.stateAsk = function(query) {
             $state.go("public.writeAsk", {
                 clientId: self.clientId,
@@ -174,12 +173,7 @@
                             center: feature.center,
                             zoom: 15
                         });
-                     // Add zoom and rotation controls to the map.
                         map.addControl(new mapboxgl.NavigationControl());
-                   
-                        /*map.addControl(new MapboxDirections({
-                            accessToken: mapboxgl.accessToken
-                        }), 'top-left');*/
                         new mapboxgl.Marker().setLngLat(feature.center).setPopup(popup).addTo(map);
                     }
                 });

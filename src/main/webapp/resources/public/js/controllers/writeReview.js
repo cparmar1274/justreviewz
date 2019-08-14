@@ -16,10 +16,8 @@
         self.reviewMessage = "";
         self.clientId = "";
         if ($stateParams.clientId != undefined && $stateParams.clientId != null) self.clientId = $stateParams.clientId;
-        
         self.type = "";
         if ($stateParams.type != undefined && $stateParams.type != null) self.type = $stateParams.type;
-        
         self.clientName = "";
         self.clientType = "";
         self.workingHours = "";
@@ -41,15 +39,13 @@
             $state.go("public.writeReview");
         };
         self.postReview = function() {
-        	
-        	
             if (self.reviewText == null || self.reviewText == "") {
                 return;
             }
             self.reviewMessage = "Submitting review...Please wait.";
             var params = {
                 reviewText: self.reviewText,
-                type:self.type,
+                type: self.type,
                 postedBy: self.firstName + " " + self.lastName,
                 postedDetail: self.firstName + " " + self.lastName,
                 postedEmail: self.email,
@@ -63,12 +59,12 @@
                 self.firstName = "";
                 self.lastName = "";
                 self.email = "";
-            })
+            });
         };
         self.loadClientDetail = function() {
-        	$http.post("getClient", {
+            $http.post("getClient", {
                 clientId: self.clientId,
-                type:self.type
+                type: self.type
             }).then(function(response) {
                 self.clientName = response.data.clientName;
             });

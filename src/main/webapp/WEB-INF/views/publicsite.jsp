@@ -25,16 +25,16 @@
 	
 	    <link href="http://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.7/angular-material.css" rel="stylesheet">
 	
-	    <link href="css/bootstrap.min.css?v=20190719" rel="stylesheet">
-	    <link href="css/pixeladmin.min.css?v=20190719" rel="stylesheet">
-	    <link href="css/widgets.min.css?v=20190719" rel="stylesheet">
-	    <link href="css/themes/frost.min.css?v=20190719" rel="stylesheet">
+	    <link href="css/bootstrap.min.css?v=20190814" rel="stylesheet">
+	    <link href="css/pixeladmin.min.css?v=20190814" rel="stylesheet">
+	    <link href="css/widgets.min.css?v=20190814" rel="stylesheet">
+	    <link href="css/themes/frost.min.css?v=20190814" rel="stylesheet">
 	
 	    <!-- Theme -->
-	<link href="css/yellowstars.css?v=20190719" rel="stylesheet" type="text/css">
+	<link href="css/yellowstars.css?v=20190814" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="css/landingpage.css" >
 	<!-- Pace.js -->
-	   <script src="js/pace/pace.min.js?v=20190719"></script>
+	   <script src="js/pace/pace.min.js?v=20190814"></script>
 	<link href='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
 	<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.0/mapbox-gl-directions.css' type='text/css' />
 	
@@ -52,26 +52,26 @@
   =============================================================================== -->
     <!-- General scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/angular.js?v=20190719"></script>
-    <script src="js/bootstrap.js?v=20190719"></script>
-    <script src="js/ui-bootstrap.js?v=20190719"></script>
-    <script src="js/pixeladmin/util.js?v=20190719"></script>
-    <script src="js/pixeladmin/pixeladmin.js?v=20190719"></script>
+    <script src="js/angular.js?v=20190814"></script>
+    <script src="js/bootstrap.js?v=20190814"></script>
+    <script src="js/ui-bootstrap.js?v=20190814"></script>
+    <script src="js/pixeladmin/util.js?v=20190814"></script>
+    <script src="js/pixeladmin/pixeladmin.js?v=20190814"></script>
 
     <!-- Perfect scrollbar -->
-    <script src="js/libs/perfect-scrollbar.jquery.js?v=20190719"></script>
-    <script src="js/pixeladmin/extensions/perfect-scrollbar.jquery.js?v=20190719"></script>
-    <script src="js/libs/angular-perfect-scrollbar.js?v=20190719"></script>
+    <script src="js/libs/perfect-scrollbar.jquery.js?v=20190814"></script>
+    <script src="js/pixeladmin/extensions/perfect-scrollbar.jquery.js?v=20190814"></script>
+    <script src="js/libs/angular-perfect-scrollbar.js?v=20190814"></script>
     
-    <script src="js/libs/owl.carousel.js?v=20190719"></script>
+    <script src="js/libs/owl.carousel.js?v=20190814"></script>
 
     <!-- PxNavbar, PxNav and PxFooter -->
-    <script src="js/pixeladmin/plugins/px-navbar.js?v=20190719"></script>
-    <script src="js/pixeladmin/directives/angular-px-navbar.js?v=20190719"></script>
-    <script src="js/pixeladmin/plugins/px-nav.js?v=20190719"></script>
-    <script src="js/pixeladmin/directives/angular-px-nav.js?v=20190719"></script>
-    <script src="js/pixeladmin/plugins/px-footer.js?v=20190719"></script>
-    <script src="js/pixeladmin/directives/angular-px-footer.js?v=20190719"></script>
+    <script src="js/pixeladmin/plugins/px-navbar.js?v=20190814"></script>
+    <script src="js/pixeladmin/directives/angular-px-navbar.js?v=20190814"></script>
+    <script src="js/pixeladmin/plugins/px-nav.js?v=20190814"></script>
+    <script src="js/pixeladmin/directives/angular-px-nav.js?v=20190814"></script>
+    <script src="js/pixeladmin/plugins/px-footer.js?v=20190814"></script>
+    <script src="js/pixeladmin/directives/angular-px-footer.js?v=20190814"></script>
     
     <!-- Moments.-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js">
@@ -91,10 +91,10 @@
 	
 	
     <!-- Application -->
-    <script src="public/js/app.js?v=20190719"></script>
-    <script src="public/js/publicsite-config.js?v=20190719"></script>
-    <script src="public/js/directives.js?v=20190719"></script>
-    <script src="public/js/controllers/main.js?v=20190719"></script>
+    <script src="public/js/app.js?v=20190814"></script>
+    <script src="public/js/publicsite-config.js?v=20190814"></script>
+    <script src="public/js/directives.js?v=20190814"></script>
+    <script src="public/js/controllers/main.js?v=20190814"></script>
 </body>
 
 </html>

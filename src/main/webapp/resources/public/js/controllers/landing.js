@@ -14,34 +14,27 @@
         self.latestReview = [];
         self.latestQuery = [];
         self.latestPromotion = [];
-        
         self.indexId = 0;
         if ($stateParams.index != undefined && $stateParams.index != null) self.indexId = $stateParams.index;
-        
-        
-        
         self.selectedProduct = "";
-		self.searchProduct="";
-		self.productSelected = function(item) {
-			console.log("product selected",item);
-			 self.goProductReview(item.productId);
-		};
-		
-		self.productSearch = function(product,type) {
-			console.log("item search",product,type);
-			return retrieveProductData(product,type).then(function(data) {
-				console.log("ttest",data.data.result);
+        self.searchProduct = "";
+        self.productSelected = function(item) {
+            console.log("product selected", item);
+            self.goProductReview(item.productId);
+        };
+        self.productSearch = function(product, type) {
+            console.log("item search", product, type);
+            return retrieveProductData(product, type).then(function(data) {
+                console.log("ttest", data.data.result);
                 return data.data.result;
             });
-		};
-        
-        
+        };
         self.blockSelect = function(item) {
             self.searchBusiness = item;
             $("#custom-template1").focus();
         };
         self.businessSelected = function(item) {
-            if (item != undefined ) {
+            if (item != undefined) {
                 self.showMessage = true;
                 var clientType = "";
                 item.categories.forEach(function(item) {
@@ -68,7 +61,6 @@
                 self.latestQuery = data.data.queries;
                 self.latestPromotion = data.data.promotions;
             });
-            
         };
         function loadBusiness(query, type) {
             return retrieveData(query, type).then(function(data) {
@@ -98,13 +90,12 @@
             });
             return deferred.promise;
         }
-        
         function retrieveProductData(query, type) {
             var deferred = $q.defer();
             var data = [];
             var params = {
-                productName:query,
-                productDetail:query
+                productName: query,
+                productDetail: query
             };
             $http.post("getProduct", params).then(function(data) {
                 deferred.resolve({
@@ -113,33 +104,28 @@
             });
             return deferred.promise;
         }
-        
         self.search = function() {};
-        
         self.goProductReview = function(productId) {
             $state.go("public.product", {
                 productId: productId
             });
         };
-        
-        self.goWriteReview = function(clientId,type) {
-        	if(type==='product'){
-        		$state.go("public.product", {
+        self.goWriteReview = function(clientId, type) {
+            if (type === "product") {
+                $state.go("public.product", {
                     productId: clientId
                 });
-        	}
-        	else{
-        		$state.go("public.main", {
+            } else {
+                $state.go("public.main", {
                     clientId: clientId
-                });	
-        	}
-            
+                });
+            }
         };
         self.loadLatestEvent();
     }
-    angular.module("pixeladmin").filter('justreviewzdate', function() {
-    	  return function(a,b) {
-    		    return moment(a).calendar();
-    		  };
-    		}).controller("LandingCtrl", LandingCtrl);
+    angular.module("pixeladmin").filter("justreviewzdate", function() {
+        return function(a, b) {
+            return moment(a).calendar();
+        };
+    }).controller("LandingCtrl", LandingCtrl);
 })();

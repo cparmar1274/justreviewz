@@ -17,17 +17,17 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/default.js?v=20190719", {
+                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/default.js?v=20190814", {
                         serie: true,
                         name: "angular-morris",
-                        files: [ "../landing/js/libs/raphael.js?v=20190719", "../landing/js/libs/morris.js?v=20190719", "../landing/js/pixeladmin/directives/angular-morris.js?v=20190719" ]
+                        files: [ "../landing/js/libs/raphael.js?v=20190814", "../landing/js/libs/morris.js?v=20190814", "../landing/js/pixeladmin/directives/angular-morris.js?v=20190814" ]
                     }, {
                         serie: true,
                         name: "datatables",
-                        files: [ "../landing/js/libs/jquery.dataTables.js?v=20190719", "../landing/js/libs/dataTables.bootstrap.js?v=20190719", "../landing/js/pixeladmin/extensions/datatables.js?v=20190719", "../landing/js/libs/angular-datatables.js?v=20190719" ]
+                        files: [ "../landing/js/libs/jquery.dataTables.js?v=20190814", "../landing/js/libs/dataTables.bootstrap.js?v=20190814", "../landing/js/pixeladmin/extensions/datatables.js?v=20190814", "../landing/js/libs/angular-datatables.js?v=20190814" ]
                     }, {
                         name: "px-tab-resize",
-                        files: [ "../landing/js/pixeladmin/plugins/px-tab-resize.js?v=20190719", "../landing/js/pixeladmin/directives/angular-px-tab-resize.js?v=20190719" ]
+                        files: [ "../landing/js/pixeladmin/plugins/px-tab-resize.js?v=20190814", "../landing/js/pixeladmin/directives/angular-px-tab-resize.js?v=20190814" ]
                     } ]);
                 }
             }
@@ -39,14 +39,14 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/analytics.js?v=20190719", {
+                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/analytics.js?v=20190814", {
                         serie: true,
                         name: "px-sparkline",
-                        files: [ "../landing/js/libs/jquery.sparkline.js?v=20190719", "../landing/js/pixeladmin/plugins/px-sparkline.js?v=20190719", "../landing/js/pixeladmin/directives/angular-px-sparkline.js?v=20190719" ]
+                        files: [ "../landing/js/libs/jquery.sparkline.js?v=20190814", "../landing/js/pixeladmin/plugins/px-sparkline.js?v=20190814", "../landing/js/pixeladmin/directives/angular-px-sparkline.js?v=20190814" ]
                     }, {
                         serie: true,
                         name: "gridshore.c3js.chart",
-                        files: [ "../landing/js/libs/d3.js?v=20190719", "../landing/js/libs/c3.js?v=20190719", "../landing/js/libs/c3-angular.js?v=20190719" ]
+                        files: [ "../landing/js/libs/d3.js?v=20190814", "../landing/js/libs/c3.js?v=20190814", "../landing/js/libs/c3-angular.js?v=20190814" ]
                     } ]);
                 }
             }
@@ -58,14 +58,14 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/competitor.js?v=20190719", {
+                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/competitor.js?v=20190814", {
                         serie: true,
-                        name: "chart.js?v=20190719",
-                        files: [ "../landing/js/libs/Chart.js?v=20190719", "../landing/js/libs/angular-chart.js?v=20190719" ]
+                        name: "chart.js?v=20190814",
+                        files: [ "../landing/js/libs/Chart.js?v=20190814", "../landing/js/libs/angular-chart.js?v=20190814" ]
                     }, {
                         serie: true,
                         name: "px-sparkline",
-                        files: [ "../landing/js/libs/jquery.sparkline.js?v=20190719", "../landing/js/pixeladmin/plugins/px-sparkline.js?v=20190719", "../landing/js/pixeladmin/directives/angular-px-sparkline.js?v=20190719" ]
+                        files: [ "../landing/js/libs/jquery.sparkline.js?v=20190814", "../landing/js/pixeladmin/plugins/px-sparkline.js?v=20190814", "../landing/js/pixeladmin/directives/angular-px-sparkline.js?v=20190814" ]
                     } ]);
                 }
             }
@@ -77,14 +77,14 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/performer.js?v=20190719", {
+                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/performer.js?v=20190814", {
                         serie: true,
-                        name: "chart.js?v=20190719",
-                        files: [ "../landing/js/libs/Chart.js?v=20190719", "../landing/js/libs/angular-chart.js?v=20190719" ]
+                        name: "chart.js?v=20190814",
+                        files: [ "../landing/js/libs/Chart.js?v=20190814", "../landing/js/libs/angular-chart.js?v=20190814" ]
                     }, {
                         serie: true,
                         name: "px-sparkline",
-                        files: [ "../landing/js/libs/jquery.sparkline.js?v=20190719", "../landing/js/pixeladmin/plugins/px-sparkline.js?v=20190719", "../landing/js/pixeladmin/directives/angular-px-sparkline.js?v=20190719" ]
+                        files: [ "../landing/js/libs/jquery.sparkline.js?v=20190814", "../landing/js/pixeladmin/plugins/px-sparkline.js?v=20190814", "../landing/js/pixeladmin/directives/angular-px-sparkline.js?v=20190814" ]
                     } ]);
                 }
             }
@@ -96,7 +96,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/weeklyReport.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/weeklyReport.js?v=20190814" ]);
                 }
             }
         }).state("dashboards.promote-business", {
@@ -107,10 +107,10 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/promoteBusiness.js?v=20190719", {
+                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/promoteBusiness.js?v=20190814", {
                         serie: true,
                         name: "datatables",
-                        files: [ "../landing/js/libs/jquery.dataTables.js?v=20190719", "../landing/js/libs/dataTables.bootstrap.js?v=20190719", "../landing/js/pixeladmin/extensions/datatables.js?v=20190719", "../landing/js/libs/angular-datatables.js?v=20190719" ]
+                        files: [ "../landing/js/libs/jquery.dataTables.js?v=20190814", "../landing/js/libs/dataTables.bootstrap.js?v=20190814", "../landing/js/pixeladmin/extensions/datatables.js?v=20190814", "../landing/js/libs/angular-datatables.js?v=20190814" ]
                     }, "../landing/js/libs/daterangepicker.js" ]);
                 }
             }
@@ -127,13 +127,13 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/pages/search-results.js?v=20190719", {
+                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/pages/search-results.js?v=20190814", {
                         serie: true,
                         name: "angular-morris",
-                        files: [ "../landing/js/libs/raphael.js?v=20190719", "../landing/js/libs/morris.js?v=20190719", "../landing/js/pixeladmin/directives/angular-morris.js?v=20190719" ]
+                        files: [ "../landing/js/libs/raphael.js?v=20190814", "../landing/js/libs/morris.js?v=20190814", "../landing/js/pixeladmin/directives/angular-morris.js?v=20190814" ]
                     }, {
                         name: "px-tab-resize",
-                        files: [ "../landing/js/pixeladmin/plugins/px-tab-resize.js?v=20190719", "../landing/js/pixeladmin/directives/angular-px-tab-resize.js?v=20190719" ]
+                        files: [ "../landing/js/pixeladmin/plugins/px-tab-resize.js?v=20190814", "../landing/js/pixeladmin/directives/angular-px-tab-resize.js?v=20190814" ]
                     } ]);
                 }
             }
@@ -145,7 +145,7 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/pages/search-results.js?v=20190719" ]);
+                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/pages/search-results.js?v=20190814" ]);
                 }
             }
         }).state("pages.account", {
@@ -156,16 +156,16 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/account.js?v=20190719", {
+                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/account.js?v=20190814", {
                         name: "px-tab-resize",
-                        files: [ "../landing/js/pixeladmin/plugins/px-tab-resize.js?v=20190719", "../landing/js/pixeladmin/directives/angular-px-tab-resize.js?v=20190719" ]
+                        files: [ "../landing/js/pixeladmin/plugins/px-tab-resize.js?v=20190814", "../landing/js/pixeladmin/directives/angular-px-tab-resize.js?v=20190814" ]
                     }, {
                         name: "angular-px-char-limit",
-                        files: [ "../landing/js/pixeladmin/plugins/px-char-limit.js?v=20190719", "../landing/js/pixeladmin/directives/angular-px-char-limit.js?v=20190719" ]
+                        files: [ "../landing/js/pixeladmin/plugins/px-char-limit.js?v=20190814", "../landing/js/pixeladmin/directives/angular-px-char-limit.js?v=20190814" ]
                     }, {
                         serie: true,
                         name: "datatables",
-                        files: [ "../landing/js/libs/jquery.dataTables.js?v=20190719", "../landing/js/libs/dataTables.bootstrap.js?v=20190719", "../landing/js/pixeladmin/extensions/datatables.js?v=20190719", "../landing/js/libs/angular-datatables.js?v=20190719" ]
+                        files: [ "../landing/js/libs/jquery.dataTables.js?v=20190814", "../landing/js/libs/dataTables.bootstrap.js?v=20190814", "../landing/js/pixeladmin/extensions/datatables.js?v=20190814", "../landing/js/libs/angular-datatables.js?v=20190814" ]
                     }, "../landing/js/libs/daterangepicker.js" ]);
                 }
             }
@@ -177,13 +177,13 @@
             },
             resolve: {
                 loadPlugin: function($ocLazyLoad) {
-                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/actionItems.js?v=20190719", {
+                    return $ocLazyLoad.load([ "../landing/assets/js/controllers/dashboards/actionItems.js?v=20190814", {
                         serie: true,
                         name: "angular-morris",
-                        files: [ "../landing/js/libs/raphael.js?v=20190719", "../landing/js/libs/morris.js?v=20190719", "../landing/js/pixeladmin/directives/angular-morris.js?v=20190719" ]
+                        files: [ "../landing/js/libs/raphael.js?v=20190814", "../landing/js/libs/morris.js?v=20190814", "../landing/js/pixeladmin/directives/angular-morris.js?v=20190814" ]
                     }, {
                         name: "px-tab-resize",
-                        files: [ "../landing/js/pixeladmin/plugins/px-tab-resize.js?v=20190719", "../landing/js/pixeladmin/directives/angular-px-tab-resize.js?v=20190719" ]
+                        files: [ "../landing/js/pixeladmin/plugins/px-tab-resize.js?v=20190814", "../landing/js/pixeladmin/directives/angular-px-tab-resize.js?v=20190814" ]
                     } ]);
                 }
             }
