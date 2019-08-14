@@ -8,7 +8,7 @@
         self.product = {};
         self.subscribeStatus = true;
         self.sortingOptions = [ "Latest Reviews First", "Oldest Reviews First", "Highest Rating First", "Lowest Rating First" ];
-        
+        self.searchReviewText = "";
         self.loadProduct = function(){
         	var params = {productId:self.productId,"productPage":"true"};
         	$http.post("getProduct", params).then(function(data) {
@@ -77,6 +77,22 @@
                 type: "product"
             });
         };
+        
+        self.searchReview = function(){
+
+            var filtered = 0, total = 0;
+            $(".widget-tree-comments-item").filter(function(a, b, c) {
+                total++;
+                if (self.searchReviewText.trim().length == 0 || b.innerText.toLowerCase().indexOf(self.searchReviewText.toLowerCase()) > 0) {
+                    $(b).show();
+                    filtered++;
+                } else {
+                    $(b).hide();
+                }
+            });
+            self.searchReviewMessage = " Showing " + filtered + " reviews ( filtered out of " + total + " reviews)";
+        
+        }
         
         self.stateAsk = function(query) {
             $state.go("public.writeAsk", {
