@@ -1,10 +1,5 @@
 function pxSidebarDirective(e, n, t) {
     "use strict";
-    function r(e) {
-        return e.replace(/^on([A-Z])/, function(e, n) {
-            return n.toLowerCase();
-        });
-    }
     var i = [ "width", "enableScrollbar", "desktopMode" ], a = [ "onExpand", "onExpanded", "onCollapse", "onCollapsed" ];
     return {
         restrict: "E",
@@ -18,7 +13,11 @@ function pxSidebarDirective(e, n, t) {
                 pre: function(p) {
                     function l() {
                         a.forEach(function(e) {
-                            d[e] && o.on(r(e) + ".px.sidebar", n(d[e])(p));
+                            d[e] && o.on(function(e) {
+                                return e.replace(/^on([A-Z])/, function(e, n) {
+                                    return n.toLowerCase();
+                                });
+                            }(e) + ".px.sidebar", n(d[e])(p));
                         }), o.pxSidebar(s), u(p, $.fn.pxSidebar.bind(o));
                         var t = e.$on("$viewContentLoaded", function() {
                             return o.pxSidebar("update");

@@ -1,10 +1,5 @@
 function pxWizardDirective(n, e) {
     "use strict";
-    function i(n) {
-        return n.replace(/^on([A-Z])/, function(n, e) {
-            return e.toLowerCase();
-        });
-    }
     var r = [ "onStepchange", "onStepchanged", "onFinish", "onFinished", "onFrozen", "onUnfrozen", "onReseted", "onDestroy" ];
     return {
         transclude: !0,
@@ -14,7 +9,11 @@ function pxWizardDirective(n, e) {
             var d = a.instance ? n(a.instance).assign : angular.noop, c = {};
             a.minStepWidth && (c.minStepWidth = n(a.minStepWidth)(t)), e(function() {
                 o.pxWizard(c), r.forEach(function(e) {
-                    a[e] && o.on(i(e) + ".px.wizard", n(a[e])(t));
+                    a[e] && o.on(function(n) {
+                        return n.replace(/^on([A-Z])/, function(n, e) {
+                            return e.toLowerCase();
+                        });
+                    }(e) + ".px.wizard", n(a[e])(t));
                 }), d(t, $.fn.pxWizard.bind(o)), o.on("$destroy", function() {
                     return o.off().pxWizard("destroy");
                 });

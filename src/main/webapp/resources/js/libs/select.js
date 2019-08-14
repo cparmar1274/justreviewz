@@ -136,7 +136,7 @@
             return !!(e.metaKey || e.ctrlKey || e.altKey);
         },
         isFunctionKey: function(e) {
-            return (e = e.which ? e.which : e) >= 112 && e <= 123;
+            return 112 <= (e = e.which ? e.which : e) && e <= 123;
         },
         isVerticalMovement: function(e) {
             return ~[ t.UP, t.DOWN ].indexOf(e);
@@ -145,12 +145,11 @@
             return ~[ t.LEFT, t.RIGHT, t.BACKSPACE, t.DELETE ].indexOf(e);
         },
         toSeparator: function(e) {
-            var i = {
+            return {
                 ENTER: "\n",
                 TAB: "\t",
                 SPACE: " "
-            }[e];
-            return i || (t[e] ? void 0 : e);
+            }[e] || (t[e] ? void 0 : e);
         }
     };
     void 0 === angular.element.prototype.querySelectorAll && (angular.element.prototype.querySelectorAll = function(e) {
@@ -195,11 +194,10 @@
             }
         };
     }).filter("highlight", function() {
-        function e(e) {
-            return ("" + e).replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
-        }
         return function(t, i) {
-            return i && t ? ("" + t).replace(new RegExp(e(i), "gi"), '<span class="ui-select-highlight">$&</span>') : t;
+            return i && t ? ("" + t).replace(new RegExp(function(e) {
+                return ("" + e).replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+            }(i), "gi"), '<span class="ui-select-highlight">$&</span>') : t;
         };
     }).factory("uisOffset", [ "$document", "$window", function(e, t) {
         return function(i) {
@@ -262,67 +260,28 @@
             }
         };
     } ]), s.controller("uiSelectCtrl", [ "$scope", "$element", "$timeout", "$filter", "$$uisDebounce", "uisRepeatParser", "uiSelectMinErr", "uiSelectConfig", "$parse", "$injector", "$window", function(i, s, c, n, l, a, r, o, u, d, p) {
-        function h(e, t, i) {
-            if (e.findIndex) return e.findIndex(t, i);
-            for (var s, c = Object(e), n = c.length >>> 0, l = 0; l < n; l++) if (s = c[l], 
-            t.call(i, s, l, c)) return l;
-            return -1;
-        }
         function g() {
-            w.resetSearchInput && (w.search = y, w.selected && w.items.length && !w.multiple && (w.activeIndex = h(w.items, function(e) {
+            w.resetSearchInput && (w.search = y, w.selected && w.items.length && !w.multiple && (w.activeIndex = function(e, t, i) {
+                if (e.findIndex) return e.findIndex(t, i);
+                for (var s, c = Object(e), n = c.length >>> 0, l = 0; l < n; l++) if (s = c[l], 
+                t.call(i, s, l, c)) return l;
+                return -1;
+            }(w.items, function(e) {
                 return angular.equals(this, e);
             }, w.selected)));
         }
-        function f(e, t) {
-            var i, s, c = [];
-            for (i = 0; i < t.length; i++) for (s = 0; s < e.length; s++) e[s].name == [ t[i] ] && c.push(e[s]);
-            return c;
-        }
-        function v(e, t) {
-            var i = S.indexOf(e);
-            t && -1 === i && S.push(e), !t && i > -1 && S.splice(i, 1);
-        }
         function m(e) {
-            return S.indexOf(e) > -1;
-        }
-        function $(e) {
-            var i = !0;
-            switch (e) {
-              case t.DOWN:
-                if (!w.open && w.multiple) w.activate(!1, !0); else if (w.activeIndex < w.items.length - 1) for (var s = ++w.activeIndex; m(w.items[s]) && s < w.items.length; ) w.activeIndex = ++s;
-                break;
-
-              case t.UP:
-                var c = 0 === w.search.length && w.tagging.isActivated ? -1 : 0;
-                if (!w.open && w.multiple) w.activate(!1, !0); else if (w.activeIndex > c) for (var n = --w.activeIndex; m(w.items[n]) && n > c; ) w.activeIndex = --n;
-                break;
-
-              case t.TAB:
-                w.multiple && !w.open || w.select(w.items[w.activeIndex], !0);
-                break;
-
-              case t.ENTER:
-                w.open && (w.tagging.isActivated || w.activeIndex >= 0) ? w.select(w.items[w.activeIndex], w.skipFocusser) : w.activate(!1, !0);
-                break;
-
-              case t.ESC:
-                w.close();
-                break;
-
-              default:
-                i = !1;
-            }
-            return i;
+            return -1 < S.indexOf(e);
         }
         function b() {
             var e = s.querySelectorAll(".ui-select-choices-content"), t = e.querySelectorAll(".ui-select-choices-row");
             if (t.length < 1) throw r("choices", "Expected multiple .ui-select-choices-row but got '{0}'.", t.length);
             if (!(w.activeIndex < 0)) {
                 var i = t[w.activeIndex], c = i.offsetTop + i.clientHeight - e[0].scrollTop, n = e[0].offsetHeight;
-                c > n ? e[0].scrollTop += c - n : c < i.clientHeight && (w.isGrouped && 0 === w.activeIndex ? e[0].scrollTop = 0 : e[0].scrollTop -= i.clientHeight - c);
+                n < c ? e[0].scrollTop += c - n : c < i.clientHeight && (w.isGrouped && 0 === w.activeIndex ? e[0].scrollTop = 0 : e[0].scrollTop -= i.clientHeight - c);
             }
         }
-        var w = this, y = "";
+        var x, w = this, y = "";
         if (w.placeholder = o.placeholder, w.searchEnabled = o.searchEnabled, w.sortable = o.sortable, 
         w.refreshDelay = o.refreshDelay, w.paste = o.paste, w.resetSearchInput = o.resetSearchInput, 
         w.refreshing = !1, w.spinnerEnabled = o.spinnerEnabled, w.spinnerClass = o.spinnerClass, 
@@ -359,9 +318,9 @@
                             w.focusSearchInput(e);
                         }));
                     };
-                    w.items.length > 0 ? w.$animate.on("enter", n[0], a) : w.$animate.on("removeClass", l[0], a);
+                    0 < w.items.length ? w.$animate.on("enter", n[0], a) : w.$animate.on("removeClass", l[0], a);
                 } else c(function() {
-                    w.focusSearchInput(e), !w.tagging.isActivated && w.items.length > 1 && b();
+                    w.focusSearchInput(e), !w.tagging.isActivated && 1 < w.items.length && b();
                 });
             }
         }, w.focusSearchInput = function(e) {
@@ -381,7 +340,11 @@
                     });
                 }), s) {
                     var n = i.$eval(s);
-                    angular.isFunction(n) ? w.groups = n(w.groups) : angular.isArray(n) && (w.groups = f(w.groups, n));
+                    angular.isFunction(n) ? w.groups = n(w.groups) : angular.isArray(n) && (w.groups = function(e, t) {
+                        var i, s, c = [];
+                        for (i = 0; i < t.length; i++) for (s = 0; s < e.length; s++) e[s].name == [ t[i] ] && c.push(e[s]);
+                        return c;
+                    }(w.groups, n));
                 }
                 w.items = [], w.groups.forEach(function(e) {
                     w.items = w.items.concat(e.items);
@@ -402,7 +365,7 @@
             }, !0)), w.refreshItems = function(e) {
                 e = e || w.parserResult.source(i);
                 var t = w.selected;
-                if (w.isEmpty() || angular.isArray(t) && !t.length || !w.multiple || !w.removeSelected) w.setItemsFn(e); else if (void 0 !== e && null !== e) {
+                if (w.isEmpty() || angular.isArray(t) && !t.length || !w.multiple || !w.removeSelected) w.setItemsFn(e); else if (null != e) {
                     var s = e.filter(function(e) {
                         return angular.isArray(t) ? t.every(function(t) {
                             return !angular.equals(e, t);
@@ -413,14 +376,12 @@
                 "auto" !== w.dropdownPosition && "up" !== w.dropdownPosition || i.calculateDropdownPos(), 
                 i.$broadcast("uis:refresh");
             }, i.$watchCollection(w.parserResult.source, function(e) {
-                if (void 0 === e || null === e) w.items = []; else {
+                if (null == e) w.items = []; else {
                     if (!angular.isArray(e)) throw r("items", "Expected an array but got '{0}'.", e);
                     w.refreshItems(e), angular.isDefined(w.ngModel.$modelValue) && (w.ngModel.$modelValue = null);
                 }
             });
-        };
-        var x;
-        w.refresh = function(e) {
+        }, w.refresh = function(e) {
             void 0 !== e && (x && c.cancel(x), x = c(function() {
                 if (i.$select.search.length >= i.$select.minimumInputLength) {
                     var t = i.$eval(e);
@@ -436,17 +397,20 @@
             i);
         };
         var E = function(e) {
-            return w.selected && angular.isArray(w.selected) && w.selected.filter(function(t) {
+            return w.selected && angular.isArray(w.selected) && 0 < w.selected.filter(function(t) {
                 return angular.equals(t, e);
-            }).length > 0;
+            }).length;
         }, S = [];
         w.isDisabled = function(e) {
             if (w.open) {
                 var t = e[w.itemProperty], i = !1;
-                if (w.items.indexOf(t) >= 0 && (angular.isDefined(w.disableChoiceExpression) || w.multiple)) {
+                if (0 <= w.items.indexOf(t) && (angular.isDefined(w.disableChoiceExpression) || w.multiple)) {
                     if (t.isTag) return !1;
                     w.multiple && (i = E(t)), !i && angular.isDefined(w.disableChoiceExpression) && (i = !!e.$eval(w.disableChoiceExpression)), 
-                    v(t, i);
+                    function(e, t) {
+                        var i = S.indexOf(e);
+                        t && -1 === i && S.push(e), !t && -1 < i && S.splice(i, 1);
+                    }(t, i);
                 }
                 return i;
             }
@@ -488,10 +452,10 @@
         }, function(e) {
             function t(e, t) {
                 var i = s.indexOf(e);
-                t && -1 === i && s.push(e), !t && i > -1 && s.splice(i, 1);
+                t && -1 === i && s.push(e), !t && -1 < i && s.splice(i, 1);
             }
             function i(e) {
-                return s.indexOf(e) > -1;
+                return -1 < s.indexOf(e);
             }
             if (e) {
                 var s = [];
@@ -521,24 +485,51 @@
             var s = e.which;
             ~[ t.ENTER, t.ESC ].indexOf(s) && (e.preventDefault(), e.stopPropagation()), i.$apply(function() {
                 var i = !1;
-                if ((w.items.length > 0 || w.tagging.isActivated) && ($(s) || w.searchEnabled || (e.preventDefault(), 
-                e.stopPropagation()), w.taggingTokens.isActivated)) {
-                    for (var n = 0; n < w.taggingTokens.tokens.length; n++) w.taggingTokens.tokens[n] === t.MAP[e.keyCode] && w.search.length > 0 && (i = !0);
+                if ((0 < w.items.length || w.tagging.isActivated) && (function(e) {
+                    var i = !0;
+                    switch (e) {
+                      case t.DOWN:
+                        if (!w.open && w.multiple) w.activate(!1, !0); else if (w.activeIndex < w.items.length - 1) for (var s = ++w.activeIndex; m(w.items[s]) && s < w.items.length; ) w.activeIndex = ++s;
+                        break;
+
+                      case t.UP:
+                        var c = 0 === w.search.length && w.tagging.isActivated ? -1 : 0;
+                        if (!w.open && w.multiple) w.activate(!1, !0); else if (w.activeIndex > c) for (var n = --w.activeIndex; m(w.items[n]) && c < n; ) w.activeIndex = --n;
+                        break;
+
+                      case t.TAB:
+                        w.multiple && !w.open || w.select(w.items[w.activeIndex], !0);
+                        break;
+
+                      case t.ENTER:
+                        w.open && (w.tagging.isActivated || 0 <= w.activeIndex) ? w.select(w.items[w.activeIndex], w.skipFocusser) : w.activate(!1, !0);
+                        break;
+
+                      case t.ESC:
+                        w.close();
+                        break;
+
+                      default:
+                        i = !1;
+                    }
+                    return i;
+                }(s) || w.searchEnabled || (e.preventDefault(), e.stopPropagation()), w.taggingTokens.isActivated)) {
+                    for (var n = 0; n < w.taggingTokens.tokens.length; n++) w.taggingTokens.tokens[n] === t.MAP[e.keyCode] && 0 < w.search.length && (i = !0);
                     i && c(function() {
                         w.searchInput.triggerHandler("tagged");
                         var i = w.search.replace(t.MAP[e.keyCode], "").trim();
                         w.tagging.fct && (i = w.tagging.fct(i)), i && w.select(i, !0);
                     });
                 }
-            }), t.isVerticalMovement(s) && w.items.length > 0 && b(), s !== t.ENTER && s !== t.ESC || (e.preventDefault(), 
+            }), t.isVerticalMovement(s) && 0 < w.items.length && b(), s !== t.ENTER && s !== t.ESC || (e.preventDefault(), 
             e.stopPropagation());
         }), w.searchInput.on("paste", function(e) {
             var i;
             if (i = window.clipboardData && window.clipboardData.getData ? window.clipboardData.getData("Text") : (e.originalEvent || e).clipboardData.getData("text/plain"), 
-            (i = w.search + i) && i.length > 0) if (w.taggingTokens.isActivated) {
+            (i = w.search + i) && 0 < i.length) if (w.taggingTokens.isActivated) {
                 for (var s = [], c = 0; c < w.taggingTokens.tokens.length; c++) {
                     var n = t.toSeparator(w.taggingTokens.tokens[c]) || w.taggingTokens.tokens[c];
-                    if (i.indexOf(n) > -1) {
+                    if (-1 < i.indexOf(n)) {
                         s = i.split(n);
                         break;
                     }
@@ -700,15 +691,15 @@
                     var w = function(e, t) {
                         e = e || s(a), t = t || s(b), b[0].style.position = "absolute", b[0].style.top = -1 * t.height + "px", 
                         a.addClass("direction-up");
-                    }, y = function(e, t) {
-                        a.removeClass("direction-up"), e = e || s(a), t = t || s(b), b[0].style.position = "", 
-                        b[0].style.top = "";
                     }, x = function() {
                         l(function() {
                             if ("up" === g.dropdownPosition) w(); else {
                                 a.removeClass("direction-up");
                                 var t = s(a), i = s(b), c = e[0].documentElement.scrollTop || e[0].body.scrollTop;
-                                t.top + t.height + i.height > c + e[0].documentElement.clientHeight ? w(t, i) : y(t, i);
+                                t.top + t.height + i.height > c + e[0].documentElement.clientHeight ? w(t, i) : function(e, t) {
+                                    a.removeClass("direction-up"), e = e || s(a), t = t || s(b), b[0].style.position = "", 
+                                    b[0].style.top = "";
+                                }(t, i);
                             }
                             b[0].style.opacity = 1;
                         });
@@ -781,12 +772,11 @@
             } ],
             controllerAs: "$selectMultiple",
             link: function(c, n, l, a) {
-                function r(e) {
-                    return angular.isNumber(e.selectionStart) ? e.selectionStart : e.value.length;
-                }
                 function o(e) {
-                    var i = r(p.searchInput[0]), s = p.selected.length - 1, c = g.activeMatchIndex, n = g.activeMatchIndex + 1, l = g.activeMatchIndex - 1, a = c;
-                    return !(i > 0 || p.search.length && e == t.RIGHT) && (p.close(), a = function() {
+                    var i = function(e) {
+                        return angular.isNumber(e.selectionStart) ? e.selectionStart : e.value.length;
+                    }(p.searchInput[0]), s = p.selected.length - 1, c = g.activeMatchIndex, n = g.activeMatchIndex + 1, l = g.activeMatchIndex - 1, a = c;
+                    return !(0 < i || p.search.length && e == t.RIGHT || (p.close(), a = function() {
                         switch (e) {
                           case t.LEFT:
                             return ~g.activeMatchIndex ? l : s;
@@ -801,12 +791,12 @@
                             return !!~g.activeMatchIndex && (g.removeChoice(g.activeMatchIndex), c);
                         }
                     }(), p.selected.length && !1 !== a ? g.activeMatchIndex = Math.min(s, Math.max(0, a)) : g.activeMatchIndex = -1, 
-                    !0);
+                    0));
                 }
                 function u(e) {
-                    return void 0 !== e && void 0 !== p.search && e.filter(function(e) {
+                    return void 0 !== e && void 0 !== p.search && 0 < e.filter(function(e) {
                         return void 0 !== p.search.toUpperCase() && void 0 !== e && e.toUpperCase() === p.search.toUpperCase();
-                    }).length > 0;
+                    }).length;
                 }
                 function d(e, t) {
                     var i = -1;
@@ -820,7 +810,7 @@
                 p.multiple = !0, p.focusInput = p.searchInput, h.$isEmpty = function(e) {
                     return !e || 0 === e.length;
                 }, h.$parsers.unshift(function() {
-                    for (var e, t = {}, i = [], s = p.selected.length - 1; s >= 0; s--) (t = {})[p.parserResult.itemName] = p.selected[s], 
+                    for (var e, t = {}, i = [], s = p.selected.length - 1; 0 <= s; s--) (t = {})[p.parserResult.itemName] = p.selected[s], 
                     e = p.parserResult.modelMapper(c, t), i.unshift(e);
                     return i;
                 }), h.$formatters.unshift(function(e) {
@@ -832,10 +822,10 @@
                     if (!i) return e;
                     var n = [], l = function(e, i) {
                         if (e && e.length) {
-                            for (var l = e.length - 1; l >= 0; l--) {
+                            for (var l = e.length - 1; 0 <= l; l--) {
                                 if (s[p.parserResult.itemName] = e[l], t = p.parserResult.modelMapper(c, s), p.parserResult.trackByExp) {
                                     var a = /(\w*)\./.exec(p.parserResult.trackByExp), r = /\.([^\s]+)/.exec(p.parserResult.trackByExp);
-                                    if (a && a.length > 0 && a[1] == p.parserResult.itemName && r && r.length > 0 && t[r[1]] == i[r[1]]) return n.unshift(e[l]), 
+                                    if (a && 0 < a.length && a[1] == p.parserResult.itemName && r && 0 < r.length && t[r[1]] == i[r[1]]) return n.unshift(e[l]), 
                                     !0;
                                 }
                                 if (angular.equals(t, i)) return n.unshift(e[l]), !0;
@@ -844,7 +834,7 @@
                         }
                     };
                     if (!e) return n;
-                    for (var a = e.length - 1; a >= 0; a--) l(p.selected, e[a]) || l(i, e[a]) || n.unshift(e[a]);
+                    for (var a = e.length - 1; 0 <= a; a--) l(p.selected, e[a]) || l(i, e[a]) || n.unshift(e[a]);
                     return n;
                 }), c.$watchCollection(function() {
                     return h.$modelValue;
@@ -881,14 +871,14 @@
                 }), p.searchInput.on("keyup", function(e) {
                     if (t.isVerticalMovement(e.which) || c.$evalAsync(function() {
                         p.activeIndex = !1 === p.taggingLabel ? -1 : 0;
-                    }), p.tagging.isActivated && p.search.length > 0) {
+                    }), p.tagging.isActivated && 0 < p.search.length) {
                         if (e.which === t.TAB || t.isControl(e) || t.isFunctionKey(e) || e.which === t.ESC || t.isVerticalMovement(e.which)) return;
                         if (p.activeIndex = !1 === p.taggingLabel ? -1 : 0, !1 === p.taggingLabel) return;
                         var i, s, n, l = angular.copy(p.items), a = angular.copy(p.items), r = !1, o = -1;
                         if (void 0 !== p.tagging.fct) {
-                            if ((s = p.$filter("filter")(l, {
+                            if (0 < (s = p.$filter("filter")(l, {
                                 isTag: !0
-                            })).length > 0 && (n = s[0]), l.length > 0 && n && (r = !0, l = l.slice(1, l.length), 
+                            })).length && (n = s[0]), 0 < l.length && n && (r = !0, l = l.slice(1, l.length), 
                             a = a.slice(1, a.length)), i = p.tagging.fct(p.search), a.some(function(e) {
                                 return angular.equals(e, i);
                             }) || p.selected.some(function(e) {
@@ -898,17 +888,17 @@
                             });
                             i && (i.isTag = !0);
                         } else {
-                            if ((s = p.$filter("filter")(l, function(e) {
+                            if (0 < (s = p.$filter("filter")(l, function(e) {
                                 return e.match(p.taggingLabel);
-                            })).length > 0 && (n = s[0]), void 0 !== l[0] && l.length > 0 && n && (r = !0, l = l.slice(1, l.length), 
-                            a = a.slice(1, a.length)), i = p.search + " " + p.taggingLabel, d(p.selected, p.search) > -1) return;
+                            })).length && (n = s[0]), void 0 !== l[0] && 0 < l.length && n && (r = !0, l = l.slice(1, l.length), 
+                            a = a.slice(1, a.length)), i = p.search + " " + p.taggingLabel, -1 < d(p.selected, p.search)) return;
                             if (u(a.concat(p.selected))) return void (r && (l = a, c.$evalAsync(function() {
                                 p.activeIndex = 0, p.items = l;
                             })));
                             if (u(a)) return void (r && (p.items = a.slice(1, a.length)));
                         }
-                        r && (o = d(p.selected, i)), o > -1 ? l = l.slice(o + 1, l.length - 1) : (l = [], 
-                        i && l.push(i), l = l.concat(a)), c.$evalAsync(function() {
+                        r && (o = d(p.selected, i)), l = -1 < o ? l.slice(o + 1, l.length - 1) : (l = [], 
+                        i && l.push(i), l.concat(a)), c.$evalAsync(function() {
                             if (p.activeIndex = 0, p.items = l, p.isGrouped) {
                                 var e = i ? l.slice(1) : l;
                                 p.setItemsFn(e), i && (p.items.unshift(i), p.groups.unshift({
@@ -948,17 +938,17 @@
                     return i[r.parserResult.itemName] = t, r.parserResult.modelMapper(c, i);
                 }), o.$formatters.unshift(function(t) {
                     if (e(t)) return t;
-                    var i, s = r.parserResult && r.parserResult.source(c, {
+                    var s = r.parserResult && r.parserResult.source(c, {
                         $select: {
                             search: ""
                         }
                     }), n = {};
                     if (s) {
                         var l = function(e) {
-                            return n[r.parserResult.itemName] = e, (i = r.parserResult.modelMapper(c, n)) === t;
+                            return n[r.parserResult.itemName] = e, r.parserResult.modelMapper(c, n) === t;
                         };
                         if (r.selected && l(r.selected)) return r.selected;
-                        for (var a = s.length - 1; a >= 0; a--) if (l(s[a])) return s[a];
+                        for (var a = s.length - 1; 0 <= a; a--) if (l(s[a])) return s[a];
                     }
                     return t;
                 }), c.$watch("$select.selected", function(e) {
@@ -1018,9 +1008,7 @@
                 }), s.on("dragend", function() {
                     d("dragging");
                 });
-                var o, u = function(e, t) {
-                    this.splice(t, 0, this.splice(e, 1)[0]);
-                }, d = function(e) {
+                var o, d = function(e) {
                     angular.forEach(l.$element.querySelectorAll("." + e), function(t) {
                         angular.element(t).removeClass(e);
                     });
@@ -1034,9 +1022,11 @@
                         g(i);
                     }, 20);
                 }, g = function(e) {
-                    var i = t.$eval(c.uiSelectSort), n = i[e], l = null;
+                    var l, i = t.$eval(c.uiSelectSort), n = i[e];
                     l = s.hasClass("dropping-before") ? e < t.$index ? t.$index - 1 : t.$index : e < t.$index ? t.$index : t.$index + 1, 
-                    u.apply(i, [ e, l ]), a.$setViewValue(Date.now()), t.$apply(function() {
+                    function(e, t) {
+                        this.splice(t, 0, this.splice(e, 1)[0]);
+                    }.apply(i, [ e, l ]), a.$setViewValue(Date.now()), t.$apply(function() {
                         t.$emit("uiSelectSort:change", {
                             array: i,
                             item: n,
@@ -1068,8 +1058,7 @@
             }
         };
     } ]), s.service("uisRepeatParser", [ "uiSelectMinErr", "$parse", function(e, t) {
-        var i = this;
-        i.parse = function(i) {
+        this.parse = function(i) {
             var s;
             if (!(s = i.match(/^\s*(?:([\s\S]+?)\s+as\s+)?(?:([\$\w][\$\w]*)|(?:\(\s*([\$\w][\$\w]*)\s*,\s*([\$\w][\$\w]*)\s*\)))\s+in\s+(\s*[\s\S]+?)?(?:\s+track\s+by\s+([\s\S]+?))?\s*$/))) throw e("iexp", "Expected expression in form of '_item_ in _collection_[ track by _id_]' but got '{0}'.", i);
             var c = s[5], n = "";
@@ -1090,7 +1079,7 @@
                     return this.trackByExp && (t += " track by " + this.trackByExp), t;
                 }
             };
-        }, i.getGroupNgRepeatExpression = function() {
+        }, this.getGroupNgRepeatExpression = function() {
             return "$group in $select.groups track by $group.name";
         };
     } ]);

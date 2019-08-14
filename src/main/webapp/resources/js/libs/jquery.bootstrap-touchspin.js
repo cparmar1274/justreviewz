@@ -1,11 +1,10 @@
 !function(t) {
     "use strict";
-    function o(t, o) {
-        return t + ".touchspin_" + o;
-    }
     function n(n, s) {
         return t.map(n, function(t) {
-            return o(t, s);
+            return function(t, o) {
+                return t + ".touchspin_" + o;
+            }(t, s);
         });
     }
     var s = 0;
@@ -63,32 +62,9 @@
                 buttonup_txt: "button-up-txt"
             };
             return this.each(function() {
-                function i() {
-                    "" !== F.initval && "" === B.val() && B.val(F.initval);
-                }
-                function p(t) {
-                    c(t), g();
-                    var o = N.input.val();
-                    "" !== o && (o = Number(N.input.val()), N.input.val(o.toFixed(F.decimals)));
-                }
-                function u() {
-                    F = t.extend({}, e, E, r(), o);
-                }
-                function r() {
-                    var o = {};
-                    return t.each(a, function(t, n) {
-                        var s = "bts-" + n;
-                        B.is("[data-" + s + "]") && (o[t] = B.data(s));
-                    }), o;
-                }
                 function c(o) {
                     F = t.extend({}, F, o), o.postfix && B.parent().find(".bootstrap-touchspin-postfix").text(o.postfix), 
                     o.prefix && B.parent().find(".bootstrap-touchspin-prefix").text(o.prefix);
-                }
-                function l() {
-                    var t = B.val(), o = B.parent();
-                    "" !== t && (t = Number(t).toFixed(F.decimals)), B.data("initvalue", t).val(t), 
-                    B.addClass("form-control"), o.hasClass("input-group") ? d(o) : f();
                 }
                 function d(o) {
                     o.addClass("bootstrap-touchspin");
@@ -104,106 +80,25 @@
                     o = F.verticalbuttons ? '<div class="input-group bootstrap-touchspin"><span class="input-group-addon bootstrap-touchspin-prefix">' + F.prefix + '</span><span class="input-group-addon bootstrap-touchspin-postfix">' + F.postfix + '</span><span class="input-group-btn-vertical"><button class="' + F.buttondown_class + ' bootstrap-touchspin-up" type="button"><i class="' + F.verticalupclass + '"></i></button><button class="' + F.buttonup_class + ' bootstrap-touchspin-down" type="button"><i class="' + F.verticaldownclass + '"></i></button></span></div>' : '<div class="input-group bootstrap-touchspin"><span class="input-group-btn"><button class="' + F.buttondown_class + ' bootstrap-touchspin-down" type="button">' + F.buttondown_txt + '</button></span><span class="input-group-addon bootstrap-touchspin-prefix">' + F.prefix + '</span><span class="input-group-addon bootstrap-touchspin-postfix">' + F.postfix + '</span><span class="input-group-btn"><button class="' + F.buttonup_class + ' bootstrap-touchspin-up" type="button">' + F.buttonup_txt + "</button></span></div>", 
                     M = t(o).insertBefore(B), t(".bootstrap-touchspin-prefix", M).after(B), B.hasClass("input-sm") ? M.addClass("input-group-sm") : B.hasClass("input-lg") && M.addClass("input-group-lg");
                 }
-                function b() {
-                    N = {
-                        down: t(".bootstrap-touchspin-down", M),
-                        up: t(".bootstrap-touchspin-up", M),
-                        input: t("input", M),
-                        prefix: t(".bootstrap-touchspin-prefix", M).addClass(F.prefix_extraclass),
-                        postfix: t(".bootstrap-touchspin-postfix", M).addClass(F.postfix_extraclass)
-                    };
-                }
-                function h() {
-                    "" === F.prefix && N.prefix.hide(), "" === F.postfix && N.postfix.hide();
-                }
-                function v() {
-                    B.on("keydown", function(t) {
-                        var o = t.keyCode || t.which;
-                        38 === o ? ("up" !== A && (y(), D()), t.preventDefault()) : 40 === o && ("down" !== A && (_(), 
-                        C()), t.preventDefault());
-                    }), B.on("keyup", function(t) {
-                        var o = t.keyCode || t.which;
-                        38 === o ? k() : 40 === o && k();
-                    }), B.on("blur", function() {
-                        g();
-                    }), N.down.on("keydown", function(t) {
-                        var o = t.keyCode || t.which;
-                        32 !== o && 13 !== o || ("down" !== A && (_(), C()), t.preventDefault());
-                    }), N.down.on("keyup", function(t) {
-                        var o = t.keyCode || t.which;
-                        32 !== o && 13 !== o || k();
-                    }), N.up.on("keydown", function(t) {
-                        var o = t.keyCode || t.which;
-                        32 !== o && 13 !== o || ("up" !== A && (y(), D()), t.preventDefault());
-                    }), N.up.on("keyup", function(t) {
-                        var o = t.keyCode || t.which;
-                        32 !== o && 13 !== o || k();
-                    }), N.down.on("mousedown.touchspin", function(t) {
-                        N.down.off("touchstart.touchspin"), B.is(":disabled") || (_(), C(), t.preventDefault(), 
-                        t.stopPropagation());
-                    }), N.down.on("touchstart.touchspin", function(t) {
-                        N.down.off("mousedown.touchspin"), B.is(":disabled") || (_(), C(), t.preventDefault(), 
-                        t.stopPropagation());
-                    }), N.up.on("mousedown.touchspin", function(t) {
-                        N.up.off("touchstart.touchspin"), B.is(":disabled") || (y(), D(), t.preventDefault(), 
-                        t.stopPropagation());
-                    }), N.up.on("touchstart.touchspin", function(t) {
-                        N.up.off("mousedown.touchspin"), B.is(":disabled") || (y(), D(), t.preventDefault(), 
-                        t.stopPropagation());
-                    }), N.up.on("mouseout touchleave touchend touchcancel", function(t) {
-                        A && (t.stopPropagation(), k());
-                    }), N.down.on("mouseout touchleave touchend touchcancel", function(t) {
-                        A && (t.stopPropagation(), k());
-                    }), N.down.on("mousemove touchmove", function(t) {
-                        A && (t.stopPropagation(), t.preventDefault());
-                    }), N.up.on("mousemove touchmove", function(t) {
-                        A && (t.stopPropagation(), t.preventDefault());
-                    }), t(document).on(n([ "mouseup", "touchend", "touchcancel" ], s).join(" "), function(t) {
-                        A && (t.preventDefault(), k());
-                    }), t(document).on(n([ "mousemove", "touchmove", "scroll", "scrollstart" ], s).join(" "), function(t) {
-                        A && (t.preventDefault(), k());
-                    }), B.on("mousewheel DOMMouseScroll", function(t) {
-                        if (F.mousewheel && B.is(":focus")) {
-                            var o = t.originalEvent.wheelDelta || -t.originalEvent.deltaY || -t.originalEvent.detail;
-                            t.stopPropagation(), t.preventDefault(), o < 0 ? _() : y();
-                        }
-                    });
-                }
-                function x() {
-                    B.on("touchspin.uponce", function() {
-                        k(), y();
-                    }), B.on("touchspin.downonce", function() {
-                        k(), _();
-                    }), B.on("touchspin.startupspin", function() {
-                        D();
-                    }), B.on("touchspin.startdownspin", function() {
-                        C();
-                    }), B.on("touchspin.stopspin", function() {
-                        k();
-                    }), B.on("touchspin.updatesettings", function(t, o) {
-                        p(o);
-                    });
-                }
-                function m(t) {
-                    switch (F.forcestepdivisibility) {
-                      case "round":
-                        return (Math.round(t / F.step) * F.step).toFixed(F.decimals);
-
-                      case "floor":
-                        return (Math.floor(t / F.step) * F.step).toFixed(F.decimals);
-
-                      case "ceil":
-                        return (Math.ceil(t / F.step) * F.step).toFixed(F.decimals);
-
-                      default:
-                        return t;
-                    }
-                }
                 function g() {
                     var t, o, n;
-                    "" !== (t = B.val()) ? F.decimals > 0 && "." === t || (o = parseFloat(t), isNaN(o) && (o = "" !== F.replacementval ? F.replacementval : 0), 
-                    n = o, o.toString() !== t && (n = o), o < F.min && (n = F.min), o > F.max && (n = F.max), 
-                    n = m(n), Number(t).toString() !== n.toString() && (B.val(n), B.trigger("change"))) : "" !== F.replacementval && (B.val(F.replacementval), 
+                    "" !== (t = B.val()) ? 0 < F.decimals && "." === t || (o = parseFloat(t), isNaN(o) && (o = "" !== F.replacementval ? F.replacementval : 0), 
+                    (n = o).toString() !== t && (n = o), o < F.min && (n = F.min), o > F.max && (n = F.max), 
+                    n = function(t) {
+                        switch (F.forcestepdivisibility) {
+                          case "round":
+                            return (Math.round(t / F.step) * F.step).toFixed(F.decimals);
+
+                          case "floor":
+                            return (Math.floor(t / F.step) * F.step).toFixed(F.decimals);
+
+                          case "ceil":
+                            return (Math.ceil(t / F.step) * F.step).toFixed(F.decimals);
+
+                          default:
+                            return t;
+                        }
+                    }(n), Number(t).toString() !== n.toString() && (B.val(n), B.trigger("change"))) : "" !== F.replacementval && (B.val(F.replacementval), 
                     B.trigger("change"));
                 }
                 function w() {
@@ -255,7 +150,89 @@
                 }
                 var F, M, N, P, S, T, j, I, B = t(this), E = B.data(), z = 0, A = !1;
                 B.data("alreadyinitialized") || (B.data("alreadyinitialized", !0), s += 1, B.data("spinnerid", s), 
-                B.is("input") ? (u(), i(), g(), l(), b(), h(), v(), x(), N.input.css("display", "block")) : console.log("Must be an input."));
+                B.is("input") ? ("" !== (F = t.extend({}, e, E, function() {
+                    var o = {};
+                    return t.each(a, function(t, n) {
+                        var s = "bts-" + n;
+                        B.is("[data-" + s + "]") && (o[t] = B.data(s));
+                    }), o;
+                }(), o)).initval && "" === B.val() && B.val(F.initval), g(), function() {
+                    var t = B.val(), o = B.parent();
+                    "" !== t && (t = Number(t).toFixed(F.decimals)), B.data("initvalue", t).val(t), 
+                    B.addClass("form-control"), o.hasClass("input-group") ? d(o) : f();
+                }(), N = {
+                    down: t(".bootstrap-touchspin-down", M),
+                    up: t(".bootstrap-touchspin-up", M),
+                    input: t("input", M),
+                    prefix: t(".bootstrap-touchspin-prefix", M).addClass(F.prefix_extraclass),
+                    postfix: t(".bootstrap-touchspin-postfix", M).addClass(F.postfix_extraclass)
+                }, "" === F.prefix && N.prefix.hide(), "" === F.postfix && N.postfix.hide(), B.on("keydown", function(t) {
+                    var o = t.keyCode || t.which;
+                    38 === o ? ("up" !== A && (y(), D()), t.preventDefault()) : 40 === o && ("down" !== A && (_(), 
+                    C()), t.preventDefault());
+                }), B.on("keyup", function(t) {
+                    var o = t.keyCode || t.which;
+                    38 === o ? k() : 40 === o && k();
+                }), B.on("blur", function() {
+                    g();
+                }), N.down.on("keydown", function(t) {
+                    var o = t.keyCode || t.which;
+                    32 !== o && 13 !== o || ("down" !== A && (_(), C()), t.preventDefault());
+                }), N.down.on("keyup", function(t) {
+                    var o = t.keyCode || t.which;
+                    32 !== o && 13 !== o || k();
+                }), N.up.on("keydown", function(t) {
+                    var o = t.keyCode || t.which;
+                    32 !== o && 13 !== o || ("up" !== A && (y(), D()), t.preventDefault());
+                }), N.up.on("keyup", function(t) {
+                    var o = t.keyCode || t.which;
+                    32 !== o && 13 !== o || k();
+                }), N.down.on("mousedown.touchspin", function(t) {
+                    N.down.off("touchstart.touchspin"), B.is(":disabled") || (_(), C(), t.preventDefault(), 
+                    t.stopPropagation());
+                }), N.down.on("touchstart.touchspin", function(t) {
+                    N.down.off("mousedown.touchspin"), B.is(":disabled") || (_(), C(), t.preventDefault(), 
+                    t.stopPropagation());
+                }), N.up.on("mousedown.touchspin", function(t) {
+                    N.up.off("touchstart.touchspin"), B.is(":disabled") || (y(), D(), t.preventDefault(), 
+                    t.stopPropagation());
+                }), N.up.on("touchstart.touchspin", function(t) {
+                    N.up.off("mousedown.touchspin"), B.is(":disabled") || (y(), D(), t.preventDefault(), 
+                    t.stopPropagation());
+                }), N.up.on("mouseout touchleave touchend touchcancel", function(t) {
+                    A && (t.stopPropagation(), k());
+                }), N.down.on("mouseout touchleave touchend touchcancel", function(t) {
+                    A && (t.stopPropagation(), k());
+                }), N.down.on("mousemove touchmove", function(t) {
+                    A && (t.stopPropagation(), t.preventDefault());
+                }), N.up.on("mousemove touchmove", function(t) {
+                    A && (t.stopPropagation(), t.preventDefault());
+                }), t(document).on(n([ "mouseup", "touchend", "touchcancel" ], s).join(" "), function(t) {
+                    A && (t.preventDefault(), k());
+                }), t(document).on(n([ "mousemove", "touchmove", "scroll", "scrollstart" ], s).join(" "), function(t) {
+                    A && (t.preventDefault(), k());
+                }), B.on("mousewheel DOMMouseScroll", function(t) {
+                    if (F.mousewheel && B.is(":focus")) {
+                        var o = t.originalEvent.wheelDelta || -t.originalEvent.deltaY || -t.originalEvent.detail;
+                        t.stopPropagation(), t.preventDefault(), o < 0 ? _() : y();
+                    }
+                }), B.on("touchspin.uponce", function() {
+                    k(), y();
+                }), B.on("touchspin.downonce", function() {
+                    k(), _();
+                }), B.on("touchspin.startupspin", function() {
+                    D();
+                }), B.on("touchspin.startdownspin", function() {
+                    C();
+                }), B.on("touchspin.stopspin", function() {
+                    k();
+                }), B.on("touchspin.updatesettings", function(t, o) {
+                    !function(t) {
+                        c(t), g();
+                        var o = N.input.val();
+                        "" !== o && (o = Number(N.input.val()), N.input.val(o.toFixed(F.decimals)));
+                    }(o);
+                }), N.input.css("display", "block")) : console.log("Must be an input."));
             });
         }
         this.each(function() {

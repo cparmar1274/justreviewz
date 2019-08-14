@@ -66,7 +66,7 @@
         },
         decrementSecond: function() {
             var t = this.second - this.secondStep;
-            t < 0 ? (this.decrementMinute(!0), this.second = t + 60) : this.second = t;
+            this.second = t < 0 ? (this.decrementMinute(!0), t + 60) : t;
         },
         elementKeydown: function(t) {
             switch (t.which) {
@@ -150,11 +150,11 @@
         },
         getTemplate: function() {
             var t, i, e, s, h, n;
-            switch (this.showInputs ? (i = '<input type="text" class="bootstrap-timepicker-hour" maxlength="2"/>', 
+            switch (h = this.showInputs ? (i = '<input type="text" class="bootstrap-timepicker-hour" maxlength="2"/>', 
             e = '<input type="text" class="bootstrap-timepicker-minute" maxlength="2"/>', s = '<input type="text" class="bootstrap-timepicker-second" maxlength="2"/>', 
-            h = '<input type="text" class="bootstrap-timepicker-meridian" maxlength="2"/>') : (i = '<span class="bootstrap-timepicker-hour"></span>', 
+            '<input type="text" class="bootstrap-timepicker-meridian" maxlength="2"/>') : (i = '<span class="bootstrap-timepicker-hour"></span>', 
             e = '<span class="bootstrap-timepicker-minute"></span>', s = '<span class="bootstrap-timepicker-second"></span>', 
-            h = '<span class="bootstrap-timepicker-meridian"></span>'), n = '<table><tr><td><a href="#" data-action="incrementHour"><span class="' + this.icons.up + '"></span></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><span class="' + this.icons.up + '"></span></a></td>' + (this.showSeconds ? '<td class="separator">&nbsp;</td><td><a href="#" data-action="incrementSecond"><span class="' + this.icons.up + '"></span></a></td>' : "") + (this.showMeridian ? '<td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><span class="' + this.icons.up + '"></span></a></td>' : "") + "</tr><tr><td>" + i + '</td> <td class="separator">:</td><td>' + e + "</td> " + (this.showSeconds ? '<td class="separator">:</td><td>' + s + "</td>" : "") + (this.showMeridian ? '<td class="separator">&nbsp;</td><td>' + h + "</td>" : "") + '</tr><tr><td><a href="#" data-action="decrementHour"><span class="' + this.icons.down + '"></span></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><span class="' + this.icons.down + '"></span></a></td>' + (this.showSeconds ? '<td class="separator">&nbsp;</td><td><a href="#" data-action="decrementSecond"><span class="' + this.icons.down + '"></span></a></td>' : "") + (this.showMeridian ? '<td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><span class="' + this.icons.down + '"></span></a></td>' : "") + "</tr></table>", 
+            '<span class="bootstrap-timepicker-meridian"></span>'), n = '<table><tr><td><a href="#" data-action="incrementHour"><span class="' + this.icons.up + '"></span></a></td><td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><span class="' + this.icons.up + '"></span></a></td>' + (this.showSeconds ? '<td class="separator">&nbsp;</td><td><a href="#" data-action="incrementSecond"><span class="' + this.icons.up + '"></span></a></td>' : "") + (this.showMeridian ? '<td class="separator">&nbsp;</td><td class="meridian-column"><a href="#" data-action="toggleMeridian"><span class="' + this.icons.up + '"></span></a></td>' : "") + "</tr><tr><td>" + i + '</td> <td class="separator">:</td><td>' + e + "</td> " + (this.showSeconds ? '<td class="separator">:</td><td>' + s + "</td>" : "") + (this.showMeridian ? '<td class="separator">&nbsp;</td><td>' + h + "</td>" : "") + '</tr><tr><td><a href="#" data-action="decrementHour"><span class="' + this.icons.down + '"></span></a></td><td class="separator"></td><td><a href="#" data-action="decrementMinute"><span class="' + this.icons.down + '"></span></a></td>' + (this.showSeconds ? '<td class="separator">&nbsp;</td><td><a href="#" data-action="decrementSecond"><span class="' + this.icons.down + '"></span></a></td>' : "") + (this.showMeridian ? '<td class="separator">&nbsp;</td><td><a href="#" data-action="toggleMeridian"><span class="' + this.icons.down + '"></span></a></td>' : "") + "</tr></table>", 
             this.template) {
               case "modal":
                 t = '<div class="bootstrap-timepicker-widget modal hide fade in" data-backdrop="' + (this.modalBackdrop ? "true" : "false") + '"><div class="modal-header"><a href="#" class="close" data-dismiss="modal">&times;</a><h3>Pick a Time</h3></div><div class="modal-content">' + n + '</div><div class="modal-footer"><a href="#" class="btn btn-primary" data-dismiss="modal">OK</a></div></div>';
@@ -183,7 +183,7 @@
             this.isOpen = !1, this.$widget.detach());
         },
         highlightUnit: function() {
-            this.position = this.getCursorPosition(), this.position >= 0 && this.position <= 2 ? this.highlightHour() : this.position >= 3 && this.position <= 5 ? this.highlightMinute() : this.position >= 6 && this.position <= 8 ? this.showSeconds ? this.highlightSecond() : this.highlightMeridian() : this.position >= 9 && this.position <= 11 && this.highlightMeridian();
+            this.position = this.getCursorPosition(), 0 <= this.position && this.position <= 2 ? this.highlightHour() : 3 <= this.position && this.position <= 5 ? this.highlightMinute() : 6 <= this.position && this.position <= 8 ? this.showSeconds ? this.highlightSecond() : this.highlightMeridian() : 9 <= this.position && this.position <= 11 && this.highlightMeridian();
         },
         highlightNextUnit: function() {
             switch (this.highlightedUnit) {
@@ -256,12 +256,12 @@
         },
         incrementMinute: function(t) {
             var i;
-            (i = t ? this.minute + t : this.minute + this.minuteStep - this.minute % this.minuteStep) > 59 ? (this.incrementHour(), 
+            59 < (i = t ? this.minute + t : this.minute + this.minuteStep - this.minute % this.minuteStep) ? (this.incrementHour(), 
             this.minute = i - 60) : this.minute = i;
         },
         incrementSecond: function() {
             var t = this.second + this.secondStep - this.second % this.secondStep;
-            t > 59 ? (this.incrementMinute(!0), this.second = t - 60) : this.second = t;
+            this.second = 59 < t ? (this.incrementMinute(!0), t - 60) : t;
         },
         mousewheel: function(i) {
             if (!this.disableMousewheel) {
@@ -270,11 +270,11 @@
                 switch ("mousewheel" === i.type ? s = -1 * i.originalEvent.wheelDelta : "DOMMouseScroll" === i.type && (s = 40 * i.originalEvent.detail), 
                 s && (i.preventDefault(), t(this).scrollTop(s + t(this).scrollTop())), this.highlightedUnit) {
                   case "minute":
-                    e > 0 ? this.incrementMinute() : this.decrementMinute(), this.highlightMinute();
+                    0 < e ? this.incrementMinute() : this.decrementMinute(), this.highlightMinute();
                     break;
 
                   case "second":
-                    e > 0 ? this.incrementSecond() : this.decrementSecond(), this.highlightSecond();
+                    0 < e ? this.incrementSecond() : this.decrementSecond(), this.highlightSecond();
                     break;
 
                   case "meridian":
@@ -282,7 +282,7 @@
                     break;
 
                   default:
-                    e > 0 ? this.incrementHour() : this.decrementHour(), this.highlightHour();
+                    0 < e ? this.incrementHour() : this.decrementHour(), this.highlightHour();
                 }
                 return !1;
             }
@@ -315,10 +315,10 @@
         setDefaultTime: function(t) {
             if (this.$element.val()) this.updateFromElementVal(); else if ("current" === t) {
                 var i = new Date(), e = i.getHours(), s = i.getMinutes(), h = i.getSeconds(), n = "AM";
-                0 !== h && 60 === (h = Math.ceil(i.getSeconds() / this.secondStep) * this.secondStep) && (s += 1, 
-                h = 0), 0 !== s && 60 === (s = Math.ceil(i.getMinutes() / this.minuteStep) * this.minuteStep) && (e += 1, 
-                s = 0), this.showMeridian && (0 === e ? e = 12 : e >= 12 ? (e > 12 && (e -= 12), 
-                n = "PM") : n = "AM"), this.hour = e, this.minute = s, this.second = h, this.meridian = n, 
+                0 !== h && 60 == (h = Math.ceil(i.getSeconds() / this.secondStep) * this.secondStep) && (s += 1, 
+                h = 0), 0 !== s && 60 == (s = Math.ceil(i.getMinutes() / this.minuteStep) * this.minuteStep) && (e += 1, 
+                s = 0), this.showMeridian && (0 === e ? e = 12 : n = 12 <= e ? (12 < e && (e -= 12), 
+                "PM") : "AM"), this.hour = e, this.minute = s, this.second = h, this.meridian = n, 
                 this.update();
             } else !1 === t ? (this.hour = 0, this.minute = 0, this.second = 0, this.meridian = "AM") : this.setTime(t);
         },
@@ -326,15 +326,15 @@
             if (t) {
                 var e, s, h, n, o, a;
                 if ("object" == typeof t && t.getMonth) h = t.getHours(), n = t.getMinutes(), o = t.getSeconds(), 
-                this.showMeridian && (a = "AM", h > 12 && (a = "PM", h %= 12), 12 === h && (a = "PM")); else {
-                    if ((e = (/a/i.test(t) ? 1 : 0) + (/p/i.test(t) ? 2 : 0)) > 2) return void this.clear();
-                    if (s = t.replace(/[^0-9\:]/g, "").split(":"), h = s[0] ? s[0].toString() : s.toString(), 
-                    this.explicitMode && h.length > 2 && h.length % 2 != 0) return void this.clear();
-                    n = s[1] ? s[1].toString() : "", o = s[2] ? s[2].toString() : "", h.length > 4 && (o = h.slice(-2), 
-                    h = h.slice(0, -2)), h.length > 2 && (n = h.slice(-2), h = h.slice(0, -2)), n.length > 2 && (o = n.slice(-2), 
+                this.showMeridian && (a = "AM", 12 < h && (a = "PM", h %= 12), 12 === h && (a = "PM")); else {
+                    if (2 < (e = (/a/i.test(t) ? 1 : 0) + (/p/i.test(t) ? 2 : 0))) return void this.clear();
+                    if (h = (s = t.replace(/[^0-9\:]/g, "").split(":"))[0] ? s[0].toString() : s.toString(), 
+                    this.explicitMode && 2 < h.length && h.length % 2 != 0) return void this.clear();
+                    n = s[1] ? s[1].toString() : "", o = s[2] ? s[2].toString() : "", 4 < h.length && (o = h.slice(-2), 
+                    h = h.slice(0, -2)), 2 < h.length && (n = h.slice(-2), h = h.slice(0, -2)), 2 < n.length && (o = n.slice(-2), 
                     n = n.slice(0, -2)), h = parseInt(h, 10), n = parseInt(n, 10), o = parseInt(o, 10), 
-                    isNaN(h) && (h = 0), isNaN(n) && (n = 0), isNaN(o) && (o = 0), o > 59 && (o = 59), 
-                    n > 59 && (n = 59), h >= this.maxHours && (h = this.maxHours - 1), this.showMeridian ? (h > 12 && (e = 2, 
+                    isNaN(h) && (h = 0), isNaN(n) && (n = 0), isNaN(o) && (o = 0), 59 < o && (o = 59), 
+                    59 < n && (n = 59), h >= this.maxHours && (h = this.maxHours - 1), this.showMeridian ? (12 < h && (e = 2, 
                     h -= 12), e || (e = 1), 0 === h && (h = 12), a = 1 === e ? "AM" : "PM") : h < 12 && 2 === e ? h += 12 : h >= this.maxHours ? h = this.maxHours - 1 : (h < 0 || 12 === h && 1 === e) && (h = 0);
                 }
                 this.hour = h, this.snapToStep ? (this.minute = this.changeToNearestStep(n, this.minuteStep), 
@@ -455,7 +455,7 @@
             }
         },
         widgetKeyup: function(t) {
-            (65 === t.which || 77 === t.which || 80 === t.which || 46 === t.which || 8 === t.which || t.which >= 48 && t.which <= 57 || t.which >= 96 && t.which <= 105) && this.updateFromWidgetInputs();
+            (65 === t.which || 77 === t.which || 80 === t.which || 46 === t.which || 8 === t.which || 48 <= t.which && t.which <= 57 || 96 <= t.which && t.which <= 105) && this.updateFromWidgetInputs();
         }
     }, t.fn.timepicker = function(i) {
         var e = Array.apply(null, arguments);

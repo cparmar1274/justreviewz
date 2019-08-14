@@ -78,9 +78,7 @@ var PixelAdmin = function(e) {
     };
     return t._setDelayedResizeListener(), e(function() {
         t.isMobile && window.FastClick && window.FastClick.attach(document.body), t.isRtl && e(window).on("px.resize.px-rtl-fix", function() {
-            document.body.style.overflow = "hidden";
-            document.body.offsetHeight;
-            document.body.style.overflow = "";
+            document.body.style.overflow = "hidden", document.body.offsetHeight, document.body.style.overflow = "";
         }), e(window).trigger("px.load"), pxUtil.triggerResizeEvent();
     }), t;
 }(jQuery);

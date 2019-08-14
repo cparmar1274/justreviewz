@@ -1,7 +1,5 @@
 !function(t) {
-    if ("object" == typeof exports && "undefined" != typeof module) module.exports = t(); else if ("function" == typeof define && define.amd) define([], t); else {
-        ("undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : this).Chart = t();
-    }
+    "object" == typeof exports && "undefined" != typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define([], t) : ("undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : this).Chart = t();
 }(function() {
     return function t(e, n, i) {
         function a(r, l) {
@@ -17,8 +15,7 @@
                     exports: {}
                 };
                 e[r][0].call(d.exports, function(t) {
-                    var n = e[r][1][t];
-                    return a(n || t);
+                    return a(e[r][1][t] || t);
                 }, d, d.exports, t, e, n, i);
             }
             return n[r].exports;
@@ -31,13 +28,8 @@
             function i(t) {
                 if (t) {
                     var e = [ 0, 0, 0 ], n = 1, i = t.match(/^#([a-fA-F0-9]{3})$/i);
-                    if (i) {
-                        i = i[1];
-                        for (a = 0; a < e.length; a++) e[a] = parseInt(i[a] + i[a], 16);
-                    } else if (i = t.match(/^#([a-fA-F0-9]{6})$/i)) {
-                        i = i[1];
-                        for (a = 0; a < e.length; a++) e[a] = parseInt(i.slice(2 * a, 2 * a + 2), 16);
-                    } else if (i = t.match(/^rgba?\(\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/i)) {
+                    if (i) for (i = i[1], a = 0; a < e.length; a++) e[a] = parseInt(i[a] + i[a], 16); else if (i = t.match(/^#([a-fA-F0-9]{6})$/i)) for (i = i[1], 
+                    a = 0; a < e.length; a++) e[a] = parseInt(i.slice(2 * a, 2 * a + 2), 16); else if (i = t.match(/^rgba?\(\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/i)) {
                         for (a = 0; a < e.length; a++) e[a] = parseInt(i[a + 1]);
                         n = parseFloat(i[4]);
                     } else if (i = t.match(/^rgba?\(\s*([+-]?[\d\.]+)\%\s*,\s*([+-]?[\d\.]+)\%\s*,\s*([+-]?[\d\.]+)\%\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)$/i)) {
@@ -131,18 +123,15 @@
         } ],
         3: [ function(t, e, n) {
             var i = t(5), a = t(2), o = function(t) {
-                if (t instanceof o) return t;
-                if (!(this instanceof o)) return new o(t);
-                this.valid = !1, this.values = {
+                return t instanceof o ? t : this instanceof o ? (this.valid = !1, this.values = {
                     rgb: [ 0, 0, 0 ],
                     hsl: [ 0, 0, 0 ],
                     hsv: [ 0, 0, 0 ],
                     hwb: [ 0, 0, 0 ],
                     cmyk: [ 0, 0, 0, 0 ],
                     alpha: 1
-                };
+                }, void ("string" == typeof t ? (e = a.getRgba(t)) ? this.setValues("rgb", e) : (e = a.getHsla(t)) ? this.setValues("hsl", e) : (e = a.getHwb(t)) && this.setValues("hwb", e) : "object" == typeof t && (void 0 !== (e = t).r || void 0 !== e.red ? this.setValues("rgb", e) : void 0 !== e.l || void 0 !== e.lightness ? this.setValues("hsl", e) : void 0 !== e.v || void 0 !== e.value ? this.setValues("hsv", e) : void 0 !== e.w || void 0 !== e.whiteness ? this.setValues("hwb", e) : void 0 === e.c && void 0 === e.cyan || this.setValues("cmyk", e)))) : new o(t);
                 var e;
-                "string" == typeof t ? (e = a.getRgba(t)) ? this.setValues("rgb", e) : (e = a.getHsla(t)) ? this.setValues("hsl", e) : (e = a.getHwb(t)) && this.setValues("hwb", e) : "object" == typeof t && (void 0 !== (e = t).r || void 0 !== e.red ? this.setValues("rgb", e) : void 0 !== e.l || void 0 !== e.lightness ? this.setValues("hsl", e) : void 0 !== e.v || void 0 !== e.value ? this.setValues("hsv", e) : void 0 !== e.w || void 0 !== e.whiteness ? this.setValues("hwb", e) : void 0 === e.c && void 0 === e.cyan || this.setValues("cmyk", e));
             };
             o.prototype = {
                 isValid: function() {
@@ -269,11 +258,11 @@
                 },
                 contrast: function(t) {
                     var e = this.luminosity(), n = t.luminosity();
-                    return e > n ? (e + .05) / (n + .05) : (n + .05) / (e + .05);
+                    return n < e ? (e + .05) / (n + .05) : (n + .05) / (e + .05);
                 },
                 level: function(t) {
                     var e = this.contrast(t);
-                    return e >= 7.1 ? "AAA" : e >= 4.5 ? "AA" : "";
+                    return 7.1 <= e ? "AAA" : 4.5 <= e ? "AA" : "";
                 },
                 dark: function() {
                     var t = this.values.rgb;
@@ -354,7 +343,7 @@
                 for (var e = this.values, n = {}, i = 0; i < t.length; i++) n[t.charAt(i)] = e[t][i];
                 return 1 !== e.alpha && (n.a = e.alpha), n;
             }, o.prototype.setValues = function(t, e) {
-                var n, a = this.values, o = this.spaces, r = this.maxes, l = 1;
+                var n, u, a = this.values, o = this.spaces, r = this.maxes, l = 1;
                 if (this.valid = !0, "alpha" === t) l = e; else if (e.length) a[t] = e.slice(0, t.length), 
                 l = e[t.length]; else if (void 0 !== e[t.charAt(0)]) {
                     for (n = 0; n < t.length; n++) a[t][n] = e[t.charAt(n)];
@@ -365,7 +354,6 @@
                     l = e.alpha;
                 }
                 if (a.alpha = Math.max(0, Math.min(1, void 0 === l ? a.alpha : l)), "alpha" === t) return !1;
-                var u;
                 for (n = 0; n < t.length; n++) u = Math.max(0, Math.min(r[t][n], a[t][n])), a[t][n] = Math.round(u);
                 for (var d in o) d !== t && (a[d] = i[t][d](a[t]));
                 return !0;
@@ -375,8 +363,7 @@
                 this.setValues(t, n), this);
             }, o.prototype.setChannel = function(t, e, n) {
                 var i = this.values[t];
-                return void 0 === n ? i[e] : n === i[e] ? this : (i[e] = n, this.setValues(t, i), 
-                this);
+                return void 0 === n ? i[e] : (n === i[e] || (i[e] = n, this.setValues(t, i)), this);
             }, "undefined" != typeof window && (window.Color = o), e.exports = o;
         }, {
             2: 2,
@@ -384,49 +371,47 @@
         } ],
         4: [ function(t, e, n) {
             function i(t) {
-                var e, n, i, a = t[0] / 255, o = t[1] / 255, r = t[2] / 255, l = Math.min(a, o, r), s = Math.max(a, o, r), u = s - l;
+                var e, i, a = t[0] / 255, o = t[1] / 255, r = t[2] / 255, l = Math.min(a, o, r), s = Math.max(a, o, r), u = s - l;
                 return s == l ? e = 0 : a == s ? e = (o - r) / u : o == s ? e = 2 + (r - a) / u : r == s && (e = 4 + (a - o) / u), 
-                (e = Math.min(60 * e, 360)) < 0 && (e += 360), i = (l + s) / 2, n = s == l ? 0 : i <= .5 ? u / (s + l) : u / (2 - s - l), 
-                [ e, 100 * n, 100 * i ];
+                (e = Math.min(60 * e, 360)) < 0 && (e += 360), i = (l + s) / 2, [ e, 100 * (s == l ? 0 : i <= .5 ? u / (s + l) : u / (2 - s - l)), 100 * i ];
             }
             function a(t) {
-                var e, n, i, a = t[0], o = t[1], r = t[2], l = Math.min(a, o, r), s = Math.max(a, o, r), u = s - l;
+                var e, n, a = t[0], o = t[1], r = t[2], l = Math.min(a, o, r), s = Math.max(a, o, r), u = s - l;
                 return n = 0 == s ? 0 : u / s * 1e3 / 10, s == l ? e = 0 : a == s ? e = (o - r) / u : o == s ? e = 2 + (r - a) / u : r == s && (e = 4 + (a - o) / u), 
-                (e = Math.min(60 * e, 360)) < 0 && (e += 360), i = s / 255 * 1e3 / 10, [ e, n, i ];
+                (e = Math.min(60 * e, 360)) < 0 && (e += 360), [ e, n, s / 255 * 1e3 / 10 ];
             }
             function o(t) {
                 var e = t[0], n = t[1], a = t[2];
-                return [ i(t)[0], 100 * (1 / 255 * Math.min(e, Math.min(n, a))), 100 * (a = 1 - 1 / 255 * Math.max(e, Math.max(n, a))) ];
+                return [ i(t)[0], 1 / 255 * Math.min(e, Math.min(n, a)) * 100, 100 * (a = 1 - 1 / 255 * Math.max(e, Math.max(n, a))) ];
             }
             function l(t) {
-                var e, n, i, a, o = t[0] / 255, r = t[1] / 255, l = t[2] / 255;
-                return a = Math.min(1 - o, 1 - r, 1 - l), e = (1 - o - a) / (1 - a) || 0, n = (1 - r - a) / (1 - a) || 0, 
-                i = (1 - l - a) / (1 - a) || 0, [ 100 * e, 100 * n, 100 * i, 100 * a ];
+                var a, o = t[0] / 255, r = t[1] / 255, l = t[2] / 255;
+                return [ 100 * ((1 - o - (a = Math.min(1 - o, 1 - r, 1 - l))) / (1 - a) || 0), 100 * ((1 - r - a) / (1 - a) || 0), 100 * ((1 - l - a) / (1 - a) || 0), 100 * a ];
             }
             function s(t) {
                 return C[JSON.stringify(t)];
             }
             function u(t) {
                 var e = t[0] / 255, n = t[1] / 255, i = t[2] / 255;
-                return [ 100 * (.4124 * (e = e > .04045 ? Math.pow((e + .055) / 1.055, 2.4) : e / 12.92) + .3576 * (n = n > .04045 ? Math.pow((n + .055) / 1.055, 2.4) : n / 12.92) + .1805 * (i = i > .04045 ? Math.pow((i + .055) / 1.055, 2.4) : i / 12.92)), 100 * (.2126 * e + .7152 * n + .0722 * i), 100 * (.0193 * e + .1192 * n + .9505 * i) ];
+                return [ 100 * (.4124 * (e = .04045 < e ? Math.pow((e + .055) / 1.055, 2.4) : e / 12.92) + .3576 * (n = .04045 < n ? Math.pow((n + .055) / 1.055, 2.4) : n / 12.92) + .1805 * (i = .04045 < i ? Math.pow((i + .055) / 1.055, 2.4) : i / 12.92)), 100 * (.2126 * e + .7152 * n + .0722 * i), 100 * (.0193 * e + .1192 * n + .9505 * i) ];
             }
             function d(t) {
-                var e, n, i, a = u(t), o = a[0], r = a[1], l = a[2];
-                return o /= 95.047, r /= 100, l /= 108.883, o = o > .008856 ? Math.pow(o, 1 / 3) : 7.787 * o + 16 / 116, 
-                r = r > .008856 ? Math.pow(r, 1 / 3) : 7.787 * r + 16 / 116, l = l > .008856 ? Math.pow(l, 1 / 3) : 7.787 * l + 16 / 116, 
-                e = 116 * r - 16, n = 500 * (o - r), i = 200 * (r - l), [ e, n, i ];
+                var a = u(t), o = a[0], r = a[1], l = a[2];
+                return r /= 100, l /= 108.883, o = .008856 < (o /= 95.047) ? Math.pow(o, 1 / 3) : 7.787 * o + 16 / 116, 
+                [ 116 * (r = .008856 < r ? Math.pow(r, 1 / 3) : 7.787 * r + 16 / 116) - 16, 500 * (o - r), 200 * (r - (l = .008856 < l ? Math.pow(l, 1 / 3) : 7.787 * l + 16 / 116)) ];
             }
             function c(t) {
                 var e, n, i, a, o, r = t[0] / 360, l = t[1] / 100, s = t[2] / 100;
-                if (0 == l) return o = 255 * s, [ o, o, o ];
+                if (0 == l) return [ o = 255 * s, o, o ];
                 e = 2 * s - (n = s < .5 ? s * (1 + l) : s + l - s * l), a = [ 0, 0, 0 ];
-                for (var u = 0; u < 3; u++) (i = r + 1 / 3 * -(u - 1)) < 0 && i++, i > 1 && i--, 
+                for (var u = 0; u < 3; u++) (i = r + 1 / 3 * -(u - 1)) < 0 && i++, 1 < i && i--, 
                 o = 6 * i < 1 ? e + 6 * (n - e) * i : 2 * i < 1 ? n : 3 * i < 2 ? e + (n - e) * (2 / 3 - i) * 6 : e, 
                 a[u] = 255 * o;
                 return a;
             }
             function h(t) {
-                var e = t[0] / 60, n = t[1] / 100, i = t[2] / 100, a = Math.floor(e) % 6, o = e - Math.floor(e), r = 255 * i * (1 - n), l = 255 * i * (1 - n * o), s = 255 * i * (1 - n * (1 - o)), i = 255 * i;
+                var e = t[0] / 60, n = t[1] / 100, i = t[2] / 100, a = Math.floor(e) % 6, o = e - Math.floor(e), r = 255 * i * (1 - n), l = 255 * i * (1 - n * o), s = 255 * i * (1 - n * (1 - o));
+                i *= 255;
                 switch (a) {
                   case 0:
                     return [ i, s, r ];
@@ -449,8 +434,8 @@
             }
             function f(t) {
                 var e, n, i, a, o = t[0] / 360, l = t[1] / 100, s = t[2] / 100, u = l + s;
-                switch (u > 1 && (l /= u, s /= u), e = Math.floor(6 * o), n = 1 - s, i = 6 * o - e, 
-                0 != (1 & e) && (i = 1 - i), a = l + i * (n - l), e) {
+                switch (1 < u && (l /= u, s /= u), i = 6 * o - (e = Math.floor(6 * o)), 0 != (1 & e) && (i = 1 - i), 
+                a = l + i * ((n = 1 - s) - l), e) {
                   default:
                   case 6:
                   case 0:
@@ -479,42 +464,36 @@
                 return [ 255 * r, 255 * g, 255 * b ];
             }
             function p(t) {
-                var e, n, i, a = t[0] / 100, o = t[1] / 100, r = t[2] / 100, l = t[3] / 100;
-                return e = 1 - Math.min(1, a * (1 - l) + l), n = 1 - Math.min(1, o * (1 - l) + l), 
-                i = 1 - Math.min(1, r * (1 - l) + l), [ 255 * e, 255 * n, 255 * i ];
+                var a = t[0] / 100, o = t[1] / 100, r = t[2] / 100, l = t[3] / 100;
+                return [ 255 * (1 - Math.min(1, a * (1 - l) + l)), 255 * (1 - Math.min(1, o * (1 - l) + l)), 255 * (1 - Math.min(1, r * (1 - l) + l)) ];
             }
             function v(t) {
                 var e, n, i, a = t[0] / 100, o = t[1] / 100, r = t[2] / 100;
-                return e = 3.2406 * a + -1.5372 * o + -.4986 * r, n = -.9689 * a + 1.8758 * o + .0415 * r, 
-                i = .0557 * a + -.204 * o + 1.057 * r, e = e > .0031308 ? 1.055 * Math.pow(e, 1 / 2.4) - .055 : e *= 12.92, 
-                n = n > .0031308 ? 1.055 * Math.pow(n, 1 / 2.4) - .055 : n *= 12.92, i = i > .0031308 ? 1.055 * Math.pow(i, 1 / 2.4) - .055 : i *= 12.92, 
-                e = Math.min(Math.max(0, e), 1), n = Math.min(Math.max(0, n), 1), i = Math.min(Math.max(0, i), 1), 
-                [ 255 * e, 255 * n, 255 * i ];
+                return n = -.9689 * a + 1.8758 * o + .0415 * r, i = .0557 * a + -.204 * o + 1.057 * r, 
+                e = .0031308 < (e = 3.2406 * a + -1.5372 * o + -.4986 * r) ? 1.055 * Math.pow(e, 1 / 2.4) - .055 : e *= 12.92, 
+                n = .0031308 < n ? 1.055 * Math.pow(n, 1 / 2.4) - .055 : n *= 12.92, i = .0031308 < i ? 1.055 * Math.pow(i, 1 / 2.4) - .055 : i *= 12.92, 
+                [ 255 * (e = Math.min(Math.max(0, e), 1)), 255 * (n = Math.min(Math.max(0, n), 1)), 255 * (i = Math.min(Math.max(0, i), 1)) ];
             }
             function m(t) {
-                var e, n, i, a = t[0], o = t[1], r = t[2];
-                return a /= 95.047, o /= 100, r /= 108.883, a = a > .008856 ? Math.pow(a, 1 / 3) : 7.787 * a + 16 / 116, 
-                o = o > .008856 ? Math.pow(o, 1 / 3) : 7.787 * o + 16 / 116, r = r > .008856 ? Math.pow(r, 1 / 3) : 7.787 * r + 16 / 116, 
-                e = 116 * o - 16, n = 500 * (a - o), i = 200 * (o - r), [ e, n, i ];
+                var a = t[0], o = t[1], r = t[2];
+                return o /= 100, r /= 108.883, a = .008856 < (a /= 95.047) ? Math.pow(a, 1 / 3) : 7.787 * a + 16 / 116, 
+                [ 116 * (o = .008856 < o ? Math.pow(o, 1 / 3) : 7.787 * o + 16 / 116) - 16, 500 * (a - o), 200 * (o - (r = .008856 < r ? Math.pow(r, 1 / 3) : 7.787 * r + 16 / 116)) ];
             }
             function x(t) {
                 var e, n, i, a, o = t[0], r = t[1], l = t[2];
-                return o <= 8 ? a = (n = 100 * o / 903.3) / 100 * 7.787 + 16 / 116 : (n = 100 * Math.pow((o + 16) / 116, 3), 
-                a = Math.pow(n / 100, 1 / 3)), e = e / 95.047 <= .008856 ? e = 95.047 * (r / 500 + a - 16 / 116) / 7.787 : 95.047 * Math.pow(r / 500 + a, 3), 
-                i = i / 108.883 <= .008859 ? i = 108.883 * (a - l / 200 - 16 / 116) / 7.787 : 108.883 * Math.pow(a - l / 200, 3), 
-                [ e, n, i ];
+                return a = o <= 8 ? (n = 100 * o / 903.3) / 100 * 7.787 + 16 / 116 : (n = 100 * Math.pow((o + 16) / 116, 3), 
+                Math.pow(n / 100, 1 / 3)), [ e = e / 95.047 <= .008856 ? e = 95.047 * (r / 500 + a - 16 / 116) / 7.787 : 95.047 * Math.pow(r / 500 + a, 3), n, i = i / 108.883 <= .008859 ? i = 108.883 * (a - l / 200 - 16 / 116) / 7.787 : 108.883 * Math.pow(a - l / 200, 3) ];
             }
             function y(t) {
-                var e, n, i, a = t[0], o = t[1], r = t[2];
-                return e = Math.atan2(r, o), (n = 360 * e / 2 / Math.PI) < 0 && (n += 360), i = Math.sqrt(o * o + r * r), 
-                [ a, i, n ];
+                var n, a = t[0], o = t[1], r = t[2];
+                return (n = 360 * Math.atan2(r, o) / 2 / Math.PI) < 0 && (n += 360), [ a, Math.sqrt(o * o + r * r), n ];
             }
             function k(t) {
                 return v(x(t));
             }
             function w(t) {
-                var e, n, i, a = t[0], o = t[1];
-                return i = t[2] / 360 * 2 * Math.PI, e = o * Math.cos(i), n = o * Math.sin(i), [ a, e, n ];
+                var i, a = t[0], o = t[1];
+                return i = t[2] / 360 * 2 * Math.PI, [ a, o * Math.cos(i), o * Math.sin(i) ];
             }
             function M(t) {
                 return S[t];
@@ -532,9 +511,8 @@
                 },
                 hsl2rgb: c,
                 hsl2hsv: function(t) {
-                    var e, n, i = t[0], a = t[1] / 100, o = t[2] / 100;
-                    return 0 === o ? [ 0, 0, 0 ] : (o *= 2, a *= o <= 1 ? o : 2 - o, n = (o + a) / 2, 
-                    e = 2 * a / (o + a), [ i, 100 * e, 100 * n ]);
+                    var i = t[0], a = t[1] / 100, o = t[2] / 100;
+                    return 0 === o ? [ 0, 0, 0 ] : [ i, 100 * (2 * (a *= (o *= 2) <= 1 ? o : 2 - o) / (o + a)), 100 * ((o + a) / 2) ];
                 },
                 hsl2hwb: function(t) {
                     return o(c(t));
@@ -548,8 +526,7 @@
                 hsv2rgb: h,
                 hsv2hsl: function(t) {
                     var e, n, i = t[0], a = t[1] / 100, o = t[2] / 100;
-                    return n = (2 - a) * o, e = a * o, e /= n <= 1 ? n : 2 - n, e = e || 0, n /= 2, 
-                    [ i, 100 * e, 100 * n ];
+                    return e = a * o, [ i, 100 * (e = (e /= (n = (2 - a) * o) <= 1 ? n : 2 - n) || 0), 100 * (n /= 2) ];
                 },
                 hsv2hwb: function(t) {
                     return o(h(t));
@@ -1129,7 +1106,7 @@
                     callbacks: {
                         title: function(t, e) {
                             var n = "";
-                            return t.length > 0 && (t[0].yLabel ? n = t[0].yLabel : e.labels.length > 0 && t[0].index < e.labels.length && (n = e.labels[t[0].index])), 
+                            return 0 < t.length && (t[0].yLabel ? n = t[0].yLabel : 0 < e.labels.length && t[0].index < e.labels.length && (n = e.labels[t[0].index])), 
                             n;
                         },
                         label: function(t, e) {
@@ -1181,7 +1158,7 @@
                         return this.getScaleForId(this.getIndexScaleId());
                     },
                     getStackCount: function(t) {
-                        var e, n, i = this, a = i.chart, o = i.getIndexScale().options.stacked, r = void 0 === t ? a.data.datasets.length : t + 1, l = [];
+                        var e, n, a = this.chart, o = this.getIndexScale().options.stacked, r = void 0 === t ? a.data.datasets.length : t + 1, l = [];
                         for (e = 0; e < r; ++e) (n = a.getDatasetMeta(e)).bar && a.isDatasetVisible(e) && (!1 === o || !0 === o && -1 === l.indexOf(n.stack) || void 0 === o && (void 0 === n.stack || -1 === l.indexOf(n.stack))) && l.push(n.stack);
                         return l.length;
                     },
@@ -1202,24 +1179,22 @@
                     calculateBarValuePixels: function(t, e) {
                         var n, i, a, o, r, l, s = this, u = s.chart, d = s.getMeta(), c = s.getValueScale(), h = u.data.datasets, f = c.getRightValue(h[t].data[e]), g = c.options.stacked, p = d.stack, v = 0;
                         if (g || void 0 === g && void 0 !== p) for (n = 0; n < t; ++n) (i = u.getDatasetMeta(n)).bar && i.stack === p && i.controller.getValueScaleId() === c.id && u.isDatasetVisible(n) && (a = c.getRightValue(h[n].data[e]), 
-                        (f < 0 && a < 0 || f >= 0 && a > 0) && (v += a));
-                        return o = c.getPixelForValue(v), r = c.getPixelForValue(v + f), l = (r - o) / 2, 
-                        {
-                            size: l,
+                        (f < 0 && a < 0 || 0 <= f && 0 < a) && (v += a));
+                        return o = c.getPixelForValue(v), {
+                            size: l = ((r = c.getPixelForValue(v + f)) - o) / 2,
                             base: o,
                             head: r,
                             center: r + l / 2
                         };
                     },
                     calculateBarIndexPixels: function(t, e, n) {
-                        var i, a, r, l, s, u, d = this, c = n.scale.options, h = d.getStackIndex(t), f = n.pixels, g = f[e], p = f.length, v = n.start, m = n.end;
-                        return 1 === p ? (i = g > v ? g - v : m - g, a = g < m ? m - g : g - v) : (e > 0 && (i = (g - f[e - 1]) / 2, 
+                        var i, a, r, s, u, c = n.scale.options, h = this.getStackIndex(t), f = n.pixels, g = f[e], p = f.length, v = n.start, m = n.end;
+                        return 1 === p ? (i = v < g ? g - v : m - g, a = g < m ? m - g : g - v) : (0 < e && (i = (g - f[e - 1]) / 2, 
                         e === p - 1 && (a = i)), e < p - 1 && (a = (f[e + 1] - g) / 2, 0 === e && (i = a))), 
-                        r = i * c.categoryPercentage, l = a * c.categoryPercentage, s = (r + l) / n.stackCount, 
-                        u = s * c.barPercentage, u = Math.min(o.valueOrDefault(c.barThickness, u), o.valueOrDefault(c.maxBarThickness, 1 / 0)), 
-                        g -= r, g += s * h, g += (s - u) / 2, {
-                            size: u,
-                            base: g,
+                        u = (s = ((r = i * c.categoryPercentage) + a * c.categoryPercentage) / n.stackCount) * c.barPercentage, 
+                        g -= r, g += s * h, {
+                            size: u = Math.min(o.valueOrDefault(c.barThickness, u), o.valueOrDefault(c.maxBarThickness, 1 / 0)),
+                            base: g += (s - u) / 2,
                             head: g + u,
                             center: g + u / 2
                         };
@@ -1409,25 +1384,10 @@
                             y: 0
                         }, c = e.getMeta(), h = a.cutoutPercentage, f = a.circumference;
                         if (f < 2 * Math.PI) {
-                            var g = a.rotation % (2 * Math.PI), p = (g += 2 * Math.PI * (g >= Math.PI ? -1 : g < -Math.PI ? 1 : 0)) + f, v = {
-                                x: Math.cos(g),
-                                y: Math.sin(g)
-                            }, m = {
-                                x: Math.cos(p),
-                                y: Math.sin(p)
-                            }, b = g <= 0 && p >= 0 || g <= 2 * Math.PI && 2 * Math.PI <= p, x = g <= .5 * Math.PI && .5 * Math.PI <= p || g <= 2.5 * Math.PI && 2.5 * Math.PI <= p, y = g <= -Math.PI && -Math.PI <= p || g <= Math.PI && Math.PI <= p, k = g <= .5 * -Math.PI && .5 * -Math.PI <= p || g <= 1.5 * Math.PI && 1.5 * Math.PI <= p, w = h / 100, M = {
-                                x: y ? -1 : Math.min(v.x * (v.x < 0 ? 1 : w), m.x * (m.x < 0 ? 1 : w)),
-                                y: k ? -1 : Math.min(v.y * (v.y < 0 ? 1 : w), m.y * (m.y < 0 ? 1 : w))
-                            }, S = {
-                                x: b ? 1 : Math.max(v.x * (v.x > 0 ? 1 : w), m.x * (m.x > 0 ? 1 : w)),
-                                y: x ? 1 : Math.max(v.y * (v.y > 0 ? 1 : w), m.y * (m.y > 0 ? 1 : w))
-                            }, C = {
-                                width: .5 * (S.x - M.x),
-                                height: .5 * (S.y - M.y)
-                            };
-                            u = Math.min(l / C.width, s / C.height), d = {
-                                x: -.5 * (S.x + M.x),
-                                y: -.5 * (S.y + M.y)
+                            var g = a.rotation % (2 * Math.PI), p = (g += 2 * Math.PI * (g >= Math.PI ? -1 : g < -Math.PI ? 1 : 0)) + f, v_x = Math.cos(g), v_y = Math.sin(g), m_x = Math.cos(p), m_y = Math.sin(p), b = g <= 0 && 0 <= p || g <= 2 * Math.PI && 2 * Math.PI <= p, x = g <= .5 * Math.PI && .5 * Math.PI <= p || g <= 2.5 * Math.PI && 2.5 * Math.PI <= p, y = g <= -Math.PI && -Math.PI <= p || g <= Math.PI && Math.PI <= p, k = g <= .5 * -Math.PI && .5 * -Math.PI <= p || g <= 1.5 * Math.PI && 1.5 * Math.PI <= p, w = h / 100, M_x = y ? -1 : Math.min(v_x * (v_x < 0 ? 1 : w), m_x * (m_x < 0 ? 1 : w)), M_y = k ? -1 : Math.min(v_y * (v_y < 0 ? 1 : w), m_y * (m_y < 0 ? 1 : w)), S_x = b ? 1 : Math.max(v_x * (0 < v_x ? 1 : w), m_x * (0 < m_x ? 1 : w)), S_y = x ? 1 : Math.max(v_y * (0 < v_y ? 1 : w), m_y * (0 < m_y ? 1 : w)), C_width = .5 * (S_x - M_x), C_height = .5 * (S_y - M_y);
+                            u = Math.min(l / C_width, s / C_height), d = {
+                                x: -.5 * (S_x + M_x),
+                                y: -.5 * (S_y + M_y)
                             };
                         }
                         n.borderWidth = e.getMaxBorderWidth(c.data), n.outerRadius = Math.max((u - n.borderWidth) / 2, 0), 
@@ -1469,11 +1429,11 @@
                     },
                     calculateCircumference: function(t) {
                         var e = this.getMeta().total;
-                        return e > 0 && !isNaN(t) ? 2 * Math.PI * (t / e) : 0;
+                        return 0 < e && !isNaN(t) ? 2 * Math.PI * (t / e) : 0;
                     },
                     getMaxBorderWidth: function(t) {
                         for (var e, n, i = 0, a = this.index, o = t.length, r = 0; r < o; r++) e = t[r]._model ? t[r]._model.borderWidth : 0, 
-                        i = (n = t[r]._chart ? t[r]._chart.config.data.datasets[a].hoverBorderWidth : 0) > (i = e > i ? e : i) ? n : i;
+                        i = (n = t[r]._chart ? t[r]._chart.config.data.datasets[a].hoverBorderWidth : 0) > (i = i < e ? e : i) ? n : i;
                         return i;
                     }
                 });
@@ -1720,7 +1680,7 @@
                     },
                     calculateCircumference: function(t) {
                         var e = this.getMeta().count;
-                        return e > 0 && !isNaN(t) ? 2 * Math.PI / e : 0;
+                        return 0 < e && !isNaN(t) ? 2 * Math.PI / e : 0;
                     }
                 });
             };
@@ -1897,10 +1857,10 @@
                     },
                     startDigest: function() {
                         var t = this, e = Date.now(), n = 0;
-                        t.dropFrames > 1 && (n = Math.floor(t.dropFrames), t.dropFrames = t.dropFrames % 1), 
+                        1 < t.dropFrames && (n = Math.floor(t.dropFrames), t.dropFrames = t.dropFrames % 1), 
                         t.advance(1 + n);
                         var i = Date.now();
-                        t.dropFrames += (i - e) / t.frameDuration, t.animations.length > 0 && t.requestAnimationFrame();
+                        t.dropFrames += (i - e) / t.frameDuration, 0 < t.animations.length && t.requestAnimationFrame();
                     },
                     advance: function(t) {
                         for (var e, n, i = this.animations, a = 0; a < i.length; ) n = (e = i[a]).chart, 
@@ -1936,12 +1896,6 @@
                     return e.datasets = e.datasets || [], e.labels = e.labels || [], t.options = a.configMerge(i.global, i[t.type], t.options || {}), 
                     t;
                 }
-                function n(t) {
-                    var e = t.options;
-                    e.scale ? t.scale.options = e.scale : e.scales && e.scales.xAxes.concat(e.scales.yAxes).forEach(function(e) {
-                        t.scales[e.id].options = e;
-                    }), t.tooltip._options = e.tooltips;
-                }
                 function l(t) {
                     return "top" === t || "bottom" === t;
                 }
@@ -1953,7 +1907,7 @@
                         var l = r.acquireContext(n, i), s = l && l.canvas, u = s && s.height, d = s && s.width;
                         o.id = a.uid(), o.ctx = l, o.canvas = s, o.config = i, o.width = d, o.height = u, 
                         o.aspectRatio = u ? d / u : null, o.options = i.options, o._bufferedRender = !1, 
-                        o.chart = o, o.controller = o, t.instances[o.id] = o, Object.defineProperty(o, "data", {
+                        (o.chart = o).controller = o, t.instances[o.id] = o, Object.defineProperty(o, "data", {
                             get: function() {
                                 return o.config.data;
                             },
@@ -2024,7 +1978,7 @@
                                     ctx: e.ctx,
                                     chart: e
                                 });
-                                i[u.id] = u, u.mergeTicksOptions(), n.isDefault && (e.scale = u);
+                                (i[u.id] = u).mergeTicksOptions(), n.isDefault && (e.scale = u);
                             }
                         }), t.scaleService.addScalesToLayout(this);
                     },
@@ -2054,7 +2008,12 @@
                         if (t && "object" == typeof t || (t = {
                             duration: t,
                             lazy: arguments[1]
-                        }), n(e), !1 !== s.notify(e, "beforeUpdate")) {
+                        }), function(t) {
+                            var e = t.options;
+                            e.scale ? t.scale.options = e.scale : e.scales && e.scales.xAxes.concat(e.scales.yAxes).forEach(function(e) {
+                                t.scales[e.id].options = e;
+                            }), t.tooltip._options = e.tooltips;
+                        }(e), !1 !== s.notify(e, "beforeUpdate")) {
                             e.tooltip._data = e.data;
                             var i = e.buildOrUpdateControllers();
                             a.each(e.data.datasets, function(t, n) {
@@ -2130,7 +2089,7 @@
                     drawDatasets: function(t) {
                         var e = this;
                         if (!1 !== s.notify(e, "beforeDatasetsDraw", [ t ])) {
-                            for (var n = (e.data.datasets || []).length - 1; n >= 0; --n) e.isDatasetVisible(n) && e.drawDataset(n, t);
+                            for (var n = (e.data.datasets || []).length - 1; 0 <= n; --n) e.isDatasetVisible(n) && e.drawDataset(n, t);
                             s.notify(e, "afterDatasetsDraw", [ t ]);
                         }
                     },
@@ -2243,7 +2202,7 @@
                         }
                     },
                     handleEvent: function(t) {
-                        var e = this, n = e.options || {}, i = n.hover, o = !1;
+                        var o, e = this, n = e.options || {}, i = n.hover;
                         return e.lastActive = e.lastActive || [], "mouseout" === t.type ? e.active = [] : e.active = e.getElementsAtEventForMode(t, i.mode, i), 
                         a.callback(n.onHover || n.hover.onHover, [ t.native, e.active ], e), "mouseup" !== t.type && "click" !== t.type || n.onClick && n.onClick.call(e, t.native, e.active), 
                         e.lastActive.length && e.updateHoverStyle(e.lastActive, i.mode, !1), e.active.length && i.mode && e.updateHoverStyle(e.active, i.mode, !0), 
@@ -2286,7 +2245,7 @@
                     var n = t._chartjs;
                     if (n) {
                         var i = n.listeners, o = i.indexOf(e);
-                        -1 !== o && i.splice(o, 1), i.length > 0 || (a.forEach(function(e) {
+                        -1 !== o && i.splice(o, 1), 0 < i.length || (a.forEach(function(e) {
                             delete t[e];
                         }), delete t._chartjs);
                     }
@@ -2375,7 +2334,7 @@
                     },
                     resyncElements: function() {
                         var t = this, e = t.getMeta(), n = t.getDataset().data, i = e.data.length, a = n.length;
-                        a < i ? e.data.splice(a, i - a) : a > i && t.insertElements(i, a - i);
+                        a < i ? e.data.splice(a, i - a) : i < a && t.insertElements(i, a - i);
                     },
                     insertElements: function(t, e) {
                         for (var n = 0; n < e; ++n) this.addElementAndReset(t + n);
@@ -2415,9 +2374,9 @@
             "use strict";
             function i(t, e, n, i) {
                 var o, r, l, s, u, d, c, h, f, g = Object.keys(n);
-                for (o = 0, r = g.length; o < r; ++o) if (l = g[o], d = n[l], e.hasOwnProperty(l) || (e[l] = d), 
+                for (o = 0, r = g.length; o < r; ++o) if (d = n[l = g[o]], e.hasOwnProperty(l) || (e[l] = d), 
                 (s = e[l]) !== d && "_" !== l[0]) {
-                    if (t.hasOwnProperty(l) || (t[l] = s), u = t[l], (c = typeof d) === typeof u) if ("string" === c) {
+                    if (t.hasOwnProperty(l) || (t[l] = s), (c = typeof d) == typeof (u = t[l])) if ("string" === c) {
                         if ((h = a(u)).valid && (f = a(d)).valid) {
                             e[l] = f.mix(h, i).rgbString();
                             continue;
@@ -2442,8 +2401,8 @@
                 },
                 transition: function(t) {
                     var e = this, n = e._model, a = e._start, o = e._view;
-                    return n && 1 !== t ? (o || (o = e._view = {}), a || (a = e._start = {}), i(a, o, n, t), 
-                    e) : (e._view = n, e._start = null, e);
+                    return n && 1 !== t ? (o || (o = e._view = {}), a || (a = e._start = {}), i(a, o, n, t)) : (e._view = n, 
+                    e._start = null), e;
                 },
                 tooltipPosition: function() {
                     return {
@@ -2469,7 +2428,7 @@
                     i;
                 }
                 function n(t) {
-                    return void 0 !== t && null !== t && "none" !== t;
+                    return null != t && "none" !== t;
                 }
                 function r(t, i, a) {
                     var o = document.defaultView, r = t.parentNode, l = o.getComputedStyle(t)[i], s = o.getComputedStyle(r)[i], u = n(l), d = n(s), c = Number.POSITIVE_INFINITY;
@@ -2517,7 +2476,7 @@
                     }
                 }, o.findPreviousWhere = function(t, e, n) {
                     o.isNullOrUndef(n) && (n = t.length);
-                    for (var i = n - 1; i >= 0; i--) {
+                    for (var i = n - 1; 0 <= i; i--) {
                         var a = t[i];
                         if (e(a)) return a;
                     }
@@ -2535,7 +2494,7 @@
                     return Math.abs(t - e) < n;
                 }, o.almostWhole = function(t, e) {
                     var n = Math.round(t);
-                    return n - e < t && n + e > t;
+                    return n - e < t && t < n + e;
                 }, o.max = function(t) {
                     return t.reduce(function(t, e) {
                         return isNaN(e) ? t : Math.max(t, e);
@@ -2547,7 +2506,7 @@
                 }, o.sign = Math.sign ? function(t) {
                     return Math.sign(t);
                 } : function(t) {
-                    return 0 == (t = +t) || isNaN(t) ? t : t > 0 ? 1 : -1;
+                    return 0 == (t = +t) || isNaN(t) ? t : 0 < t ? 1 : -1;
                 }, o.log10 = Math.log10 ? function(t) {
                     return Math.log10(t);
                 } : function(t) {
@@ -2579,7 +2538,7 @@
                         }
                     };
                 }, o.EPSILON = Number.EPSILON || 1e-14, o.splineCurveMonotone = function(t) {
-                    var e, n, i, a, r = (t || []).map(function(t) {
+                    var e, n, i, a, u, d, c, h, f, r = (t || []).map(function(t) {
                         return {
                             model: t._model,
                             deltaK: 0,
@@ -2587,18 +2546,16 @@
                         };
                     }), l = r.length;
                     for (e = 0; e < l; ++e) if (!(i = r[e]).model.skip) {
-                        if (n = e > 0 ? r[e - 1] : null, (a = e < l - 1 ? r[e + 1] : null) && !a.model.skip) {
+                        if (n = 0 < e ? r[e - 1] : null, (a = e < l - 1 ? r[e + 1] : null) && !a.model.skip) {
                             var s = a.model.x - i.model.x;
                             i.deltaK = 0 !== s ? (a.model.y - i.model.y) / s : 0;
                         }
                         !n || n.model.skip ? i.mK = i.deltaK : !a || a.model.skip ? i.mK = n.deltaK : this.sign(n.deltaK) !== this.sign(i.deltaK) ? i.mK = 0 : i.mK = (n.deltaK + i.deltaK) / 2;
                     }
-                    var u, d, c, h;
                     for (e = 0; e < l - 1; ++e) i = r[e], a = r[e + 1], i.model.skip || a.model.skip || (o.almostEquals(i.deltaK, 0, this.EPSILON) ? i.mK = a.mK = 0 : (u = i.mK / i.deltaK, 
                     d = a.mK / i.deltaK, (h = Math.pow(u, 2) + Math.pow(d, 2)) <= 9 || (c = 3 / Math.sqrt(h), 
                     i.mK = u * c * i.deltaK, a.mK = d * c * i.deltaK)));
-                    var f;
-                    for (e = 0; e < l; ++e) (i = r[e]).model.skip || (n = e > 0 ? r[e - 1] : null, a = e < l - 1 ? r[e + 1] : null, 
+                    for (e = 0; e < l; ++e) (i = r[e]).model.skip || (n = 0 < e ? r[e - 1] : null, a = e < l - 1 ? r[e + 1] : null, 
                     n && !n.model.skip && (f = (i.model.x - n.model.x) / 3, i.model.controlPointPreviousX = i.model.x - f, 
                     i.model.controlPointPreviousY = i.model.y - f * i.mK), a && !a.model.skip && (f = (a.model.x - i.model.x) / 3, 
                     i.model.controlPointNextX = i.model.x + f, i.model.controlPointNextY = i.model.y + f * i.mK));
@@ -2615,12 +2572,11 @@
                     return window.setTimeout(t, 1e3 / 60);
                 }, o.getRelativePosition = function(t, e) {
                     var n, i, a = t.originalEvent || t, r = t.currentTarget || t.srcElement, l = r.getBoundingClientRect(), s = a.touches;
-                    s && s.length > 0 ? (n = s[0].clientX, i = s[0].clientY) : (n = a.clientX, i = a.clientY);
+                    i = s && 0 < s.length ? (n = s[0].clientX, s[0].clientY) : (n = a.clientX, a.clientY);
                     var u = parseFloat(o.getStyle(r, "padding-left")), d = parseFloat(o.getStyle(r, "padding-top")), c = parseFloat(o.getStyle(r, "padding-right")), h = parseFloat(o.getStyle(r, "padding-bottom")), f = l.right - l.left - u - c, g = l.bottom - l.top - d - h;
-                    return n = Math.round((n - l.left - u) / f * r.width / e.currentDevicePixelRatio), 
-                    i = Math.round((i - l.top - d) / g * r.height / e.currentDevicePixelRatio), {
-                        x: n,
-                        y: i
+                    return {
+                        x: n = Math.round((n - l.left - u) / f * r.width / e.currentDevicePixelRatio),
+                        y: i = Math.round((i - l.top - d) / g * r.height / e.currentDevicePixelRatio)
                     };
                 }, o.getConstraintWidth = function(t) {
                     return r(t, "max-width", "clientWidth");
@@ -2652,8 +2608,8 @@
                     i.font !== e && (a = i.data = {}, r = i.garbageCollect = [], i.font = e), t.font = e;
                     var l = 0;
                     o.each(n, function(e) {
-                        void 0 !== e && null !== e && !0 !== o.isArray(e) ? l = o.measureText(t, a, r, l, e) : o.isArray(e) && o.each(e, function(e) {
-                            void 0 === e || null === e || o.isArray(e) || (l = o.measureText(t, a, r, l, e));
+                        null != e && !0 !== o.isArray(e) ? l = o.measureText(t, a, r, l, e) : o.isArray(e) && o.each(e, function(e) {
+                            null == e || o.isArray(e) || (l = o.measureText(t, a, r, l, e));
                         });
                     });
                     var s = r.length / 2;
@@ -2664,7 +2620,7 @@
                     return l;
                 }, o.measureText = function(t, e, n, i, a) {
                     var o = e[a];
-                    return o || (o = e[a] = t.measureText(a).width, n.push(a)), o > i && (i = o), i;
+                    return o || (o = e[a] = t.measureText(a).width, n.push(a)), i < o && (i = o), i;
                 }, o.numberOfLabelLines = function(t) {
                     var e = 1;
                     return o.each(t, function(t) {
@@ -2747,7 +2703,7 @@
                         var a = i(e, t);
                         n.axis = n.axis || "xy";
                         var s = l(n.axis), u = n.intersect ? o(t, a) : r(t, a, !1, s);
-                        return u.length > 0 && (u = t.getDatasetMeta(u[0]._datasetIndex).data), u;
+                        return 0 < u.length && (u = t.getDatasetMeta(u[0]._datasetIndex).data), u;
                     },
                     "x-axis": function(t, e) {
                         return s(t, e, {
@@ -2761,7 +2717,7 @@
                         var a = i(e, t);
                         n.axis = n.axis || "xy";
                         var o = l(n.axis), s = r(t, a, n.intersect, o);
-                        return s.length > 1 && s.sort(function(t, e) {
+                        return 1 < s.length && s.sort(function(t, e) {
                             var n = t.getArea() - e.getArea();
                             return 0 === n && (n = t._datasetIndex - e._datasetIndex), n;
                         }), s.slice(0, 1);
@@ -2816,7 +2772,7 @@
                 var t = function(t, e) {
                     return this.construct(t, e), this;
                 };
-                return t.Chart = t, t;
+                return t.Chart = t;
             };
         }, {
             25: 25
@@ -2991,7 +2947,7 @@
                     },
                     notify: function(t, e, n) {
                         var i, a, o, r, l, s = this.descriptors(t), u = s.length;
-                        for (i = 0; i < u; ++i) if (a = s[i], o = a.plugin, "function" == typeof (l = o[e]) && ((r = [ t ].concat(n || [])).push(a.options), 
+                        for (i = 0; i < u; ++i) if ("function" == typeof (l = (o = (a = s[i]).plugin)[e]) && ((r = [ t ].concat(n || [])).push(a.options), 
                         !1 === l.apply(o, r))) return !1;
                         return !0;
                     },
@@ -3104,12 +3060,11 @@
                     },
                     mergeTicksOptions: function() {
                         var t = this.options.ticks;
-                        !1 === t.minor && (t.minor = {
+                        for (var e in !1 === t.minor && (t.minor = {
                             display: !1
                         }), !1 === t.major && (t.major = {
                             display: !1
-                        });
-                        for (var e in t) "major" !== e && "minor" !== e && (void 0 === t.minor[e] && (t.minor[e] = t[e]), 
+                        }), t) "major" !== e && "minor" !== e && (void 0 === t.minor[e] && (t.minor[e] = t[e]), 
                         void 0 === t.major[e] && (t.major[e] = t[e]));
                     },
                     beforeUpdate: function() {
@@ -3125,8 +3080,8 @@
                         }, n), d.longestTextCache = d.longestTextCache || {}, d.beforeSetDimensions(), d.setDimensions(), 
                         d.afterSetDimensions(), d.beforeDataLimits(), d.determineDataLimits(), d.afterDataLimits(), 
                         d.beforeBuildTicks(), s = d.buildTicks() || [], d.afterBuildTicks(), d.beforeTickToLabelConversion(), 
-                        o = d.convertTicksToLabels(s) || d.ticks, d.afterTickToLabelConversion(), d.ticks = o, 
-                        i = 0, a = o.length; i < a; ++i) r = o[i], (u = s[i]) ? u.label = r : s.push(u = {
+                        o = d.convertTicksToLabels(s) || d.ticks, d.afterTickToLabelConversion(), i = 0, 
+                        a = (d.ticks = o).length; i < a; ++i) r = o[i], (u = s[i]) ? u.label = r : s.push(u = {
                             label: r,
                             major: !1
                         });
@@ -3180,7 +3135,7 @@
                         var t = this, e = t.ctx, a = t.options.ticks, o = i(t._ticks), r = n(a);
                         e.font = r.font;
                         var s = a.minRotation || 0;
-                        if (o.length && t.options.display && t.isHorizontal()) for (var u, d = l.longestText(e, r.font, o, t.longestTextCache), c = d, h = t.getPixelForTick(1) - t.getPixelForTick(0) - 6; c > h && s < a.maxRotation; ) {
+                        if (o.length && t.options.display && t.isHorizontal()) for (var u, d = l.longestText(e, r.font, o, t.longestTextCache), c = d, h = t.getPixelForTick(1) - t.getPixelForTick(0) - 6; h < c && s < a.maxRotation; ) {
                             var f = l.toRadians(s);
                             if (u = Math.cos(f), Math.sin(f) * d > t.maxHeight) {
                                 s--;
@@ -3250,9 +3205,7 @@
                         var e = this, n = e.options.offset;
                         if (e.isHorizontal()) {
                             var i = (e.width - (e.paddingLeft + e.paddingRight)) / Math.max(e._ticks.length - (n ? 0 : 1), 1), a = i * t + e.paddingLeft;
-                            n && (a += i / 2);
-                            var o = e.left + Math.round(a);
-                            return o += e.isFullWidth() ? e.margins.left : 0;
+                            return n && (a += i / 2), e.left + Math.round(a) + (e.isFullWidth() ? e.margins.left : 0);
                         }
                         var r = e.height - (e.paddingTop + e.paddingBottom);
                         return e.top + t * (r / (e._ticks.length - 1));
@@ -3260,8 +3213,8 @@
                     getPixelForDecimal: function(t) {
                         var e = this;
                         if (e.isHorizontal()) {
-                            var n = (e.width - (e.paddingLeft + e.paddingRight)) * t + e.paddingLeft, i = e.left + Math.round(n);
-                            return i += e.isFullWidth() ? e.margins.left : 0;
+                            var n = (e.width - (e.paddingLeft + e.paddingRight)) * t + e.paddingLeft;
+                            return e.left + Math.round(n) + (e.isFullWidth() ? e.margins.left : 0);
                         }
                         return e.top + t * e.height;
                     },
@@ -3270,13 +3223,13 @@
                     },
                     getBaseValue: function() {
                         var t = this, e = t.min, n = t.max;
-                        return t.beginAtZero ? 0 : e < 0 && n < 0 ? n : e > 0 && n > 0 ? e : 0;
+                        return t.beginAtZero ? 0 : e < 0 && n < 0 ? n : 0 < e && 0 < n ? e : 0;
                     },
                     _autoSkip: function(t) {
                         var e, n, i, a, o = this, r = o.isHorizontal(), s = o.options.ticks.minor, u = t.length, d = l.toRadians(o.labelRotation), c = Math.cos(d), h = o.longestLabelWidth * c, f = [];
                         for (s.maxTicksLimit && (a = s.maxTicksLimit), r && (e = !1, (h + s.autoSkipPadding) * u > o.width - (o.paddingLeft + o.paddingRight) && (e = 1 + Math.floor((h + s.autoSkipPadding) * u / (o.width - (o.paddingLeft + o.paddingRight)))), 
-                        a && u > a && (e = Math.max(e, Math.floor(u / a)))), n = 0; n < u; n++) i = t[n], 
-                        ((e > 1 && n % e > 0 || n % e == 0 && n + e >= u) && n !== u - 1 || l.isNullOrUndef(i.label)) && delete i.label, 
+                        a && a < u && (e = Math.max(e, Math.floor(u / a)))), n = 0; n < u; n++) i = t[n], 
+                        ((1 < e && 0 < n % e || n % e == 0 && u <= n + e) && n !== u - 1 || l.isNullOrUndef(i.label)) && delete i.label, 
                         f.push(i);
                         return f;
                     },
@@ -3287,23 +3240,23 @@
                             if (l.each(v, function(n, o) {
                                 if (void 0 !== n.label) {
                                     var r, s, c, f, m = n.label;
-                                    o === e.zeroLineIndex && i.offset === h.offsetGridLines ? (r = h.zeroLineWidth, 
-                                    s = h.zeroLineColor, c = h.zeroLineBorderDash, f = h.zeroLineBorderDashOffset) : (r = l.valueAtIndexOrDefault(h.lineWidth, o), 
+                                    f = o === e.zeroLineIndex && i.offset === h.offsetGridLines ? (r = h.zeroLineWidth, 
+                                    s = h.zeroLineColor, c = h.zeroLineBorderDash, h.zeroLineBorderDashOffset) : (r = l.valueAtIndexOrDefault(h.lineWidth, o), 
                                     s = l.valueAtIndexOrDefault(h.color, o), c = l.valueOrDefault(h.borderDash, u.borderDash), 
-                                    f = l.valueOrDefault(h.borderDashOffset, u.borderDashOffset));
+                                    l.valueOrDefault(h.borderDashOffset, u.borderDashOffset));
                                     var b, x, y, w, M, S, T, F, O, R, L = "middle", z = "middle", B = d.padding;
                                     if (p) {
                                         var W = k + B;
-                                        "bottom" === i.position ? (z = g ? "middle" : "top", L = g ? "right" : "center", 
-                                        R = e.top + W) : (z = g ? "middle" : "bottom", L = g ? "left" : "center", R = e.bottom - W);
-                                        var N = a(e, o, h.offsetGridLines && v.length > 1);
+                                        R = "bottom" === i.position ? (z = g ? "middle" : "top", L = g ? "right" : "center", 
+                                        e.top + W) : (z = g ? "middle" : "bottom", L = g ? "left" : "center", e.bottom - W);
+                                        var N = a(e, o, h.offsetGridLines && 1 < v.length);
                                         N < e.left && (s = "rgba(0,0,0,0)"), N += l.aliasPixel(r), O = e.getPixelForTick(o) + d.labelOffset, 
                                         b = y = M = T = N, x = P, w = A, S = t.top, F = t.bottom;
                                     } else {
                                         var V, E = "left" === i.position;
-                                        d.mirror ? (L = E ? "left" : "right", V = B) : (L = E ? "right" : "left", V = k + B), 
+                                        V = d.mirror ? (L = E ? "left" : "right", B) : (L = E ? "right" : "left", k + B), 
                                         O = E ? e.right - V : e.left + V;
-                                        var H = a(e, o, h.offsetGridLines && v.length > 1);
+                                        var H = a(e, o, h.offsetGridLines && 1 < v.length);
                                         H < e.top && (s = "rgba(0,0,0,0)"), H += l.aliasPixel(r), R = e.getPixelForTick(o) + d.labelOffset, 
                                         b = D, y = I, M = t.left, T = t.right, x = w = S = F = H;
                                     }
@@ -3407,7 +3360,7 @@
                 generators: {
                     linear: function(t, e) {
                         var n, a = [];
-                        if (t.stepSize && t.stepSize > 0) n = t.stepSize; else {
+                        if (t.stepSize && 0 < t.stepSize) n = t.stepSize; else {
                             var o = i.niceNum(e.max - e.min, !1);
                             n = i.niceNum(o / (t.maxTicks - 1), !0);
                         }
@@ -3421,11 +3374,9 @@
                     },
                     logarithmic: function(t, e) {
                         var n, a, o = [], r = i.valueOrDefault, l = r(t.min, Math.pow(10, Math.floor(i.log10(e.min)))), s = Math.floor(i.log10(e.max)), u = Math.ceil(e.max / Math.pow(10, s));
-                        0 === l ? (n = Math.floor(i.log10(e.minNotZero)), a = Math.floor(e.minNotZero / Math.pow(10, n)), 
-                        o.push(l), l = a * Math.pow(10, n)) : (n = Math.floor(i.log10(l)), a = Math.floor(l / Math.pow(10, n)));
-                        do {
-                            o.push(l), 10 === ++a && (a = 1, ++n), l = a * Math.pow(10, n);
-                        } while (n < s || n === s && a < u);
+                        for (0 === l ? (n = Math.floor(i.log10(e.minNotZero)), a = Math.floor(e.minNotZero / Math.pow(10, n)), 
+                        o.push(l), l = a * Math.pow(10, n)) : (n = Math.floor(i.log10(l)), a = Math.floor(l / Math.pow(10, n))); o.push(l), 
+                        10 == ++a && (a = 1, ++n), l = a * Math.pow(10, n), n < s || n === s && a < u; ) ;
                         var d = r(t.max, l);
                         return o.push(d), o;
                     }
@@ -3435,8 +3386,8 @@
                         return i.isArray(t) ? t : "" + t;
                     },
                     linear: function(t, e, n) {
-                        var a = n.length > 3 ? n[2] - n[1] : n[1] - n[0];
-                        Math.abs(a) > 1 && t !== Math.floor(t) && (a = t - Math.floor(t));
+                        var a = 3 < n.length ? n[2] - n[1] : n[1] - n[0];
+                        1 < Math.abs(a) && t !== Math.floor(t) && (a = t - Math.floor(t));
                         var o = i.log10(Math.abs(a)), r = "";
                         if (0 !== t) {
                             var l = -1 * Math.floor(o);
@@ -3490,9 +3441,9 @@
                         beforeTitle: o.noop,
                         title: function(t, e) {
                             var n = "", i = e.labels, a = i ? i.length : 0;
-                            if (t.length > 0) {
+                            if (0 < t.length) {
                                 var o = t[0];
-                                o.xLabel ? n = o.xLabel : a > 0 && o.index < a && (n = i[o.index]);
+                                o.xLabel ? n = o.xLabel : 0 < a && o.index < a && (n = i[o.index]);
                             }
                             return n;
                         },
@@ -3501,7 +3452,7 @@
                         beforeLabel: o.noop,
                         label: function(t, e) {
                             var n = e.datasets[t.datasetIndex].label || "";
-                            return n && (n += ": "), n += t.yLabel;
+                            return n && (n += ": "), n + t.yLabel;
                         },
                         labelColor: function(t, e) {
                             var n = e.getDatasetMeta(t.datasetIndex).data[t.index]._view;
@@ -3576,70 +3527,13 @@
                         borderWidth: t.borderWidth
                     };
                 }
-                function s(t, e) {
-                    var n = t._chart.ctx, i = 2 * e.yPadding, a = 0, r = e.body, l = r.reduce(function(t, e) {
-                        return t + e.before.length + e.lines.length + e.after.length;
-                    }, 0);
-                    l += e.beforeBody.length + e.afterBody.length;
-                    var s = e.title.length, u = e.footer.length, d = e.titleFontSize, c = e.bodyFontSize, h = e.footerFontSize;
-                    i += s * d, i += s ? (s - 1) * e.titleSpacing : 0, i += s ? e.titleMarginBottom : 0, 
-                    i += l * c, i += l ? (l - 1) * e.bodySpacing : 0, i += u ? e.footerMarginTop : 0, 
-                    i += u * h, i += u ? (u - 1) * e.footerSpacing : 0;
-                    var f = 0, g = function(t) {
-                        a = Math.max(a, n.measureText(t).width + f);
-                    };
-                    return n.font = o.fontString(d, e._titleFontStyle, e._titleFontFamily), o.each(e.title, g), 
-                    n.font = o.fontString(c, e._bodyFontStyle, e._bodyFontFamily), o.each(e.beforeBody.concat(e.afterBody), g), 
-                    f = e.displayColors ? c + 2 : 0, o.each(r, function(t) {
-                        o.each(t.before, g), o.each(t.lines, g), o.each(t.after, g);
-                    }), f = 0, n.font = o.fontString(h, e._footerFontStyle, e._footerFontFamily), o.each(e.footer, g), 
-                    a += 2 * e.xPadding, {
-                        width: a,
-                        height: i
-                    };
-                }
-                function u(t, e) {
-                    var n = t._model, i = t._chart, a = t._chart.chartArea, o = "center", r = "center";
-                    n.y < e.height ? r = "top" : n.y > i.height - e.height && (r = "bottom");
-                    var l, s, u, d, c, h = (a.left + a.right) / 2, f = (a.top + a.bottom) / 2;
-                    "center" === r ? (l = function(t) {
-                        return t <= h;
-                    }, s = function(t) {
-                        return t > h;
-                    }) : (l = function(t) {
-                        return t <= e.width / 2;
-                    }, s = function(t) {
-                        return t >= i.width - e.width / 2;
-                    }), u = function(t) {
-                        return t + e.width > i.width;
-                    }, d = function(t) {
-                        return t - e.width < 0;
-                    }, c = function(t) {
-                        return t <= f ? "top" : "bottom";
-                    }, l(n.x) ? (o = "left", u(n.x) && (o = "center", r = c(n.y))) : s(n.x) && (o = "right", 
-                    d(n.x) && (o = "center", r = c(n.y)));
-                    var g = t._options;
-                    return {
-                        xAlign: g.xAlign ? g.xAlign : o,
-                        yAlign: g.yAlign ? g.yAlign : r
-                    };
-                }
-                function d(t, e, n) {
-                    var i = t.x, a = t.y, o = t.caretSize, r = t.caretPadding, l = t.cornerRadius, s = n.xAlign, u = n.yAlign, d = o + r, c = l + r;
-                    return "right" === s ? i -= e.width : "center" === s && (i -= e.width / 2), "top" === u ? a += d : a -= "bottom" === u ? e.height + d : e.height / 2, 
-                    "center" === u ? "left" === s ? i += d : "right" === s && (i -= d) : "left" === s ? i -= c : "right" === s && (i += c), 
-                    {
-                        x: i,
-                        y: a
-                    };
-                }
                 t.Tooltip = a.extend({
                     initialize: function() {
                         this._model = l(this._options);
                     },
                     getTitle: function() {
                         var t = this, e = t._options.callbacks, i = e.beforeTitle.apply(t, arguments), a = e.title.apply(t, arguments), o = e.afterTitle.apply(t, arguments), r = [];
-                        return r = n(r, i), r = n(r, a), r = n(r, o);
+                        return n(r = n(r = n(r, i), a), o);
                     },
                     getBeforeBody: function() {
                         var t = this._options.callbacks.beforeBody.apply(this, arguments);
@@ -3663,7 +3557,7 @@
                     },
                     getFooter: function() {
                         var t = this, e = t._options.callbacks, i = e.beforeFooter.apply(t, arguments), a = e.footer.apply(t, arguments), o = e.afterFooter.apply(t, arguments), r = [];
-                        return r = n(r, i), r = n(r, a), r = n(r, o);
+                        return n(r = n(r = n(r, i), a), o);
                     },
                     update: function(e) {
                         var n, i, a = this, c = a._options, h = a._model, f = a._model = l(c), g = a._active, p = a._data, v = {
@@ -3694,7 +3588,61 @@
                             }), f.title = a.getTitle(w, p), f.beforeBody = a.getBeforeBody(w, p), f.body = a.getBody(w, p), 
                             f.afterBody = a.getAfterBody(w, p), f.footer = a.getFooter(w, p), f.x = Math.round(x.x), 
                             f.y = Math.round(x.y), f.caretPadding = c.caretPadding, f.labelColors = y, f.labelTextColors = k, 
-                            f.dataPoints = w, m = d(f, b = s(this, f), v = u(this, b));
+                            f.dataPoints = w, m = function(t, e, n) {
+                                var i = t.x, a = t.y, o = t.caretSize, r = t.caretPadding, l = t.cornerRadius, s = n.xAlign, u = n.yAlign, d = o + r, c = l + r;
+                                return "right" === s ? i -= e.width : "center" === s && (i -= e.width / 2), "top" === u ? a += d : a -= "bottom" === u ? e.height + d : e.height / 2, 
+                                "center" === u ? "left" === s ? i += d : "right" === s && (i -= d) : "left" === s ? i -= c : "right" === s && (i += c), 
+                                {
+                                    x: i,
+                                    y: a
+                                };
+                            }(f, b = function(t, e) {
+                                var n = t._chart.ctx, i = 2 * e.yPadding, a = 0, r = e.body, l = r.reduce(function(t, e) {
+                                    return t + e.before.length + e.lines.length + e.after.length;
+                                }, 0);
+                                l += e.beforeBody.length + e.afterBody.length;
+                                var s = e.title.length, u = e.footer.length, d = e.titleFontSize, c = e.bodyFontSize, h = e.footerFontSize;
+                                i += s * d, i += s ? (s - 1) * e.titleSpacing : 0, i += s ? e.titleMarginBottom : 0, 
+                                i += l * c, i += l ? (l - 1) * e.bodySpacing : 0, i += u ? e.footerMarginTop : 0, 
+                                i += u * h, i += u ? (u - 1) * e.footerSpacing : 0;
+                                var f = 0, g = function(t) {
+                                    a = Math.max(a, n.measureText(t).width + f);
+                                };
+                                return n.font = o.fontString(d, e._titleFontStyle, e._titleFontFamily), o.each(e.title, g), 
+                                n.font = o.fontString(c, e._bodyFontStyle, e._bodyFontFamily), o.each(e.beforeBody.concat(e.afterBody), g), 
+                                f = e.displayColors ? c + 2 : 0, o.each(r, function(t) {
+                                    o.each(t.before, g), o.each(t.lines, g), o.each(t.after, g);
+                                }), f = 0, n.font = o.fontString(h, e._footerFontStyle, e._footerFontFamily), o.each(e.footer, g), 
+                                {
+                                    width: a += 2 * e.xPadding,
+                                    height: i
+                                };
+                            }(this, f), v = function(t, e) {
+                                var n = t._model, i = t._chart, a = t._chart.chartArea, o = "center", r = "center";
+                                n.y < e.height ? r = "top" : n.y > i.height - e.height && (r = "bottom");
+                                var l, s, u, d, c, h = (a.left + a.right) / 2, f = (a.top + a.bottom) / 2;
+                                s = "center" === r ? (l = function(t) {
+                                    return t <= h;
+                                }, function(t) {
+                                    return h < t;
+                                }) : (l = function(t) {
+                                    return t <= e.width / 2;
+                                }, function(t) {
+                                    return t >= i.width - e.width / 2;
+                                }), u = function(t) {
+                                    return t + e.width > i.width;
+                                }, d = function(t) {
+                                    return t - e.width < 0;
+                                }, c = function(t) {
+                                    return t <= f ? "top" : "bottom";
+                                }, l(n.x) ? (o = "left", u(n.x) && (o = "center", r = c(n.y))) : s(n.x) && (o = "right", 
+                                d(n.x) && (o = "center", r = c(n.y)));
+                                var g = t._options;
+                                return {
+                                    xAlign: g.xAlign ? g.xAlign : o,
+                                    yAlign: g.yAlign ? g.yAlign : r
+                                };
+                            }(this, b));
                         } else f.opacity = 0;
                         return f.xAlign = v.xAlign, f.yAlign = v.yAlign, f.x = m.x, f.y = m.y, f.width = b.width, 
                         f.height = b.height, f.caretX = x.x, f.caretY = x.y, a._model = f, e && c.custom && c.custom.call(a, f), 
@@ -3706,10 +3654,9 @@
                     },
                     getCaretPosition: function(t, e, n) {
                         var i, a, o, r, l, s, u = n.caretSize, d = n.cornerRadius, c = n.xAlign, h = n.yAlign, f = t.x, g = t.y, p = e.width, v = e.height;
-                        if ("center" === h) l = g + v / 2, "left" === c ? (a = (i = f) - u, o = i, r = l + u, 
-                        s = l - u) : (a = (i = f + p) + u, o = i, r = l - u, s = l + u); else if ("left" === c ? (i = (a = f + d + u) - u, 
-                        o = a + u) : "right" === c ? (i = (a = f + p - d - u) - u, o = a + u) : (i = (a = f + p / 2) - u, 
-                        o = a + u), "top" === h) l = (r = g) - u, s = r; else {
+                        if ("center" === h) l = g + v / 2, s = "left" === c ? (a = (i = f) - u, o = i, r = l + u, 
+                        l - u) : (a = (i = f + p) + u, o = i, r = l - u, l + u); else if (o = (i = "left" === c ? (a = f + d + u) - u : "right" === c ? (a = f + p - d - u) - u : (a = f + p / 2) - u, 
+                        a + u), "top" === h) l = (r = g) - u, s = r; else {
                             l = (r = g + v) + u, s = r;
                             var m = o;
                             o = i, i = m;
@@ -3727,11 +3674,9 @@
                         var r = n.title;
                         if (r.length) {
                             i.textAlign = n._titleAlign, i.textBaseline = "top";
-                            var l = n.titleFontSize, s = n.titleSpacing;
-                            i.fillStyle = e(n.titleFontColor, a), i.font = o.fontString(l, n._titleFontStyle, n._titleFontFamily);
-                            var u, d;
-                            for (u = 0, d = r.length; u < d; ++u) i.fillText(r[u], t.x, t.y), t.y += l + s, 
-                            u + 1 === r.length && (t.y += n.titleMarginBottom - s);
+                            var u, d, l = n.titleFontSize, s = n.titleSpacing;
+                            for (i.fillStyle = e(n.titleFontColor, a), i.font = o.fontString(l, n._titleFontStyle, n._titleFontFamily), 
+                            u = 0, d = r.length; u < d; ++u) i.fillText(r[u], t.x, t.y), t.y += l + s, u + 1 === r.length && (t.y += n.titleMarginBottom - s);
                         }
                     },
                     drawBody: function(t, n, i, a) {
@@ -3771,7 +3716,7 @@
                         i.lineTo(s + d, u + c - h), i.quadraticCurveTo(s + d, u + c, s + d - h, u + c), 
                         "bottom" === l && this.drawCaret(t, a), i.lineTo(s + h, u + c), i.quadraticCurveTo(s, u + c, s, u + c - h), 
                         "center" === l && "left" === r && this.drawCaret(t, a), i.lineTo(s, u + h), i.quadraticCurveTo(s, u, s + h, u), 
-                        i.closePath(), i.fill(), n.borderWidth > 0 && i.stroke();
+                        i.closePath(), i.fill(), 0 < n.borderWidth && i.stroke();
                     },
                     draw: function() {
                         var t = this._chart.ctx, e = this._view;
@@ -3865,9 +3810,9 @@
                             x: t,
                             y: e
                         }), a = i.angle, r = i.distance, l = n.startAngle, s = n.endAngle; s < l; ) s += 2 * Math.PI;
-                        for (;a > s; ) a -= 2 * Math.PI;
+                        for (;s < a; ) a -= 2 * Math.PI;
                         for (;a < l; ) a += 2 * Math.PI;
-                        var u = a >= l && a <= s, d = r >= n.innerRadius && r <= n.outerRadius;
+                        var u = l <= a && a <= s, d = r >= n.innerRadius && r <= n.outerRadius;
                         return u && d;
                     }
                     return !1;
@@ -4037,11 +3982,11 @@
                         return m[(b + t) % 4];
                     }
                     var e, n, i, a, o, r, l, s = this._chart.ctx, u = this._view, d = u.borderWidth;
-                    if (u.horizontal ? (e = u.base, n = u.x, i = u.y - u.height / 2, a = u.y + u.height / 2, 
-                    o = n > e ? 1 : -1, r = 1, l = u.borderSkipped || "left") : (e = u.x - u.width / 2, 
-                    n = u.x + u.width / 2, i = u.y, o = 1, r = (a = u.base) > i ? 1 : -1, l = u.borderSkipped || "bottom"), 
+                    if (l = u.horizontal ? (e = u.base, n = u.x, i = u.y - u.height / 2, a = u.y + u.height / 2, 
+                    o = e < n ? 1 : -1, r = 1, u.borderSkipped || "left") : (e = u.x - u.width / 2, 
+                    n = u.x + u.width / 2, i = u.y, o = 1, r = (a = u.base) > i ? 1 : -1, u.borderSkipped || "bottom"), 
                     d) {
-                        var c = Math.min(Math.abs(e - n), Math.abs(i - a)), h = (d = d > c ? c : d) / 2, f = e + ("left" !== l ? h * o : 0), g = n + ("right" !== l ? -h * o : 0), p = i + ("top" !== l ? h * r : 0), v = a + ("bottom" !== l ? -h * r : 0);
+                        var c = Math.min(Math.abs(e - n), Math.abs(i - a)), h = (d = c < d ? c : d) / 2, f = e + ("left" !== l ? h * o : 0), g = n + ("right" !== l ? -h * o : 0), p = i + ("top" !== l ? h * r : 0), v = a + ("bottom" !== l ? -h * r : 0);
                         f !== g && (i = p, a = v), p !== v && (e = f, n = g);
                     }
                     s.beginPath(), s.fillStyle = u.backgroundColor, s.strokeStyle = u.borderColor, s.lineWidth = d;
@@ -4080,7 +4025,7 @@
                 },
                 getCenterPoint: function() {
                     var t, e, n = this._view;
-                    return i(this) ? (t = n.x, e = (n.y + n.base) / 2) : (t = (n.x + n.base) / 2, e = n.y), 
+                    return e = i(this) ? (t = n.x, (n.y + n.base) / 2) : (t = (n.x + n.base) / 2, n.y), 
                     {
                         x: t,
                         y: e
@@ -4114,7 +4059,8 @@
         } ],
         41: [ function(t, e, n) {
             "use strict";
-            var i = t(42), n = e.exports = {
+            var i = t(42);
+            n = e.exports = {
                 clear: function(t) {
                     t.ctx.clearRect(0, 0, t.width, t.height);
                 },
@@ -4212,7 +4158,7 @@
                     };
                 }(),
                 isNullOrUndef: function(t) {
-                    return null === t || void 0 === t;
+                    return null == t;
                 },
                 isArray: Array.isArray ? Array.isArray : function(t) {
                     return "[object Array]" === Object.prototype.toString.call(t);
@@ -4231,7 +4177,7 @@
                 },
                 each: function(t, e, n, a) {
                     var o, r, l;
-                    if (i.isArray(t)) if (r = t.length, a) for (o = r - 1; o >= 0; o--) e.call(n, t[o], o); else for (o = 0; o < r; o++) e.call(n, t[o], o); else if (i.isObject(t)) for (r = (l = Object.keys(t)).length, 
+                    if (i.isArray(t)) if (r = t.length, a) for (o = r - 1; 0 <= o; o--) e.call(n, t[o], o); else for (o = 0; o < r; o++) e.call(n, t[o], o); else if (i.isObject(t)) for (r = (l = Object.keys(t)).length, 
                     o = 0; o < r; o++) e.call(n, t[l[o]], l[o]);
                 },
                 arrayEquals: function(t, e) {
@@ -4271,7 +4217,7 @@
                     });
                 }
             };
-            e.exports = i, i.callCallback = i.callback, i.indexOf = function(t, e, n) {
+            (e.exports = i).callCallback = i.callback, i.indexOf = function(t, e, n) {
                 return Array.prototype.indexOf.call(t, e, n);
             }, i.getValueOrDefault = i.valueOrDefault, i.getValueAtIndexOrDefault = i.valueAtIndexOrDefault;
         }, {} ],
@@ -4336,7 +4282,7 @@
                     return 0 === t ? 0 : 1 === t ? 1 : (t /= .5) < 1 ? .5 * Math.pow(2, 10 * (t - 1)) : .5 * (2 - Math.pow(2, -10 * --t));
                 },
                 easeInCirc: function(t) {
-                    return t >= 1 ? t : -(Math.sqrt(1 - t * t) - 1);
+                    return 1 <= t ? t : -(Math.sqrt(1 - t * t) - 1);
                 },
                 easeOutCirc: function(t) {
                     return Math.sqrt(1 - (t -= 1) * t);
@@ -4346,17 +4292,17 @@
                 },
                 easeInElastic: function(t) {
                     var e = 1.70158, n = 0, i = 1;
-                    return 0 === t ? 0 : 1 === t ? 1 : (n || (n = .3), i < 1 ? (i = 1, e = n / 4) : e = n / (2 * Math.PI) * Math.asin(1 / i), 
+                    return 0 === t ? 0 : 1 === t ? 1 : (n || (n = .3), e = i < 1 ? (i = 1, n / 4) : n / (2 * Math.PI) * Math.asin(1 / i), 
                     -i * Math.pow(2, 10 * (t -= 1)) * Math.sin((t - e) * (2 * Math.PI) / n));
                 },
                 easeOutElastic: function(t) {
                     var e = 1.70158, n = 0, i = 1;
-                    return 0 === t ? 0 : 1 === t ? 1 : (n || (n = .3), i < 1 ? (i = 1, e = n / 4) : e = n / (2 * Math.PI) * Math.asin(1 / i), 
+                    return 0 === t ? 0 : 1 === t ? 1 : (n || (n = .3), e = i < 1 ? (i = 1, n / 4) : n / (2 * Math.PI) * Math.asin(1 / i), 
                     i * Math.pow(2, -10 * t) * Math.sin((t - e) * (2 * Math.PI) / n) + 1);
                 },
                 easeInOutElastic: function(t) {
                     var e = 1.70158, n = 0, i = 1;
-                    return 0 === t ? 0 : 2 == (t /= .5) ? 1 : (n || (n = .45), i < 1 ? (i = 1, e = n / 4) : e = n / (2 * Math.PI) * Math.asin(1 / i), 
+                    return 0 === t ? 0 : 2 == (t /= .5) ? 1 : (n || (n = .45), e = i < 1 ? (i = 1, n / 4) : n / (2 * Math.PI) * Math.asin(1 / i), 
                     t < 1 ? i * Math.pow(2, 10 * (t -= 1)) * Math.sin((t - e) * (2 * Math.PI) / n) * -.5 : i * Math.pow(2, -10 * (t -= 1)) * Math.sin((t - e) * (2 * Math.PI) / n) * .5 + 1);
                 },
                 easeInBack: function(t) {
@@ -4446,28 +4392,6 @@
                 var n = v.getStyle(t, e), i = n && n.match(/^(\d+)(\.\d+)?px$/);
                 return i ? Number(i[1]) : void 0;
             }
-            function a(t, e) {
-                var n = t.style, a = t.getAttribute("height"), o = t.getAttribute("width");
-                if (t[m] = {
-                    initial: {
-                        height: a,
-                        width: o,
-                        style: {
-                            display: n.display,
-                            height: n.height,
-                            width: n.width
-                        }
-                    }
-                }, n.display = n.display || "block", null === o || "" === o) {
-                    var r = i(t, "width");
-                    void 0 !== r && (t.width = r);
-                }
-                if (null === a || "" === a) if ("" === t.style.height) t.height = t.width / (e.options.aspectRatio || 2); else {
-                    var l = i(t, "height");
-                    void 0 !== r && (t.height = l);
-                }
-                return t;
-            }
             function o(t, e, n) {
                 t.addEventListener(e, n, M);
             }
@@ -4483,50 +4407,37 @@
                     y: void 0 !== i ? i : null
                 };
             }
-            function s(t, e) {
-                var n = w[t.type] || t.type, i = v.getRelativePosition(t, e);
-                return l(n, e, i.x, i.y, t);
-            }
-            function u(t, e) {
-                var n = !1, i = [];
-                return function() {
-                    i = Array.prototype.slice.call(arguments), e = e || this, n || (n = !0, v.requestAnimFrame.call(window, function() {
-                        n = !1, t.apply(e, i);
-                    }));
-                };
-            }
-            function d(t) {
-                var e = document.createElement("div"), n = b + "size-monitor", i = "position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;";
-                e.style.cssText = i, e.className = n, e.innerHTML = '<div class="' + n + '-expand" style="' + i + '"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="' + n + '-shrink" style="' + i + '"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div>';
-                var a = e.childNodes[0], r = e.childNodes[1];
-                e._reset = function() {
-                    a.scrollLeft = 1e6, a.scrollTop = 1e6, r.scrollLeft = 1e6, r.scrollTop = 1e6;
-                };
-                var l = function() {
-                    e._reset(), t();
-                };
-                return o(a, "scroll", l.bind(a, "expand")), o(r, "scroll", l.bind(r, "shrink")), 
-                e;
-            }
-            function c(t, e) {
-                var n = (t[m] || (t[m] = {})).renderProxy = function(t) {
-                    t.animationName === y && e();
-                };
-                v.each(k, function(e) {
-                    o(t, e, n);
-                }), t.classList.add(x);
-            }
-            function h(t) {
-                var e = t[m] || {}, n = e.renderProxy;
-                n && (v.each(k, function(e) {
-                    r(t, e, n);
-                }), delete e.renderProxy), t.classList.remove(x);
-            }
             function f(t, e, n) {
-                var i = t[m] || (t[m] = {}), a = i.resizer = d(u(function() {
+                var i = t[m] || (t[m] = {}), a = i.resizer = function(t) {
+                    var e = document.createElement("div"), n = b + "size-monitor", i = "position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;";
+                    e.style.cssText = i, e.className = n, e.innerHTML = '<div class="' + n + '-expand" style="' + i + '"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="' + n + '-shrink" style="' + i + '"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div>';
+                    var a = e.childNodes[0], r = e.childNodes[1];
+                    e._reset = function() {
+                        a.scrollLeft = 1e6, a.scrollTop = 1e6, r.scrollLeft = 1e6, r.scrollTop = 1e6;
+                    };
+                    var l = function() {
+                        e._reset(), t();
+                    };
+                    return o(a, "scroll", l.bind(a, "expand")), o(r, "scroll", l.bind(r, "shrink")), 
+                    e;
+                }(function(t, e) {
+                    var n = !1, i = [];
+                    return function() {
+                        i = Array.prototype.slice.call(arguments), e = e || this, n || (n = !0, v.requestAnimFrame.call(window, function() {
+                            n = !1, t.apply(e, i);
+                        }));
+                    };
+                }(function() {
                     if (i.resizer) return e(l("resize", n));
                 }));
-                c(t, function() {
+                !function(t, e) {
+                    var n = (t[m] || (t[m] = {})).renderProxy = function(t) {
+                        t.animationName === y && e();
+                    };
+                    v.each(k, function(e) {
+                        o(t, e, n);
+                    }), t.classList.add(x);
+                }(t, function() {
                     if (i.resizer) {
                         var e = t.parentNode;
                         e && e !== a.parentNode && e.insertBefore(a, e.firstChild), a._reset();
@@ -4535,12 +4446,12 @@
             }
             function g(t) {
                 var e = t[m] || {}, n = e.resizer;
-                delete e.resizer, h(t), n && n.parentNode && n.parentNode.removeChild(n);
-            }
-            function p(t, e) {
-                var n = t._style || document.createElement("style");
-                t._style || (t._style = n, e = "/* Chart.js */\n" + e, n.setAttribute("type", "text/css"), 
-                document.getElementsByTagName("head")[0].appendChild(n)), n.appendChild(document.createTextNode(e));
+                delete e.resizer, function(t) {
+                    var e = t[m] || {}, n = e.renderProxy;
+                    n && (v.each(k, function(e) {
+                        r(t, e, n);
+                    }), delete e.renderProxy), t.classList.remove(x);
+                }(t), n && n.parentNode && n.parentNode.removeChild(n);
             }
             var v = t(45), m = "$chartjs", b = "chartjs-", x = b + "render-monitor", y = b + "render-animation", k = [ "animationstart", "webkitAnimationStart" ], w = {
                 touchstart: "mousedown",
@@ -4570,13 +4481,37 @@
                 _enabled: "undefined" != typeof window && "undefined" != typeof document,
                 initialize: function() {
                     var t = "from{opacity:0.99}to{opacity:1}";
-                    p(this, "@-webkit-keyframes " + y + "{" + t + "}@keyframes " + y + "{" + t + "}." + x + "{-webkit-animation:" + y + " 0.001s;animation:" + y + " 0.001s;}");
+                    !function(t, e) {
+                        var n = t._style || document.createElement("style");
+                        t._style || (e = "/* Chart.js */\n" + e, (t._style = n).setAttribute("type", "text/css"), 
+                        document.getElementsByTagName("head")[0].appendChild(n)), n.appendChild(document.createTextNode(e));
+                    }(this, "@-webkit-keyframes " + y + "{" + t + "}@keyframes " + y + "{" + t + "}." + x + "{-webkit-animation:" + y + " 0.001s;animation:" + y + " 0.001s;}");
                 },
                 acquireContext: function(t, e) {
                     "string" == typeof t ? t = document.getElementById(t) : t.length && (t = t[0]), 
                     t && t.canvas && (t = t.canvas);
                     var n = t && t.getContext && t.getContext("2d");
-                    return n && n.canvas === t ? (a(t, e), n) : null;
+                    return n && n.canvas === t ? (function(t, e) {
+                        var n = t.style, a = t.getAttribute("height"), o = t.getAttribute("width");
+                        if (t[m] = {
+                            initial: {
+                                height: a,
+                                width: o,
+                                style: {
+                                    display: n.display,
+                                    height: n.height,
+                                    width: n.width
+                                }
+                            }
+                        }, n.display = n.display || "block", null === o || "" === o) {
+                            var r = i(t, "width");
+                            void 0 !== r && (t.width = r);
+                        }
+                        if (null === a || "" === a) if ("" === t.style.height) t.height = t.width / (e.options.aspectRatio || 2); else {
+                            var l = i(t, "height");
+                            void 0 !== r && (t.height = l);
+                        }
+                    }(t, e), n) : null;
                 },
                 releaseContext: function(t) {
                     var e = t.canvas;
@@ -4595,7 +4530,10 @@
                     if ("resize" !== e) {
                         var a = n[m] || (n[m] = {});
                         o(i, e, (a.proxies || (a.proxies = {}))[t.id + "_" + e] = function(e) {
-                            n(s(e, t));
+                            n(function(t, e) {
+                                var n = w[t.type] || t.type, i = v.getRelativePosition(t, e);
+                                return l(n, e, i.x, i.y, t);
+                            }(e, t));
                         });
                     } else f(i, n, t);
                 },
@@ -4640,7 +4578,7 @@
                     if (void 0 === o && (o = !!a.backgroundColor), !1 === o || null === o) return !1;
                     if (!0 === o) return "origin";
                     if (i = parseFloat(o, 10), isFinite(i) && Math.floor(i) === i) return "-" !== o[0] && "+" !== o[0] || (i = e + i), 
-                    !(i === e || i < 0 || i >= n) && i;
+                    !(i === e || i < 0 || n <= i) && i;
                     switch (o) {
                       case "bottom":
                         return "start";
@@ -4664,10 +4602,10 @@
                     var e, n = t.el._model || {}, i = t.el._scale || {}, a = t.fill, o = null;
                     if (isFinite(a)) return null;
                     if ("start" === a ? o = void 0 === n.scaleBottom ? i.bottom : n.scaleBottom : "end" === a ? o = void 0 === n.scaleTop ? i.top : n.scaleTop : void 0 !== n.scaleZero ? o = n.scaleZero : i.getBasePosition ? o = i.getBasePosition() : i.getBasePixel && (o = i.getBasePixel()), 
-                    void 0 !== o && null !== o) {
+                    null != o) {
                         if (void 0 !== o.x && void 0 !== o.y) return o;
-                        if ("number" == typeof o && isFinite(o)) return e = i.isHorizontal(), {
-                            x: e ? o : null,
+                        if ("number" == typeof o && isFinite(o)) return {
+                            x: (e = i.isHorizontal()) ? o : null,
                             y: e ? null : o
                         };
                     }
@@ -4695,7 +4633,7 @@
                     var r;
                     if (i && a) {
                         for (t.moveTo(e[0].x, e[0].y), r = 1; r < i; ++r) o.canvas.lineTo(t, e[r - 1], e[r]);
-                        for (t.lineTo(n[a - 1].x, n[a - 1].y), r = a - 1; r > 0; --r) o.canvas.lineTo(t, n[r], n[r - 1], !0);
+                        for (t.lineTo(n[a - 1].x, n[a - 1].y), r = a - 1; 0 < r; --r) o.canvas.lineTo(t, n[r], n[r - 1], !0);
                     }
                 }
                 function u(t, e, n, i, a, o) {
@@ -4841,7 +4779,7 @@
                     beforeFit: l,
                     fit: function() {
                         var t = this, n = t.options, a = n.labels, r = n.display, l = t.ctx, s = i.global, u = o.valueOrDefault, d = u(a.fontSize, s.defaultFontSize), c = u(a.fontStyle, s.defaultFontStyle), h = u(a.fontFamily, s.defaultFontFamily), f = o.fontString(d, c, h), g = t.legendHitBoxes = [], p = t.minSize, v = t.isHorizontal();
-                        if (v ? (p.width = t.maxWidth, p.height = r ? 10 : 0) : (p.width = r ? 10 : 0, p.height = t.maxHeight), 
+                        if (p.height = v ? (p.width = t.maxWidth, r ? 10 : 0) : (p.width = r ? 10 : 0, t.maxHeight), 
                         r) if (l.font = f, v) {
                             var m = t.lineWidths = [ 0 ], b = t.legendItems.length ? d + a.padding : 0;
                             l.textAlign = "left", l.textBaseline = "top", o.each(t.legendItems, function(n, i) {
@@ -4858,7 +4796,7 @@
                             var x = a.padding, y = t.columnWidths = [], k = a.padding, w = 0, M = 0, S = d + x;
                             o.each(t.legendItems, function(t, n) {
                                 var i = e(a, d) + d / 2 + l.measureText(t.text).width;
-                                M + S > p.height && (k += w + a.padding, y.push(w), w = 0, M = 0), w = Math.max(w, i), 
+                                M + S > p.height && (k += w + a.padding, y.push(w), M = w = 0), w = Math.max(w, i), 
                                 M += S, g[n] = {
                                     left: 0,
                                     top: 0,
@@ -4891,10 +4829,6 @@
                                     } else a || c.strokeRect(t, e, b, g), c.fillRect(t, e, b, g);
                                     c.restore();
                                 }
-                            }, k = function(t, e, n, i) {
-                                var a = g / 2, o = b + a + t, r = e + a;
-                                c.fillText(n.text, o, r), n.hidden && (c.beginPath(), c.lineWidth = 2, c.moveTo(o, r), 
-                                c.lineTo(o + i, r), c.stroke());
                             }, w = t.isHorizontal();
                             d = w ? {
                                 x: t.left + (s - u[0]) / 2,
@@ -4908,9 +4842,12 @@
                             var M = g + a.padding;
                             o.each(t.legendItems, function(e, n) {
                                 var i = c.measureText(e.text).width, o = b + g / 2 + i, r = d.x, l = d.y;
-                                w ? r + o >= s && (l = d.y += M, d.line++, r = d.x = t.left + (s - u[d.line]) / 2) : l + M > t.bottom && (r = d.x = r + t.columnWidths[d.line] + a.padding, 
-                                l = d.y = t.top + a.padding, d.line++), y(r, l, e), x[n].left = r, x[n].top = l, 
-                                k(r, l, e, i), w ? d.x += o + a.padding : d.y += M;
+                                w ? s <= r + o && (l = d.y += M, d.line++, r = d.x = t.left + (s - u[d.line]) / 2) : l + M > t.bottom && (r = d.x = r + t.columnWidths[d.line] + a.padding, 
+                                l = d.y = t.top + a.padding, d.line++), y(r, l, e), function(t, e, n, i) {
+                                    var a = g / 2, o = b + a + t, r = e + a;
+                                    c.fillText(n.text, o, r), n.hidden && (c.beginPath(), c.lineWidth = 2, c.moveTo(o, r), 
+                                    c.lineTo(o + i, r), c.stroke());
+                                }(x[n].left = r, x[n].top = l, e, i), w ? d.x += o + a.padding : d.y += M;
                             });
                         }
                     },
@@ -4986,8 +4923,7 @@
                 var n = t.layoutService, r = o.noop;
                 return t.Title = a.extend({
                     initialize: function(t) {
-                        var e = this;
-                        o.extend(e, t), e.legendHitBoxes = [];
+                        o.extend(this, t), this.legendHitBoxes = [];
                     },
                     beforeUpdate: r,
                     update: function(t, e, n) {
@@ -5063,12 +4999,10 @@
                         return this.options.labels || (this.isHorizontal() ? t.xLabels : t.yLabels) || t.labels;
                     },
                     determineDataLimits: function() {
-                        var t = this, e = t.getLabels();
-                        t.minIndex = 0, t.maxIndex = e.length - 1;
-                        var n;
-                        void 0 !== t.options.ticks.min && (n = e.indexOf(t.options.ticks.min), t.minIndex = -1 !== n ? n : t.minIndex), 
-                        void 0 !== t.options.ticks.max && (n = e.indexOf(t.options.ticks.max), t.maxIndex = -1 !== n ? n : t.maxIndex), 
-                        t.min = e[t.minIndex], t.max = e[t.maxIndex];
+                        var n, t = this, e = t.getLabels();
+                        t.minIndex = 0, t.maxIndex = e.length - 1, void 0 !== t.options.ticks.min && (n = e.indexOf(t.options.ticks.min), 
+                        t.minIndex = -1 !== n ? n : t.minIndex), void 0 !== t.options.ticks.max && (n = e.indexOf(t.options.ticks.max), 
+                        t.maxIndex = -1 !== n ? n : t.maxIndex), t.min = e[t.minIndex], t.max = e[t.maxIndex];
                     },
                     buildTicks: function() {
                         var t = this, e = t.getLabels();
@@ -5080,10 +5014,9 @@
                     },
                     getPixelForValue: function(t, e) {
                         var n, i = this, a = i.options.offset, o = Math.max(i.maxIndex + 1 - i.minIndex - (a ? 0 : 1), 1);
-                        if (void 0 !== t && null !== t && (n = i.isHorizontal() ? t.x : t.y), void 0 !== n || void 0 !== t && isNaN(e)) {
-                            var r = i.getLabels();
+                        if (null != t && (n = i.isHorizontal() ? t.x : t.y), void 0 !== n || void 0 !== t && isNaN(e)) {
                             t = n || t;
-                            var l = r.indexOf(t);
+                            var l = i.getLabels().indexOf(t);
                             e = -1 !== l ? l : e;
                         }
                         if (i.isHorizontal()) {
@@ -5175,8 +5108,8 @@
                     },
                     getPixelForValue: function(t) {
                         var e, n = this, i = n.start, a = +n.getRightValue(t), o = n.end - i;
-                        return n.isHorizontal() ? (e = n.left + n.width / o * (a - i), Math.round(e)) : (e = n.bottom - n.height / o * (a - i), 
-                        Math.round(e));
+                        return e = n.isHorizontal() ? n.left + n.width / o * (a - i) : n.bottom - n.height / o * (a - i), 
+                        Math.round(e);
                     },
                     getValueForPixel: function(t) {
                         var e = this, n = e.isHorizontal(), i = n ? e.width : e.height, a = (n ? t - e.left : e.bottom - t) / i;
@@ -5206,7 +5139,7 @@
                         var t = this, e = t.options.ticks;
                         if (e.beginAtZero) {
                             var n = i.sign(t.min), a = i.sign(t.max);
-                            n < 0 && a < 0 ? t.max = 0 : n > 0 && a > 0 && (t.min = 0);
+                            n < 0 && a < 0 ? t.max = 0 : 0 < n && 0 < a && (t.min = 0);
                         }
                         var o = void 0 !== e.min || void 0 !== e.suggestedMin, r = void 0 !== e.max || void 0 !== e.suggestedMax;
                         void 0 !== e.min ? t.min = e.min : void 0 !== e.suggestedMin && (null === t.min ? t.min = e.suggestedMin : t.min = Math.min(t.min, e.suggestedMin)), 
@@ -5299,18 +5232,17 @@
                         return this.getPixelForValue(this.tickValues[t]);
                     },
                     getPixelForValue: function(t) {
-                        var e, n, a, o = this, r = o.start, l = +o.getRightValue(t), s = o.options.ticks;
-                        return o.isHorizontal() ? (a = i.log10(o.end) - i.log10(r), 0 === l ? n = o.left : (e = o.width, 
-                        n = o.left + e / a * (i.log10(l) - i.log10(r)))) : (e = o.height, 0 !== r || s.reverse ? 0 === o.end && s.reverse ? (a = i.log10(o.start) - i.log10(o.minNotZero), 
-                        n = l === o.end ? o.top : l === o.minNotZero ? o.top + .02 * e : o.top + .02 * e + .98 * e / a * (i.log10(l) - i.log10(o.minNotZero))) : 0 === l ? n = s.reverse ? o.top : o.bottom : (a = i.log10(o.end) - i.log10(r), 
-                        e = o.height, n = o.bottom - e / a * (i.log10(l) - i.log10(r))) : (a = i.log10(o.end) - i.log10(o.minNotZero), 
-                        n = l === r ? o.bottom : l === o.minNotZero ? o.bottom - .02 * e : o.bottom - .02 * e - .98 * e / a * (i.log10(l) - i.log10(o.minNotZero)))), 
-                        n;
+                        var e, a, o = this, r = o.start, l = +o.getRightValue(t), s = o.options.ticks;
+                        return o.isHorizontal() ? (a = i.log10(o.end) - i.log10(r), 0 === l ? o.left : (e = o.width, 
+                        o.left + e / a * (i.log10(l) - i.log10(r)))) : (e = o.height, 0 !== r || s.reverse ? 0 === o.end && s.reverse ? (a = i.log10(o.start) - i.log10(o.minNotZero), 
+                        l === o.end ? o.top : l === o.minNotZero ? o.top + .02 * e : o.top + .02 * e + .98 * e / a * (i.log10(l) - i.log10(o.minNotZero))) : 0 === l ? s.reverse ? o.top : o.bottom : (a = i.log10(o.end) - i.log10(r), 
+                        e = o.height, o.bottom - e / a * (i.log10(l) - i.log10(r))) : (a = i.log10(o.end) - i.log10(o.minNotZero), 
+                        l === r ? o.bottom : l === o.minNotZero ? o.bottom - .02 * e : o.bottom - .02 * e - .98 * e / a * (i.log10(l) - i.log10(o.minNotZero))));
                     },
                     getValueForPixel: function(t) {
-                        var e, n, a = this, o = i.log10(a.end) - i.log10(a.start);
-                        return a.isHorizontal() ? (n = a.width, e = a.start * Math.pow(10, (t - a.left) * o / n)) : (n = a.height, 
-                        e = Math.pow(10, (a.bottom - t) * o / n) / a.start), e;
+                        var n, a = this, o = i.log10(a.end) - i.log10(a.start);
+                        return a.isHorizontal() ? (n = a.width, a.start * Math.pow(10, (t - a.left) * o / n)) : (n = a.height, 
+                        Math.pow(10, (a.bottom - t) * o / n) / a.start);
                     }
                 });
                 t.scaleService.registerScaleType("logarithmic", n, e);
@@ -5349,34 +5281,13 @@
                     return t === i || t === a ? {
                         start: e - n / 2,
                         end: e + n / 2
-                    } : t < i || t > a ? {
+                    } : t < i || a < t ? {
                         start: e - n - 5,
                         end: e
                     } : {
                         start: e,
                         end: e + n + 5
                     };
-                }
-                function s(t) {
-                    var i, o, s, u = n(t), d = Math.min(t.height / 2, t.width / 2), c = {
-                        r: t.width,
-                        l: 0,
-                        t: t.height,
-                        b: 0
-                    }, h = {};
-                    t.ctx.font = u.font, t._pointLabelSizes = [];
-                    var f = e(t);
-                    for (i = 0; i < f; i++) {
-                        s = t.getPointPosition(i, d), o = r(t.ctx, u.size, t.pointLabels[i] || ""), t._pointLabelSizes[i] = o;
-                        var g = t.getIndexAngle(i), p = a.toDegrees(g) % 360, v = l(p, s.x, o.w, 0, 180), m = l(p, s.y, o.h, 90, 270);
-                        v.start < c.l && (c.l = v.start, h.l = g), v.end > c.r && (c.r = v.end, h.r = g), 
-                        m.start < c.t && (c.t = m.start, h.t = g), m.end > c.b && (c.b = m.end, h.b = g);
-                    }
-                    t.setReductions(d, c, h);
-                }
-                function u(t) {
-                    var e = Math.min(t.height / 2, t.width / 2);
-                    t.drawingArea = Math.round(e), t.setCenterPoint(0, 0, 0, 0);
                 }
                 function d(t) {
                     return 0 === t || 180 === t ? "center" : t < 180 ? "left" : "right";
@@ -5386,14 +5297,14 @@
                     o += r; else t.fillText(e, n.x, n.y);
                 }
                 function h(t, e, n) {
-                    90 === t || 270 === t ? n.y -= e.h / 2 : (t > 270 || t < 90) && (n.y -= e.h);
+                    90 === t || 270 === t ? n.y -= e.h / 2 : (270 < t || t < 90) && (n.y -= e.h);
                 }
                 function f(t) {
                     var i = t.ctx, o = a.valueOrDefault, r = t.options, l = r.angleLines, s = r.pointLabels;
                     i.lineWidth = l.lineWidth, i.strokeStyle = l.color;
                     var u = t.getDistanceFromCenterForValue(r.ticks.reverse ? t.min : t.max), f = n(t);
                     i.textBaseline = "top";
-                    for (var g = e(t) - 1; g >= 0; g--) {
+                    for (var g = e(t) - 1; 0 <= g; g--) {
                         if (l.display) {
                             var p = t.getPointPosition(g, u);
                             i.beginPath(), i.moveTo(t.xCenter, t.yCenter), i.lineTo(p.x, p.y), i.stroke(), i.closePath();
@@ -5482,7 +5393,25 @@
                         return +this.getRightValue(this.chart.data.datasets[e].data[t]);
                     },
                     fit: function() {
-                        this.options.pointLabels.display ? s(this) : u(this);
+                        var t, e;
+                        this.options.pointLabels.display ? function(t) {
+                            var i, o, s, u = n(t), d = Math.min(t.height / 2, t.width / 2), c = {
+                                r: t.width,
+                                l: 0,
+                                t: t.height,
+                                b: 0
+                            }, h = {};
+                            t.ctx.font = u.font, t._pointLabelSizes = [];
+                            var f = e(t);
+                            for (i = 0; i < f; i++) {
+                                s = t.getPointPosition(i, d), o = r(t.ctx, u.size, t.pointLabels[i] || ""), t._pointLabelSizes[i] = o;
+                                var g = t.getIndexAngle(i), p = a.toDegrees(g) % 360, v = l(p, s.x, o.w, 0, 180), m = l(p, s.y, o.h, 90, 270);
+                                v.start < c.l && (c.l = v.start, h.l = g), v.end > c.r && (c.r = v.end, h.r = g), 
+                                m.start < c.t && (c.t = m.start, h.t = g), m.end > c.b && (c.b = m.end, h.b = g);
+                            }
+                            t.setReductions(d, c, h);
+                        }(this) : (t = this, e = Math.min(t.height / 2, t.width / 2), t.drawingArea = Math.round(e), 
+                        t.setCenterPoint(0, 0, 0, 0));
                     },
                     setReductions: function(t, e, n) {
                         var i = this, a = e.l / Math.sin(n.l), o = Math.max(e.r - i.width, 0) / Math.sin(n.r), r = -e.t / Math.cos(n.t), l = -Math.max(e.b - i.height, 0) / Math.cos(n.b);
@@ -5514,14 +5443,14 @@
                     },
                     getBasePosition: function() {
                         var t = this, e = t.min, n = t.max;
-                        return t.getPointPositionForValue(0, t.beginAtZero ? 0 : e < 0 && n < 0 ? n : e > 0 && n > 0 ? e : 0);
+                        return t.getPointPositionForValue(0, t.beginAtZero ? 0 : e < 0 && n < 0 ? n : 0 < e && 0 < n ? e : 0);
                     },
                     draw: function() {
                         var t = this, e = t.options, n = e.gridLines, i = e.ticks, o = a.valueOrDefault;
                         if (e.display) {
                             var r = t.ctx, l = this.getIndexAngle(0), s = o(i.fontSize, v.defaultFontSize), u = o(i.fontStyle, v.defaultFontStyle), d = o(i.fontFamily, v.defaultFontFamily), c = a.fontString(s, u, d);
                             a.each(t.ticks, function(e, a) {
-                                if (a > 0 || i.reverse) {
+                                if (0 < a || i.reverse) {
                                     var u = t.getDistanceFromCenterForValue(t.ticksAsNumbers[a]);
                                     if (n.display && 0 !== a && g(t, n, u, a), i.display) {
                                         var d = o(i.fontColor, v.defaultFontColor);
@@ -5554,44 +5483,26 @@
                 for (e = 0, n = t.length; e < n; ++e) a[i = t[e]] || (a[i] = !0, o.push(i));
                 return o;
             }
-            function o(t, e, n, i) {
-                if ("linear" === i || !t.length) return [ {
-                    time: e,
-                    pos: 0
-                }, {
-                    time: n,
-                    pos: 1
-                } ];
-                var a, o, r, l, s, u = [], d = [ e ];
-                for (a = 0, o = t.length; a < o; ++a) (l = t[a]) > e && l < n && d.push(l);
-                for (d.push(n), a = 0, o = d.length; a < o; ++a) s = d[a + 1], r = d[a - 1], l = d[a], 
-                void 0 !== r && void 0 !== s && Math.round((s + r) / 2) === l || u.push({
-                    time: l,
-                    pos: a / (o - 1)
-                });
-                return u;
-            }
-            function r(t, e, n) {
-                for (var i, a, o, r = 0, l = t.length - 1; r >= 0 && r <= l; ) {
-                    if (i = r + l >> 1, a = t[i - 1] || null, o = t[i], !a) return {
-                        lo: null,
-                        hi: o
-                    };
-                    if (o[e] < n) r = i + 1; else {
-                        if (!(a[e] > n)) return {
-                            lo: a,
+            function l(t, e, n, i) {
+                var a = function(t, e, n) {
+                    for (var i, a, o, r = 0, l = t.length - 1; 0 <= r && r <= l; ) {
+                        if (a = t[(i = r + l >> 1) - 1] || null, o = t[i], !a) return {
+                            lo: null,
                             hi: o
                         };
-                        l = i - 1;
+                        if (o[e] < n) r = i + 1; else {
+                            if (!(a[e] > n)) return {
+                                lo: a,
+                                hi: o
+                            };
+                            l = i - 1;
+                        }
                     }
-                }
-                return {
-                    lo: o,
-                    hi: null
-                };
-            }
-            function l(t, e, n, i) {
-                var a = r(t, e, n), o = a.lo ? a.hi ? a.lo : t[t.length - 2] : t[0], l = a.lo ? a.hi ? a.hi : t[t.length - 1] : t[1], s = l[e] - o[e], u = s ? (n - o[e]) / s : 0, d = (l[i] - o[i]) * u;
+                    return {
+                        lo: o,
+                        hi: null
+                    };
+                }(t, e, n), o = a.lo ? a.hi ? a.lo : t[t.length - 2] : t[0], l = a.lo ? a.hi ? a.hi : t[t.length - 1] : t[1], s = l[e] - o[e], u = s ? (n - o[e]) / s : 0, d = (l[i] - o[i]) * u;
                 return o[i] + d;
             }
             function s(t, e) {
@@ -5604,33 +5515,29 @@
                 var n = e.options.time, i = s(e.getRightValue(t), n);
                 return i.isValid() ? (n.round && i.startOf(n.round), i.valueOf()) : null;
             }
-            function d(t, e, n, i) {
-                var a, o, r, l = e - t, s = k[n], u = s.size, d = s.steps;
-                if (!d) return Math.ceil(l / ((i || 1) * u));
-                for (a = 0, o = d.length; a < o && (r = d[a], !(Math.ceil(l / (u * r)) <= i)); ++a) ;
-                return r;
-            }
             function c(t, e, n, i) {
                 var a, o, r, l = w.length;
-                for (a = w.indexOf(t); a < l - 1; ++a) if (o = k[w[a]], r = o.steps ? o.steps[o.steps.length - 1] : y, 
+                for (a = w.indexOf(t); a < l - 1; ++a) if (r = (o = k[w[a]]).steps ? o.steps[o.steps.length - 1] : y, 
                 Math.ceil((n - e) / (r * o.size)) <= i) return w[a];
                 return w[l - 1];
             }
-            function h(t) {
-                for (var e = w.indexOf(t) + 1, n = w.length; e < n; ++e) if (k[w[e]].major) return w[e];
-            }
             function f(t, e, n, i, a, o) {
                 var r, l = o.time, s = b.valueOrDefault(l.stepSize, l.unitStepSize), u = "week" === n && l.isoWeekday, c = o.ticks.major.enabled, h = k[n], f = v(t), g = v(e), p = [];
-                for (s || (s = d(t, e, n, a)), u && (f = f.isoWeekday(u), g = g.isoWeekday(u)), 
-                f = f.startOf(u ? "day" : n), (g = g.startOf(u ? "day" : n)) < e && g.add(1, n), 
-                r = v(f), c && i && !u && !l.round && (r.startOf(i), r.add(~~((f - r) / (h.size * s)) * s, n)); r < g; r.add(s, n)) p.push(+r);
+                for (s || (s = function(t, e, n, i) {
+                    var a, o, r, l = e - t, s = k[n], u = s.size, d = s.steps;
+                    if (!d) return Math.ceil(l / ((i || 1) * u));
+                    for (a = 0, o = d.length; a < o && (r = d[a], !(Math.ceil(l / (u * r)) <= i)); ++a) ;
+                    return r;
+                }(t, e, n, a)), u && (f = f.isoWeekday(u), g = g.isoWeekday(u)), f = f.startOf(u ? "day" : n), 
+                (g = g.startOf(u ? "day" : n)) < e && g.add(1, n), r = v(f), c && i && !u && !l.round && (r.startOf(i), 
+                r.add(~~((f - r) / (h.size * s)) * s, n)); r < g; r.add(s, n)) p.push(+r);
                 return p.push(+r), p;
             }
             function g(t, e, n, i, a) {
                 var o, r, s = 0, u = 0;
-                return a.offset && e.length && (a.time.min || (o = e.length > 1 ? e[1] : i, r = e[0], 
+                return a.offset && e.length && (a.time.min || (o = 1 < e.length ? e[1] : i, r = e[0], 
                 s = (l(t, "time", o, "pos") - l(t, "time", r, "pos")) / 2), a.time.max || (o = e[e.length - 1], 
-                r = e.length > 1 ? e[e.length - 2] : n, u = (l(t, "time", o, "pos") - l(t, "time", r, "pos")) / 2)), 
+                r = 1 < e.length ? e[e.length - 2] : n, u = (l(t, "time", o, "pos") - l(t, "time", r, "pos")) / 2)), 
                 {
                     left: s,
                     right: u
@@ -5700,9 +5607,9 @@
                         this.mergeTicksOptions(), t.Scale.prototype.initialize.call(this);
                     },
                     update: function() {
-                        var e = this, n = e.options;
+                        var n = this.options;
                         return n.time && n.time.format && console.warn("options.time.format is deprecated and replaced by options.time.parser."), 
-                        t.Scale.prototype.update.apply(e, arguments);
+                        t.Scale.prototype.update.apply(this, arguments);
                     },
                     getRightValue: function(e) {
                         return e && void 0 !== e.t && (e = e.t), t.Scale.prototype.getRightValue.call(this, e);
@@ -5724,7 +5631,9 @@
                         };
                     },
                     buildTicks: function() {
-                        var t, e, n, i = this, a = i.min, r = i.max, l = i.options, s = l.time, d = s.displayFormats, v = i.getLabelCapacity(a), m = s.unit || c(s.minUnit, a, r, v), b = h(m), x = [], y = [];
+                        var t, e, n, i = this, a = i.min, r = i.max, l = i.options, s = l.time, d = s.displayFormats, v = i.getLabelCapacity(a), m = s.unit || c(s.minUnit, a, r, v), b = function(t) {
+                            for (var e = w.indexOf(t) + 1, n = w.length; e < n; ++e) if (k[w[e]].major) return w[e];
+                        }(m), x = [], y = [];
                         switch (l.ticks.source) {
                           case "data":
                             x = i._timestamps.data;
@@ -5741,7 +5650,23 @@
                         for ("ticks" === l.bounds && x.length && (a = x[0], r = x[x.length - 1]), a = u(s.min, i) || a, 
                         r = u(s.max, i) || r, t = 0, e = x.length; t < e; ++t) (n = x[t]) >= a && n <= r && y.push(n);
                         return i.min = a, i.max = r, i._unit = m, i._majorUnit = b, i._minorFormat = d[m], 
-                        i._majorFormat = d[b], i._table = o(i._timestamps.data, a, r, l.distribution), i._offsets = g(i._table, y, a, r, l), 
+                        i._majorFormat = d[b], i._table = function(t, e, n, i) {
+                            if ("linear" === i || !t.length) return [ {
+                                time: e,
+                                pos: 0
+                            }, {
+                                time: n,
+                                pos: 1
+                            } ];
+                            var a, o, r, l, s, u = [], d = [ e ];
+                            for (a = 0, o = t.length; a < o; ++a) (l = t[a]) > e && l < n && d.push(l);
+                            for (d.push(n), a = 0, o = d.length; a < o; ++a) s = d[a + 1], r = d[a - 1], l = d[a], 
+                            void 0 !== r && void 0 !== s && Math.round((s + r) / 2) === l || u.push({
+                                time: l,
+                                pos: a / (o - 1)
+                            });
+                            return u;
+                        }(i._timestamps.data, a, r, l.distribution), i._offsets = g(i._table, y, a, r, l), 
                         p(y, b);
                     },
                     getLabelForIndex: function(t, e) {
@@ -5769,14 +5694,14 @@
                     },
                     getPixelForTick: function(t) {
                         var e = this.getTicks();
-                        return t >= 0 && t < e.length ? this.getPixelForOffset(e[t].value) : null;
+                        return 0 <= t && t < e.length ? this.getPixelForOffset(e[t].value) : null;
                     },
                     getValueForPixel: function(t) {
                         var e = this, n = e._horizontal ? e.width : e.height, i = e._horizontal ? e.left : e.top, a = (n ? (t - i) / n : 0) * (e._offsets.left + 1 + e._offsets.left) - e._offsets.right, o = l(e._table, "pos", a, "time");
                         return v(o);
                     },
                     getLabelWidth: function(t) {
-                        var e = this, n = e.options.ticks, i = e.ctx.measureText(t).width, a = b.toRadians(n.maxRotation), o = Math.cos(a), r = Math.sin(a);
+                        var n = this.options.ticks, i = this.ctx.measureText(t).width, a = b.toRadians(n.maxRotation), o = Math.cos(a), r = Math.sin(a);
                         return i * o + b.valueOrDefault(n.fontSize, m.global.defaultFontSize) * r;
                     },
                     getLabelCapacity: function(t) {

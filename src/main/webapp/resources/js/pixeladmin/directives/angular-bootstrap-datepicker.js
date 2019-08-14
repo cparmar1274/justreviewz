@@ -1,10 +1,5 @@
 function bootstrapDatepickerDirective(e) {
     "use strict";
-    function t(e) {
-        return e.replace(/^on([A-Z])/, function(e, t) {
-            return t.toLowerCase();
-        });
-    }
     var a = [ "datesDisabled", "daysOfWeekDisabled", "daysOfWeekHighlighted", "enableOnReadonly", "endDate", "format", "language", "maxViewMode", "minViewMode", "multidate", "multidateSeparator", "orientation", "startDate", "startView", "toggleActive", "weekStart" ], r = [ "autoclose", "beforeShowDay", "beforeShowMonth", "beforeShowYear", "beforeShowDecade", "beforeShowCentury", "calendarWeeks", "clearBtn", "container", "disableTouchKeyboard", "forceParse", "assumeNearbyYear", "immediateUpdates", "keepEmptyValues", "keyboardNavigation", "showOnFocus", "templates", "title", "todayBtn", "todayHighlight", "updateViewDate", "zIndexOffset" ], i = [ "onShow", "onHide", "onClearDate", "onChangeDate", "onChangeMonth", "onChangeYear", "onChangeDecade", "onChangeCentury" ];
     return {
         restrict: "A",
@@ -45,7 +40,7 @@ function bootstrapDatepickerDirective(e) {
                 o.find(".bs-datepicker-end").datepicker("setDate", n.date.end)) : o.datepicker("setDate", n.date);
             }
             function l() {
-                var e = void 0;
+                var e;
                 p(e = "input" === b && D.multidate ? o.datepicker("getDates") : "range" === b ? {
                     start: o.find(".bs-datepicker-start").datepicker("getDate"),
                     end: o.find(".bs-datepicker-end").datepicker("getDate")
@@ -62,7 +57,11 @@ function bootstrapDatepickerDirective(e) {
             r.forEach(function(t) {
                 void 0 !== d[t] && (D[t] = e(d[t])(n.$parent));
             }), f(), i.forEach(function(a) {
-                d[a] && o.on(t(a), e(d[a])(n.$parent));
+                d[a] && o.on(function(e) {
+                    return e.replace(/^on([A-Z])/, function(e, t) {
+                        return t.toLowerCase();
+                    });
+                }(a), e(d[a])(n.$parent));
             }), o.on("hide.px-datepicker", l), o.on("changeDate.px-datepicker", l), n.$watch("date", u, !0), 
             a.forEach(function(e) {
                 n.$watch(e, function(e, t) {

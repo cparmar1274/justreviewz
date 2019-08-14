@@ -15,12 +15,7 @@ var _createClass = function() {
     };
 }(), PxExpandingInput = function(e) {
     "use strict";
-    var t = "pxExpandingInput", n = "px.expanding-input", i = "." + n, r = e.fn[t], s = {
-        EXPANDED: "expanded",
-        CONTROL: "expanding-input-control",
-        OVERLAY: "expanding-input-overlay",
-        CONTENT: "expanding-input-content"
-    }, o = {
+    var t = "pxExpandingInput", n = "px.expanding-input", i = "." + n, r = e.fn[t], s_EXPANDED = "expanded", s_CONTROL = "expanding-input-control", s_OVERLAY = "expanding-input-overlay", s_CONTENT = "expanding-input-content", o = {
         FOCUS: "focus" + i,
         CLICK: "click" + i,
         EXPAND: "expand" + i,
@@ -29,17 +24,17 @@ var _createClass = function() {
         COLLAPSED: "collapsed" + i
     }, a = function() {
         function r(t) {
-            _classCallCheck(this, r), this.element = t, this.control = e(t).find("." + s.CONTROL)[0], 
-            this.overlay = e(t).find("." + s.OVERLAY)[0], this._checkElements(), this._setListeners();
+            _classCallCheck(this, r), this.element = t, this.control = e(t).find("." + s_CONTROL)[0], 
+            this.overlay = e(t).find("." + s_OVERLAY)[0], this._checkElements(), this._setListeners();
         }
         return _createClass(r, [ {
             key: "expand",
             value: function() {
-                if (!pxUtil.hasClass(this.element, s.EXPANDED)) {
+                if (!pxUtil.hasClass(this.element, s_EXPANDED)) {
                     var t = e.Event(this.constructor.Event.EXPAND, {
                         target: this.element
                     });
-                    e(this.element).trigger(t), t.isDefaultPrevented() || (pxUtil.addClass(this.element, s.EXPANDED), 
+                    e(this.element).trigger(t), t.isDefaultPrevented() || (pxUtil.addClass(this.element, s_EXPANDED), 
                     e(this.element).trigger(e.Event(this.constructor.Event.EXPANDED, {
                         target: this.element
                     })), e(this.control).trigger("focus"));
@@ -48,11 +43,11 @@ var _createClass = function() {
         }, {
             key: "collapse",
             value: function() {
-                if (pxUtil.hasClass(this.element, s.EXPANDED)) {
+                if (pxUtil.hasClass(this.element, s_EXPANDED)) {
                     var t = e.Event(this.constructor.Event.COLLAPSE, {
                         target: this.element
                     });
-                    e(this.element).trigger(t), t.isDefaultPrevented() || (pxUtil.removeClass(this.element, s.EXPANDED), 
+                    e(this.element).trigger(t), t.isDefaultPrevented() || (pxUtil.removeClass(this.element, s_EXPANDED), 
                     e(this.element).trigger(e.Event(this.constructor.Event.COLLAPSED, {
                         target: this.element
                     })));
@@ -69,7 +64,7 @@ var _createClass = function() {
                 if (!pxUtil.hasClass(this.element, "expanding-input")) throw new Error(t + " plugin must be called on an element with 'expanding-input' class.");
                 if (!this.control) throw new Error("Input is not found.");
                 if (this.overlay || (this.overlay = e('<div class="expanding-input-overlay"></div>').insertAfter(this.control)[0]), 
-                !e(this.element).find("." + s.CONTENT)[0]) throw new Error("Content element is not found.");
+                !e(this.element).find("." + s_CONTENT)[0]) throw new Error("Content element is not found.");
             }
         }, {
             key: "_setListeners",

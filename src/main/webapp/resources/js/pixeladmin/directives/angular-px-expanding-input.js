@@ -1,10 +1,5 @@
 function pxExpandingInputDirective(n, t) {
     "use strict";
-    function i(n) {
-        return n.replace(/on([A-Z])/g, function(n, t) {
-            return t.toLowerCase();
-        });
-    }
     var e = [ "onExpand", "onExpanded", "onCollapse", "onCollapsed" ];
     return {
         restrict: "E",
@@ -15,7 +10,11 @@ function pxExpandingInputDirective(n, t) {
             var u = r.instance ? t(r.instance).assign : angular.noop;
             n(function() {
                 a.pxExpandingInput(), e.forEach(function(n) {
-                    r[n] && a.on(i(n) + ".px.expanding-input", t(r[n])(p));
+                    r[n] && a.on(function(n) {
+                        return n.replace(/on([A-Z])/g, function(n, t) {
+                            return t.toLowerCase();
+                        });
+                    }(n) + ".px.expanding-input", t(r[n])(p));
                 }), void 0 !== r.expand && p.$watch(r.expand, function(n) {
                     a.pxExpandingInput(n ? "expand" : "collapse");
                 }), u(p, $.fn.pxExpandingInput.bind(a)), a.on("$destroy", function() {

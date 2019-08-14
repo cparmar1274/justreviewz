@@ -36,16 +36,6 @@
         } else (t.selectionStart || "0" == t.selectionStart) && (e = t.selectionStart);
         return e;
     }
-    function r(e, n) {
-        var i = !1;
-        return t.each(n, function(t, n) {
-            if ("number" == typeof n && e.which === n) return i = !0, !1;
-            if (e.which === n.which) {
-                var a = !n.hasOwnProperty("altKey") || e.altKey === n.altKey, o = !n.hasOwnProperty("shiftKey") || e.shiftKey === n.shiftKey, r = !n.hasOwnProperty("ctrlKey") || e.ctrlKey === n.ctrlKey;
-                if (a && o && r) return i = !0, !1;
-            }
-        }), i;
-    }
     var s = {
         tagClass: function(t) {
             return "label label-info";
@@ -82,10 +72,10 @@
             if (!(o.options.maxTags && o.itemsArray.length >= o.options.maxTags) && (!1 === e || e)) {
                 if ("string" == typeof e && o.options.trimValue && (e = t.trim(e)), "object" == typeof e && !o.objectItems) throw "Can't add objects when itemValue option is not set";
                 if (!e.toString().match(/^\s*$/)) {
-                    if (o.isSelect && !o.multiple && o.itemsArray.length > 0 && o.remove(o.itemsArray[0]), 
+                    if (o.isSelect && !o.multiple && 0 < o.itemsArray.length && o.remove(o.itemsArray[0]), 
                     "string" == typeof e && "INPUT" === this.$element[0].tagName) {
                         var r = o.options.delimiterRegex ? o.options.delimiterRegex : o.options.delimiter, s = e.split(r);
-                        if (s.length > 1) {
+                        if (1 < s.length) {
                             for (var l = 0; l < s.length; l++) this.add(s[l], !0);
                             return void (n || o.pushVal(o.options.triggerChange));
                         }
@@ -131,11 +121,11 @@
         },
         remove: function(e, n, i) {
             var a = this;
-            if (a.objectItems && (e = "object" == typeof e ? t.grep(a.itemsArray, function(t) {
+            if (a.objectItems && (e = (e = "object" == typeof e ? t.grep(a.itemsArray, function(t) {
                 return a.options.itemValue(t) == a.options.itemValue(e);
             }) : t.grep(a.itemsArray, function(t) {
                 return a.options.itemValue(t) == e;
-            }), e = e[e.length - 1]), e) {
+            }))[e.length - 1]), e) {
                 var o = t.Event("beforeItemRemove", {
                     item: e,
                     cancel: !1,
@@ -156,7 +146,7 @@
         },
         removeAll: function() {
             var e = this;
-            for (t(".tag", e.$container).remove(), t("option", e.$element).remove(); e.itemsArray.length > 0; ) e.itemsArray.pop();
+            for (t(".tag", e.$container).remove(), t("option", e.$element).remove(); 0 < e.itemsArray.length; ) e.itemsArray.pop();
             e.pushVal(e.options.triggerChange);
         },
         refresh: function() {
@@ -214,7 +204,7 @@
             }
             if (a.options.typeaheadjs) {
                 var u = null, p = {}, c = a.options.typeaheadjs;
-                t.isArray(c) ? (u = c[0], p = c[1]) : p = c, a.$input.typeahead(u, p).on("typeahead:selected", t.proxy(function(t, e) {
+                p = t.isArray(c) ? (u = c[0], c[1]) : c, a.$input.typeahead(u, p).on("typeahead:selected", t.proxy(function(t, e) {
                     p.valueKey ? a.add(e[p.valueKey]) : a.add(e), a.$input.typeahead("val", "");
                 }, a));
             }
@@ -258,18 +248,25 @@
                         0 === n.val().length && u[0] && (u.after(i), n.focus());
                     }
                     var p = n.val().length;
-                    Math.ceil(p / 5);
-                    n.attr("size", Math.max(this.inputSize, n.val().length));
+                    Math.ceil(p / 5), n.attr("size", Math.max(this.inputSize, n.val().length));
                 }
             }, a)), a.$container.on("keypress", "input", t.proxy(function(e) {
                 var n = t(e.target);
                 if (a.$element.attr("disabled")) a.$input.attr("disabled", "disabled"); else {
                     var i = n.val(), o = a.options.maxChars && i.length >= a.options.maxChars;
-                    a.options.freeInput && (r(e, a.options.confirmKeys) || o) && (0 !== i.length && (a.add(o ? i.substr(0, a.options.maxChars) : i), 
+                    a.options.freeInput && (function(e, n) {
+                        var i = !1;
+                        return t.each(n, function(t, n) {
+                            if ("number" == typeof n && e.which === n) return !(i = !0);
+                            if (e.which === n.which) {
+                                var a = !n.hasOwnProperty("altKey") || e.altKey === n.altKey, o = !n.hasOwnProperty("shiftKey") || e.shiftKey === n.shiftKey, r = !n.hasOwnProperty("ctrlKey") || e.ctrlKey === n.ctrlKey;
+                                if (a && o && r) return !(i = !0);
+                            }
+                        }), i;
+                    }(e, a.options.confirmKeys) || o) && (0 !== i.length && (a.add(o ? i.substr(0, a.options.maxChars) : i), 
                     n.val("")), !1 === a.options.cancelConfirmKeysOnEmpty && e.preventDefault());
                     var s = n.val().length;
-                    Math.ceil(s / 5);
-                    n.attr("size", Math.max(this.inputSize, n.val().length));
+                    Math.ceil(s / 5), n.attr("size", Math.max(this.inputSize, n.val().length));
                 }
             }, a)), a.$container.on("click", "[data-role=remove]", t.proxy(function(e) {
                 a.$element.attr("disabled") || a.remove(t(e.target).closest(".tag").data("item"));
@@ -304,7 +301,7 @@
             } else o.push(r); else r = new e(this, n), t(this).data("tagsinput", r), o.push(r), 
             "SELECT" === this.tagName && t("option", t(this)).attr("selected", "selected"), 
             t(this).val(t(this).val());
-        }), "string" == typeof n ? o.length > 1 ? o : o[0] : o;
+        }), "string" == typeof n ? 1 < o.length ? o : o[0] : o;
     }, t.fn.tagsinput.Constructor = e;
     var l = t("<div />");
     t(function() {

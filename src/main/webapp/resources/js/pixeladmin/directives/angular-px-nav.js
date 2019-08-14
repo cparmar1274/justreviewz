@@ -1,12 +1,5 @@
 function pxNavDirective(n, e) {
     "use strict";
-    function o(n) {
-        return n.replace(/^on([A-Z])/, function(n, e) {
-            return e.toLowerCase();
-        }).replace(/[A-Z]/g, function(n) {
-            return "-" + n.toLowerCase();
-        });
-    }
     var r = [ "accordion", "transitionDuration", "dropdownCloseDelay", "enableTooltips", "animate", "storeState", "storagePrefix", "modes" ], t = [ "onExpand", "onExpanded", "onCollapse", "onCollapsed", "onDestroy", "onDropdownOpen", "onDropdownOpened", "onDropdownClose", "onDropdownClosed", "onDropdownFrozen", "onDropdownUnfrozen" ];
     return {
         restrict: "E",
@@ -20,7 +13,13 @@ function pxNavDirective(n, e) {
                 pre: function(d) {
                     function l() {
                         a.pxNav(u), t.forEach(function(e) {
-                            i[e] && a.on(o(e) + ".px.nav", n(i[e])(d));
+                            i[e] && a.on(function(n) {
+                                return n.replace(/^on([A-Z])/, function(n, e) {
+                                    return e.toLowerCase();
+                                }).replace(/[A-Z]/g, function(n) {
+                                    return "-" + n.toLowerCase();
+                                });
+                            }(e) + ".px.nav", n(i[e])(d));
                         }), c(d, $.fn.pxNav.bind(a)), a.on("$destroy", function() {
                             return a.off().pxNav("destroy");
                         });

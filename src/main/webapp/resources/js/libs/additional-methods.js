@@ -34,12 +34,10 @@
     }, "Please specify a valid BIC code"), t.validator.addMethod("cifES", function(t, e) {
         "use strict";
         if (this.optional(e)) return !0;
-        var a, d, i, n, r = new RegExp(/^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])$/gi), o = t.substring(0, 1), s = t.substring(1, 8), l = t.substring(8, 9), u = 0, c = 0, h = 0;
+        var a, d, i, n, r = new RegExp(/^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])$/gi), o = t.substring(0, 1), s = t.substring(1, 8), l = t.substring(8, 9), c = 0, h = 0;
         if (9 !== t.length || !r.test(t)) return !1;
-        for (a = 0; a < s.length; a++) d = parseInt(s[a], 10), !function(t) {
-            return t % 2 == 0;
-        }(a) ? c += d : h += (d *= 2) < 10 ? d : d - 9;
-        return u = c + h, i = (10 - u.toString().substr(-1)).toString(), i = parseInt(i, 10) > 9 ? "0" : i, 
+        for (a = 0; a < s.length; a++) d = parseInt(s[a], 10), a % 2 != 0 ? c += d : h += (d *= 2) < 10 ? d : d - 9;
+        return i = (10 - (c + h).toString().substr(-1)).toString(), i = 9 < parseInt(i, 10) ? "0" : i, 
         n = "JABCDEFGHI".substr(i, 1).toString(), o.match(/[ABEH]/) ? l === i : o.match(/[KPQS]/) ? l === n : l === i || l === n;
     }, "Please specify a valid CIF number."), t.validator.addMethod("cpfBR", function(t) {
         if (11 !== (t = t.replace(/([~!@#$%^&*()_+=`{}\[\]\-|\\:;'<>,.\/? ])+/g, "")).length) return !1;
@@ -59,8 +57,8 @@
         if (this.optional(e)) return "dependency-mismatch";
         if (/[^0-9 \-]+/.test(t)) return !1;
         var a, d, i = 0, n = 0, r = !1;
-        if ((t = t.replace(/\D/g, "")).length < 13 || t.length > 19) return !1;
-        for (a = t.length - 1; a >= 0; a--) d = t.charAt(a), n = parseInt(d, 10), r && (n *= 2) > 9 && (n -= 9), 
+        if ((t = t.replace(/\D/g, "")).length < 13 || 19 < t.length) return !1;
+        for (a = t.length - 1; 0 <= a; a--) d = t.charAt(a), n = parseInt(d, 10), r && 9 < (n *= 2) && (n -= 9), 
         i += n, r = !r;
         return i % 10 == 0;
     }, "Please enter a valid credit card number."), t.validator.addMethod("creditcardtypes", function(t, e, a) {
@@ -72,14 +70,14 @@
         a.all && (d = 255), 1 & d && /^(5[12345])/.test(t) ? 16 === t.length : 2 & d && /^(4)/.test(t) ? 16 === t.length : 4 & d && /^(3[47])/.test(t) ? 15 === t.length : 8 & d && /^(3(0[012345]|[68]))/.test(t) ? 14 === t.length : 16 & d && /^(2(014|149))/.test(t) ? 15 === t.length : 32 & d && /^(6011)/.test(t) ? 16 === t.length : 64 & d && /^(3)/.test(t) ? 16 === t.length : 64 & d && /^(2131|1800)/.test(t) ? 15 === t.length : !!(128 & d);
     }, "Please enter a valid credit card number."), t.validator.addMethod("currency", function(t, e, a) {
         var d, i = "string" == typeof a, n = i ? a : a[0], r = !!i || a[1];
-        return n = n.replace(/,/g, ""), n = r ? n + "]" : n + "]?", d = "^[" + n + "([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$", 
+        return n = n.replace(/,/g, ""), d = "^[" + (n = r ? n + "]" : n + "]?") + "([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$", 
         d = new RegExp(d), this.optional(e) || d.test(t);
     }, "Please specify a valid currency"), t.validator.addMethod("dateFA", function(t, e) {
         return this.optional(e) || /^[1-4]\d{3}\/((0?[1-6]\/((3[0-1])|([1-2][0-9])|(0?[1-9])))|((1[0-2]|(0?[7-9]))\/(30|([1-2][0-9])|(0?[1-9]))))$/.test(t);
     }, t.validator.messages.date), t.validator.addMethod("dateITA", function(t, e) {
         var a, d, i, n, r, o = !1;
-        return /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(t) ? (a = t.split("/"), d = parseInt(a[0], 10), 
-        i = parseInt(a[1], 10), n = parseInt(a[2], 10), o = (r = new Date(Date.UTC(n, i - 1, d, 12, 0, 0, 0))).getUTCFullYear() === n && r.getUTCMonth() === i - 1 && r.getUTCDate() === d) : o = !1, 
+        return o = !!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(t) && (a = t.split("/"), d = parseInt(a[0], 10), 
+        i = parseInt(a[1], 10), n = parseInt(a[2], 10), (r = new Date(Date.UTC(n, i - 1, d, 12, 0, 0, 0))).getUTCFullYear() === n && r.getUTCMonth() === i - 1 && r.getUTCDate() === d), 
         this.optional(e) || o;
     }, t.validator.messages.date), t.validator.addMethod("dateNL", function(t, e) {
         return this.optional(e) || /^(0?[1-9]|[12]\d|3[01])[\.\/\-](0?[1-9]|1[012])[\.\/\-]([12]\d)?(\d\d)$/.test(t);
@@ -89,9 +87,9 @@
         return this.optional(e) || /^[0-9]{1,7}$/.test(t);
     }, "Please specify a valid giro account number"), t.validator.addMethod("iban", function(t, e) {
         if (this.optional(e)) return !0;
-        var a, d, i, n, r, o, s, l = t.replace(/ /g, "").toUpperCase(), u = "", c = !0, h = "";
+        var d, i, n, o, s, l = t.replace(/ /g, "").toUpperCase(), u = "", c = !0, h = "";
         if (l.length < 5) return !1;
-        if (a = l.substring(0, 2), r = {
+        if (void 0 !== (n = {
             AL: "\\d{8}[\\dA-Z]{16}",
             AD: "\\d{8}[\\dA-Z]{12}",
             AT: "\\d{16}",
@@ -156,7 +154,7 @@
             AE: "\\d{3}\\d{16}",
             GB: "[A-Z]{4}\\d{14}",
             VG: "[\\dA-Z]{4}\\d{16}"
-        }, void 0 !== (n = r[a]) && !new RegExp("^[A-Z]{2}\\d{2}" + n + "$", "").test(l)) return !1;
+        }[l.substring(0, 2)]) && !new RegExp("^[A-Z]{2}\\d{2}" + n + "$", "").test(l)) return !1;
         for (d = l.substring(4, l.length) + l.substring(0, 4), o = 0; o < d.length; o++) "0" !== (i = d.charAt(o)) && (c = !1), 
         c || (u += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(i));
         for (s = 0; s < u.length; s++) h = ("" + h + u.charAt(s)) % 97;
@@ -174,15 +172,15 @@
     }, "Letters or punctuation only please"), t.validator.addMethod("mobileNL", function(t, e) {
         return this.optional(e) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)6((\s|\s?\-\s?)?[0-9]){8}$/.test(t);
     }, "Please specify a valid mobile number"), t.validator.addMethod("mobileUK", function(t, e) {
-        return t = t.replace(/\(|\)|\s+|-/g, ""), this.optional(e) || t.length > 9 && t.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[1345789]\d{2}|624)\s?\d{3}\s?\d{3})$/);
+        return t = t.replace(/\(|\)|\s+|-/g, ""), this.optional(e) || 9 < t.length && t.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[1345789]\d{2}|624)\s?\d{3}\s?\d{3})$/);
     }, "Please specify a valid mobile number"), t.validator.addMethod("netmask", function(t, e) {
         return this.optional(e) || /^(254|252|248|240|224|192|128)\.0\.0\.0|255\.(254|252|248|240|224|192|128|0)\.0\.0|255\.255\.(254|252|248|240|224|192|128|0)\.0|255\.255\.255\.(254|252|248|240|224|192|128|0)/i.test(t);
     }, "Please enter a valid netmask."), t.validator.addMethod("nieES", function(t, e) {
         "use strict";
         if (this.optional(e)) return !0;
         var a, d = new RegExp(/^[MXYZ]{1}[0-9]{7,8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/gi), i = t.substr(t.length - 1).toUpperCase();
-        return !((t = t.toString().toUpperCase()).length > 10 || t.length < 9 || !d.test(t)) && (t = t.replace(/^[X]/, "0").replace(/^[Y]/, "1").replace(/^[Z]/, "2"), 
-        a = 9 === t.length ? t.substr(0, 8) : t.substr(0, 9), "TRWAGMYFPDXBNJZSQVHLCKET".charAt(parseInt(a, 10) % 23) === i);
+        return !(10 < (t = t.toString().toUpperCase()).length || t.length < 9 || !d.test(t)) && (a = 9 === (t = t.replace(/^[X]/, "0").replace(/^[Y]/, "1").replace(/^[Z]/, "2")).length ? t.substr(0, 8) : t.substr(0, 9), 
+        "TRWAGMYFPDXBNJZSQVHLCKET".charAt(parseInt(a, 10) % 23) === i);
     }, "Please specify a valid NIE number."), t.validator.addMethod("nifES", function(t, e) {
         "use strict";
         return !!this.optional(e) || !!(t = t.toUpperCase()).match("((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)") && (/^[0-9]{8}[A-Z]{1}$/.test(t) ? "TRWAGMYFPDXBNJZSQVHLCKE".charAt(t.substring(8, 0) % 23) === t.charAt(8) : !!/^[KLM]{1}/.test(t) && t[8] === "TRWAGMYFPDXBNJZSQVHLCKE".charAt(t.substring(8, 1) % 23));
@@ -202,11 +200,11 @@
     }, "Invalid format."), t.validator.addMethod("phoneNL", function(t, e) {
         return this.optional(e) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9]){8}$/.test(t);
     }, "Please specify a valid phone number."), t.validator.addMethod("phonesUK", function(t, e) {
-        return t = t.replace(/\(|\)|\s+|-/g, ""), this.optional(e) || t.length > 9 && t.match(/^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[1345789]\d{8}|624\d{6})))$/);
+        return t = t.replace(/\(|\)|\s+|-/g, ""), this.optional(e) || 9 < t.length && t.match(/^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[1345789]\d{8}|624\d{6})))$/);
     }, "Please specify a valid uk phone number"), t.validator.addMethod("phoneUK", function(t, e) {
-        return t = t.replace(/\(|\)|\s+|-/g, ""), this.optional(e) || t.length > 9 && t.match(/^(?:(?:(?:00\s?|\+)44\s?)|(?:\(?0))(?:\d{2}\)?\s?\d{4}\s?\d{4}|\d{3}\)?\s?\d{3}\s?\d{3,4}|\d{4}\)?\s?(?:\d{5}|\d{3}\s?\d{3})|\d{5}\)?\s?\d{4,5})$/);
+        return t = t.replace(/\(|\)|\s+|-/g, ""), this.optional(e) || 9 < t.length && t.match(/^(?:(?:(?:00\s?|\+)44\s?)|(?:\(?0))(?:\d{2}\)?\s?\d{4}\s?\d{4}|\d{3}\)?\s?\d{3}\s?\d{3,4}|\d{4}\)?\s?(?:\d{5}|\d{3}\s?\d{3})|\d{5}\)?\s?\d{4,5})$/);
     }, "Please specify a valid phone number"), t.validator.addMethod("phoneUS", function(t, e) {
-        return t = t.replace(/\s+/g, ""), this.optional(e) || t.length > 9 && t.match(/^(\+?1-?)?(\([2-9]([02-9]\d|1[02-9])\)|[2-9]([02-9]\d|1[02-9]))-?[2-9]([02-9]\d|1[02-9])-?\d{4}$/);
+        return t = t.replace(/\s+/g, ""), this.optional(e) || 9 < t.length && t.match(/^(\+?1-?)?(\([2-9]([02-9]\d|1[02-9])\)|[2-9]([02-9]\d|1[02-9]))-?[2-9]([02-9]\d|1[02-9])-?\d{4}$/);
     }, "Please specify a valid phone number"), t.validator.addMethod("postalcodeBR", function(t, e) {
         return this.optional(e) || /^\d{2}.\d{3}-\d{3}?$|^\d{5}-?\d{3}?$/.test(t);
     }, "Informe um CEP válido."), t.validator.addMethod("postalCodeCA", function(t, e) {
@@ -258,7 +256,7 @@
             } else d *= i;
             u += d;
         }
-        return 10 === (n = u % 11) && (n = "X"), n === r;
+        return 10 == (n = u % 11) && (n = "X"), n === r;
     }, "The specified vehicle identification number (VIN) is invalid."), t.validator.addMethod("zipcodeUS", function(t, e) {
         return this.optional(e) || /^\d{5}(-\d{4})?$/.test(t);
     }, "The specified US ZIP Code is invalid"), t.validator.addMethod("ziprange", function(t, e) {

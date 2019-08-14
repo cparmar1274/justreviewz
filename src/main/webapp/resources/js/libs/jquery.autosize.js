@@ -8,7 +8,7 @@
         placeholder: !0
     }, i = [ "fontFamily", "fontSize", "fontWeight", "fontStyle", "letterSpacing", "textTransform", "wordSpacing", "textIndent", "whiteSpace" ], a = e('<textarea tabindex="-1"/>').data("autosize", !0)[0];
     a.style.cssText = "position:absolute; top:-999px; left:0; right:auto; bottom:auto; border:0; padding: 0; -moz-box-sizing:content-box; -webkit-box-sizing:content-box; box-sizing:content-box; word-wrap:break-word; height:0 !important; min-height:0 !important; overflow:hidden; transition:none; -webkit-transition:none; -moz-transition:none;", 
-    a.style.lineHeight = "99px", "99px" === e(a).css("lineHeight") && i.push("lineHeight"), 
+    (a.style.lineHeight = "99px") === e(a).css("lineHeight") && i.push("lineHeight"), 
     a.style.lineHeight = "", e.fn.autosize = function(n) {
         return this.length ? (n = e.extend({}, o, n || {}), a.parentNode !== document.body && e(document.body).append(a), 
         this.each(function() {
@@ -25,17 +25,15 @@
                     s[t] = p.css(t);
                 }), e(a).css(s).attr("wrap", p.attr("wrap")), o(), window.chrome) {
                     var r = u.style.width;
-                    u.style.width = "0px";
-                    u.offsetWidth;
-                    u.style.width = r;
+                    u.style.width = "0px", u.offsetWidth, u.style.width = r;
                 }
             }
             function r() {
                 var e, i;
                 t !== u ? s() : o(), !u.value && n.placeholder ? a.value = p.attr("placeholder") || "" : a.value = u.value, 
                 a.value += n.append || "", a.style.overflowY = u.style.overflowY, i = parseFloat(u.style.height) || 0, 
-                a.scrollTop = 0, a.scrollTop = 9e4, e = a.scrollTop, d && e > d ? (u.style.overflowY = "scroll", 
-                e = d) : (u.style.overflowY = "hidden", e < c && (e = c)), e += z, Math.abs(i - e) > .01 && (u.style.height = e + "px", 
+                a.scrollTop = 0, a.scrollTop = 9e4, e = a.scrollTop, d && d < e ? (u.style.overflowY = "scroll", 
+                e = d) : (u.style.overflowY = "hidden", e < c && (e = c)), e += z, .01 < Math.abs(i - e) && (u.style.height = e + "px", 
                 a.className = a.className, w && n.callback.call(u, u), p.trigger("autosize.resized"));
             }
             function l() {

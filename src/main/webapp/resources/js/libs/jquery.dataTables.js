@@ -16,9 +16,8 @@
         }), e._hungarianMap = o;
     }
     function o(e, n, i) {
-        e._hungarianMap || r(e);
         var l;
-        t.each(n, function(r, s) {
+        e._hungarianMap || r(e), t.each(n, function(r, s) {
             (l = e._hungarianMap[r]) === a || !i && n[l] !== a || ("o" === l.charAt(0) ? (n[l] || (n[l] = {}), 
             t.extend(!0, n[l], n[r]), o(e[l], n[l], i)) : n[l] = n[r]);
         });
@@ -114,9 +113,9 @@
         }, "number" != typeof f && (e._rowReadObject = !0), e.oFeatures.bSort || (i.bSortable = !1, 
         u.addClass(l.sSortableNone));
         var g = -1 !== t.inArray("asc", i.asSorting), b = -1 !== t.inArray("desc", i.asSorting);
-        i.bSortable && (g || b) ? g && !b ? (i.sSortingClass = l.sSortableAsc, i.sSortingClassJUI = l.sSortJUIAscAllowed) : !g && b ? (i.sSortingClass = l.sSortableDesc, 
-        i.sSortingClassJUI = l.sSortJUIDescAllowed) : (i.sSortingClass = l.sSortable, i.sSortingClassJUI = l.sSortJUI) : (i.sSortingClass = l.sSortableNone, 
-        i.sSortingClassJUI = "");
+        i.bSortable && (g || b) ? i.sSortingClassJUI = g && !b ? (i.sSortingClass = l.sSortableAsc, 
+        l.sSortJUIAscAllowed) : !g && b ? (i.sSortingClass = l.sSortableDesc, l.sSortJUIDescAllowed) : (i.sSortingClass = l.sSortable, 
+        l.sSortJUI) : (i.sSortingClass = l.sSortableNone, i.sSortingClassJUI = "");
     }
     function h(t) {
         if (!1 !== t.oFeatures.bAutoWidth) {
@@ -149,7 +148,7 @@
     }
     function S(t) {
         var e, n, r, o, i, l, s, u, c, f = t.aoColumns, d = t.aoData, h = qt.ext.type.detect;
-        for (e = 0, n = f.length; e < n; e++) if (s = f[e], c = [], !s.sType && s._sManualType) s.sType = s._sManualType; else if (!s.sType) {
+        for (e = 0, n = f.length; e < n; e++) if (c = [], !(s = f[e]).sType && s._sManualType) s.sType = s._sManualType; else if (!s.sType) {
             for (r = 0, o = h.length; r < o; r++) {
                 for (i = 0, l = d.length; i < l && (c[i] === a && (c[i] = _(t, i, e, "type")), (u = h[r](c[i], t)) || r === h.length - 1) && "html" !== u; i++) ;
                 if (u) {
@@ -162,9 +161,9 @@
     }
     function m(e, n, r, o) {
         var i, l, s, u, c, d, h, p = e.aoColumns;
-        if (n) for (i = n.length - 1; i >= 0; i--) {
+        if (n) for (i = n.length - 1; 0 <= i; i--) {
             var g = (h = n[i]).targets !== a ? h.targets : h.aTargets;
-            for (t.isArray(g) || (g = [ g ]), s = 0, u = g.length; s < u; s++) if ("number" == typeof g[s] && g[s] >= 0) {
+            for (t.isArray(g) || (g = [ g ]), s = 0, u = g.length; s < u; s++) if ("number" == typeof g[s] && 0 <= g[s]) {
                 for (;p.length <= g[s]; ) f(e);
                 o(g[s], h);
             } else if ("number" == typeof g[s] && g[s] < 0) o(p.length + g[s], h); else if ("string" == typeof g[s]) for (c = 0, 
@@ -377,12 +376,12 @@
         var o, i, l, s, u, c, f, d, h, p = [], g = [], b = e.aoColumns.length;
         if (n) {
             for (r === a && (r = !1), o = 0, i = n.length; o < i; o++) {
-                for (p[o] = n[o].slice(), p[o].nTr = n[o].nTr, l = b - 1; l >= 0; l--) e.aoColumns[l].bVisible || r || p[o].splice(l, 1);
+                for (p[o] = n[o].slice(), p[o].nTr = n[o].nTr, l = b - 1; 0 <= l; l--) e.aoColumns[l].bVisible || r || p[o].splice(l, 1);
                 g.push([]);
             }
             for (o = 0, i = p.length; o < i; o++) {
                 if (f = p[o].nTr) for (;c = f.firstChild; ) f.removeChild(c);
-                for (l = 0, s = p[o].length; l < s; l++) if (d = 1, h = 1, g[o][l] === a) {
+                for (l = 0, s = p[o].length; l < s; l++) if (h = d = 1, g[o][l] === a) {
                     for (f.appendChild(p[o][l].cell), g[o][l] = 1; p[o + d] !== a && p[o][l].cell == p[o + d][l].cell; ) g[o + d][l] = 1, 
                     d++;
                     for (;p[o][l + h] !== a && p[o][l].cell == p[o][l + h].cell; ) {
@@ -466,15 +465,14 @@
         r.replaceWith(i), e.nHolding = null;
     }
     function W(e, n) {
-        var a, r, o, i, l, s, u, c, f, d, h, p = t(n).children("tr");
+        var a, r, o, i, l, s, u, f, d, h, p = t(n).children("tr");
         for (e.splice(0, e.length), o = 0, s = p.length; o < s; o++) e.push([]);
-        for (o = 0, s = p.length; o < s; o++) for (c = 0, r = (a = p[o]).firstChild; r; ) {
-            if ("TD" == r.nodeName.toUpperCase() || "TH" == r.nodeName.toUpperCase()) for (f = 1 * r.getAttribute("colspan"), 
-            d = 1 * r.getAttribute("rowspan"), f = f && 0 !== f && 1 !== f ? f : 1, d = d && 0 !== d && 1 !== d ? d : 1, 
-            u = function(t, e, n) {
-                for (var a = t[e]; a[n]; ) n++;
+        for (o = 0, s = p.length; o < s; o++) for (0, r = (a = p[o]).firstChild; r; ) {
+            if ("TD" == r.nodeName.toUpperCase() || "TH" == r.nodeName.toUpperCase()) for (f = (f = 1 * r.getAttribute("colspan")) && 0 !== f && 1 !== f ? f : 1, 
+            d = (d = 1 * r.getAttribute("rowspan")) && 0 !== d && 1 !== d ? d : 1, u = function(t, e, n) {
+                for (var a = t[o]; a[n]; ) n++;
                 return n;
-            }(e, o, c), h = 1 === f, l = 0; l < f; l++) for (i = 0; i < d; i++) e[o + i][u + l] = {
+            }(e, 0, 0), h = 1 === f, l = 0; l < f; l++) for (i = 0; i < d; i++) e[o + i][u + l] = {
                 cell: r,
                 unique: h
             }, e[o + i].nTr = a;
@@ -723,7 +721,7 @@
                 var a = J(t, n);
                 for (e = 0; e < a.length; e++) D(t, a[e]);
                 t.iInitDisplayStart = r, k(t), ft(t, !1), ot(t, n);
-            }, t) : (ft(t, !1), ot(t)));
+            }) : (ft(t, !1), ot(t)));
         } else setTimeout(function() {
             rt(t);
         }, 200);
@@ -766,7 +764,7 @@
     }
     function ut(t, e, n) {
         var a = t._iDisplayStart, r = t._iDisplayLength, o = t.fnRecordsDisplay();
-        0 === o || -1 === r ? a = 0 : "number" == typeof e ? (a = e * r) > o && (a = 0) : "first" == e ? a = 0 : "previous" == e ? (a = r >= 0 ? a - r : 0) < 0 && (a = 0) : "next" == e ? a + r < o && (a += r) : "last" == e ? a = Math.floor((o - 1) / r) * r : Lt(t, 0, "Unknown paging action: " + e, 5);
+        0 === o || -1 === r ? a = 0 : "number" == typeof e ? (a = e * r) > o && (a = 0) : "first" == e ? a = 0 : "previous" == e ? (a = 0 <= r ? a - r : 0) < 0 && (a = 0) : "next" == e ? a + r < o && (a += r) : "last" == e ? a = Math.floor((o - 1) / r) * r : Lt(t, 0, "Unknown paging action: " + e, 5);
         var i = t._iDisplayStart !== a;
         return t._iDisplayStart = a, i && (Nt(t, null, "page", [ t ]), n && O(t)), i;
     }
@@ -969,22 +967,21 @@
             for (e = 0, a = c.length; e < a; e++) i[c[e]] = e;
             u === o.length ? c.sort(function(t, e) {
                 var n, a, r, l, u, c = o.length, f = s[t]._aSortData, d = s[e]._aSortData;
-                for (r = 0; r < c; r++) if (u = o[r], n = f[u.col], a = d[u.col], 0 !== (l = n < a ? -1 : n > a ? 1 : 0)) return "asc" === u.dir ? l : -l;
-                return n = i[t], a = i[e], n < a ? -1 : n > a ? 1 : 0;
+                for (r = 0; r < c; r++) if (0 != (l = (n = f[(u = o[r]).col]) < (a = d[u.col]) ? -1 : a < n ? 1 : 0)) return "asc" === u.dir ? l : -l;
+                return (n = i[t]) < (a = i[e]) ? -1 : a < n ? 1 : 0;
             }) : c.sort(function(t, e) {
-                var n, a, r, u, c, f, d = o.length, h = s[t]._aSortData, p = s[e]._aSortData;
-                for (r = 0; r < d; r++) if (c = o[r], n = h[c.col], a = p[c.col], f = l[c.type + "-" + c.dir] || l["string-" + c.dir], 
-                0 !== (u = f(n, a))) return u;
-                return n = i[t], a = i[e], n < a ? -1 : n > a ? 1 : 0;
+                var n, a, r, u, c, d = o.length, h = s[t]._aSortData, p = s[e]._aSortData;
+                for (r = 0; r < d; r++) if (n = h[(c = o[r]).col], a = p[c.col], 0 !== (u = (l[c.type + "-" + c.dir] || l["string-" + c.dir])(n, a))) return u;
+                return (n = i[t]) < (a = i[e]) ? -1 : a < n ? 1 : 0;
             });
         }
         t.bSorted = !0;
     }
     function _t(t) {
-        for (var e, n, a = t.aoColumns, r = Dt(t), o = t.oLanguage.oAria, i = 0, l = a.length; i < l; i++) {
+        for (var e, a = t.aoColumns, r = Dt(t), o = t.oLanguage.oAria, i = 0, l = a.length; i < l; i++) {
             var s = a[i], u = s.asSorting, c = s.sTitle.replace(/<.*?>/g, ""), f = s.nTh;
-            f.removeAttribute("aria-sort"), s.bSortable ? (r.length > 0 && r[0].col == i ? (f.setAttribute("aria-sort", "asc" == r[0].dir ? "ascending" : "descending"), 
-            n = u[r[0].index + 1] || u[0]) : n = u[0], e = c + ("asc" === n ? o.sSortAscending : o.sSortDescending)) : e = c, 
+            f.removeAttribute("aria-sort"), e = s.bSortable ? c + ("asc" === (0 < r.length && r[0].col == i ? (f.setAttribute("aria-sort", "asc" == r[0].dir ? "ascending" : "descending"), 
+            u[r[0].index + 1] || u[0]) : u[0]) ? o.sSortAscending : o.sSortDescending) : c, 
             f.setAttribute("aria-label", e);
         }
     }
@@ -1047,7 +1044,7 @@
                 var s = Nt(e, "aoStateLoadParams", "stateLoadParams", [ e, n ]);
                 if (-1 === t.inArray(!1, s)) {
                     var u = e.iStateDuration;
-                    if (u > 0 && n.time < +new Date() - 1e3 * u) r(); else if (n.columns && l.length !== n.columns.length) r(); else {
+                    if (0 < u && n.time < +new Date() - 1e3 * u) r(); else if (n.columns && l.length !== n.columns.length) r(); else {
                         if (e.oLoadedState = t.extend(!0, {}, n), n.start !== a && (e._iDisplayStart = n.start, 
                         e.iInitDisplayStart = n.start), n.length !== a && (e._iDisplayLength = n.length), 
                         n.order !== a && (e.aaSorting = [], t.each(n.order, function(t, n) {
@@ -1120,20 +1117,20 @@
     }
     function Ot(t) {
         var e = t._iDisplayStart, n = t.fnDisplayEnd(), a = t._iDisplayLength;
-        e >= n && (e = n - a), e -= e % a, (-1 === a || e < 0) && (e = 0), t._iDisplayStart = e;
+        n <= e && (e = n - a), e -= e % a, (-1 === a || e < 0) && (e = 0), t._iDisplayStart = e;
     }
     function kt(e, n) {
         var a = e.renderer, r = qt.ext.renderer[n];
-        return t.isPlainObject(a) && a[n] ? r[a[n]] || r._ : "string" == typeof a ? r[a] || r._ : r._;
+        return t.isPlainObject(a) && a[n] ? r[a[n]] || r._ : "string" == typeof a && r[a] || r._;
     }
     function Mt(t) {
         return t.oFeatures.bServerSide ? "ssp" : t.ajax || t.sAjaxSource ? "ajax" : "dom";
     }
     function Wt(t, e) {
         var n = [], a = We.numbers_length, r = Math.floor(a / 2);
-        return e <= a ? n = le(0, e) : t <= r ? ((n = le(0, a - 2)).push("ellipsis"), n.push(e - 1)) : t >= e - 1 - r ? ((n = le(e - (a - 2), e)).splice(0, 0, "ellipsis"), 
-        n.splice(0, 0, 0)) : ((n = le(t - r + 2, t + r - 1)).push("ellipsis"), n.push(e - 1), 
-        n.splice(0, 0, "ellipsis"), n.splice(0, 0, 0)), n.DT_el = "span", n;
+        return e <= a ? n = le(0, e) : t <= r ? ((n = le(0, a - 2)).push("ellipsis"), n.push(e - 1)) : (e - 1 - r <= t ? (n = le(e - (a - 2), e)).splice(0, 0, "ellipsis") : ((n = le(t - r + 2, t + r - 1)).push("ellipsis"), 
+        n.push(e - 1), n.splice(0, 0, "ellipsis")), n.splice(0, 0, 0)), n.DT_el = "span", 
+        n;
     }
     function Et(e) {
         t.each({
@@ -1189,22 +1186,18 @@
             null === e || e === a ? l.search(t, n, r, i) : l.column(e).search(t, n, r, i), l.draw();
         }, this.fnGetData = function(t, e) {
             var n = this.api(!0);
-            if (t !== a) {
-                var r = t.nodeName ? t.nodeName.toLowerCase() : "";
-                return e !== a || "td" == r || "th" == r ? n.cell(t, e).data() : n.row(t).data() || null;
-            }
-            return n.data().toArray();
+            if (t === a) return n.data().toArray();
+            var r = t.nodeName ? t.nodeName.toLowerCase() : "";
+            return e !== a || "td" == r || "th" == r ? n.cell(t, e).data() : n.row(t).data() || null;
         }, this.fnGetNodes = function(t) {
             var e = this.api(!0);
             return t !== a ? e.row(t).node() : e.rows().nodes().flatten().toArray();
         }, this.fnGetPosition = function(t) {
             var e = this.api(!0), n = t.nodeName.toUpperCase();
             if ("TR" == n) return e.row(t).index();
-            if ("TD" == n || "TH" == n) {
-                var a = e.cell(t).index();
-                return [ a.row, a.columnVisible, a.column ];
-            }
-            return null;
+            if ("TD" != n && "TH" != n) return null;
+            var a = e.cell(t).index();
+            return [ a.row, a.columnVisible, a.column ];
         }, this.fnIsOpen = function(t) {
             return this.api(!0).row(t).child.isShown();
         }, this.fnOpen = function(t, e, n) {
@@ -1227,10 +1220,9 @@
             (r === a || r) && i.draw(), 0;
         }, this.fnVersionCheck = Ut.fnVersionCheck;
         var n = this, r = e === a, c = this.length;
-        r && (e = {}), this.oApi = this.internal = Ut.internal;
-        for (var h in qt.ext.internal) h && (this[h] = Bt(h));
+        for (var h in r && (e = {}), this.oApi = this.internal = Ut.internal, qt.ext.internal) h && (this[h] = Bt(h));
         return this.each(function() {
-            var h, p = c > 1 ? Pt({}, e, !0) : e, g = 0, b = this.getAttribute("id"), v = !1, S = qt.defaults, _ = t(this);
+            var h, p = 1 < c ? Pt({}, e, !0) : e, g = 0, b = this.getAttribute("id"), v = !1, S = qt.defaults, _ = t(this);
             if ("table" == this.nodeName.toLowerCase()) {
                 l(S), s(S.column), o(S, S, !0), o(S.column, S.column, !0), o(S, t.extend(p, _.data()));
                 var C = qt.settings;
@@ -1335,10 +1327,10 @@
                     var o = _.children("tbody");
                     0 === o.length && (o = t("<tbody/>").appendTo(_)), A.nTBody = o[0];
                     var i = _.children("tfoot");
-                    if (0 === i.length && n.length > 0 && ("" !== A.oScroll.sX || "" !== A.oScroll.sY) && (i = t("<tfoot/>").appendTo(_)), 
-                    0 === i.length || 0 === i.children().length ? _.addClass(F.sNoFooter) : i.length > 0 && (A.nTFoot = i[0], 
+                    if (0 === i.length && 0 < n.length && ("" !== A.oScroll.sX || "" !== A.oScroll.sY) && (i = t("<tfoot/>").appendTo(_)), 
+                    0 === i.length || 0 === i.children().length ? _.addClass(F.sNoFooter) : 0 < i.length && (A.nTFoot = i[0], 
                     W(A.aoFooter, A.nTFoot)), p.aaData) for (g = 0; g < p.aaData.length; g++) D(A, p.aaData[g]); else (A.bDeferLoading || "dom" == Mt(A)) && y(A, t(A.nTBody).children("tr"));
-                    A.aiDisplay = A.aiDisplayMaster.slice(), A.bInitialised = !0, !1 === v && rt(A);
+                    A.aiDisplay = A.aiDisplayMaster.slice(), !(A.bInitialised = !0) === v && rt(A);
                 };
                 p.bStateSave ? (M.bStateSave = !0, Ht(A, "aoDrawCallback", It, "state_save"), At(A, 0, B)) : B();
             } else Lt(null, 0, "Non-table node initialisation (" + this.nodeName + ")", 2);
@@ -1354,10 +1346,10 @@
         var a = "string" == typeof t;
         return !!Qt(t) || (e && a && (t = ee(t, e)), n && a && (t = t.replace(Kt, "")), 
         !isNaN(parseFloat(t)) && isFinite(t));
-    }, ae = function(t) {
-        return Qt(t) || "string" == typeof t;
     }, re = function(t, e, n) {
-        return !!Qt(t) || (ae(t) ? !!ne(ue(t), e, n) || null : null);
+        return !!Qt(t) || function(t) {
+            return Qt(t) || "string" == typeof t;
+        }(t) && !!ne(ue(t), e, n) || null;
     }, oe = function(t, e, n) {
         var r = [], o = 0, i = t.length;
         if (n !== a) for (;o < i; o++) t[o] && t[o][e] && r.push(t[o][e][n]); else for (;o < i; o++) t[o] && r.push(t[o][e]);
@@ -1376,15 +1368,15 @@
         return e;
     }, ue = function(t) {
         return t.replace(zt, "");
-    }, ce = function(t) {
-        if (t.length < 2) return !0;
-        for (var e = t.slice().sort(), n = e[0], a = 1, r = e.length; a < r; a++) {
-            if (e[a] === n) return !1;
-            n = e[a];
-        }
-        return !0;
     }, fe = function(t) {
-        if (ce(t)) return t.slice();
+        if (function(t) {
+            if (t.length < 2) return !0;
+            for (var e = t.slice().sort(), n = e[0], a = 1, r = e.length; a < r; a++) {
+                if (e[a] === n) return !1;
+                n = e[a];
+            }
+            return !0;
+        }(t)) return t.slice();
         var e, n, a, r = [], o = t.length, i = 0;
         t: for (n = 0; n < o; n++) {
             for (e = t[n], a = 0; a < i; a++) if (r[a] === e) continue t;
@@ -1518,16 +1510,14 @@
         },
         unshift: ye.unshift
     }), Vt.extend = function(e, n, a) {
-        if (a.length && n && (n instanceof Vt || n.__dt_wrapper)) {
-            var r, o, i;
-            for (r = 0, o = a.length; r < o; r++) n[(i = a[r]).name] = "function" == typeof i.val ? function(t, e, n) {
-                return function() {
-                    var a = e.apply(t, arguments);
-                    return Vt.extend(a, a, n.methodExt), a;
-                };
-            }(e, i.val, i) : t.isPlainObject(i.val) ? {} : i.val, n[i.name].__dt_wrapper = !0, 
-            Vt.extend(e, n[i.name], i.propExt);
-        }
+        var r, o, i;
+        if (a.length && n && (n instanceof Vt || n.__dt_wrapper)) for (r = 0, o = a.length; r < o; r++) n[(i = a[r]).name] = "function" == typeof i.val ? function(t, e, n) {
+            return function() {
+                var a = e.apply(t, arguments);
+                return Vt.extend(a, a, n.methodExt), a;
+            };
+        }(e, i.val, i) : t.isPlainObject(i.val) ? {} : i.val, n[i.name].__dt_wrapper = !0, 
+        Vt.extend(e, n[i.name], i.propExt);
     }, Vt.register = Xt = function(e, n) {
         if (t.isArray(e)) for (var a = 0, r = e.length; a < r; a++) Vt.register(e[a], n); else {
             var o, i, l, s, u = e.split("."), c = De;
@@ -1630,10 +1620,10 @@
     };
     Xt("ajax.json()", function() {
         var t = this.context;
-        if (t.length > 0) return t[0].json;
+        if (0 < t.length) return t[0].json;
     }), Xt("ajax.params()", function() {
         var t = this.context;
-        if (t.length > 0) return t[0].oAjaxData;
+        if (0 < t.length) return t[0].oAjaxData;
     }), Xt("ajax.reload()", function(t, e) {
         return this.iterator("table", function(n) {
             Te(n, !1 === e, t);
@@ -1662,7 +1652,7 @@
             page: "all"
         }, e);
     }, Ie = function(t) {
-        for (var e = 0, n = t.length; e < n; e++) if (t[e].length > 0) return t[0] = t[e], 
+        for (var e = 0, n = t.length; e < n; e++) if (0 < t[e].length) return t[0] = t[e], 
         t[0].length = 1, t.length = 1, t.context = [ t.context[e] ], t;
         return t.length = 0, t;
     }, Ae = function(e, n) {
@@ -1670,7 +1660,7 @@
         if ("ssp" == Mt(e)) return "removed" === u ? [] : le(0, s.length);
         if ("current" == f) for (a = e._iDisplayStart, r = e.fnDisplayEnd(); a < r; a++) i.push(l[a]); else if ("current" == c || "applied" == c) i = "none" == u ? s.slice() : "applied" == u ? l.slice() : t.map(s, function(e, n) {
             return -1 === t.inArray(e, l) ? e : null;
-        }); else if ("index" == c || "original" == c) for (a = 0, r = e.aoData.length; a < r; a++) "none" == u ? i.push(a) : (-1 === (o = t.inArray(a, l)) && "removed" == u || o >= 0 && "applied" == u) && i.push(a);
+        }); else if ("index" == c || "original" == c) for (a = 0, r = e.aoData.length; a < r; a++) "none" == u ? i.push(a) : (-1 === (o = t.inArray(a, l)) && "removed" == u || 0 <= o && "applied" == u) && i.push(a);
         return i;
     }, Fe = function(e, n, r) {
         var o;
@@ -1736,9 +1726,9 @@
         var t = this;
         return this.iterator("row", function(e, n, r) {
             var o, i, l, s, u, c, f = e.aoData, d = f[n];
-            for (f.splice(n, 1), o = 0, i = f.length; o < i; o++) if (u = f[o], c = u.anCells, 
+            for (f.splice(n, 1), o = 0, i = f.length; o < i; o++) if (c = (u = f[o]).anCells, 
             null !== u.nTr && (u.nTr._DT_RowIndex = o), null !== c) for (l = 0, s = c.length; l < s; l++) c[l]._DT_CellIndex.row = o;
-            F(e.aiDisplayMaster, n), F(e.aiDisplay, n), F(t[r], n, !1), e._iRecordsDisplay > 0 && e._iRecordsDisplay--, 
+            F(e.aiDisplayMaster, n), F(e.aiDisplay, n), F(t[r], n, !1), 0 < e._iRecordsDisplay && e._iRecordsDisplay--, 
             Ot(e);
             var h = e.rowIdFn(d._aData);
             h !== a && delete e.aIds[h];
@@ -1760,7 +1750,7 @@
         L(e[0], this[0], "data"), this);
     }), Xt("row().node()", function() {
         var t = this.context;
-        return t.length && this.length ? t[0].aoData[this[0]].nTr || null : null;
+        return t.length && this.length && t[0].aoData[this[0]].nTr || null;
     }), Xt("row.add()", function(e) {
         e instanceof t && e.length && (e = e[0]);
         var n = this.iterator("table", function(t) {
@@ -1786,13 +1776,13 @@
         var n = t.context;
         if (n.length && t.length) {
             var a = n[0].aoData[t[0]];
-            a._details && (a._detailsShow = e, e ? a._details.insertAfter(a.nTr) : a._details.detach(), 
+            a._details && ((a._detailsShow = e) ? a._details.insertAfter(a.nTr) : a._details.detach(), 
             je(n[0]));
         }
     }, je = function(t) {
         var e = new Vt(t), n = t.aoData;
         e.off("draw.dt.DT_details column-visibility.dt.DT_details destroy.dt.DT_details"), 
-        oe(n, "_details").length > 0 && (e.on("draw.dt.DT_details", function(a, r) {
+        0 < oe(n, "_details").length && (e.on("draw.dt.DT_details", function(a, r) {
             t === r && e.rows({
                 page: "current"
             }).eq(0).each(function(t) {
@@ -1827,7 +1817,7 @@
         return we("column", n, function(n) {
             var l = te(n);
             if ("" === n) return le(r.length);
-            if (null !== l) return [ l >= 0 ? l : r.length + l ];
+            if (null !== l) return [ 0 <= l ? l : r.length + l ];
             if ("function" == typeof n) {
                 var s = Ae(e, a);
                 return t.map(r, function(t, a) {
@@ -2014,15 +2004,13 @@
             Tt(a, t, e, n);
         });
     }), Xt("order.fixed()", function(e) {
-        if (!e) {
-            var n = this.context, r = n.length ? n[0].aaSortingFixed : a;
-            return t.isArray(r) ? {
-                pre: r
-            } : r;
-        }
-        return this.iterator("table", function(n) {
+        if (e) return this.iterator("table", function(n) {
             n.aaSortingFixed = t.extend(!0, {}, e);
         });
+        var n = this.context, r = n.length ? n[0].aaSortingFixed : a;
+        return t.isArray(r) ? {
+            pre: r
+        } : r;
     }), Xt([ "columns().order()", "column().order()" ], function(e) {
         var n = this;
         return this.iterator("table", function(a, r) {
@@ -2065,8 +2053,7 @@
             It(t);
         });
     }), qt.versionCheck = qt.fnVersionCheck = function(t) {
-        for (var e, n, a = qt.version.split("."), r = t.split("."), o = 0, i = r.length; o < i; o++) if (e = parseInt(a[o], 10) || 0, 
-        n = parseInt(r[o], 10) || 0, e !== n) return e > n;
+        for (var e, n, a = qt.version.split("."), r = t.split("."), o = 0, i = r.length; o < i; o++) if ((e = parseInt(a[o], 10) || 0) !== (n = parseInt(r[o], 10) || 0)) return n < e;
         return !0;
     }, qt.isDataTable = qt.fnIsDataTable = function(e) {
         var n = t(e).get(0), a = !1;
@@ -2399,7 +2386,7 @@
         },
         fnDisplayEnd: function() {
             var t = this._iDisplayLength, e = this._iDisplayStart, n = e + t, a = this.aiDisplay.length, r = this.oFeatures, o = r.bPaginate;
-            return r.bServerSide ? !1 === o || -1 === t ? e + a : Math.min(e + t, this._iRecordsDisplay) : !o || n > a || -1 === t ? a : n;
+            return r.bServerSide ? !1 === o || -1 === t ? e + a : Math.min(e + t, this._iRecordsDisplay) : !o || a < n || -1 === t ? a : n;
         },
         oInstance: null,
         sInstance: null,
@@ -2531,11 +2518,11 @@
                             break;
 
                           case "first":
-                            u = h.sFirst, c = f + (l > 0 ? "" : " " + d.sPageButtonDisabled);
+                            u = h.sFirst, c = f + (0 < l ? "" : " " + d.sPageButtonDisabled);
                             break;
 
                           case "previous":
-                            u = h.sPrevious, c = f + (l > 0 ? "" : " " + d.sPageButtonDisabled);
+                            u = h.sPrevious, c = f + (0 < l ? "" : " " + d.sPageButtonDisabled);
                             break;
 
                           case "next":
@@ -2610,10 +2597,10 @@
             return Qt(t) ? "" : "string" == typeof t ? t.toLowerCase() : t.toString ? t.toString() : "";
         },
         "string-asc": function(t, e) {
-            return t < e ? -1 : t > e ? 1 : 0;
+            return t < e ? -1 : e < t ? 1 : 0;
         },
         "string-desc": function(t, e) {
-            return t < e ? 1 : t > e ? -1 : 0;
+            return t < e ? 1 : e < t ? -1 : 0;
         }
     }), Et(""), t.extend(!0, qt.ext.renderer, {
         header: {
@@ -2752,7 +2739,7 @@
         _fnDataSource: Mt,
         _fnRowAttributes: j,
         _fnCalculateEnd: function() {}
-    }), t.fn.dataTable = qt, qt.$ = t, t.fn.dataTableSettings = qt.settings, t.fn.dataTableExt = qt.ext, 
+    }), ((t.fn.dataTable = qt).$ = t).fn.dataTableSettings = qt.settings, t.fn.dataTableExt = qt.ext, 
     t.fn.DataTable = function(e) {
         return t(this).dataTable(e).api();
     }, t.each(qt, function(e, n) {

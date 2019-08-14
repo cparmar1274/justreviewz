@@ -37,9 +37,6 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
             function a() {
                 return r(n.btnCheckboxTrue, !0);
             }
-            function i() {
-                return r(n.btnCheckboxFalse, !1);
-            }
             function r(t, n) {
                 return angular.isDefined(t) ? e.$eval(t) : n;
             }
@@ -50,7 +47,7 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
                 t.toggleClass(l.activeClass, angular.equals(s.$modelValue, a()));
             }, t.on(l.toggleEvent, function() {
                 n.disabled || e.$apply(function() {
-                    s.$setViewValue(t.hasClass(l.activeClass) ? i() : a()), s.$render();
+                    s.$setViewValue(t.hasClass(l.activeClass) ? r(n.btnCheckboxFalse, !1) : a()), s.$render();
                 });
             });
         }
@@ -249,7 +246,7 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         },
         parsePlacement: function(e) {
             var t = i.auto.test(e);
-            return t && (e = e.replace(i.auto, "")), e = e.split("-"), e[0] = e[0] || "top", 
+            return t && (e = e.replace(i.auto, "")), (e = e.split("-"))[0] = e[0] || "top", 
             i.primary.test(e[0]) || (e[0] = "top"), e[1] = e[1] || "center", i.secondary.test(e[1]) || (e[1] = "center"), 
             e[2] = !!t, e;
         },
@@ -263,18 +260,15 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
                 placement: ""
             };
             if (o[2]) {
-                var u = this.viewportOffset(e, a), c = t.getComputedStyle(n), d = {
-                    width: r + Math.round(Math.abs(this.parseStyle(c.marginLeft) + this.parseStyle(c.marginRight))),
-                    height: l + Math.round(Math.abs(this.parseStyle(c.marginTop) + this.parseStyle(c.marginBottom)))
-                };
-                if (o[0] = "top" === o[0] && d.height > u.top && d.height <= u.bottom ? "bottom" : "bottom" === o[0] && d.height > u.bottom && d.height <= u.top ? "top" : "left" === o[0] && d.width > u.left && d.width <= u.right ? "right" : "right" === o[0] && d.width > u.right && d.width <= u.left ? "left" : o[0], 
-                o[1] = "top" === o[1] && d.height - s.height > u.bottom && d.height - s.height <= u.top ? "bottom" : "bottom" === o[1] && d.height - s.height > u.top && d.height - s.height <= u.bottom ? "top" : "left" === o[1] && d.width - s.width > u.right && d.width - s.width <= u.left ? "right" : "right" === o[1] && d.width - s.width > u.left && d.width - s.width <= u.right ? "left" : o[1], 
+                var u = this.viewportOffset(e, a), c = t.getComputedStyle(n), d_width = r + Math.round(Math.abs(this.parseStyle(c.marginLeft) + this.parseStyle(c.marginRight))), d_height = l + Math.round(Math.abs(this.parseStyle(c.marginTop) + this.parseStyle(c.marginBottom)));
+                if (o[0] = "top" === o[0] && d_height > u.top && d_height <= u.bottom ? "bottom" : "bottom" === o[0] && d_height > u.bottom && d_height <= u.top ? "top" : "left" === o[0] && d_width > u.left && d_width <= u.right ? "right" : "right" === o[0] && d_width > u.right && d_width <= u.left ? "left" : o[0], 
+                o[1] = "top" === o[1] && d_height - s.height > u.bottom && d_height - s.height <= u.top ? "bottom" : "bottom" === o[1] && d_height - s.height > u.top && d_height - s.height <= u.bottom ? "top" : "left" === o[1] && d_width - s.width > u.right && d_width - s.width <= u.left ? "right" : "right" === o[1] && d_width - s.width > u.left && d_width - s.width <= u.right ? "left" : o[1], 
                 "center" === o[1]) if (i.vertical.test(o[0])) {
                     var f = s.width / 2 - r / 2;
-                    u.left + f < 0 && d.width - s.width <= u.right ? o[1] = "left" : u.right + f < 0 && d.width - s.width <= u.left && (o[1] = "right");
+                    u.left + f < 0 && d_width - s.width <= u.right ? o[1] = "left" : u.right + f < 0 && d_width - s.width <= u.left && (o[1] = "right");
                 } else {
-                    var m = s.height / 2 - d.height / 2;
-                    u.top + m < 0 && d.height - s.height <= u.bottom ? o[1] = "top" : u.bottom + m < 0 && d.height - s.height <= u.top && (o[1] = "bottom");
+                    var m = s.height / 2 - d_height / 2;
+                    u.top + m < 0 && d_height - s.height <= u.bottom ? o[1] = "top" : u.bottom + m < 0 && d_height - s.height <= u.top && (o[1] = "bottom");
                 }
             }
             switch (o[0]) {
@@ -377,7 +371,7 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
             }, t.render = function() {
                 n.page = parseInt(t.ngModelCtrl.$viewValue, 10) || 1;
             }, n.selectPage = function(e, o) {
-                o && o.preventDefault(), (!n.ngDisabled || !o) && n.page !== e && e > 0 && e <= n.totalPages && (o && o.target && o.target.blur(), 
+                o && o.preventDefault(), (!n.ngDisabled || !o) && n.page !== e && 0 < e && e <= n.totalPages && (o && o.target && o.target.blur(), 
                 t.ngModelCtrl.$setViewValue(e), t.ngModelCtrl.$render());
             }, n.getText = function(e) {
                 return n[e + "Text"] || t.config[e + "Text"];
@@ -520,14 +514,11 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
             m.dropdownMenu.css(T);
         }
         var M = w || t, A = w ? b : h, S = M.hasClass(A), U = i.isOnlyOpen(e, w);
-        if (S === !a) {
-            r[w ? U ? "removeClass" : "addClass" : a ? "addClass" : "removeClass"](M, A).then(function() {
-                angular.isDefined(a) && a !== f && $(e, {
-                    open: !!a
-                });
+        if (S === !a && r[w ? U ? "removeClass" : "addClass" : a ? "addClass" : "removeClass"](M, A).then(function() {
+            angular.isDefined(a) && a !== f && $(e, {
+                open: !!a
             });
-        }
-        if (a) m.dropdownMenuTemplateUrl ? u(m.dropdownMenuTemplateUrl).then(function(e) {
+        }), a) m.dropdownMenuTemplateUrl ? u(m.dropdownMenuTemplateUrl).then(function(e) {
             d = g.$new(), p(e.trim())(d, function(e) {
                 var t = e;
                 m.dropdownMenu.replaceWith(t), m.dropdownMenu = t, s.on("keydown", i.keybindFilter);
@@ -587,7 +578,7 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
     function t(e) {
         for (var t = 0; t < o.tabs.length; t++) if (o.tabs[t].index === e) return t;
     }
-    var n, o = this;
+    var n, a, o = this;
     o.tabs = [], o.select = function(e, i) {
         if (!a) {
             var r = t(n), l = o.tabs[r];
@@ -626,9 +617,7 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         o.tabs.splice(t, 1);
     }, e.$watch("tabset.active", function(e) {
         angular.isDefined(e) && e !== n && o.select(t(e));
-    });
-    var a;
-    e.$on("$destroy", function() {
+    }), e.$on("$destroy", function() {
         a = !0;
     });
 } ]).directive("uibTabset", function() {
@@ -695,9 +684,6 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         }
     };
 }).directive("uibTabContentTransclude", function() {
-    function e(e) {
-        return e.tagName && (e.hasAttribute("uib-tab-heading") || e.hasAttribute("data-uib-tab-heading") || e.hasAttribute("x-uib-tab-heading") || "uib-tab-heading" === e.tagName.toLowerCase() || "data-uib-tab-heading" === e.tagName.toLowerCase() || "x-uib-tab-heading" === e.tagName.toLowerCase() || "uib:tab-heading" === e.tagName.toLowerCase());
-    }
     return {
         restrict: "A",
         require: "^uibTabset",
@@ -705,7 +691,9 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
             var a = t.$eval(o.uibTabContentTransclude).tab;
             a.$transcludeFn(a.$parent, function(t) {
                 angular.forEach(t, function(t) {
-                    e(t) ? a.headingElement = t : n.append(t);
+                    !function(e) {
+                        return e.tagName && (e.hasAttribute("uib-tab-heading") || e.hasAttribute("data-uib-tab-heading") || e.hasAttribute("x-uib-tab-heading") || "uib-tab-heading" === e.tagName.toLowerCase() || "data-uib-tab-heading" === e.tagName.toLowerCase() || "x-uib-tab-heading" === e.tagName.toLowerCase() || "uib:tab-heading" === e.tagName.toLowerCase());
+                    }(t) ? n.append(t) : a.headingElement = t;
                 });
             });
         }
@@ -758,13 +746,13 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
                 i.css(v), i.removeClass("collapsing").addClass("collapse"), g(o);
             }
             var d = n(r.expanding), f = n(r.expanded), m = n(r.collapsing), g = n(r.collapsed), b = !1, h = {}, v = {};
-            (b = !!("horizontal" in r)) ? (h = {
+            v = (b = !!("horizontal" in r)) ? (h = {
                 width: ""
-            }, v = {
+            }, {
                 width: "0"
             }) : (h = {
                 height: ""
-            }, v = {
+            }, {
                 height: "0"
             }), o.$eval(r.uibCollapse) || i.addClass("in").addClass("collapse").attr("aria-expanded", !0).attr("aria-hidden", !1).css(h), 
             o.$watch(r.uibCollapse, function(e) {
@@ -808,46 +796,6 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
             active: n
         };
     }
-    function r(e, t) {
-        var n = [], o = 1, a = t, r = angular.isDefined(s) && s < t;
-        r && (p ? (a = (o = Math.max(e - Math.floor(s / 2), 1)) + s - 1) > t && (o = (a = t) - s + 1) : (o = (Math.ceil(e / s) - 1) * s + 1, 
-        a = Math.min(o + s - 1, t)));
-        for (var l = o; l <= a; l++) {
-            var f = i(l, d(l), l === e);
-            n.push(f);
-        }
-        if (r && s > 0 && (!p || u || c)) {
-            if (o > 1) {
-                if (!c || o > 3) {
-                    var m = i(o - 1, "...", !1);
-                    n.unshift(m);
-                }
-                if (c) {
-                    if (3 === o) {
-                        var g = i(2, "2", !1);
-                        n.unshift(g);
-                    }
-                    var b = i(1, "1", !1);
-                    n.unshift(b);
-                }
-            }
-            if (a < t) {
-                if (!c || a < t - 2) {
-                    var h = i(a + 1, "...", !1);
-                    n.push(h);
-                }
-                if (c) {
-                    if (a === t - 2) {
-                        var v = i(t - 1, t - 1, !1);
-                        n.push(v);
-                    }
-                    var $ = i(t, t, !1);
-                    n.push($);
-                }
-            }
-        }
-        return n;
-    }
     var l = this, s = angular.isDefined(t.maxSize) ? e.$parent.$eval(t.maxSize) : a.maxSize, p = angular.isDefined(t.rotate) ? e.$parent.$eval(t.rotate) : a.rotate, u = angular.isDefined(t.forceEllipses) ? e.$parent.$eval(t.forceEllipses) : a.forceEllipses, c = angular.isDefined(t.boundaryLinkNumbers) ? e.$parent.$eval(t.boundaryLinkNumbers) : a.boundaryLinkNumbers, d = angular.isDefined(t.pageLabel) ? function(n) {
         return e.$parent.$eval(t.pageLabel, {
             $page: n
@@ -860,7 +808,46 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
     }));
     var f = this.render;
     this.render = function() {
-        f(), e.page > 0 && e.page <= e.totalPages && (e.pages = r(e.page, e.totalPages));
+        f(), 0 < e.page && e.page <= e.totalPages && (e.pages = function(e, t) {
+            var n = [], o = 1, a = t, r = angular.isDefined(s) && s < t;
+            r && (p ? (a = (o = Math.max(e - Math.floor(s / 2), 1)) + s - 1) > t && (o = (a = t) - s + 1) : (o = (Math.ceil(e / s) - 1) * s + 1, 
+            a = Math.min(o + s - 1, t)));
+            for (var l = o; l <= a; l++) {
+                var f = i(l, d(l), l === e);
+                n.push(f);
+            }
+            if (r && 0 < s && (!p || u || c)) {
+                if (1 < o) {
+                    if (!c || 3 < o) {
+                        var m = i(o - 1, "...", !1);
+                        n.unshift(m);
+                    }
+                    if (c) {
+                        if (3 === o) {
+                            var g = i(2, "2", !1);
+                            n.unshift(g);
+                        }
+                        var b = i(1, "1", !1);
+                        n.unshift(b);
+                    }
+                }
+                if (a < t) {
+                    if (!c || a < t - 2) {
+                        var h = i(a + 1, "...", !1);
+                        n.push(h);
+                    }
+                    if (c) {
+                        if (a === t - 2) {
+                            var v = i(t - 1, t - 1, !1);
+                            n.push(v);
+                        }
+                        var $ = i(t, t, !1);
+                        n.push($);
+                    }
+                }
+            }
+            return n;
+        }(e.page, e.totalPages));
     };
 } ]).constant("uibPaginationConfig", {
     itemsPerPage: 10,
@@ -933,7 +920,7 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
             var t = a.bars.reduce(function(e, t) {
                 return t.percent = +(100 * t.value / t.max).toFixed(2), e + t.percent;
             }, 0);
-            t > 100 && (e.percent -= t - 100);
+            100 < t && (e.percent -= t - 100);
         }, e.$on("$destroy", function() {
             t = null, a.removeBar(e);
         });
@@ -1075,17 +1062,9 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         }
     };
 } ]).factory("$uibModalStack", [ "$animate", "$animateCss", "$document", "$compile", "$rootScope", "$q", "$$multiMap", "$$stackedMap", "$uibPosition", function(e, t, n, o, a, i, r, l, s) {
-    function p(e) {
-        return e.replace(E, function(e, t) {
-            return (t ? "-" : "") + e.toLowerCase();
-        });
-    }
-    function u(e) {
-        return !!(e.offsetWidth || e.offsetHeight || e.getClientRects().length);
-    }
     function c() {
         for (var e = -1, t = x.keys(), n = 0; n < t.length; n++) x.get(t[n]).value.backdrop && (e = n);
-        return e > -1 && e < P && (e = P), e;
+        return -1 < e && e < P && (e = P), e;
     }
     function d(e, t) {
         var n = x.get(e).value, o = n.appendTo;
@@ -1099,32 +1078,29 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
             }) : o.css({
                 paddingRight: ""
             }), y = null), f(!0);
-        }, n.closedDeferred), m(), t && t.focus ? t.focus() : o.focus && o.focus();
+        }, n.closedDeferred), function() {
+            if ($ && -1 === c()) {
+                g($, w, function() {
+                    null;
+                }), w = $ = void 0;
+            }
+        }(), t && t.focus ? t.focus() : o.focus && o.focus();
     }
     function f(e) {
         var t;
-        x.length() > 0 && (t = x.top().value).modalDomEl.toggleClass(t.windowTopClass || "", e);
-    }
-    function m() {
-        if ($ && -1 === c()) {
-            var e = w;
-            g($, w, function() {
-                e = null;
-            }), $ = void 0, w = void 0;
-        }
+        0 < x.length() && (t = x.top().value).modalDomEl.toggleClass(t.windowTopClass || "", e);
     }
     function g(t, n, o, a) {
-        function r() {
-            r.done || (r.done = !0, e.leave(t).then(function() {
-                o && o(), t.remove(), a && a.resolve();
-            }), n.$destroy());
-        }
         var l, s = null;
         return n.$broadcast(k.NOW_CLOSING_EVENT, function() {
             return l || (l = i.defer(), s = l.promise), function() {
                 l.resolve();
             };
-        }), i.when(s).then(r);
+        }), i.when(s).then(function r() {
+            r.done || (r.done = !0, e.leave(t).then(function() {
+                o && o(), t.remove(), a && a.resolve();
+            }), n.$destroy());
+        });
     }
     function b(e) {
         if (e.isDefaultPrevented()) return e;
@@ -1159,17 +1135,6 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
     }), n.on("keydown", b), a.$on("$destroy", function() {
         n.off("keydown", b);
     }), k.open = function(t, i) {
-        function r(e) {
-            if (e && "BODY" !== e[0].tagName) return function(e) {
-                var t = e.parent() ? e.parent().children() : [];
-                return Array.prototype.filter.call(t, function(t) {
-                    return t !== e[0];
-                });
-            }(e).forEach(function(e) {
-                var t = "true" === e.getAttribute("aria-hidden"), n = parseInt(e.getAttribute(O), 10);
-                n || (n = t ? 1 : 0), e.setAttribute(O, n + 1), e.setAttribute("aria-hidden", "true");
-            }), r(e.parent());
-        }
         var l = n[0].activeElement, u = i.openedClass || C;
         f(!1), D = x.top(), x.add(t, {
             deferred: i.deferred,
@@ -1183,8 +1148,8 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
             animation: i.animation,
             appendTo: i.appendTo
         }), T.put(u, t);
-        var d = i.appendTo, m = c();
-        m >= 0 && !$ && ((w = a.$new(!0)).modalOptions = i, w.index = m, ($ = angular.element('<div uib-modal-backdrop="modal-backdrop"></div>')).attr({
+        var g, d = i.appendTo, m = c();
+        0 <= m && !$ && ((w = a.$new(!0)).modalOptions = i, w.index = m, ($ = angular.element('<div uib-modal-backdrop="modal-backdrop"></div>')).attr({
             class: "modal-backdrop",
             "ng-style": "{'z-index': 1040 + (index && 1 || 0) + index*10}",
             "uib-modal-animation-class": "fade",
@@ -1192,9 +1157,11 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         }), i.backdropClass && $.addClass(i.backdropClass), i.animation && $.attr("modal-animation", "true"), 
         o($)(w), e.enter($, d), s.isScrollable(d) && (y = s.scrollbarPadding(d)).heightOverflow && y.scrollbarWidth && d.css({
             paddingRight: y.right + "px"
-        }));
-        var g;
-        i.component ? (g = document.createElement(p(i.component.name)), (g = angular.element(g)).attr({
+        })), i.component ? (g = document.createElement(function(e) {
+            return e.replace(E, function(e, t) {
+                return (t ? "-" : "") + e.toLowerCase();
+            });
+        }(i.component.name)), (g = angular.element(g)).attr({
             resolve: "$resolve",
             "modal-instance": "$uibModalInstance",
             close: "$close($value)",
@@ -1217,7 +1184,17 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
             "modal-in-class": "in"
         }).append(g), i.windowClass && b.addClass(i.windowClass), i.animation && b.attr("modal-animation", "true"), 
         d.addClass(u), i.scope && (i.scope.$$topModalIndex = P), e.enter(o(b)(i.scope), d), 
-        x.top().value.modalDomEl = b, x.top().value.modalOpener = l, r(b);
+        x.top().value.modalDomEl = b, x.top().value.modalOpener = l, function r(e) {
+            if (e && "BODY" !== e[0].tagName) return function(e) {
+                var t = e.parent() ? e.parent().children() : [];
+                return Array.prototype.filter.call(t, function(t) {
+                    return t !== e[0];
+                });
+            }(e).forEach(function(e) {
+                var t = "true" === e.getAttribute("aria-hidden"), n = parseInt(e.getAttribute(O), 10);
+                n || (n = t ? 1 : 0), e.setAttribute(O, n + 1), e.setAttribute("aria-hidden", "true");
+            }), r(e.parent());
+        }(b);
     }, k.close = function(e, t) {
         var n = x.get(e);
         return v(), n && h(n, t, !0) ? (n.value.modalScope.$$uibDestructionScheduled = !0, 
@@ -1234,9 +1211,9 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         var t = x.get(e);
         t && t.value.renderDeferred.resolve();
     }, k.focusFirstFocusableElement = function(e) {
-        return e.length > 0 && (e[0].focus(), !0);
+        return 0 < e.length && (e[0].focus(), !0);
     }, k.focusLastFocusableElement = function(e) {
-        return e.length > 0 && (e[e.length - 1].focus(), !0);
+        return 0 < e.length && (e[e.length - 1].focus(), !0);
     }, k.isModalFocused = function(e, t) {
         if (e && t) {
             var n = t.value.modalDomEl;
@@ -1244,16 +1221,18 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         }
         return !1;
     }, k.isFocusInFirstItem = function(e, t) {
-        return t.length > 0 && (e.target || e.srcElement) === t[0];
+        return 0 < t.length && (e.target || e.srcElement) === t[0];
     }, k.isFocusInLastItem = function(e, t) {
-        return t.length > 0 && (e.target || e.srcElement) === t[t.length - 1];
+        return 0 < t.length && (e.target || e.srcElement) === t[t.length - 1];
     }, k.loadFocusElementList = function(e) {
         if (e) {
             var t = e.value.modalDomEl;
             if (t && t.length) {
                 var n = t[0].querySelectorAll("a[href], area[href], input:not([disabled]):not([tabindex='-1']), button:not([disabled]):not([tabindex='-1']),select:not([disabled]):not([tabindex='-1']), textarea:not([disabled]):not([tabindex='-1']), iframe, object, embed, *[tabindex]:not([tabindex='-1']), *[contenteditable=true]");
                 return n ? Array.prototype.filter.call(n, function(e) {
-                    return u(e);
+                    return function(e) {
+                        return !!(e.offsetWidth || e.offsetHeight || e.getClientRects().length);
+                    }(e);
                 }) : n;
             }
         }
@@ -1276,7 +1255,7 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
                 function p() {
                     return b;
                 }
-                var c = n.defer(), d = n.defer(), f = n.defer(), m = n.defer(), g = {
+                var b, h, c = n.defer(), d = n.defer(), f = n.defer(), m = n.defer(), g = {
                     result: c.promise,
                     opened: d.promise,
                     closed: f.promise,
@@ -1288,13 +1267,11 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
                         return l.dismiss(g, e);
                     }
                 };
-                if (a = angular.extend({}, e.options, a), a.resolve = a.resolve || {}, a.appendTo = a.appendTo || o.find("body").eq(0), 
+                if ((a = angular.extend({}, e.options, a)).resolve = a.resolve || {}, a.appendTo = a.appendTo || o.find("body").eq(0), 
                 !a.appendTo.length) throw new Error("appendTo element not found. Make sure that the element passed is in DOM.");
                 if (!a.component && !a.template && !a.templateUrl) throw new Error("One of component or template or templateUrl options is required.");
-                var b;
-                b = a.component ? n.when(r.resolve(a.resolve, {}, null, null)) : n.all([ s(a), r.resolve(a.resolve, {}, null, null) ]);
-                var h;
-                return h = u = n.all([ u ]).then(p, p).then(function(e) {
+                return b = a.component ? n.when(r.resolve(a.resolve, {}, null, null)) : n.all([ s(a), r.resolve(a.resolve, {}, null, null) ]), 
+                h = u = n.all([ u ]).then(p, p).then(function(e) {
                     function n(t, n, o, a) {
                         t.$scope = r, t.$scope.$resolve = {}, o ? t.$scope.$uibModalInstance = g : t.$uibModalInstance = g;
                         var i = n ? e[1] : e;
@@ -1340,11 +1317,6 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
     };
     return e;
 }), angular.module("ui.bootstrap.tooltip", [ "ui.bootstrap.position", "ui.bootstrap.stackedMap" ]).provider("$uibTooltip", function() {
-    function e(e) {
-        return e.replace(/[A-Z]/g, function(e, t) {
-            return (t ? "-" : "") + e.toLowerCase();
-        });
-    }
     var t = {
         placement: "top",
         placementClassPrefix: "",
@@ -1384,7 +1356,11 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
                 };
             }
             f = angular.extend({}, t, o, f);
-            var b = e(a), h = p.startSymbol(), v = p.endSymbol(), $ = "<div " + b + '-popup uib-title="' + h + "title" + v + '" ' + (f.useContentExp ? 'content-exp="contentExp()" ' : 'content="' + h + "content" + v + '" ') + 'origin-scope="origScope" class="uib-position-measure ' + u + '" tooltip-animation-class="fade"uib-tooltip-classes ng-class="{ in: isOpen }" ></div>';
+            var b = function(e) {
+                return e.replace(/[A-Z]/g, function(e, t) {
+                    return (t ? "-" : "") + e.toLowerCase();
+                });
+            }(a), h = p.startSymbol(), v = p.endSymbol(), $ = "<div " + b + '-popup uib-title="' + h + "title" + v + '" ' + (f.useContentExp ? 'content-exp="contentExp()" ' : 'content="' + h + "content" + v + '" ') + 'origin-scope="origScope" class="uib-position-measure ' + u + '" tooltip-animation-class="fade"uib-tooltip-classes ng-class="{ in: isOpen }" ></div>';
             return {
                 compile: function(e, t) {
                     var n = i($);
@@ -1393,15 +1369,38 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
                             F.isOpen ? b() : d();
                         }
                         function d() {
-                            R && !e.$eval(o[u + "Enable"]) || (w(), x(), F.popupDelay ? S || (S = r(h, F.popupDelay, !1)) : h());
+                            R && !e.$eval(o[u + "Enable"]) || (w(), function() {
+                                F.title = o[u + "Title"], F.content = V ? V(e) : o[a], F.popupClass = o[u + "Class"], 
+                                F.placement = angular.isDefined(o[u + "Placement"]) ? o[u + "Placement"] : f.placement;
+                                var t = s.parsePlacement(F.placement);
+                                L = t[1] ? t[0] + "-" + t[1] : t[0];
+                                var n = parseInt(o[u + "PopupDelay"], 10), i = parseInt(o[u + "PopupCloseDelay"], 10);
+                                F.popupDelay = isNaN(n) ? f.popupDelay : n, F.popupCloseDelay = isNaN(i) ? f.popupCloseDelay : i;
+                            }(), F.popupDelay ? S || (S = r(h, F.popupDelay, !1)) : h());
                         }
                         function b() {
                             v(), F.popupCloseDelay ? U || (U = r($, F.popupCloseDelay, !1)) : $();
                         }
                         function h() {
                             if (v(), w(), !F.content) return angular.noop;
-                            y(), F.$evalAsync(function() {
-                                F.isOpen = !0, T(!0), _();
+                            E || (M = F.$new(), E = n(M, function(e) {
+                                q ? l.find("body").append(e) : t.after(e);
+                            }), m.add(F, {
+                                close: $
+                            }), j.length = 0, V ? (j.push(e.$watch(V, function(e) {
+                                !(F.content = e) && F.isOpen && $();
+                            })), j.push(M.$watch(function() {
+                                W || (W = !0, M.$$postDigest(function() {
+                                    W = !1, F && F.isOpen && _();
+                                }));
+                            }))) : j.push(o.$observe(a, function(e) {
+                                !(F.content = e) && F.isOpen ? $() : _();
+                            })), j.push(o.$observe(u + "Title", function(e) {
+                                F.title = e, F.isOpen && _();
+                            })), j.push(o.$observe(u + "Placement", function(e) {
+                                F.placement = e || f.placement, F.isOpen && _();
+                            }))), F.$evalAsync(function() {
+                                T(F.isOpen = !0), _();
                             });
                         }
                         function v() {
@@ -1409,53 +1408,20 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
                         }
                         function $() {
                             F && F.$evalAsync(function() {
-                                F && (F.isOpen = !1, T(!1), F.animation ? A || (A = r(C, 150, !1)) : C());
+                                F && (T(F.isOpen = !1), F.animation ? A || (A = r(C, 150, !1)) : C());
                             });
                         }
                         function w() {
                             U && (r.cancel(U), U = null), A && (r.cancel(A), A = null);
                         }
-                        function y() {
-                            E || (M = F.$new(), E = n(M, function(e) {
-                                q ? l.find("body").append(e) : t.after(e);
-                            }), m.add(F, {
-                                close: $
-                            }), k());
-                        }
                         function C() {
-                            v(), w(), P(), E && (E.remove(), E = null, N && r.cancel(N)), m.remove(F), M && (M.$destroy(), 
+                            v(), w(), j.length && (angular.forEach(j, function(e) {
+                                e();
+                            }), j.length = 0), E && (E.remove(), E = null, N && r.cancel(N)), m.remove(F), M && (M.$destroy(), 
                             M = null);
-                        }
-                        function x() {
-                            F.title = o[u + "Title"], F.content = V ? V(e) : o[a], F.popupClass = o[u + "Class"], 
-                            F.placement = angular.isDefined(o[u + "Placement"]) ? o[u + "Placement"] : f.placement;
-                            var t = s.parsePlacement(F.placement);
-                            L = t[1] ? t[0] + "-" + t[1] : t[0];
-                            var n = parseInt(o[u + "PopupDelay"], 10), i = parseInt(o[u + "PopupCloseDelay"], 10);
-                            F.popupDelay = isNaN(n) ? f.popupDelay : n, F.popupCloseDelay = isNaN(i) ? f.popupCloseDelay : i;
                         }
                         function T(t) {
                             H && angular.isFunction(H.assign) && H.assign(e, t);
-                        }
-                        function k() {
-                            j.length = 0, V ? (j.push(e.$watch(V, function(e) {
-                                F.content = e, !e && F.isOpen && $();
-                            })), j.push(M.$watch(function() {
-                                W || (W = !0, M.$$postDigest(function() {
-                                    W = !1, F && F.isOpen && _();
-                                }));
-                            }))) : j.push(o.$observe(a, function(e) {
-                                F.content = e, !e && F.isOpen ? $() : _();
-                            })), j.push(o.$observe(u + "Title", function(e) {
-                                F.title = e, F.isOpen && _();
-                            })), j.push(o.$observe(u + "Placement", function(e) {
-                                F.placement = e || f.placement, F.isOpen && _();
-                            }));
-                        }
-                        function P() {
-                            j.length && (angular.forEach(j, function(e) {
-                                e();
-                            }), j.length = 0);
                         }
                         function D(e) {
                             F && F.isOpen && E && (t[0].contains(e.target) || E[0].contains(e.target) || b());
@@ -1496,12 +1462,12 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
                         };
                         !function() {
                             var n = [], a = [], i = e.$eval(o[u + "Trigger"]);
-                            z(), angular.isObject(i) ? (Object.keys(i).forEach(function(e) {
+                            z(), "none" !== (B = angular.isObject(i) ? (Object.keys(i).forEach(function(e) {
                                 n.push(e), a.push(i[e]);
-                            }), B = {
+                            }), {
                                 show: n,
                                 hide: a
-                            }) : B = g(i), "none" !== B.show && B.show.forEach(function(e, n) {
+                            }) : g(i)).show && B.show.forEach(function(e, n) {
                                 "outsideClick" === e ? (t.on("click", p), l.on("click", D)) : e === B.hide[n] ? t.on(e, p) : e && (t.on(e, d), 
                                 t.on(B.hide[n], b)), t.on("keypress", O);
                             });
@@ -1635,7 +1601,7 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
                 direction: r
             }), angular.extend(m[b].slide || {}, {
                 direction: r
-            }), a.enabled(t) && !e.$currentTransition && m[o].element && f.slides.length > 1) {
+            }), a.enabled(t) && !e.$currentTransition && m[o].element && 1 < f.slides.length) {
                 m[o].element.data(g, n.direction);
                 var l = f.getCurrentIndex();
                 angular.isNumber(l) && m[l].element && m[l].element.data(g, n.direction), e.$currentTransition = !0, 
@@ -1655,11 +1621,11 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
     function p() {
         s();
         var t = +e.interval;
-        !isNaN(t) && t > 0 && (c = n(u, t));
+        !isNaN(t) && 0 < t && (c = n(u, t));
     }
     function u() {
         var t = +e.interval;
-        d && !isNaN(t) && t > 0 && m.length ? e.next() : e.pause();
+        d && !isNaN(t) && 0 < t && m.length ? e.next() : e.pause();
     }
     var c, d, f = this, m = f.slides = e.slides = [], g = "uib-slideDirection", b = e.active, h = !1;
     t.addClass("carousel"), f.addSlide = function(t, n) {
@@ -1674,20 +1640,16 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         for (var e = 0; e < m.length; e++) if (m[e].slide.index === b) return e;
     }, f.next = e.next = function() {
         var t = (f.getCurrentIndex() + 1) % m.length;
-        {
-            if (0 !== t || !e.noWrap()) return f.select(m[t], "next");
-            e.pause();
-        }
+        if (0 !== t || !e.noWrap()) return f.select(m[t], "next");
+        e.pause();
     }, f.prev = e.prev = function() {
         var t = f.getCurrentIndex() - 1 < 0 ? m.length - 1 : f.getCurrentIndex() - 1;
-        {
-            if (!e.noWrap() || t !== m.length - 1) return f.select(m[t], "prev");
-            e.pause();
-        }
+        if (!e.noWrap() || t !== m.length - 1) return f.select(m[t], "prev");
+        e.pause();
     }, f.removeSlide = function(t) {
         var n = l(t);
-        m.splice(n, 1), m.length > 0 && b === n ? n >= m.length ? (b = m.length - 1, e.active = b, 
-        i(b), f.select(m[m.length - 1])) : (b = n, e.active = b, i(b), f.select(m[n])) : b > n && (b--, 
+        m.splice(n, 1), 0 < m.length && b === n ? n >= m.length ? (b = m.length - 1, i(e.active = b), 
+        f.select(m[m.length - 1])) : (b = n, i(e.active = b), f.select(m[n])) : n < b && (b--, 
         e.active = b), 0 === m.length && (b = null, e.active = null);
     }, f.select = e.select = function(t, n) {
         var o = l(t.slide);
@@ -1763,22 +1725,22 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
     return {
         beforeAddClass: function(n, o, a) {
             if ("active" === o) {
-                var i = !1, r = n.data("uib-slideDirection"), l = "next" === r ? "left" : "right", s = t.bind(this, n, l + " " + r, a);
+                var r = n.data("uib-slideDirection"), l = "next" === r ? "left" : "right", s = t.bind(this, n, l + " " + r, a);
                 return n.addClass(r), e(n, {
                     addClass: l
                 }).start().done(s), function() {
-                    i = !0;
+                    !0;
                 };
             }
             a();
         },
         beforeRemoveClass: function(n, o, a) {
             if ("active" === o) {
-                var i = !1, r = "next" === n.data("uib-slideDirection") ? "left" : "right", l = t.bind(this, n, r, a);
+                var r = "next" === n.data("uib-slideDirection") ? "left" : "right", l = t.bind(this, n, r, a);
                 return e(n, {
                     addClass: r
                 }).start().done(l), function() {
-                    i = !0;
+                    !0;
                 };
             }
             a();
@@ -1884,12 +1846,6 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
     function m() {
         F.position = M ? c.offset(t) : c.position(t), F.position.top += t.prop("offsetHeight");
     }
-    function g(e) {
-        var t;
-        return angular.version.minor < 6 ? (t = e.$options || {}).getOption = function(e) {
-            return t[e];
-        } : t = e.$options, t;
-    }
     var b, h, v = [ 9, 13, 27, 38, 40 ], $ = e.$eval(n.typeaheadMinLength);
     $ || 0 === $ || ($ = 1), e.$watch(n.typeaheadMinLength, function(e) {
         $ = e || 0 === e ? e : 1;
@@ -1901,22 +1857,16 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
     var C, x, T = a(n.typeaheadLoading).assign || angular.noop, k = n.typeaheadShouldSelect ? a(n.typeaheadShouldSelect) : function(e, t) {
         var n = t.$event;
         return 13 === n.which || 9 === n.which;
-    }, P = a(n.typeaheadOnSelect), D = !!angular.isDefined(n.typeaheadSelectOnBlur) && e.$eval(n.typeaheadSelectOnBlur), O = a(n.typeaheadNoResults).assign || angular.noop, E = n.typeaheadInputFormatter ? a(n.typeaheadInputFormatter) : void 0, M = !!n.typeaheadAppendToBody && e.$eval(n.typeaheadAppendToBody), A = n.typeaheadAppendTo ? e.$eval(n.typeaheadAppendTo) : null, S = !1 !== e.$eval(n.typeaheadFocusFirst), U = !!n.typeaheadSelectOnExact && e.$eval(n.typeaheadSelectOnExact), I = a(n.typeaheadIsOpen).assign || angular.noop, N = e.$eval(n.typeaheadShowHint) || !1, L = a(n.ngModel), q = a(n.ngModel + "($$$p)"), B = function(t, n) {
-        return angular.isFunction(L(e)) && h.getOption("getterSetter") ? q(t, {
-            $$$p: n
-        }) : L.assign(t, n);
-    }, R = d.parse(n.uibTypeahead), F = e.$new(), W = e.$on("$destroy", function() {
+    }, P = a(n.typeaheadOnSelect), D = !!angular.isDefined(n.typeaheadSelectOnBlur) && e.$eval(n.typeaheadSelectOnBlur), O = a(n.typeaheadNoResults).assign || angular.noop, E = n.typeaheadInputFormatter ? a(n.typeaheadInputFormatter) : void 0, M = !!n.typeaheadAppendToBody && e.$eval(n.typeaheadAppendToBody), A = n.typeaheadAppendTo ? e.$eval(n.typeaheadAppendTo) : null, S = !1 !== e.$eval(n.typeaheadFocusFirst), U = !!n.typeaheadSelectOnExact && e.$eval(n.typeaheadSelectOnExact), I = a(n.typeaheadIsOpen).assign || angular.noop, N = e.$eval(n.typeaheadShowHint) || !1, L = a(n.ngModel), q = a(n.ngModel + "($$$p)"), R = d.parse(n.uibTypeahead), F = e.$new(), W = e.$on("$destroy", function() {
         F.$destroy();
     });
     F.$on("$destroy", W);
-    var H = "typeahead-" + F.$id + "-" + Math.floor(1e4 * Math.random());
+    var V, j, H = "typeahead-" + F.$id + "-" + Math.floor(1e4 * Math.random());
     t.attr({
         "aria-autocomplete": "list",
         "aria-expanded": !1,
         "aria-owns": H
-    });
-    var V, j;
-    N && ((V = angular.element("<div></div>")).css("position", "relative"), t.after(V), 
+    }), N && ((V = angular.element("<div></div>")).css("position", "relative"), t.after(V), 
     (j = t.clone()).attr("placeholder", ""), j.attr("tabindex", "-1"), j.val(""), j.css({
         position: "absolute",
         top: "0px",
@@ -1944,37 +1894,35 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         debounce: "debounceUpdate"
     }), angular.isDefined(n.typeaheadTemplateUrl) && _.attr("template-url", n.typeaheadTemplateUrl), 
     angular.isDefined(n.typeaheadPopupTemplateUrl) && _.attr("popup-template-url", n.typeaheadPopupTemplateUrl);
-    var z = function() {
-        N && j.val("");
-    }, G = function() {
-        F.matches = [], F.activeIdx = -1, t.attr("aria-expanded", !1), z();
+    var G = function() {
+        F.matches = [], F.activeIdx = -1, t.attr("aria-expanded", !1), N && j.val("");
     }, Y = function(e) {
         return H + "-option-" + e;
     };
     F.$watch("activeIdx", function(e) {
         e < 0 ? t.removeAttr("aria-activedescendant") : t.attr("aria-activedescendant", Y(e));
     });
-    var K = function(e, t) {
-        return !!(F.matches.length > t && e) && e.toUpperCase() === F.matches[t].label.toUpperCase();
-    }, X = function(n, o) {
+    var X = function(n, o) {
         var a = {
             $viewValue: n
         };
         T(e, !0), O(e, !1), i.when(R.source(e, a)).then(function(i) {
             var r = n === b.$viewValue;
-            if (r && C) if (i && i.length > 0) {
-                F.activeIdx = S ? 0 : -1, O(e, !1), F.matches.length = 0;
-                for (var l = 0; l < i.length; l++) a[R.itemName] = i[l], F.matches.push({
+            if (r && C) if (i && 0 < i.length) {
+                F.activeIdx = S ? 0 : -1, O(e, !1);
+                for (var l = F.matches.length = 0; l < i.length; l++) a[R.itemName] = i[l], F.matches.push({
                     id: Y(l),
                     label: R.viewMapper(F, a),
                     model: i[l]
                 });
-                if (F.query = n, m(), t.attr("aria-expanded", !0), U && 1 === F.matches.length && K(n, 0) && (angular.isNumber(F.debounceUpdate) || angular.isObject(F.debounceUpdate) ? u(function() {
+                if (F.query = n, m(), t.attr("aria-expanded", !0), U && 1 === F.matches.length && function(e, t) {
+                    return !!(F.matches.length > t && e) && e.toUpperCase() === F.matches[t].label.toUpperCase();
+                }(n, 0) && (angular.isNumber(F.debounceUpdate) || angular.isObject(F.debounceUpdate) ? u(function() {
                     F.select(0, o);
                 }, angular.isNumber(F.debounceUpdate) ? F.debounceUpdate : F.debounceUpdate.default) : F.select(0, o)), 
                 N) {
                     var s = F.matches[0].label;
-                    angular.isString(n) && n.length > 0 && s.slice(0, n.length).toUpperCase() === n.toUpperCase() ? j.val(n + s.slice(n.length)) : j.val("");
+                    angular.isString(n) && 0 < n.length && s.slice(0, n.length).toUpperCase() === n.toUpperCase() ? j.val(n + s.slice(n.length)) : j.val("");
                 }
             } else G(), O(e, !0);
             r && T(e, !1);
@@ -1987,19 +1935,18 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         F.matches.length && m(), F.moveInProgress = !1;
     }, 200);
     F.moveInProgress = !1, F.query = void 0;
-    var J, Q = function(e) {
-        J = r(function() {
-            X(e);
-        }, w);
-    }, ee = function() {
+    var J, ee = function() {
         J && r.cancel(J);
     };
     G(), F.assignIsOpen = function(t) {
         I(e, t);
     }, F.select = function(o, a) {
         var i, l, s = {};
-        x = !0, s[R.itemName] = l = F.matches[o].model, i = R.modelMapper(e, s), B(e, i), 
-        b.$setValidity("editable", !0), b.$setValidity("parse", !0), P(e, {
+        x = !0, s[R.itemName] = l = F.matches[o].model, i = R.modelMapper(e, s), function(t, n) {
+            angular.isFunction(L(e)) && h.getOption("getterSetter") ? q(t, {
+                $$$p: n
+            }) : L.assign(t, n);
+        }(e, i), b.$setValidity("editable", !0), b.$setValidity("parse", !0), P(e, {
             $item: l,
             $model: i,
             $label: R.viewMapper(e, s),
@@ -2009,19 +1956,17 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         }, 0, !1);
     }, t.on("keydown", function(t) {
         if (0 !== F.matches.length && -1 !== v.indexOf(t.which)) {
-            var n = k(e, {
+            var o, n = k(e, {
                 $event: t
             });
             if (-1 === F.activeIdx && n || 9 === t.which && t.shiftKey) return G(), void F.$digest();
-            t.preventDefault();
-            var o;
-            switch (t.which) {
+            switch (t.preventDefault(), t.which) {
               case 27:
                 t.stopPropagation(), G(), e.$digest();
                 break;
 
               case 38:
-                F.activeIdx = (F.activeIdx > 0 ? F.activeIdx : F.matches.length) - 1, F.$digest(), 
+                F.activeIdx = (0 < F.activeIdx ? F.activeIdx : F.matches.length) - 1, F.$digest(), 
                 (o = _[0].querySelectorAll(".uib-typeahead-match")[F.activeIdx]).parentNode.scrollTop = o.offsetTop;
                 break;
 
@@ -2048,7 +1993,7 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
             }, F.debounceUpdate.blur) : F.select(F.activeIdx, e);
         })), !y && b.$error.editable && (b.$setViewValue(), F.$apply(function() {
             b.$setValidity("editable", !0), b.$setValidity("parse", !0);
-        }), t.val("")), C = !1, x = !1;
+        }), t.val("")), x = C = !1;
     });
     var te = function(n) {
         t[0] !== n.target && 3 !== n.which && 0 !== F.matches.length && (G(), p.$$phase || e.$digest());
@@ -2060,14 +2005,22 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
     var ne = o(_)(F);
     M ? l.find("body").append(ne) : A ? angular.element(A).eq(0).append(ne) : t.after(ne), 
     this.init = function(t) {
-        h = g(b = t), F.debounceUpdate = a(h.getOption("debounce"))(e), b.$parsers.unshift(function(t) {
-            return C = !0, 0 === $ || t && t.length >= $ ? w > 0 ? (ee(), Q(t)) : X(t) : (T(e, !1), 
-            ee(), G()), y ? t : t ? void b.$setValidity("editable", !1) : (b.$setValidity("editable", !0), 
+        h = function(e) {
+            var t;
+            return angular.version.minor < 6 ? (t = e.$options || {}).getOption = function(e) {
+                return t[e];
+            } : t = e.$options, t;
+        }(b = t), F.debounceUpdate = a(h.getOption("debounce"))(e), b.$parsers.unshift(function(t) {
+            return C = !0, 0 === $ || t && t.length >= $ ? 0 < w ? (ee(), function(e) {
+                J = r(function() {
+                    X(e);
+                }, w);
+            }(t)) : X(t) : (T(e, !1), ee(), G()), y ? t : t ? void b.$setValidity("editable", !1) : (b.$setValidity("editable", !0), 
             null);
         }), b.$formatters.push(function(t) {
-            var n, o, a = {};
+            var n, a = {};
             return y || b.$setValidity("editable", !0), E ? (a.$model = t, E(e, a)) : (a[R.itemName] = t, 
-            n = R.viewMapper(e, a), a[R.itemName] = void 0, o = R.viewMapper(e, a), n !== o ? n : t);
+            n = R.viewMapper(e, a), a[R.itemName] = void 0, n !== R.viewMapper(e, a) ? n : t);
         });
     };
 } ]).directive("uibTypeahead", function() {
@@ -2096,7 +2049,7 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         },
         link: function(t, n, o) {
             t.templateUrl = o.templateUrl, t.isOpen = function() {
-                var e = t.matches.length > 0;
+                var e = 0 < t.matches.length;
                 return t.assignIsOpen({
                     isOpen: e
                 }), e;
@@ -2134,16 +2087,13 @@ angular.module("ui.bootstrap.buttons", []).constant("uibButtonConfig", {
         }
     };
 } ]).filter("uibTypeaheadHighlight", [ "$sce", "$injector", "$log", function(e, t, n) {
-    function o(e) {
-        return e.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
-    }
-    function a(e) {
-        return /<.*>/g.test(e);
-    }
     var i;
     return i = t.has("$sanitize"), function(t, r) {
-        return !i && a(t) && n.warn("Unsafe use of typeahead please use ngSanitize"), t = r ? ("" + t).replace(new RegExp(o(r), "gi"), "<strong>$&</strong>") : t, 
-        i || (t = e.trustAsHtml(t)), t;
+        return !i && function(e) {
+            return /<.*>/g.test(e);
+        }(t) && n.warn("Unsafe use of typeahead please use ngSanitize"), t = r ? ("" + t).replace(new RegExp(function(e) {
+            return e.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+        }(r), "gi"), "<strong>$&</strong>") : t, i || (t = e.trustAsHtml(t)), t;
     };
 } ]), angular.module("uib/template/tabs/tab.html", []).run([ "$templateCache", function(e) {
     e.put("uib/template/tabs/tab.html", '<li ng-class="[{active: active, disabled: disabled}, classes]" class="uib-tab nav-item">\n  <a href ng-click="select($event)" class="nav-link" uib-tab-heading-transclude>{{heading}}</a>\n</li>\n');

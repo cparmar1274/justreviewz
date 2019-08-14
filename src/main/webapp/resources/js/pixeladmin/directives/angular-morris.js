@@ -21,8 +21,7 @@ function morrisDirectiveFactory(i, e, t) {
         }.bind(c), $(window).on("resize", u));
     }
     function o() {
-        u && $(window).off("resize", u), morrisDirectiveDestroy.call(c), t.empty(), c = null, 
-        n = null, s = null, u = null, c = null;
+        u && $(window).off("resize", u), morrisDirectiveDestroy.call(c), t.empty(), c = u = s = n = c = null;
     }
     var n = void 0, s = void 0, u = void 0, c = void 0;
     r(), [ "data", "options" ].forEach(function(i) {

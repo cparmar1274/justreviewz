@@ -20,15 +20,15 @@ $.fn.editableTableWidget = function(e) {
             if (13 === e.which) s(), o.hide(), t.focus(), e.preventDefault(), e.stopPropagation(); else if (27 === e.which) o.val(t.text()), 
             e.preventDefault(), e.stopPropagation(), o.hide(), t.focus(); else if (9 === e.which) t.focus(); else if (this.selectionEnd - this.selectionStart === this.value.length) {
                 var i = a(t, e.which);
-                i.length > 0 && (i.focus(), e.preventDefault(), e.stopPropagation());
+                0 < i.length && (i.focus(), e.preventDefault(), e.stopPropagation());
             }
         }).on("input paste", function() {
             var e = $.Event("validate");
             t.trigger(e, o.val()), !1 === e.result ? o.addClass("error") : o.removeClass("error");
         }), n.on("click keypress dblclick", r).css("cursor", "pointer").keydown(function(e) {
             var t = !0, i = a($(e.target), e.which);
-            i.length > 0 ? i.focus() : 13 === e.which ? r(!1) : 17 === e.which || 91 === e.which || 93 === e.which ? (r(!0), 
-            t = !1) : t = !1, t && (e.stopPropagation(), e.preventDefault());
+            0 < i.length ? i.focus() : 13 === e.which ? r(!1) : t = ((17 === e.which || 91 === e.which || 93 === e.which) && r(!0), 
+            !1), t && (e.stopPropagation(), e.preventDefault());
         }), n.find("td").prop("tabindex", 1), $(window).on("resize", function() {
             o.is(":visible") && o.offset(t.offset()).width(t.width()).height(t.height());
         });

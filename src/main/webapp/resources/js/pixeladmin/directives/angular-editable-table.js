@@ -13,7 +13,7 @@ function editableTableCtrl(e, t) {
             e.stopPropagation(); else if (27 === e.which) r.$editor.val(r.active.text()), e.preventDefault(), 
             e.stopPropagation(), r.$editor.hide(), r.active.focus(); else if (9 === e.which) r.active.focus(); else if (this.selectionEnd - this.selectionStart === this.value.length) {
                 var t = r.movement(r.active, e.which);
-                t.length > 0 && (t.focus(), e.preventDefault(), e.stopPropagation());
+                0 < t.length && (t.focus(), e.preventDefault(), e.stopPropagation());
             }
         }).on("input paste", function() {
             var e = $.Event("validate");
@@ -26,25 +26,20 @@ function editableTableCtrl(e, t) {
         o.active = e.find("td:focus"), o.active.length && (o.$editor.val(o.active.text()).removeClass("error").show().offset(o.active.offset()).css(o.active.css(o.options.cloneProperties)).width(o.active.width()).height(o.active.height()).focus(), 
         t && o.$editor.select());
     }, this.setActiveText = function() {
-        var e = o.$editor.val(), t = $.Event("change"), i = void 0;
+        var i, e = o.$editor.val(), t = $.Event("change");
         if (o.active.text() === e || o.$editor.hasClass("error")) return !0;
         i = o.active.html(), o.active.text(e).trigger(t, e), !1 === t.result && o.active.html(i);
     }, this.movement = function(e, t) {
         return 39 === t ? e.next("td") : 37 === t ? e.prev("td") : 38 === t ? e.parent().prev().children().eq(e.index()) : 40 === t ? e.parent().next().children().eq(e.index()) : [];
     }, e.on("click keypress dblclick", this.showEditor).css("cursor", "pointer").keydown(function(e) {
         var t = o.movement(angular.element(e.target), e.which), i = !0;
-        t.length > 0 ? t.focus() : 13 === e.which ? o.showEditor(!1) : 17 === e.which || 91 === e.which || 93 === e.which ? (o.showEditor(!0), 
-        i = !1) : i = !1, i && (e.stopPropagation(), e.preventDefault());
+        0 < t.length ? t.focus() : 13 === e.which ? o.showEditor(!1) : i = ((17 === e.which || 91 === e.which || 93 === e.which) && o.showEditor(!0), 
+        !1), i && (e.stopPropagation(), e.preventDefault());
     }), e.find("td").prop("tabindex", 1);
 }
 
 function editableTableDirective(e) {
     "use strict";
-    function t(e) {
-        return e.replace(/^on([A-Z])/, function(e, t) {
-            return t.toLowerCase();
-        });
-    }
     var i = {
         cloneProperties: [ "padding", "padding-top", "padding-bottom", "padding-left", "padding-right", "text-align", "font", "font-size", "font-family", "font-weight", "border", "border-top", "border-bottom", "border-left", "border-right" ],
         editor: angular.element("<input>")
@@ -57,7 +52,11 @@ function editableTableDirective(e) {
             Object.keys(i).forEach(function(t) {
                 void 0 !== a[t] ? c[t] = e(a[t])(r) : c[t] = i[t];
             }), s.init(c), o.forEach(function(i) {
-                a[i] && n.on(t(i), "td", e(a[i])(r));
+                a[i] && n.on(function(e) {
+                    return e.replace(/^on([A-Z])/, function(e, t) {
+                        return t.toLowerCase();
+                    });
+                }(i), "td", e(a[i])(r));
             }), n.on("$destroy", s.destroy);
         }
     };

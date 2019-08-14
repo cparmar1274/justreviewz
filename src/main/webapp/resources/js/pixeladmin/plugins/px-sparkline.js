@@ -64,8 +64,8 @@ var _createClass = function() {
             key: "_parseArgs",
             value: function(t, n) {
                 var r = void 0, a = void 0;
-                return "[object Array]" === Object.prototype.toString.call(n[0]) || "html" === n[0] || null === n[0] ? (r = n[0], 
-                a = n[1] || null) : a = n[0] || null, "html" !== r && void 0 !== r || null === r || (void 0 !== (r = t.getAttribute("values")) && null !== r || (r = e(t).html()), 
+                return a = "[object Array]" === Object.prototype.toString.call(n[0]) || "html" === n[0] || null === n[0] ? (r = n[0], 
+                n[1] || null) : n[0] || null, "html" !== r && void 0 !== r || null === r || (void 0 !== (r = t.getAttribute("values")) && null !== r || (r = e(t).html()), 
                 r = r.replace(/(^\s*<!--)|(-->\s*$)|\s+/g, "").split(",")), r && "[object Array]" === Object.prototype.toString.call(r) && 0 !== r.length || (r = null), 
                 {
                     values: r,

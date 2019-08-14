@@ -9,8 +9,7 @@ function ChartAxes() {
             i && a.addXAxisValues(i);
             var e = o.valuesXs, r = {};
             if (e) {
-                xsItems = e.split(",");
-                for (var l in xsItems) xsItem = xsItems[l].split(":"), r[xsItem[0]] = xsItem[1];
+                for (var l in xsItems = e.split(","), xsItems) xsItem = xsItems[l].split(":"), r[xsItem[0]] = xsItem[1];
                 a.addXSValues(r);
             }
             var c = o.y, u = o.y2, s = {};
@@ -100,7 +99,7 @@ function ChartAxisXTick() {
             var d = o.tickFit;
             d && ("true" === (d = angular.lowercase(d)) ? i.fit = !0 : "false" === d && (i.fit = !1));
             var h = o.tickValues;
-            h && h && (h.indexOf(",") > -1 ? i.values = h.split(",") : i.values = h);
+            h && h && (-1 < h.indexOf(",") ? i.values = h.split(",") : i.values = h);
             var p = o.tickOuter;
             p && ("true" === (p = angular.lowercase(p)) ? i.outer = !0 : "false" === p && (i.outer = !1));
             var m = o.tickFormat;
@@ -118,11 +117,11 @@ function ChartAxisY() {
         scope: {},
         replace: !0,
         link: function(t, n, o, a) {
-            var i = o.axisId, e = o.axisPosition, r = o.axisLabel;
-            i = void 0 == i ? "y" : i;
+            var i = o.axisId, e = o.axisPosition;
+            i = null == i ? "y" : i;
             var l = {
                 label: {
-                    text: r,
+                    text: o.axisLabel,
                     position: e
                 }
             };
@@ -155,7 +154,7 @@ function ChartAxisYTick() {
             var r = o.tickOuter;
             r && ("true" === (r = angular.lowercase(r)) ? i.outer = !0 : "false" === r && (i.outer = !1));
             var l = o.tickValues;
-            l && (l.indexOf(",") > -1 ? i.values = l.split(",") : i.values = l);
+            l && (-1 < l.indexOf(",") ? i.values = l.split(",") : i.values = l);
             var c = o.tickFormat;
             c && (i.format = d3.format(c)), a.addYTick(i), o.tickFormatFunction && a.addYTickFormatFunction(t.tickFormatFunction());
         }

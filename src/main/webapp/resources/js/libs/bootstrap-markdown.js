@@ -21,7 +21,7 @@
         __alterButtons: function(e, n) {
             var i = this.$handler, a = "all" == e, s = this;
             t.each(i, function(t, i) {
-                !1 === (!a && i.indexOf(e) < 0) && n(s.$editor.find('button[data-handler="' + i + '"]'));
+                !1 == (!a && i.indexOf(e) < 0) && n(s.$editor.find('button[data-handler="' + i + '"]'));
             });
         },
         __buildButtons: function(e, n) {
@@ -52,7 +52,7 @@
             return n;
         },
         __setListener: function() {
-            var e = void 0 !== this.$textarea.attr("rows"), n = this.$textarea.val().split("\n").length > 5 ? this.$textarea.val().split("\n").length : "5", i = e ? this.$textarea.attr("rows") : n;
+            var e = void 0 !== this.$textarea.attr("rows"), n = 5 < this.$textarea.val().split("\n").length ? this.$textarea.val().split("\n").length : "5", i = e ? this.$textarea.attr("rows") : n;
             this.$textarea.attr("rows", i), this.$options.resize && this.$textarea.css("resize", this.$options.resize), 
             this.$textarea.on({
                 focus: t.proxy(this.focus, this),
@@ -94,16 +94,16 @@
                 var h = t("<div/>", {
                     class: "md-header btn-toolbar"
                 }), d = [];
-                if (l.buttons.length > 0 && (d = d.concat(l.buttons[0])), l.additionalButtons.length > 0 && t.each(l.additionalButtons[0], function(e, n) {
+                if (0 < l.buttons.length && (d = d.concat(l.buttons[0])), 0 < l.additionalButtons.length && t.each(l.additionalButtons[0], function(e, n) {
                     var i = t.grep(d, function(t, e) {
                         return t.name === n.name;
                     });
-                    i.length > 0 ? i[0].data = i[0].data.concat(n.data) : d.push(l.additionalButtons[0][e]);
-                }), l.reorderButtonGroups.length > 0 && (d = d.filter(function(t) {
-                    return l.reorderButtonGroups.indexOf(t.name) > -1;
+                    0 < i.length ? i[0].data = i[0].data.concat(n.data) : d.push(l.additionalButtons[0][e]);
+                }), 0 < l.reorderButtonGroups.length && (d = d.filter(function(t) {
+                    return -1 < l.reorderButtonGroups.indexOf(t.name);
                 }).sort(function(t, e) {
                     return l.reorderButtonGroups.indexOf(t.name) < l.reorderButtonGroups.indexOf(e.name) ? -1 : l.reorderButtonGroups.indexOf(t.name) > l.reorderButtonGroups.indexOf(e.name) ? 1 : 0;
-                })), d.length > 0 && (h = this.__buildButtons([ d ], h)), l.fullscreen.enable && h.append('<div class="md-controls"><a class="md-control md-control-fullscreen" href="#"><span class="' + this.__getIcon(l.fullscreen.icons.fullscreenOn) + '"></span></a></div>').on("click", ".md-control-fullscreen", function(t) {
+                })), 0 < d.length && (h = this.__buildButtons([ d ], h)), l.fullscreen.enable && h.append('<div class="md-controls"><a class="md-control md-control-fullscreen" href="#"><span class="' + this.__getIcon(l.fullscreen.icons.fullscreenOn) + '"></span></a></div>').on("click", ".md-control-fullscreen", function(t) {
                     t.preventDefault(), n.setFullscreen(!0);
                 }), c.append(h), a.is("textarea")) a.before(c), (e = a).addClass("md-input"), c.append(e); else {
                     var u = "function" == typeof toMarkdown ? toMarkdown(a.html()) : a.html(), f = t.trim(u);
@@ -115,14 +115,11 @@
                         s.attrKeys.push(this.nodeName), s.attrValues.push(this.nodeValue);
                     }), a.replaceWith(c);
                 }
-                var p = t("<div/>", {
+                var v, p = t("<div/>", {
                     class: "md-footer"
-                }), g = !1, v = "";
-                if (l.savable) {
-                    g = !0;
-                    o.push("cmdSave"), r.push(l.onSave), p.append('<button class="btn btn-success" data-provider="' + i + '" data-handler="cmdSave"><i class="icon icon-white icon-ok"></i> ' + this.__localize("Save") + "</button>");
-                }
-                if (v = "function" == typeof l.footer ? l.footer(this) : l.footer, "" !== t.trim(v) && (g = !0, 
+                }), g = !1;
+                if (l.savable && (g = !0, o.push("cmdSave"), r.push(l.onSave), p.append('<button class="btn btn-success" data-provider="' + i + '" data-handler="cmdSave"><i class="icon icon-white icon-ok"></i> ' + this.__localize("Save") + "</button>")), 
+                v = "function" == typeof l.footer ? l.footer(this) : l.footer, "" !== t.trim(v) && (g = !0, 
                 p.append(v)), g && c.append(p), l.width && "inherit" !== l.width && (jQuery.isNumeric(l.width) ? (c.css("display", "table"), 
                 e.css("width", l.width + "px")) : c.addClass(l.width)), l.height && "inherit" !== l.height) if (jQuery.isNumeric(l.height)) {
                     var m = l.height;
@@ -147,7 +144,7 @@
             l.onShow(this), this;
         },
         parseContent: function(t) {
-            var t = t || this.$textarea.val();
+            t = t || this.$textarea.val();
             return this.$options.parser ? this.$options.parser(t) : "object" == typeof markdown ? markdown.toHTML(t) : "function" == typeof marked ? marked(t) : t;
         },
         showPreview: function() {
@@ -155,15 +152,15 @@
                 class: "md-preview",
                 "data-provider": "markdown-preview"
             });
-            return 1 == this.$isPreview ? this : (this.$isPreview = !0, this.disableButtons("all").enableButtons("cmdPreview"), 
-            n = i.onPreview(this), e = "string" == typeof n ? n : this.parseContent(), o.html(e), 
+            return 1 == this.$isPreview || (this.$isPreview = !0, this.disableButtons("all").enableButtons("cmdPreview"), 
+            e = "string" == typeof (n = i.onPreview(this)) ? n : this.parseContent(), o.html(e), 
             s && "md-footer" == s.attr("class") ? o.insertBefore(s) : a.parent().append(o), 
             o.css({
                 width: a.outerWidth() + "px",
                 height: a.outerHeight() + "px"
             }), this.$options.resize && o.css("resize", this.$options.resize), a.hide(), o.data("markdown", this), 
             (this.$element.is(":disabled") || this.$element.is("[readonly]")) && (this.$editor.addClass("md-editor-disabled"), 
-            this.disableButtons("all")), this);
+            this.disableButtons("all"))), this;
         },
         hidePreview: function() {
             return this.$isPreview = !1, this.$editor.find('div[data-provider="markdown-preview"]').remove(), 
@@ -181,7 +178,7 @@
         },
         findSelection: function(t) {
             var e;
-            if ((e = this.getContent().indexOf(t)) >= 0 && t.length > 0) {
+            if (0 <= (e = this.getContent().indexOf(t)) && 0 < t.length) {
                 var n, i = this.getSelection();
                 return this.setSelection(e, e + t.length), n = this.getSelection(), this.setSelection(i.start, i.end), 
                 n;
@@ -222,7 +219,7 @@
         getNextTab: function() {
             if (0 === this.$nextTab.length) return null;
             var t, e = this.$nextTab.shift();
-            return "function" == typeof e ? t = e() : "object" == typeof e && e.length > 0 && (t = e), 
+            return "function" == typeof e ? t = e() : "object" == typeof e && 0 < e.length && (t = e), 
             t;
         },
         setNextTab: function(t, e) {
@@ -295,8 +292,8 @@
                     }, 500), e = !0;
                 } else {
                     var a = this.getSelection();
-                    a.start == a.end && a.end == this.getContent().length ? e = !1 : (this.setSelection(this.getContent().length, this.getContent().length), 
-                    e = !0);
+                    e = (a.start != a.end || a.end != this.getContent().length) && (this.setSelection(this.getContent().length, this.getContent().length), 
+                    !0);
                 }
                 break;
 
@@ -322,11 +319,9 @@
         focus: function(e) {
             var n = this.$options, i = (n.hideable, this.$editor);
             return i.addClass("active"), t(document).find(".md-editor").each(function() {
-                if (t(this).attr("id") !== i.attr("id")) {
-                    var e;
-                    null === (e = t(this).find("textarea").data("markdown")) && (e = t(this).find('div[data-provider="markdown-preview"]').data("markdown")), 
-                    e && e.blur();
-                }
+                var e;
+                t(this).attr("id") !== i.attr("id") && (null === (e = t(this).find("textarea").data("markdown")) && (e = t(this).find('div[data-provider="markdown-preview"]').data("markdown")), 
+                e && e.blur());
             }), n.onFocus(this), this;
         },
         blur: function(e) {
@@ -373,9 +368,9 @@
                 },
                 callback: function(t) {
                     var e, n, i = t.getSelection(), a = t.getContent();
-                    e = 0 === i.length ? t.__localize("strong text") : i.text, "**" === a.substr(i.start - 2, 2) && "**" === a.substr(i.end, 2) ? (t.setSelection(i.start - 2, i.end + 2), 
-                    t.replaceSelection(e), n = i.start - 2) : (t.replaceSelection("**" + e + "**"), 
-                    n = i.start + 2), t.setSelection(n, n + e.length);
+                    e = 0 === i.length ? t.__localize("strong text") : i.text, n = "**" === a.substr(i.start - 2, 2) && "**" === a.substr(i.end, 2) ? (t.setSelection(i.start - 2, i.end + 2), 
+                    t.replaceSelection(e), i.start - 2) : (t.replaceSelection("**" + e + "**"), i.start + 2), 
+                    t.setSelection(n, n + e.length);
                 }
             }, {
                 name: "cmdItalic",
@@ -388,8 +383,8 @@
                 },
                 callback: function(t) {
                     var e, n, i = t.getSelection(), a = t.getContent();
-                    e = 0 === i.length ? t.__localize("emphasized text") : i.text, "_" === a.substr(i.start - 1, 1) && "_" === a.substr(i.end, 1) ? (t.setSelection(i.start - 1, i.end + 1), 
-                    t.replaceSelection(e), n = i.start - 1) : (t.replaceSelection("_" + e + "_"), n = i.start + 1), 
+                    e = 0 === i.length ? t.__localize("emphasized text") : i.text, n = "_" === a.substr(i.start - 1, 1) && "_" === a.substr(i.end, 1) ? (t.setSelection(i.start - 1, i.end + 1), 
+                    t.replaceSelection(e), i.start - 1) : (t.replaceSelection("_" + e + "_"), i.start + 1), 
                     t.setSelection(n, n + e.length);
                 }
             }, {
@@ -403,10 +398,10 @@
                 },
                 callback: function(t) {
                     var e, n, i, a, s = t.getSelection(), o = t.getContent();
-                    e = 0 === s.length ? t.__localize("heading text") : s.text + "\n", i = 4, "### " === o.substr(s.start - i, i) || (i = 3, 
+                    e = 0 === s.length ? t.__localize("heading text") : s.text + "\n", i = 4, n = "### " === o.substr(s.start - i, i) || (i = 3, 
                     "###" === o.substr(s.start - i, i)) ? (t.setSelection(s.start - i, s.end), t.replaceSelection(e), 
-                    n = s.start - i) : s.start > 0 && (a = o.substr(s.start - 1, 1)) && "\n" != a ? (t.replaceSelection("\n\n### " + e), 
-                    n = s.start + 6) : (t.replaceSelection("### " + e), n = s.start + 4), t.setSelection(n, n + e.length);
+                    s.start - i) : 0 < s.start && (a = o.substr(s.start - 1, 1)) && "\n" != a ? (t.replaceSelection("\n\n### " + e), 
+                    s.start + 6) : (t.replaceSelection("### " + e), s.start + 4), t.setSelection(n, n + e.length);
                 }
             } ]
         }, {
@@ -422,8 +417,8 @@
                 },
                 callback: function(e) {
                     var n, i, a, s = e.getSelection();
-                    e.getContent();
-                    n = 0 === s.length ? e.__localize("enter link description here") : s.text, a = prompt(e.__localize("Insert Hyperlink"), "http://");
+                    e.getContent(), n = 0 === s.length ? e.__localize("enter link description here") : s.text, 
+                    a = prompt(e.__localize("Insert Hyperlink"), "http://");
                     var o = new RegExp("^((http|https)://|(mailto:)|(//))[a-z0-9]", "i");
                     if (null !== a && "" !== a && "http://" !== a && o.test(a)) {
                         var r = t("<div>" + a + "</div>").text();
@@ -441,8 +436,8 @@
                 },
                 callback: function(e) {
                     var n, i, a, s = e.getSelection();
-                    e.getContent();
-                    n = 0 === s.length ? e.__localize("enter image description here") : s.text, a = prompt(e.__localize("Insert Image Hyperlink"), "http://");
+                    e.getContent(), n = 0 === s.length ? e.__localize("enter image description here") : s.text, 
+                    a = prompt(e.__localize("Insert Image Hyperlink"), "http://");
                     var o = new RegExp("^((http|https)://|(//))[a-z0-9]", "i");
                     if (null !== a && "" !== a && "http://" !== a && o.test(a)) {
                         var r = t("<div>" + a + "</div>").text();
@@ -464,8 +459,7 @@
                 },
                 callback: function(e) {
                     var n, i, a = e.getSelection();
-                    e.getContent();
-                    if (0 === a.length) n = e.__localize("list text here"), e.replaceSelection("- " + n), 
+                    if (e.getContent(), 0 === a.length) n = e.__localize("list text here"), e.replaceSelection("- " + n), 
                     i = a.start + 2; else if (a.text.indexOf("\n") < 0) n = a.text, e.replaceSelection("- " + n), 
                     i = a.start + 2; else {
                         var s = [];
@@ -486,8 +480,7 @@
                 },
                 callback: function(e) {
                     var n, i, a = e.getSelection();
-                    e.getContent();
-                    if (0 === a.length) n = e.__localize("list text here"), e.replaceSelection("1. " + n), 
+                    if (e.getContent(), 0 === a.length) n = e.__localize("list text here"), e.replaceSelection("1. " + n), 
                     i = a.start + 3; else if (a.text.indexOf("\n") < 0) n = a.text, e.replaceSelection("1. " + n), 
                     i = a.start + 3; else {
                         var s = [];
@@ -508,10 +501,10 @@
                 },
                 callback: function(t) {
                     var e, n, i = t.getSelection(), a = t.getContent();
-                    e = 0 === i.length ? t.__localize("code text here") : i.text, "```\n" === a.substr(i.start - 4, 4) && "\n```" === a.substr(i.end, 4) ? (t.setSelection(i.start - 4, i.end + 4), 
-                    t.replaceSelection(e), n = i.start - 4) : "`" === a.substr(i.start - 1, 1) && "`" === a.substr(i.end, 1) ? (t.setSelection(i.start - 1, i.end + 1), 
-                    t.replaceSelection(e), n = i.start - 1) : a.indexOf("\n") > -1 ? (t.replaceSelection("```\n" + e + "\n```"), 
-                    n = i.start + 4) : (t.replaceSelection("`" + e + "`"), n = i.start + 1), t.setSelection(n, n + e.length);
+                    e = 0 === i.length ? t.__localize("code text here") : i.text, n = "```\n" === a.substr(i.start - 4, 4) && "\n```" === a.substr(i.end, 4) ? (t.setSelection(i.start - 4, i.end + 4), 
+                    t.replaceSelection(e), i.start - 4) : "`" === a.substr(i.start - 1, 1) && "`" === a.substr(i.end, 1) ? (t.setSelection(i.start - 1, i.end + 1), 
+                    t.replaceSelection(e), i.start - 1) : -1 < a.indexOf("\n") ? (t.replaceSelection("```\n" + e + "\n```"), 
+                    i.start + 4) : (t.replaceSelection("`" + e + "`"), i.start + 1), t.setSelection(n, n + e.length);
                 }
             }, {
                 name: "cmdQuote",
@@ -524,8 +517,7 @@
                 },
                 callback: function(e) {
                     var n, i, a = e.getSelection();
-                    e.getContent();
-                    if (0 === a.length) n = e.__localize("quote here"), e.replaceSelection("> " + n), 
+                    if (e.getContent(), 0 === a.length) n = e.__localize("quote here"), e.replaceSelection("> " + n), 
                     i = a.start + 2; else if (a.text.indexOf("\n") < 0) n = a.text, e.replaceSelection("> " + n), 
                     i = a.start + 2; else {
                         var s = [];

@@ -28,9 +28,8 @@
         }, t;
     }(), i.commas = function(t) {
         var i, e, o, s;
-        return null != t ? (o = t < 0 ? "-" : "", i = Math.abs(t), e = Math.floor(i).toFixed(0), 
-        o += e.replace(/(?=(?:\d{3})+$)(?!^)/g, ","), (s = i.toString()).length > e.length && (o += s.slice(e.length)), 
-        o) : "-";
+        return null != t ? (o = t < 0 ? "-" : "", i = Math.abs(t), o += (e = Math.floor(i).toFixed(0)).replace(/(?=(?:\d{3})+$)(?!^)/g, ","), 
+        (s = i.toString()).length > e.length && (o += s.slice(e.length)), o) : "-";
     }, i.pad2 = function(t) {
         return (t < 10 ? "0" : "") + t;
     }, i.Grid = function(e) {
@@ -43,9 +42,9 @@
             "string" == typeof this.options.units && (this.options.postUnits = i.units), this.raphael = new Raphael(this.el[0]), 
             this.elementWidth = null, this.elementHeight = null, this.dirty = !1, this.selectFrom = null, 
             this.init && this.init(), this.setData(this.options.data), this.el.bind("mousemove", function(t) {
-                var i, o, s, n, r;
+                var i, o, n, r;
                 return o = e.el.offset(), r = t.pageX - o.left, e.selectFrom ? (i = e.data[e.hitTest(Math.min(r, e.selectFrom))]._x, 
-                s = e.data[e.hitTest(Math.max(r, e.selectFrom))]._x, n = s - i, e.selectionRect.attr({
+                n = e.data[e.hitTest(Math.max(r, e.selectFrom))]._x - i, e.selectionRect.attr({
                     x: i,
                     width: n
                 })) : e.fire("hovermove", r, t.pageY - o.top);
@@ -102,9 +101,9 @@
             resize: !1
         }, o.prototype.setData = function(t, e) {
             var o, s, n, r, h, a, l, p, u, c, d, f, g, m, y;
-            return null == e && (e = !0), this.options.data = t, null == t || 0 === t.length ? (this.data = [], 
+            return null == e && (e = !0), null == (this.options.data = t) || 0 === t.length ? (this.data = [], 
             this.raphael.clear(), void (null != this.hover && this.hover.hide())) : (f = this.cumulative ? 0 : null, 
-            g = this.cumulative ? 0 : null, this.options.goals.length > 0 && (h = Math.min.apply(Math, this.options.goals), 
+            g = this.cumulative ? 0 : null, 0 < this.options.goals.length && (h = Math.min.apply(Math, this.options.goals), 
             r = Math.max.apply(Math, this.options.goals), g = null != g ? Math.min(g, h) : h, 
             f = null != f ? Math.max(f, r) : r), this.data = function() {
                 var e, o, r;
@@ -124,7 +123,7 @@
             }.call(this), this.options.parseTime && (this.data = this.data.sort(function(t, i) {
                 return (t.x > i.x) - (i.x > t.x);
             })), this.xmin = this.data[0].x, this.xmax = this.data[this.data.length - 1].x, 
-            this.events = [], this.options.events.length > 0 && (this.options.parseTime ? this.events = function() {
+            this.events = [], 0 < this.options.events.length && (this.options.parseTime ? this.events = function() {
                 var t, e, s, n;
                 for (n = [], t = 0, e = (s = this.options.events).length; t < e; t++) o = s[t], 
                 n.push(i.parseDate(o));
@@ -136,27 +135,27 @@
             this.ymin = Math.min(this.ymin, this.grid[0]), this.ymax = Math.max(this.ymax, this.grid[this.grid.length - 1])) : (p = (this.ymax - this.ymin) / (this.options.numLines - 1), 
             this.grid = function() {
                 var t, i, e;
-                for (e = [], c = t = this.ymin, i = this.ymax; p > 0 ? t <= i : t >= i; c = t += p) e.push(c);
+                for (e = [], c = t = this.ymin, i = this.ymax; 0 < p ? t <= i : i <= t; c = t += p) e.push(c);
                 return e;
             }.call(this))), this.dirty = !0, e ? this.redraw() : void 0);
         }, o.prototype.yboundary = function(t, i) {
             var e, o;
-            return "string" == typeof (e = this.options["y" + t]) ? "auto" === e.slice(0, 4) ? e.length > 5 ? (o = parseInt(e.slice(5), 10), 
+            return "string" == typeof (e = this.options["y" + t]) ? "auto" === e.slice(0, 4) ? 5 < e.length ? (o = parseInt(e.slice(5), 10), 
             null == i ? o : Math[t](i, o)) : null != i ? i : 0 : parseInt(e, 10) : e;
         }, o.prototype.autoGridLines = function(t, i, e) {
-            var o, s, n, r, h, a, l, p, u;
+            var o, s, r, h, a, l, p, u;
             return h = i - t, u = Math.floor(Math.log(h) / Math.log(10)), l = Math.pow(10, u), 
-            s = Math.floor(t / l) * l, o = Math.ceil(i / l) * l, a = (o - s) / (e - 1), 1 === l && a > 1 && Math.ceil(a) !== a && (a = Math.ceil(a), 
-            o = s + a * (e - 1)), s < 0 && o > 0 && (s = Math.floor(t / a) * a, o = Math.ceil(i / a) * a), 
-            a < 1 ? (r = Math.floor(Math.log(a) / Math.log(10)), n = function() {
+            s = Math.floor(t / l) * l, o = Math.ceil(i / l) * l, a = (o - s) / (e - 1), 1 === l && 1 < a && Math.ceil(a) !== a && (a = Math.ceil(a), 
+            o = s + a * (e - 1)), s < 0 && 0 < o && (s = Math.floor(t / a) * a, o = Math.ceil(i / a) * a), 
+            a < 1 ? (r = Math.floor(Math.log(a) / Math.log(10)), function() {
                 var t, i;
-                for (i = [], p = t = s; a > 0 ? t <= o : t >= o; p = t += a) i.push(parseFloat(p.toFixed(1 - r)));
+                for (i = [], p = t = s; 0 < a ? t <= o : o <= t; p = t += a) i.push(parseFloat(p.toFixed(1 - r)));
                 return i;
-            }()) : n = function() {
+            }()) : function() {
                 var t, i;
-                for (i = [], p = t = s; a > 0 ? t <= o : t >= o; p = t += a) i.push(p);
+                for (i = [], p = t = s; 0 < a ? t <= o : o <= t; p = t += a) i.push(p);
                 return i;
-            }(), n;
+            }();
         }, o.prototype._calc = function() {
             var t, i, e, o, s, n, r, h;
             if (s = this.el.width(), e = this.el.height(), (this.elementWidth !== s || this.elementHeight !== e || this.dirty) && (this.elementWidth = s, 
@@ -168,7 +167,7 @@
                 return s;
             }.call(this), this.left += Math.max.apply(Math, n)), !0 !== (h = this.options.axes) && "both" !== h && "x" !== h || (t = function() {
                 var t, i, e;
-                for (e = [], o = t = 0, i = this.data.length; 0 <= i ? t < i : t > i; o = 0 <= i ? ++t : --t) e.push(this.measureText(this.data[o].text, -this.options.xLabelAngle).height);
+                for (e = [], o = t = 0, i = this.data.length; 0 <= i ? t < i : i < t; o = 0 <= i ? ++t : --t) e.push(this.measureText(this.data[o].text, -this.options.xLabelAngle).height);
                 return e;
             }.call(this), this.bottom -= Math.max.apply(Math, t)), this.width = Math.max(1, this.right - this.left), 
             this.height = Math.max(1, this.bottom - this.top), this.dx = this.width / (this.xmax - this.xmin), 
@@ -182,8 +181,8 @@
             this.draw) return this.draw();
         }, o.prototype.measureText = function(t, i) {
             var e, o;
-            return null == i && (i = 0), o = this.raphael.text(100, 100, t).attr("font-size", this.options.gridTextSize).attr("font-family", this.options.gridTextFamily).attr("font-weight", this.options.gridTextWeight).rotate(i), 
-            e = o.getBBox(), o.remove(), e;
+            return null == i && (i = 0), e = (o = this.raphael.text(100, 100, t).attr("font-size", this.options.gridTextSize).attr("font-family", this.options.gridTextFamily).attr("font-weight", this.options.gridTextWeight).rotate(i)).getBBox(), 
+            o.remove(), e;
         }, o.prototype.yAxisFormat = function(t) {
             return this.yLabelFormat(t);
         }, o.prototype.yLabelFormat = function(t) {
@@ -305,9 +304,9 @@
             }())));
             return n;
         }, e.prototype.hitTest = function(t) {
-            var i, e, o, s, n;
+            var i, o, s, n;
             if (0 === this.data.length) return null;
-            for (i = o = 0, s = (n = this.data.slice(1)).length; o < s && (e = n[i], !(t < (e._x + this.data[i]._x) / 2)); i = ++o) ;
+            for (i = o = 0, s = (n = this.data.slice(1)).length; o < s && !(t < (n[i]._x + this.data[i]._x) / 2); i = ++o) ;
             return i;
         }, e.prototype.onGridClick = function(t, i) {
             var e;
@@ -331,15 +330,15 @@
             var t, e, o, s;
             return this.paths = function() {
                 var n, r, h, l;
-                for (l = [], e = n = 0, r = this.options.ykeys.length; 0 <= r ? n < r : n > r; e = 0 <= r ? ++n : --n) s = "boolean" == typeof this.options.smooth ? this.options.smooth : (h = this.options.ykeys[e], 
-                a.call(this.options.smooth, h) >= 0), (t = function() {
+                for (l = [], e = n = 0, r = this.options.ykeys.length; 0 <= r ? n < r : r < n; e = 0 <= r ? ++n : --n) s = "boolean" == typeof this.options.smooth ? this.options.smooth : (h = this.options.ykeys[e], 
+                0 <= a.call(this.options.smooth, h)), 1 < (t = function() {
                     var t, i, s, n;
                     for (n = [], t = 0, i = (s = this.data).length; t < i; t++) void 0 !== (o = s[t])._y[e] && n.push({
                         x: o._x,
                         y: o._y[e]
                     });
                     return n;
-                }.call(this)).length > 1 ? l.push(i.Line.createPath(t, s, this.bottom)) : l.push(null);
+                }.call(this)).length ? l.push(i.Line.createPath(t, s, this.bottom)) : l.push(null);
                 return l;
             }.call(this);
         }, e.prototype.draw = function() {
@@ -348,11 +347,11 @@
             this.drawSeries(), !1 === this.options.hideHover) return this.displayHoverForRow(this.data.length - 1);
         }, e.prototype.drawXAxis = function() {
             var t, e, o, s, n, r, h, a, l, p, u = this;
-            for (h = this.bottom + this.options.padding / 2, n = null, s = null, t = function(t, i) {
+            for (h = this.bottom + this.options.padding / 2, s = n = null, t = function(t, i) {
                 var e, o, r, a, l;
-                return e = u.drawXAxisLabel(u.transX(i), h, t), l = e.getBBox(), e.transform("r" + -u.options.xLabelAngle), 
+                return l = (e = u.drawXAxisLabel(u.transX(i), h, t)).getBBox(), e.transform("r" + -u.options.xLabelAngle), 
                 o = e.getBBox(), e.transform("t0," + o.height / 2 + "..."), 0 !== u.options.xLabelAngle && (a = -.5 * l.width * Math.cos(u.options.xLabelAngle * Math.PI / 180), 
-                e.transform("t" + a + ",0...")), o = e.getBBox(), (null == n || n >= o.x + o.width || null != s && s >= o.x) && o.x >= 0 && o.x + o.width < u.el.width() ? (0 !== u.options.xLabelAngle && (r = 1.25 * u.options.gridTextSize / Math.sin(u.options.xLabelAngle * Math.PI / 180), 
+                e.transform("t" + a + ",0...")), o = e.getBBox(), (null == n || n >= o.x + o.width || null != s && s >= o.x) && 0 <= o.x && o.x + o.width < u.el.width() ? (0 !== u.options.xLabelAngle && (r = 1.25 * u.options.gridTextSize / Math.sin(u.options.xLabelAngle * Math.PI / 180), 
                 s = o.x - r), n = o.x - u.options.xLabelMargin) : e.remove();
             }, (o = this.options.parseTime ? 1 === this.data.length && "auto" === this.options.xLabels ? [ [ this.data[0].label, this.data[0].x ] ] : i.labelSeries(this.xmin, this.xmax, this.width, this.options.xLabels, this.options.xLabelFormat) : function() {
                 var t, i, e, o;
@@ -362,13 +361,12 @@
             return p;
         }, e.prototype.drawSeries = function() {
             var t, i, e, o, s, n;
-            for (this.seriesPoints = [], t = i = o = this.options.ykeys.length - 1; o <= 0 ? i <= 0 : i >= 0; t = o <= 0 ? ++i : --i) this._drawLineFor(t);
-            for (n = [], t = e = s = this.options.ykeys.length - 1; s <= 0 ? e <= 0 : e >= 0; t = s <= 0 ? ++e : --e) n.push(this._drawPointFor(t));
+            for (this.seriesPoints = [], t = i = o = this.options.ykeys.length - 1; o <= 0 ? i <= 0 : 0 <= i; t = o <= 0 ? ++i : --i) this._drawLineFor(t);
+            for (n = [], t = e = s = this.options.ykeys.length - 1; s <= 0 ? e <= 0 : 0 <= e; t = s <= 0 ? ++e : --e) n.push(this._drawPointFor(t));
             return n;
         }, e.prototype._drawPointFor = function(t) {
             var i, e, o, s, n, r;
-            for (this.seriesPoints[t] = [], r = [], o = 0, s = (n = this.data).length; o < s; o++) i = null, 
-            null != (e = n[o])._y[t] && (i = this.drawLinePoint(e._x, e._y[t], this.colorFor(e, t, "point"), t)), 
+            for (this.seriesPoints[t] = [], r = [], o = 0, s = (n = this.data).length; o < s; o++) (i = null) != (e = n[o])._y[t] && (i = this.drawLinePoint(e._x, e._y[t], this.colorFor(e, t, "point"), t)), 
             r.push(this.seriesPoints[t].push(i));
             return r;
         }, e.prototype._drawLineFor = function(t) {
@@ -394,11 +392,11 @@
             return a;
         }, e.prototype.hilight = function(t) {
             var i, e, o, s, n;
-            if (null !== this.prevHilight && this.prevHilight !== t) for (i = e = 0, s = this.seriesPoints.length - 1; 0 <= s ? e <= s : e >= s; i = 0 <= s ? ++e : --e) this.seriesPoints[i][this.prevHilight] && this.seriesPoints[i][this.prevHilight].animate(this.pointShrinkSeries(i));
-            if (null !== t && this.prevHilight !== t) for (i = o = 0, n = this.seriesPoints.length - 1; 0 <= n ? o <= n : o >= n; i = 0 <= n ? ++o : --o) this.seriesPoints[i][t] && this.seriesPoints[i][t].animate(this.pointGrowSeries(i));
+            if (null !== this.prevHilight && this.prevHilight !== t) for (i = e = 0, s = this.seriesPoints.length - 1; 0 <= s ? e <= s : s <= e; i = 0 <= s ? ++e : --e) this.seriesPoints[i][this.prevHilight] && this.seriesPoints[i][this.prevHilight].animate(this.pointShrinkSeries(i));
+            if (null !== t && this.prevHilight !== t) for (i = o = 0, n = this.seriesPoints.length - 1; 0 <= n ? o <= n : n <= o; i = 0 <= n ? ++o : --o) this.seriesPoints[i][t] && this.seriesPoints[i][t].animate(this.pointGrowSeries(i));
             return this.prevHilight = t;
         }, e.prototype.colorFor = function(t, i, e) {
-            return "function" == typeof this.options.lineColors ? this.options.lineColors.call(this, t, i, e) : "point" === e ? this.options.pointFillColors[i % this.options.pointFillColors.length] || this.options.lineColors[i % this.options.lineColors.length] : this.options.lineColors[i % this.options.lineColors.length];
+            return "function" == typeof this.options.lineColors ? this.options.lineColors.call(this, t, i, e) : "point" === e && this.options.pointFillColors[i % this.options.pointFillColors.length] || this.options.lineColors[i % this.options.lineColors.length];
         }, e.prototype.drawXAxisLabel = function(t, i, e) {
             return this.raphael.text(t, i, e).attr("font-size", this.options.gridTextSize).attr("font-family", this.options.gridTextFamily).attr("font-weight", this.options.gridTextWeight).attr("fill", this.options.gridTextColor);
         }, e.prototype.drawLinePath = function(t, i, e) {
@@ -425,14 +423,13 @@
     }(i.Grid), i.labelSeries = function(e, o, s, n, r) {
         var h, a, l, p, u, c, d, f, g, m, y;
         if (l = 200 * (o - e) / s, a = new Date(e), void 0 === (d = i.LABEL_SPECS[n])) for (g = 0, 
-        m = (y = i.AUTO_LABEL_ORDER).length; g < m; g++) if (p = y[g], c = i.LABEL_SPECS[p], 
-        l >= c.span) {
+        m = (y = i.AUTO_LABEL_ORDER).length; g < m; g++) if (p = y[g], l >= (c = i.LABEL_SPECS[p]).span) {
             d = c;
             break;
         }
         for (void 0 === d && (d = i.LABEL_SPECS.second), r && (d = t.extend({}, d, {
             fmt: r
-        })), h = d.start(a), u = []; (f = h.getTime()) <= o; ) f >= e && u.push([ d.fmt(h), f ]), 
+        })), h = d.start(a), u = []; (f = h.getTime()) <= o; ) e <= f && u.push([ d.fmt(h), f ]), 
         d.incr(h);
         return u;
     }, e = function(t) {
@@ -559,11 +556,11 @@
             var t, i, e, o, s, n, r, h;
             for (this.seriesPoints = [], h = [], e = 0, o = (i = this.options.behaveLikeLine ? function() {
                 n = [];
-                for (var t = 0, i = this.options.ykeys.length - 1; 0 <= i ? t <= i : t >= i; 0 <= i ? t++ : t--) n.push(t);
+                for (var t = 0, i = this.options.ykeys.length - 1; 0 <= i ? t <= i : i <= t; 0 <= i ? t++ : t--) n.push(t);
                 return n;
             }.apply(this) : function() {
                 r = [];
-                for (var t = s = this.options.ykeys.length - 1; s <= 0 ? t <= 0 : t >= 0; s <= 0 ? t++ : t--) r.push(t);
+                for (var t = s = this.options.ykeys.length - 1; s <= 0 ? t <= 0 : 0 <= t; s <= 0 ? t++ : t--) r.push(t);
                 return r;
             }.apply(this)).length; e < o; e++) t = i[e], this._drawFillFor(t), this._drawLineFor(t), 
             h.push(this._drawPointFor(t));
@@ -617,24 +614,24 @@
         }, o.prototype.drawXAxis = function() {
             var t, i, e, o, s, n, r, h, a, l, p, u, c;
             for (l = this.bottom + (this.options.xAxisLabelTopPadding || this.options.padding / 2), 
-            r = null, n = null, c = [], t = p = 0, u = this.data.length; 0 <= u ? p < u : p > u; t = 0 <= u ? ++p : --p) h = this.data[this.data.length - 1 - t], 
+            n = r = null, c = [], t = p = 0, u = this.data.length; 0 <= u ? p < u : u < p; t = 0 <= u ? ++p : --p) h = this.data[this.data.length - 1 - t], 
             a = (i = this.drawXAxisLabel(h._x, l, h.label)).getBBox(), i.transform("r" + -this.options.xLabelAngle), 
             e = i.getBBox(), i.transform("t0," + e.height / 2 + "..."), 0 !== this.options.xLabelAngle && (s = -.5 * a.width * Math.cos(this.options.xLabelAngle * Math.PI / 180), 
-            i.transform("t" + s + ",0...")), (null == r || r >= e.x + e.width || null != n && n >= e.x) && e.x >= 0 && e.x + e.width < this.el.width() ? (0 !== this.options.xLabelAngle && (o = 1.25 * this.options.gridTextSize / Math.sin(this.options.xLabelAngle * Math.PI / 180), 
+            i.transform("t" + s + ",0...")), (null == r || r >= e.x + e.width || null != n && n >= e.x) && 0 <= e.x && e.x + e.width < this.el.width() ? (0 !== this.options.xLabelAngle && (o = 1.25 * this.options.gridTextSize / Math.sin(this.options.xLabelAngle * Math.PI / 180), 
             n = e.x - o), c.push(r = e.x - this.options.xLabelMargin)) : c.push(i.remove());
             return c;
         }, o.prototype.drawSeries = function() {
             var t, i, e, o, s, n, r, h, a, l, p, u, c, d, f;
             return e = this.width / this.options.data.length, h = this.options.stacked ? 1 : this.options.ykeys.length, 
             t = (e * this.options.barSizeRatio - this.options.barGap * (h - 1)) / h, this.options.barSize && (t = Math.min(t, this.options.barSize)), 
-            u = e - t * h - this.options.barGap * (h - 1), r = u / 2, f = this.ymin <= 0 && this.ymax >= 0 ? this.transY(0) : null, 
+            u = e - t * h - this.options.barGap * (h - 1), r = u / 2, f = this.ymin <= 0 && 0 <= this.ymax ? this.transY(0) : null, 
             this.bars = function() {
                 var h, u, g, m;
                 for (g = this.data, m = [], o = h = 0, u = g.length; h < u; o = ++h) a = g[o], s = 0, 
                 m.push(function() {
                     var h, u, g, m;
-                    for (g = a._y, m = [], l = h = 0, u = g.length; h < u; l = ++h) null !== (d = g[l]) ? (f ? (c = Math.min(d, f), 
-                    i = Math.max(d, f)) : (c = d, i = this.bottom), n = this.left + o * e + r, this.options.stacked || (n += l * (t + this.options.barGap)), 
+                    for (g = a._y, m = [], l = h = 0, u = g.length; h < u; l = ++h) null !== (d = g[l]) ? (i = f ? (c = Math.min(d, f), 
+                    Math.max(d, f)) : (c = d, this.bottom), n = this.left + o * e + r, this.options.stacked || (n += l * (t + this.options.barGap)), 
                     p = i - c, this.options.verticalGridCondition && this.options.verticalGridCondition(a.x) && this.drawBar(this.left + o * e, this.top, e, Math.abs(this.top - this.bottom), this.options.verticalGridColor, this.options.verticalGridOpacity, this.options.barRadius), 
                     this.options.stacked && (c -= s), this.drawBar(n, c, t, p, this.colorFor(a, l, "bar"), this.options.barOpacity, this.options.barRadius), 
                     m.push(s += p)) : m.push(null);
@@ -665,16 +662,16 @@
         }, o.prototype.onHoverOut = function() {
             if (!1 !== this.options.hideHover) return this.hover.hide();
         }, o.prototype.hoverContentForRow = function(t) {
-            var i, e, o, s, n, r, h, a;
+            var i, e, o, n, r, h, a;
             for (i = "<div class='morris-hover-row-label'>" + (o = this.data[t]).label + "</div>", 
             e = r = 0, h = (a = o.y).length; r < h; e = ++r) n = a[e], i += "<div class='morris-hover-point' style='color: " + this.colorFor(o, e, "label") + "'>\n  " + this.options.labels[e] + ":\n  " + this.yLabelFormat(n) + "\n</div>";
             return "function" == typeof this.options.hoverCallback && (i = this.options.hoverCallback(t, this.options, i, o.src)), 
-            s = this.left + (t + .5) * this.width / this.data.length, [ i, s ];
+            [ i, this.left + (t + .5) * this.width / this.data.length ];
         }, o.prototype.drawXAxisLabel = function(t, i, e) {
             return this.raphael.text(t, i, e).attr("font-size", this.options.gridTextSize).attr("font-family", this.options.gridTextFamily).attr("font-weight", this.options.gridTextWeight).attr("fill", this.options.gridTextColor);
         }, o.prototype.drawBar = function(t, i, e, o, s, n, r) {
             var h;
-            return h = Math.max.apply(Math, r), (0 === h || h > o ? this.raphael.rect(t, i, e, o) : this.raphael.path(this.roundedRect(t, i, e, o, r))).attr("fill", s).attr("fill-opacity", n).attr("stroke", "none");
+            return (0 === (h = Math.max.apply(Math, r)) || o < h ? this.raphael.rect(t, i, e, o) : this.raphael.path(this.roundedRect(t, i, e, o, r))).attr("fill", s).attr("fill-opacity", n).attr("stroke", "none");
         }, o.prototype.roundedRect = function(t, i, e, o, s) {
             return null == s && (s = [ 0, 0, 0, 0 ]), [ "M", t, s[0] + i, "Q", t, i, t + s[0], i, "L", t + e - s[1], i, "Q", t + e, i, t + e, i + s[1], "L", t + e, i + o - s[2], "Q", t + e, i + o, t + e - s[2], i + o, "L", t + s[3], i + o, "Q", t, i + o, t, i + o - s[3], "Z" ];
         }, o;
@@ -700,15 +697,15 @@
         }, o.prototype.redraw = function() {
             var t, e, o, s, n, r, h, a, l, p, u, c, d, f, g, m, y, v, x, w, b, M;
             for (this.raphael.clear(), e = this.el.width() / 2, o = this.el.height() / 2, c = (Math.min(e, o) - 10) / 3, 
-            u = 0, d = 0, m = (x = this.values).length; d < m; d++) u += x[d];
-            for (a = 5 / (2 * c), t = 1.9999 * Math.PI - a * this.data.length, r = 0, n = 0, 
-            this.segments = [], s = f = 0, y = (w = this.values).length; f < y; s = ++f) l = r + a + t * (w[s] / u), 
+            d = u = 0, m = (x = this.values).length; d < m; d++) u += x[d];
+            for (a = 5 / (2 * c), t = 1.9999 * Math.PI - a * this.data.length, n = r = 0, this.segments = [], 
+            s = f = 0, y = (w = this.values).length; f < y; s = ++f) l = r + a + t * (w[s] / u), 
             (p = new i.DonutSegment(e, o, 2 * c, c, r, l, this.data[s].color || this.options.colors[n % this.options.colors.length], this.options.backgroundColor, n, this.raphael)).render(), 
             this.segments.push(p), p.on("hover", this.select), p.on("click", this.click), r = l, 
             n += 1;
             for (this.text1 = this.drawEmptyDonutLabel(e, o - 10, this.options.labelColor, 15, 800), 
             this.text2 = this.drawEmptyDonutLabel(e, o + 10, this.options.labelColor, 14), h = Math.max.apply(Math, this.values), 
-            n = 0, M = [], g = 0, v = (b = this.values).length; g < v; g++) {
+            M = [], g = n = 0, v = (b = this.values).length; g < v; g++) {
                 if (b[g] === h) {
                     this.select(n);
                     break;
@@ -731,7 +728,7 @@
             return this.segments[t].select(), i = this.data[t], this.setLabels(i.label, this.options.formatter(i.value, i));
         }, o.prototype.setLabels = function(t, i) {
             var e, o, s, n, r, h, a, l;
-            return e = 2 * (Math.min(this.el.width() / 2, this.el.height() / 2) - 10) / 3, n = 1.8 * e, 
+            return n = 1.8 * (e = 2 * (Math.min(this.el.width() / 2, this.el.height() / 2) - 10) / 3), 
             s = e / 2, o = e / 3, this.text1.attr({
                 text: t,
                 transform: ""
@@ -763,11 +760,11 @@
             return [ this.cx + t * this.sin_p0, this.cy + t * this.cos_p0, this.cx + t * this.sin_p1, this.cy + t * this.cos_p1 ];
         }, i.prototype.calcSegment = function(t, i) {
             var e, o, s, n, r, h, a, l, p, u;
-            return p = this.calcArcPoints(t), e = p[0], s = p[1], o = p[2], n = p[3], u = this.calcArcPoints(i), 
-            r = u[0], a = u[1], h = u[2], l = u[3], "M" + e + "," + s + "A" + t + "," + t + ",0," + this.is_long + ",0," + o + "," + n + "L" + h + "," + l + "A" + i + "," + i + ",0," + this.is_long + ",1," + r + "," + a + "Z";
+            return e = (p = this.calcArcPoints(t))[0], s = p[1], o = p[2], n = p[3], r = (u = this.calcArcPoints(i))[0], 
+            a = u[1], h = u[2], l = u[3], "M" + e + "," + s + "A" + t + "," + t + ",0," + this.is_long + ",0," + o + "," + n + "L" + h + "," + l + "A" + i + "," + i + ",0," + this.is_long + ",1," + r + "," + a + "Z";
         }, i.prototype.calcArc = function(t) {
             var i, e, o, s, n;
-            return n = this.calcArcPoints(t), i = n[0], o = n[1], e = n[2], s = n[3], "M" + i + "," + o + "A" + t + "," + t + ",0," + this.is_long + ",0," + e + "," + s;
+            return i = (n = this.calcArcPoints(t))[0], o = n[1], e = n[2], s = n[3], "M" + i + "," + o + "A" + t + "," + t + ",0," + this.is_long + ",0," + e + "," + s;
         }, i.prototype.render = function() {
             var t = this;
             return this.arc = this.drawDonutArc(this.hilight, this.color), this.seg = this.drawDonutSegment(this.path, this.color, this.backgroundColor, function() {

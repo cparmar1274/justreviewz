@@ -1,8 +1,6 @@
 angular.module("myapp", [ "ngMaterial", "ngMessages" ]).controller("ReportController", function($scope, $sce, $window, $http, $httpParamSerializerJQLike, $timeout, $q) {
     var self = $scope;
-    self.reportVehicle = {};
-    self.reportVehicle.reporterEmail = "";
-    self.reportVehicle.clientId = "";
+    self.reportVehicle = {}, self.reportVehicle.reporterEmail = "", self.reportVehicle.clientId = "", 
     self.reportVehicle.reasons = [ {
         id: 1,
         type: "1 Star",
@@ -39,52 +37,38 @@ angular.module("myapp", [ "ngMaterial", "ngMessages" ]).controller("ReportContro
         id: 9,
         type: "5 Star",
         stars: "5"
-    } ];
-    self.reportVehicle.selected = [];
-    self.reportVehicle.incidentDescription = "";
-    self.reportVehicle.incidentImage = null;
-    self.reportVehicle.selectedProvince = [ {
+    } ], self.reportVehicle.selected = [], self.reportVehicle.incidentDescription = "", 
+    self.reportVehicle.incidentImage = null, self.reportVehicle.selectedProvince = [ {
         id: 1,
         name: "Ontario"
-    } ];
-    self.reportVehicle.province = [ {
+    } ], self.reportVehicle.province = [ {
         id: 1,
         name: "Ontario"
     }, {
         id: 2,
         name: "British Columbia"
-    } ];
-    self.reportVehicle.selectedCountry = [ {
+    } ], self.reportVehicle.selectedCountry = [ {
         id: 1,
         name: "Canada"
-    } ];
-    self.reportVehicle.country = [ {
+    } ], self.reportVehicle.country = [ {
         id: 1,
         name: "Canada"
     }, {
         id: 3,
         name: "USA"
-    } ];
-    self.reportVehicle.address = "";
-    self.reportVehicle.city = "";
-    self.reportVehicle.postalCode = "";
-    self.reportVehicle.incidentDate = null;
-    self.reportVehicle.uploadFile = function(files) {
-        console.log("Selected File", files);
-        self.reportVehicle.incidentImage = files[0];
-    };
-    self.reportVehicle.bulkUpload = function() {
+    } ], self.reportVehicle.address = "", self.reportVehicle.city = "", self.reportVehicle.postalCode = "", 
+    self.reportVehicle.incidentDate = null, self.reportVehicle.uploadFile = function(files) {
+        console.log("Selected File", files), self.reportVehicle.incidentImage = files[0];
+    }, self.reportVehicle.bulkUpload = function() {
         var fd = new FormData();
-        fd.append("file", self.reportVehicle.incidentImage);
-        $http.post("bulkUpload", fd, {
-            withCredentials: true,
+        fd.append("file", self.reportVehicle.incidentImage), $http.post("bulkUpload", fd, {
+            withCredentials: !0,
             headers: {
-                "Content-Type": undefined
+                "Content-Type": void 0
             },
             transformRequest: angular.identity
         }).success(function(data, status, headers, config) {});
-    };
-    self.reportVehicle.reportIncident = function() {
+    }, self.reportVehicle.reportIncident = function() {
         var params = {
             clientId: self.reportVehicle.clientUserName,
             postedEmail: self.reportVehicle.reporterEmail,

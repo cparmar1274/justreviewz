@@ -30,10 +30,17 @@
     }).factory("ChartJsFactory", [ "ChartJs", "$timeout", function(a, n) {
         function o(t, r, e) {
             var n = D(t, r);
-            if (C(r) && k(t, r, e, n)) {
+            if (function(t) {
+                return t.chartData && t.chartData.length;
+            }(r) && k(t, r, e, n)) {
                 var o = e[0], c = o.getContext("2d");
-                r.chartGetColor = y(r);
-                var i = b(t, r);
+                r.chartGetColor = function(t) {
+                    return "function" == typeof t.chartGetColor ? t.chartGetColor : s;
+                }(r);
+                var i = function(t, r) {
+                    var e = l(t, r);
+                    return Array.isArray(r.chartData[0]) ? m(r.chartLabels, r.chartData, r.chartSeries || [], e, r.chartDatasetOverride) : w(r.chartLabels, r.chartData, e, r.chartDatasetOverride);
+                }(t, r);
                 F(r), r.chart = new a.Chart(c, {
                     type: t,
                     data: i,
@@ -44,7 +51,7 @@
         function c(t, r) {
             return !!(t && r && t.length && r.length) && (Array.isArray(t[0]) ? t.length === r.length && t.every(function(t, e) {
                 return t.length === r[e].length;
-            }) : r.reduce(i, 0) > 0 && t.length === r.length);
+            }) : 0 < r.reduce(i, 0) && t.length === r.length);
         }
         function i(t, r) {
             return t + r;
@@ -68,15 +75,22 @@
             return c && (n.chartColors = o), o.map(h);
         }
         function h(t) {
-            return "string" == typeof t && "r" === t[0] ? f(v(t)) : "string" == typeof t && "#" === t[0] ? f(p(t.substr(1))) : "object" == typeof t && null !== t ? t : s();
+            return "string" == typeof t && "r" === t[0] ? f(function(t) {
+                var r = t.match(/^rgba?\(([\d,.]+)\)$/);
+                if (!r) throw new Error("Cannot parse rgb value");
+                return (t = r[1].split(",")).map(Number);
+            }(t)) : "string" == typeof t && "#" === t[0] ? f(function(t) {
+                var r = parseInt(t, 16);
+                return [ r >> 16 & 255, r >> 8 & 255, 255 & r ];
+            }(t.substr(1))) : "object" == typeof t && null !== t ? t : s();
         }
         function s() {
             return f([ d(0, 255), d(0, 255), d(0, 255) ]);
         }
         function f(t) {
             var r = t[3] || 1;
-            return t = t.slice(0, 3), {
-                backgroundColor: g(t, .2),
+            return {
+                backgroundColor: g(t = t.slice(0, 3), .2),
                 pointBackgroundColor: g(t, r),
                 pointHoverBackgroundColor: g(t, .8),
                 borderColor: g(t, r),
@@ -89,25 +103,6 @@
         }
         function g(t, r) {
             return e ? "rgb(" + t.join(",") + ")" : "rgba(" + t.concat(r).join(",") + ")";
-        }
-        function p(t) {
-            var r = parseInt(t, 16);
-            return [ r >> 16 & 255, r >> 8 & 255, 255 & r ];
-        }
-        function v(t) {
-            var r = t.match(/^rgba?\(([\d,.]+)\)$/);
-            if (!r) throw new Error("Cannot parse rgb value");
-            return (t = r[1].split(",")).map(Number);
-        }
-        function C(t) {
-            return t.chartData && t.chartData.length;
-        }
-        function y(t) {
-            return "function" == typeof t.chartGetColor ? t.chartGetColor : s;
-        }
-        function b(t, r) {
-            var e = l(t, r);
-            return Array.isArray(r.chartData[0]) ? m(r.chartLabels, r.chartData, r.chartSeries || [], e, r.chartDatasetOverride) : w(r.chartLabels, r.chartData, e, r.chartDatasetOverride);
         }
         function m(r, e, a, n, o) {
             return {
@@ -141,11 +136,6 @@
         }
         function A(r, e) {
             r.onclick = e.chartClick ? u(e, "chartClick", !1) : t.noop, r.onmousemove = e.chartHover ? u(e, "chartHover", !0) : t.noop;
-        }
-        function B(t, r) {
-            Array.isArray(r.chartData[0]) ? r.chart.data.datasets.forEach(function(r, e) {
-                r.data = t[e];
-            }) : r.chart.data.datasets[0].data = t, r.chart.update(), r.$emit("chart-update", r.chart);
         }
         function $(t) {
             return !t || Array.isArray(t) && !t.length || "object" == typeof t && !Object.keys(t).length;
@@ -183,7 +173,11 @@
                     e && window.G_vmlCanvasManager.initElement(n[0]), a.$watch("chartData", function(t, e) {
                         if (t && t.length && (!Array.isArray(t[0]) || t[0].length)) {
                             var i = r || a.chartType;
-                            if (i) return a.chart && c(t, e) ? B(t, a) : void o(i, a, n);
+                            if (i) return a.chart && c(t, e) ? function(t, r) {
+                                Array.isArray(r.chartData[0]) ? r.chart.data.datasets.forEach(function(r, e) {
+                                    r.data = t[e];
+                                }) : r.chart.data.datasets[0].data = t, r.chart.update(), r.$emit("chart-update", r.chart);
+                            }(t, a) : void o(i, a, n);
                         } else F(a);
                     }, !0), a.$watch("chartSeries", i, !0), a.$watch("chartLabels", i, !0), a.$watch("chartOptions", i, !0), 
                     a.$watch("chartColors", i, !0), a.$watch("chartDatasetOverride", i, !0), a.$watch("chartType", function(r, e) {

@@ -40,8 +40,7 @@
             }
         };
         for (var i in n) !(i in e) && (e[i] = n[i]);
-        at(e);
-        for (var o in this) "_" === o.charAt(0) && "function" == typeof this[o] && (this[o] = this[o].bind(this));
+        for (var o in at(e), this) "_" === o.charAt(0) && "function" == typeof this[o] && (this[o] = this[o].bind(this));
         this.nativeDraggable = !e.forceFallback && K, r(t, "mousedown", this._onTapStart), 
         r(t, "touchstart", this._onTapStart), r(t, "pointerdown", this._onTapStart), this.nativeDraggable && (r(t, "dragover", this), 
         r(t, "dragenter", this)), ot.push(this._onDragOver), e.store && this.sort(e.store.get(this));
@@ -63,9 +62,6 @@
     function i(t) {
         var e = t.host;
         return e && e.nodeType ? e : t.parentNode;
-    }
-    function o(t) {
-        t.dataTransfer && (t.dataTransfer.dropEffect = "move"), t.preventDefault();
     }
     function r(t, e, n) {
         t.addEventListener(e, n, J);
@@ -113,10 +109,6 @@
     function f() {
         tt = !1;
     }
-    function p(t, e) {
-        var n = t.lastElementChild.getBoundingClientRect();
-        return e.clientY - (n.top + n.height) > 5 || e.clientX - (n.left + n.width) > 5;
-    }
     function g(t) {
         for (var e = t.tagName + t.className + t.src + t.href + t.textContent, n = e.length, i = 0; n--; ) i += e.charCodeAt(n);
         return i.toString(36);
@@ -149,18 +141,12 @@
     function D(t) {
         return Q ? Q(t).clone(!0)[0] : Z && Z.dom ? Z.dom(t).cloneNode(!0) : t.cloneNode(!0);
     }
-    function y(t) {
-        for (var e = t.getElementsByTagName("input"), n = e.length; n--; ) {
-            var i = e[n];
-            i.checked && it.push(i);
-        }
-    }
     if ("undefined" == typeof window || !window.document) return function() {
         throw new Error("Sortable.js requires a window with a document");
     };
     var w, T, C, S, E, x, N, k, B, Y, O, X, A, M, P, R, I, L, F, U, j = {}, H = /\s+/g, W = /left|right|inline/, V = "Sortable" + new Date().getTime(), q = window, z = q.document, G = q.parseInt, Q = q.jQuery || q.Zepto, Z = q.Polymer, J = !1, K = !!("draggable" in z.createElement("div")), $ = function(t) {
-        return !navigator.userAgent.match(/Trident.*rv[ :]?11\./) && (t = z.createElement("x"), 
-        t.style.cssText = "pointer-events:auto", "auto" === t.style.pointerEvents);
+        return !navigator.userAgent.match(/Trident.*rv[ :]?11\./) && ((t = z.createElement("x")).style.cssText = "pointer-events:auto", 
+        "auto" === t.style.pointerEvents);
     }(), tt = !1, et = Math.abs, nt = Math.min, it = [], ot = [], rt = b(function(t, e, n) {
         if (n && e.scroll) {
             var i, o, r, a, s, l, c = n[V], d = e.scrollSensitivity, h = e.scrollSpeed, u = t.clientX, f = t.clientY, p = window.innerWidth, g = window.innerHeight;
@@ -170,7 +156,7 @@
                     if (k.offsetWidth < k.scrollWidth || k.offsetHeight < k.scrollHeight) break;
                 } while (k = k.parentNode);
             }
-            k && (i = k, o = k.getBoundingClientRect(), r = (et(o.right - u) <= d) - (et(o.left - u) <= d), 
+            k && (o = (i = k).getBoundingClientRect(), r = (et(o.right - u) <= d) - (et(o.left - u) <= d), 
             a = (et(o.bottom - f) <= d) - (et(o.top - f) <= d)), r || a || (a = (g - f <= d) - (f <= d), 
             ((r = (p - u <= d) - (u <= d)) || a) && (i = q)), j.vx === r && j.vy === a && j.el === i || (j.el = i, 
             j.vx = r, j.vy = a, clearInterval(j.pid), i && (j.pid = setInterval(function() {
@@ -183,7 +169,7 @@
         function e(t, e) {
             return void 0 !== t && !0 !== t || (t = n.name), "function" == typeof t ? t : function(n, i) {
                 var o = i.options.group.name;
-                return e ? t : t && (t.join ? t.indexOf(o) > -1 : o == t);
+                return e ? t : t && (t.join ? -1 < t.indexOf(o) : o == t);
             };
         }
         var n = {}, i = t.group;
@@ -196,7 +182,12 @@
         constructor: t,
         _onTapStart: function(t) {
             var e, i = this, o = this.el, r = this.options, a = r.preventOnFilter, s = t.type, l = t.touches && t.touches[0], c = (l || t).target, h = t.target.shadowRoot && t.path[0] || c, u = r.filter;
-            if (y(o), !w && !("mousedown" === s && 0 !== t.button || r.disabled) && (c = n(c, r.draggable, o)) && N !== c) {
+            if (function(t) {
+                for (var e = t.getElementsByTagName("input"), n = e.length; n--; ) {
+                    var i = e[n];
+                    i.checked && it.push(i);
+                }
+            }(o), !w && !("mousedown" === s && 0 !== t.button || r.disabled) && (c = n(c, r.draggable, o)) && N !== c) {
                 if (e = v(c, r.draggable), "function" == typeof u) {
                     if (u.call(this, t, c, this)) return d(i, h, "filter", c, o, e), void (a && t.preventDefault());
                 } else if (u && (u = u.split(",").some(function(t) {
@@ -242,7 +233,7 @@
         _dragStarted: function() {
             if (E && w) {
                 var e = this.options;
-                s(w, e.ghostClass, !0), s(w, e.dragClass, !1), t.active = this, d(this, E, "start", w, E, M);
+                s(w, e.ghostClass, !0), s(w, e.dragClass, !1), d(t.active = this, E, "start", w, E, M);
             } else this._nulling();
         },
         _emulateDragOver: function() {
@@ -303,7 +294,10 @@
                 if (rt(i, d, this.el), tt) return;
                 if (o = n(i.target, d.draggable, c), r = w.getBoundingClientRect(), I !== this && (I = this, 
                 m = !0), s) return e(g, !0), T = E, void (S || x ? E.insertBefore(w, S || x) : b || E.appendChild(w));
-                if (0 === c.children.length || c.children[0] === C || c === i.target && p(c, i)) {
+                if (0 === c.children.length || c.children[0] === C || c === i.target && function(t, e) {
+                    var n = t.lastElementChild.getBoundingClientRect();
+                    return 5 < e.clientY - (n.top + n.height) || 5 < e.clientX - (n.left + n.width);
+                }(c, i)) {
                     if (0 !== c.children.length && c.children[0] !== C && c === i.target && (o = c.lastElementChild), 
                     o) {
                         if (o.animated) return;
@@ -312,11 +306,11 @@
                     e(g, v), !1 !== h(E, c, w, r, o, a, i) && (w.contains(c) || (c.appendChild(w), T = c), 
                     this._animate(r, w), o && this._animate(a, o));
                 } else if (o && !o.animated && o !== w && void 0 !== o.parentNode[V]) {
-                    O !== o && (O = o, X = l(o), A = l(o.parentNode));
-                    var _ = (a = o.getBoundingClientRect()).right - a.left, D = a.bottom - a.top, y = W.test(X.cssFloat + X.display) || "flex" == A.display && 0 === A["flex-direction"].indexOf("row"), N = o.offsetWidth > w.offsetWidth, k = o.offsetHeight > w.offsetHeight, B = (y ? (i.clientX - a.left) / _ : (i.clientY - a.top) / D) > .5, Y = o.nextElementSibling, M = !1;
+                    O !== o && (X = l(O = o), A = l(o.parentNode));
+                    var _ = (a = o.getBoundingClientRect()).right - a.left, D = a.bottom - a.top, y = W.test(X.cssFloat + X.display) || "flex" == A.display && 0 === A["flex-direction"].indexOf("row"), N = o.offsetWidth > w.offsetWidth, k = o.offsetHeight > w.offsetHeight, B = .5 < (y ? (i.clientX - a.left) / _ : (i.clientY - a.top) / D), Y = o.nextElementSibling, M = !1;
                     if (y) {
                         var P = w.offsetTop, L = o.offsetTop;
-                        M = P === L ? o.previousElementSibling === w && !N || B && N : o.previousElementSibling === w || w.previousElementSibling === o ? (i.clientY - a.top) / D > .5 : L > P;
+                        M = P === L ? o.previousElementSibling === w && !N || B && N : o.previousElementSibling === w || w.previousElementSibling === o ? .5 < (i.clientY - a.top) / D : P < L;
                     } else m || (M = Y !== w && !k || B && k);
                     var F = h(E, c, w, r, o, a, i, M);
                     !1 !== F && (1 !== F && -1 !== F || (M = 1 === F), tt = !0, setTimeout(f, 30), e(g, v), 
@@ -352,8 +346,8 @@
             E !== T && "clone" === t.active.lastPullMode || S && S.parentNode && S.parentNode.removeChild(S), 
             w && (this.nativeDraggable && a(w, "dragend", this), u(w), w.style["will-change"] = "", 
             s(w, this.options.ghostClass, !1), s(w, this.options.chosenClass, !1), d(this, E, "unchoose", w, E, M), 
-            E !== T ? (P = v(w, i.draggable)) >= 0 && (d(null, T, "add", w, E, M, P), d(this, E, "remove", w, E, M, P), 
-            d(null, T, "sort", w, E, M, P), d(this, E, "sort", w, E, M, P)) : w.nextSibling !== x && (P = v(w, i.draggable)) >= 0 && (d(this, E, "update", w, E, M, P), 
+            E !== T ? 0 <= (P = v(w, i.draggable)) && (d(null, T, "add", w, E, M, P), d(this, E, "remove", w, E, M, P), 
+            d(null, T, "sort", w, E, M, P), d(this, E, "sort", w, E, M, P)) : w.nextSibling !== x && 0 <= (P = v(w, i.draggable)) && (d(this, E, "update", w, E, M, P), 
             d(this, E, "sort", w, E, M, P)), t.active && (null != P && -1 !== P || (P = M), 
             d(this, E, "end", w, E, M, P), this.save()))), this._nulling();
         },
@@ -372,7 +366,9 @@
 
               case "dragover":
               case "dragenter":
-                w && (this._onDragOver(t), o(t));
+                w && (this._onDragOver(t), function(t) {
+                    t.dataTransfer && (t.dataTransfer.dropEffect = "move"), t.preventDefault();
+                }(t));
                 break;
 
               case "selectstart":

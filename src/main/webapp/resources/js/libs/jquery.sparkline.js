@@ -3,7 +3,7 @@
         "function" == typeof define && define.amd ? define([ "jquery" ], t) : jQuery && !jQuery.fn.sparkline && t(jQuery);
     }(function(e) {
         "use strict";
-        var s, r, n, a, o, h, l, g, p, d, u, c, f, v, m, x, y, C, w, b, R, S, k, M, _, H, W, T, q, I, j = {}, P = 0;
+        var s, r, n, a, o, h, l, g, p, d, u, c, f, v, m, x, y, C, w, b, R, S, k, M, H, W, T, q, I, j = {}, P = 0;
         s = function() {
             return {
                 common: {
@@ -140,15 +140,14 @@
                     }
                 }
             };
-        }, _ = '.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;box-sizing: content-box;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}', 
-        r = function() {
+        }, r = function() {
             var t, i;
             return t = function() {
                 this.init.apply(this, arguments);
-            }, arguments.length > 1 ? (arguments[0] ? (t.prototype = e.extend(new arguments[0](), arguments[arguments.length - 1]), 
+            }, 1 < arguments.length ? (arguments[0] ? (t.prototype = e.extend(new arguments[0](), arguments[arguments.length - 1]), 
             t._super = arguments[0].prototype) : t.prototype = arguments[arguments.length - 1], 
-            arguments.length > 2 && ((i = Array.prototype.slice.call(arguments, 1, -1)).unshift(t.prototype), 
-            e.extend.apply(e, i))) : t.prototype = arguments[0], t.prototype.cls = t, t;
+            2 < arguments.length && ((i = Array.prototype.slice.call(arguments, 1, -1)).unshift(t.prototype), 
+            e.extend.apply(e, i))) : t.prototype = arguments[0], t.prototype.cls = t;
         }, e.SPFormatClass = n = r({
             fre: /\{\{([\w.]+?)(:(.+?))?\}\}/g,
             precre: /(\w+)\.(\d+)/,
@@ -166,7 +165,7 @@
         }), e.spformat = function(t, i) {
             return new n(t, i);
         }, a = function(t, i, e) {
-            return t < i ? i : t > e ? e : t;
+            return t < i ? i : e < t ? e : t;
         }, o = function(t, e) {
             var s;
             return 2 === e ? (s = i.floor(t.length / 2), t.length % 2 ? t[s] : (t[s - 1] + t[s]) / 2) : t.length % 2 ? (s = (t.length * e + e) / 4) % 1 ? (t[i.floor(s)] + t[i.floor(s) - 1]) / 2 : t[s - 1] : (s = (t.length * e + 2) / 4) % 1 ? (t[i.floor(s)] + t[i.floor(s) - 1]) / 2 : t[s - 1];
@@ -206,7 +205,7 @@
         }, f = function(t, i, s, r, n) {
             var a, o;
             for (t = (!1 === i ? parseFloat(t).toString() : t.toFixed(i)).split(""), (a = (a = e.inArray(".", t)) < 0 ? t.length : a) < t.length && (t[a] = n), 
-            o = a - s; o > 0; o -= s) t.splice(o, 0, r);
+            o = a - s; 0 < o; o -= s) t.splice(o, 0, r);
             return t.join("");
         }, d = function(t, i, e) {
             var s;
@@ -232,7 +231,7 @@
                 if (h.getContext && h.getContext("2d")) e.fn.sparkline.canvas = function(t, i, e, s) {
                     return new T(t, i, e, s);
                 }; else {
-                    if (!t.namespaces || t.namespaces.v) return e.fn.sparkline.canvas = !1, !1;
+                    if (!t.namespaces || t.namespaces.v) return e.fn.sparkline.canvas = !1;
                     t.namespaces.add("v", "urn:schemas-microsoft-com:vml", "#default#VML"), e.fn.sparkline.canvas = function(t, i, e, s) {
                         return new q(t, i, e);
                     };
@@ -247,7 +246,7 @@
         }, e.RangeMapClass = v = r({
             init: function(t) {
                 var i, e, s = [];
-                for (i in t) t.hasOwnProperty(i) && "string" == typeof i && i.indexOf(":") > -1 && ((e = i.split(":"))[0] = 0 === e[0].length ? -1 / 0 : parseFloat(e[0]), 
+                for (i in t) t.hasOwnProperty(i) && "string" == typeof i && -1 < i.indexOf(":") && ((e = i.split(":"))[0] = 0 === e[0].length ? -1 / 0 : parseFloat(e[0]), 
                 e[1] = 0 === e[1].length ? 1 / 0 : parseFloat(e[1]), e[2] = t[i], s.push(e));
                 this.map = t, this.rangelist = s || !1;
             },
@@ -270,7 +269,7 @@
             },
             registerCanvas: function(t) {
                 var i = e(t.canvas);
-                this.canvas = t, this.$canvas = i, i.mouseenter(e.proxy(this.mouseenter, this)), 
+                this.canvas = t, (this.$canvas = i).mouseenter(e.proxy(this.mouseenter, this)), 
                 i.mouseleave(e.proxy(this.mouseleave, this)), i.click(e.proxy(this.mouseclick, this));
             },
             reset: function(t) {
@@ -302,7 +301,7 @@
                 if (this.over) {
                     for (i = 0; i < a; i++) (s = n[i].setRegionHighlight(this.currentEl, l, g)) && (o = !0);
                     if (o) {
-                        if (r = e.Event("sparklineRegionChange"), r.sparklines = this.splist, this.$el.trigger(r), 
+                        if ((r = e.Event("sparklineRegionChange")).sparklines = this.splist, this.$el.trigger(r), 
                         this.tooltip) {
                             for (t = "", i = 0; i < a; i++) t += n[i].getCurrentRegionTooltip();
                             this.tooltip.setContent(t);
@@ -362,14 +361,14 @@
                 e(window).unbind("resize.jqs scroll.jqs");
             }
         }), e(function() {
-            u(_);
+            u('.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;box-sizing: content-box;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}');
         }), I = [], e.fn.sparkline = function(i, s) {
             return this.each(function() {
                 var r, n, a = new e.fn.sparkline.options(this, s), o = e(this);
                 if (r = function() {
                     var s, r, n, h, l, g, p;
-                    "html" === i || void 0 === i ? (void 0 !== (p = this.getAttribute(a.get("tagValuesAttribute"))) && null !== p || (p = o.html()), 
-                    s = p.replace(/(^\s*<!--)|(-->\s*$)|\s+/g, "").split(",")) : s = i, r = "auto" === a.get("width") ? s.length * a.get("defaultPixelsPerValue") : a.get("width"), 
+                    s = "html" === i || void 0 === i ? (void 0 !== (p = this.getAttribute(a.get("tagValuesAttribute"))) && null !== p || (p = o.html()), 
+                    p.replace(/(^\s*<!--)|(-->\s*$)|\s+/g, "").split(",")) : i, r = "auto" === a.get("width") ? s.length * a.get("defaultPixelsPerValue") : a.get("width"), 
                     "auto" === a.get("height") ? a.get("composite") && e.data(this, "_jqs_vcanvas") || ((h = t.createElement("span")).innerHTML = "a", 
                     o.html(h), n = e(h).innerHeight() || e(h).height(), e(h).remove(), h = null) : n = a.get("height"), 
                     a.get("disableInteraction") ? l = !1 : (l = e.data(this, "_jqs_mhandler")) ? a.get("composite") || l.reset() : (l = new m(this, a), 
@@ -425,13 +424,11 @@
             getRegion: function(t, i) {},
             setRegionHighlight: function(t, i, e) {
                 var s, r = this.currentRegion, n = !this.options.get("disableHighlight");
-                return i > this.canvasWidth || e > this.canvasHeight || i < 0 || e < 0 ? null : (s = this.getRegion(t, i, e), 
-                r !== s && (void 0 !== r && n && this.removeHighlight(), this.currentRegion = s, 
-                void 0 !== s && n && this.renderHighlight(), !0));
+                return i > this.canvasWidth || e > this.canvasHeight || i < 0 || e < 0 ? null : r !== (s = this.getRegion(t, i, e)) && (void 0 !== r && n && this.removeHighlight(), 
+                void 0 !== (this.currentRegion = s) && n && this.renderHighlight(), !0);
             },
             clearRegionHighlight: function() {
-                return void 0 !== this.currentRegion && (this.removeHighlight(), this.currentRegion = void 0, 
-                !0);
+                return void 0 !== this.currentRegion && (this.removeHighlight(), !(this.currentRegion = void 0));
             },
             renderHighlight: function() {
                 this.changeHighlight(!0);
@@ -558,7 +555,7 @@
                     h.length || h.push([ u, n + q ]), o = [ u, n + i.round(q - q * ((p - this.miny) / s)) ], 
                     h.push(o), I.push(o));
                     for (x = [], y = [], w = l.length, _ = 0; _ < w; _++) (h = l[_]).length && (H.get("fillColor") && (h.push([ h[h.length - 1][0], n + q ]), 
-                    y.push(h.slice(0)), h.pop()), h.length > 2 && (h[0] = [ h[0][0], h[1][1] ]), x.push(h));
+                    y.push(h.slice(0)), h.pop()), 2 < h.length && (h[0] = [ h[0][0], h[1][1] ]), x.push(h));
                     for (w = y.length, _ = 0; _ < w; _++) W.drawShape(y[_], H.get("fillColor"), H.get("fillColor")).append();
                     for (void 0 !== H.get("normalRangeMin") && H.get("drawNormalOnTop") && this.drawNormalRange(a, n, q, T, s), 
                     w = x.length, _ = 0; _ < w; _++) W.drawShape(x[_], H.get("lineColor"), void 0, H.get("lineWidth")).append();
@@ -575,24 +572,24 @@
             type: "bar",
             init: function(t, s, r, n, o) {
                 var p, d, u, c, f, m, x, y, C, b, R, S, k, M, _, H, W, T, q, I, j, P = parseInt(r.get("barWidth"), 10), L = parseInt(r.get("barSpacing"), 10), A = r.get("chartRangeMin"), F = r.get("chartRangeMax"), B = r.get("chartRangeClip"), O = 1 / 0, V = -1 / 0;
-                for (w._super.init.call(this, t, s, r, n, o), m = 0, x = s.length; m < x; m++) ((p = "string" == typeof (I = s[m]) && I.indexOf(":") > -1) || e.isArray(I)) && (_ = !0, 
-                p && (I = s[m] = l(I.split(":"))), I = g(I, null), d = i.min.apply(i, I), u = i.max.apply(i, I), 
-                d < O && (O = d), u > V && (V = u));
+                for (w._super.init.call(this, t, s, r, n, o), m = 0, x = s.length; m < x; m++) ((p = "string" == typeof (I = s[m]) && -1 < I.indexOf(":")) || e.isArray(I)) && (_ = !0, 
+                p && (I = s[m] = l(I.split(":"))), I = g(I, null), (d = i.min.apply(i, I)) < O && (O = d), 
+                V < (u = i.max.apply(i, I)) && (V = u));
                 this.stacked = _, this.regionShapes = {}, this.barWidth = P, this.barSpacing = L, 
                 this.totalBarWidth = P + L, this.width = n = s.length * P + (s.length - 1) * L, 
                 this.initTarget(), B && (k = void 0 === A ? -1 / 0 : A, M = void 0 === F ? 1 / 0 : F), 
                 f = [], c = _ ? [] : f;
                 var X = [], z = [];
                 for (m = 0, x = s.length; m < x; m++) if (_) for (H = s[m], s[m] = q = [], X[m] = 0, 
-                c[m] = z[m] = 0, W = 0, T = H.length; W < T; W++) null !== (I = q[W] = B ? a(H[W], k, M) : H[W]) && (I > 0 && (X[m] += I), 
-                O < 0 && V > 0 ? I < 0 ? z[m] += i.abs(I) : c[m] += I : c[m] += i.abs(I - (I < 0 ? V : O)), 
+                c[m] = z[m] = 0, W = 0, T = H.length; W < T; W++) null !== (I = q[W] = B ? a(H[W], k, M) : H[W]) && (0 < I && (X[m] += I), 
+                O < 0 && 0 < V ? I < 0 ? z[m] += i.abs(I) : c[m] += I : c[m] += i.abs(I - (I < 0 ? V : O)), 
                 f.push(I)); else I = B ? a(s[m], k, M) : s[m], null !== (I = s[m] = h(I)) && f.push(I);
                 this.max = S = i.max.apply(i, f), this.min = R = i.min.apply(i, f), this.stackMax = V = _ ? i.max.apply(i, X) : S, 
                 this.stackMin = O = _ ? i.min.apply(i, f) : R, void 0 !== r.get("chartRangeMin") && (r.get("chartRangeClip") || r.get("chartRangeMin") < R) && (R = r.get("chartRangeMin")), 
                 void 0 !== r.get("chartRangeMax") && (r.get("chartRangeClip") || r.get("chartRangeMax") > S) && (S = r.get("chartRangeMax")), 
-                this.zeroAxis = C = r.get("zeroAxis", !0), b = R <= 0 && S >= 0 && C ? 0 : 0 == C ? R : R > 0 ? R : S, 
+                this.zeroAxis = C = r.get("zeroAxis", !0), b = R <= 0 && 0 <= S && C ? 0 : 0 == C ? R : 0 < R ? R : S, 
                 this.xaxisOffset = b, y = _ ? i.max.apply(i, c) + i.max.apply(i, z) : S - R, this.canvasHeightEf = C && R < 0 ? this.canvasHeight - 2 : this.canvasHeight - 1, 
-                R < b ? (j = ((_ && S >= 0 ? V : S) - b) / y * this.canvasHeight) !== i.ceil(j) && (this.canvasHeightEf -= 2, 
+                R < b ? (j = ((_ && 0 <= S ? V : S) - b) / y * this.canvasHeight) !== i.ceil(j) && (this.canvasHeightEf -= 2, 
                 j = i.ceil(j)) : j = this.canvasHeight, this.yoffset = j, e.isArray(r.get("colorMap")) ? (this.colorMapByIndex = r.get("colorMap"), 
                 this.colorMapByValue = null) : (this.colorMapByIndex = null, this.colorMapByValue = r.get("colorMap"), 
                 this.colorMapByValue && void 0 === this.colorMapByValue.get && (this.colorMapByValue = new v(this.colorMapByValue))), 
@@ -620,15 +617,15 @@
             },
             renderRegion: function(t, s) {
                 var r, n, a, o, h, l, g, p, u, c, f = this.values[t], v = this.options, m = this.xaxisOffset, x = [], y = this.range, C = this.stacked, w = this.target, b = t * this.totalBarWidth, R = this.canvasHeightEf, S = this.yoffset;
-                if (f = e.isArray(f) ? f : [ f ], g = f.length, p = f[0], o = d(null, f), c = d(m, f, !0), 
+                if (g = (f = e.isArray(f) ? f : [ f ]).length, p = f[0], o = d(null, f), c = d(m, f, !0), 
                 o) return v.get("nullColor") ? (a = s ? v.get("nullColor") : this.calcHighlightColor(v.get("nullColor"), v), 
-                r = S > 0 ? S - 1 : S, w.drawRect(b, r, this.barWidth - 1, 0, a, a)) : void 0;
+                r = 0 < S ? S - 1 : S, w.drawRect(b, r, this.barWidth - 1, 0, a, a)) : void 0;
                 for (h = S, l = 0; l < g; l++) {
                     if (p = f[l], C && p === m) {
                         if (!c || u) continue;
                         u = !0;
                     }
-                    n = y > 0 ? i.floor(R * (i.abs(p - m) / y)) + 1 : 1, p < m || p === m && 0 === S ? (r = h, 
+                    n = 0 < y ? i.floor(R * (i.abs(p - m) / y)) + 1 : 1, p < m || p === m && 0 === S ? (r = h, 
                     h += n) : (r = S - n, S -= n), a = this.calcColor(l, p, t), s && (a = this.calcHighlightColor(a, v)), 
                     x.push(w.drawRect(b, r, this.barWidth - 1, n - 1, a, a));
                 }
@@ -659,12 +656,12 @@
             },
             calcColor: function(t, i) {
                 var e, s = this.values, r = this.options, n = this.colorMapByIndex, a = this.colorMapByValue;
-                return a && (e = a.get(t)) ? e : n && n.length > i ? n[i] : s[i] < 0 ? r.get("negBarColor") : s[i] > 0 ? r.get("posBarColor") : r.get("zeroBarColor");
+                return a && (e = a.get(t)) ? e : n && n.length > i ? n[i] : s[i] < 0 ? r.get("negBarColor") : 0 < s[i] ? r.get("posBarColor") : r.get("zeroBarColor");
             },
             renderRegion: function(t, e) {
                 var s, r, n, a, o, h, l = this.values, g = this.options, p = this.target;
-                if (s = p.pixelHeight, n = i.round(s / 2), a = t * this.totalBarWidth, l[t] < 0 ? (o = n, 
-                r = n - 1) : l[t] > 0 ? (o = 0, r = n - 1) : (o = n - 1, r = 2), null !== (h = this.calcColor(l[t], t))) return e && (h = this.calcHighlightColor(h, g)), 
+                if (s = p.pixelHeight, n = i.round(s / 2), a = t * this.totalBarWidth, r = l[t] < 0 ? (o = n) - 1 : 0 < l[t] ? (o = 0, 
+                n - 1) : (o = n - 1, 2), null !== (h = this.calcColor(l[t], t))) return e && (h = this.calcHighlightColor(h, g)), 
                 p.drawRect(a, o, this.barWidth - 1, r - 1, h, h);
             }
         }), e.fn.sparkline.discrete = R = r(e.fn.sparkline._base, y, {
@@ -760,7 +757,7 @@
                 var o, h = 0;
                 if (k._super.init.call(this, t, s, r, n, a), this.shapes = {}, this.valueShapes = {}, 
                 this.values = s = e.map(s, Number), "auto" === r.get("width") && (this.width = this.height), 
-                s.length > 0) for (o = s.length; o--; ) h += s[o];
+                0 < s.length) for (o = s.length; o--; ) h += s[o];
                 this.total = h, this.initTarget(), this.radius = i.floor(i.min(this.canvasWidth, this.canvasHeight) / 2);
             },
             getRegion: function(t, i, e) {
@@ -785,7 +782,7 @@
             renderSlice: function(t, e) {
                 var s, r, n, a, o, h = this.target, l = this.options, g = this.radius, p = l.get("borderWidth"), d = l.get("offset"), u = 2 * i.PI, c = this.values, f = this.total, v = d ? 2 * i.PI * (d / 360) : 0;
                 for (a = c.length, n = 0; n < a; n++) {
-                    if (s = v, r = v, f > 0 && (r = v + u * (c[n] / f)), t === n) return o = l.get("sliceColors")[n % l.get("sliceColors").length], 
+                    if (r = s = v, 0 < f && (r = v + u * (c[n] / f)), t === n) return o = l.get("sliceColors")[n % l.get("sliceColors").length], 
                     e && (o = this.calcHighlightColor(o, l)), h.drawPieSlice(g, g, g - p, s, r, void 0, o);
                     v = r;
                 }
@@ -836,11 +833,11 @@
             render: function() {
                 var t, e, s, r, n, a, h, l, g, p, d, u = this.target, c = this.values, f = c.length, v = this.options, m = this.canvasWidth, x = this.canvasHeight, y = void 0 === v.get("chartRangeMin") ? i.min.apply(i, c) : v.get("chartRangeMin"), C = void 0 === v.get("chartRangeMax") ? i.max.apply(i, c) : v.get("chartRangeMax"), w = 0;
                 if (M._super.render.call(this)) {
-                    if (v.get("raw")) v.get("showOutliers") && c.length > 5 ? (e = c[0], t = c[1], r = c[2], 
+                    if (v.get("raw")) v.get("showOutliers") && 5 < c.length ? (e = c[0], t = c[1], r = c[2], 
                     n = c[3], a = c[4], h = c[5], l = c[6]) : (t = c[0], r = c[1], n = c[2], a = c[3], 
                     h = c[4]); else if (c.sort(function(t, i) {
                         return t - i;
-                    }), r = o(c, 1), n = o(c, 2), a = o(c, 3), s = a - r, v.get("showOutliers")) {
+                    }), r = o(c, 1), n = o(c, 2), s = (a = o(c, 3)) - r, v.get("showOutliers")) {
                         for (t = h = void 0, g = 0; g < f; g++) void 0 === t && c[g] > r - s * v.get("outlierIQR") && (t = c[g]), 
                         c[g] < a + s * v.get("outlierIQR") && (h = c[g]);
                         e = c[0], l = c[f - 1];
@@ -848,7 +845,7 @@
                     this.quartiles = [ r, n, a ], this.lwhisker = t, this.rwhisker = h, this.loutlier = e, 
                     this.routlier = l, d = m / (C - y + 1), v.get("showOutliers") && (w = i.ceil(v.get("spotRadius")), 
                     d = (m -= 2 * i.ceil(v.get("spotRadius"))) / (C - y + 1), e < t && u.drawCircle((e - y) * d + w, x / 2, v.get("spotRadius"), v.get("outlierLineColor"), v.get("outlierFillColor")).append(), 
-                    l > h && u.drawCircle((l - y) * d + w, x / 2, v.get("spotRadius"), v.get("outlierLineColor"), v.get("outlierFillColor")).append()), 
+                    h < l && u.drawCircle((l - y) * d + w, x / 2, v.get("spotRadius"), v.get("outlierLineColor"), v.get("outlierFillColor")).append()), 
                     u.drawRect(i.round((r - y) * d + w), i.round(.1 * x), i.round((a - r) * d), i.round(.8 * x), v.get("boxLineColor"), v.get("boxFillColor")).append(), 
                     u.drawLine(i.round((t - y) * d + w), i.round(x / 2), i.round((r - y) * d + w), i.round(x / 2), v.get("lineColor")).append(), 
                     u.drawLine(i.round((t - y) * d + w), i.round(x / 4), i.round((t - y) * d + w), i.round(x - x / 4), v.get("whiskerColor")).append(), 
@@ -1031,10 +1028,7 @@
                 h = p[0] === p[p.length - 1] ? "x " : "", '<v:shape coordorigin="0 0" coordsize="' + this.pixelWidth + " " + this.pixelHeight + '"  id="jqsshape' + t + '" ' + a + o + ' style="position:absolute;left:0px;top:0px;height:' + this.pixelHeight + "px;width:" + this.pixelWidth + 'px;padding:0px;margin:0px;"  path="m ' + n + " l " + p.join(", ") + " " + h + 'e"> </v:shape>';
             },
             _drawCircle: function(t, i, e, s, r, n, a) {
-                var o, h;
-                return i -= s, e -= s, o = void 0 === r ? ' stroked="false" ' : ' strokeWeight="' + a + 'px" strokeColor="' + r + '" ', 
-                h = void 0 === n ? ' filled="false"' : ' fillColor="' + n + '" filled="true" ', 
-                '<v:oval  id="jqsshape' + t + '" ' + o + h + ' style="position:absolute;top:' + e + "px; left:" + i + "px; width:" + 2 * s + "px; height:" + 2 * s + 'px"></v:oval>';
+                return '<v:oval  id="jqsshape' + t + '" ' + (void 0 === r ? ' stroked="false" ' : ' strokeWeight="' + a + 'px" strokeColor="' + r + '" ') + (void 0 === n ? ' filled="false"' : ' fillColor="' + n + '" filled="true" ') + ' style="position:absolute;top:' + (e -= s) + "px; left:" + (i -= s) + "px; width:" + 2 * s + "px; height:" + 2 * s + 'px"></v:oval>';
             },
             _drawPieSlice: function(t, e, s, r, n, a, o, h) {
                 var l, g, p, d, u, c, f;

@@ -108,7 +108,7 @@
                 merge: !1,
                 width: e
             }; s--; ) i = this._mergers[s], i = this.settings.mergeFit && Math.min(i, this.settings.items) || i, 
-            t.items.merge = i > 1 || t.items.merge, o[s] = n ? e * i : this._items[s].width();
+            t.items.merge = 1 < i || t.items.merge, o[s] = n ? e * i : this._items[s].width();
             this._widths = o;
         }
     }, {
@@ -170,12 +170,11 @@
             this.$stage.children().eq(this.current()).addClass("center"));
         }
     } ], n.prototype.initialize = function() {
-        if (this.enter("initializing"), this.trigger("initialize"), this.$element.toggleClass(this.settings.rtlClass, this.settings.rtl), 
-        this.settings.autoWidth && !this.is("pre-loading")) {
-            var e, i, s;
-            e = this.$element.find("img"), i = this.settings.nestedItemSelector ? "." + this.settings.nestedItemSelector : void 0, 
-            s = this.$element.children(i).width(), e.length && s <= 0 && this.preloadAutoWidthImages(e);
-        }
+        var e, i, s;
+        (this.enter("initializing"), this.trigger("initialize"), this.$element.toggleClass(this.settings.rtlClass, this.settings.rtl), 
+        this.settings.autoWidth && !this.is("pre-loading")) && (e = this.$element.find("img"), 
+        i = this.settings.nestedItemSelector ? "." + this.settings.nestedItemSelector : void 0, 
+        s = this.$element.children(i).width(), e.length && s <= 0 && this.preloadAutoWidthImages(e));
         this.$element.addClass(this.options.loadingClass), this.$stage = t("<" + this.settings.stageElement + ' class="' + this.settings.stageClass + '"/>').wrap('<div class="' + this.settings.stageOuterClass + '"/>'), 
         this.$element.append(this.$stage.parent()), this.replace(this.$element.children().not(this.$stage.parent())), 
         this.$element.is(":visible") ? this.refresh() : this.invalidate("width"), this.$element.removeClass(this.options.loadingClass).addClass(this.options.loadedClass), 
@@ -183,7 +182,7 @@
     }, n.prototype.setup = function() {
         var e = this.viewport(), i = this.options.responsive, s = -1, n = null;
         i ? (t.each(i, function(t) {
-            t <= e && t > s && (s = Number(t));
+            t <= e && s < t && (s = Number(t));
         }), "function" == typeof (n = t.extend({}, this.options, i[s])).stagePadding && (n.stagePadding = n.stagePadding()), 
         delete n.responsive, n.responsiveClass && this.$element.attr("class", this.$element.attr("class").replace(new RegExp("(" + this.options.responsiveClass + "-)\\S+\\s", "g"), "$1" + s))) : n = t.extend({}, this.options), 
         this.trigger("change", {
@@ -210,7 +209,7 @@
     }, n.prototype.update = function() {
         for (var e = 0, i = this._pipe.length, s = t.proxy(function(t) {
             return this[t];
-        }, this._invalidated), n = {}; e < i; ) (this._invalidated.all || t.grep(this._pipe[e].filter, s).length > 0) && this._pipe[e].run(n), 
+        }, this._invalidated), n = {}; e < i; ) (this._invalidated.all || 0 < t.grep(this._pipe[e].filter, s).length) && this._pipe[e].run(n), 
         e++;
         this._invalidated = {}, !this.is("valid") && this.enter("valid");
     }, n.prototype.width = function(t) {
@@ -229,9 +228,9 @@
     }, n.prototype.onThrottledResize = function() {
         e.clearTimeout(this.resizeTimer), this.resizeTimer = e.setTimeout(this._handlers.onResize, this.settings.responsiveRefreshRate);
     }, n.prototype.onResize = function() {
-        return !!this._items.length && (this._width !== this.$element.width() && (!!this.$element.is(":visible") && (this.enter("resizing"), 
+        return !!this._items.length && this._width !== this.$element.width() && !!this.$element.is(":visible") && (this.enter("resizing"), 
         this.trigger("resize").isDefaultPrevented() ? (this.leave("resizing"), !1) : (this.invalidate("width"), 
-        this.refresh(), this.leave("resizing"), void this.trigger("resized")))));
+        this.refresh(), this.leave("resizing"), void this.trigger("resized")));
     }, n.prototype.registerEventHandlers = function() {
         t.support.transition && this.$stage.on(t.support.transition.end + ".owl.core", t.proxy(this.onTransitionEnd, this)), 
         !1 !== this.settings.responsive && this.on(e, "resize", this._handlers.onThrottledResize), 
@@ -242,10 +241,10 @@
         this.$stage.on("touchcancel.owl.core", t.proxy(this.onDragEnd, this)));
     }, n.prototype.onDragStart = function(e) {
         var s = null;
-        3 !== e.which && (t.support.transform ? s = {
+        3 !== e.which && (s = t.support.transform ? {
             x: (s = this.$stage.css("transform").replace(/.*\(|\)| /g, "").split(","))[16 === s.length ? 12 : 4],
             y: s[16 === s.length ? 13 : 5]
-        } : (s = this.$stage.position(), s = {
+        } : (s = this.$stage.position(), {
             x: this.settings.rtl ? s.left + this.$stage.width() - this.width() + this.settings.margin : s.left,
             y: s.top
         }), this.is("animating") && (t.support.transform ? this.animate(s.x) : this.$stage.stop(), 
@@ -266,21 +265,21 @@
         s = this.settings.pullDrag ? -1 * n.x / 5 : 0, o.x = Math.max(Math.min(o.x, e + s), i + s)), 
         this._drag.stage.current = o, this.animate(o.x));
     }, n.prototype.onDragEnd = function(e) {
-        var s = this.difference(this._drag.pointer, this.pointer(e)), n = this._drag.stage.current, o = s.x > 0 ^ this.settings.rtl ? "left" : "right";
+        var s = this.difference(this._drag.pointer, this.pointer(e)), n = this._drag.stage.current, o = 0 < s.x ^ this.settings.rtl ? "left" : "right";
         t(i).off(".owl.core"), this.$element.removeClass(this.options.grabClass), (0 !== s.x && this.is("dragging") || !this.is("valid")) && (this.speed(this.settings.dragEndSpeed || this.settings.smartSpeed), 
         this.current(this.closest(n.x, 0 !== s.x ? o : this._drag.direction)), this.invalidate("position"), 
-        this.update(), this._drag.direction = o, (Math.abs(s.x) > 3 || new Date().getTime() - this._drag.time > 300) && this._drag.target.one("click.owl.core", function() {
+        this.update(), this._drag.direction = o, (3 < Math.abs(s.x) || 300 < new Date().getTime() - this._drag.time) && this._drag.target.one("click.owl.core", function() {
             return !1;
         })), this.is("dragging") && (this.leave("dragging"), this.trigger("dragged"));
     }, n.prototype.closest = function(e, i) {
         var s = -1, n = this.width(), o = this.coordinates();
         return this.settings.freeDrag || t.each(o, t.proxy(function(t, r) {
-            return "left" === i && e > r - 30 && e < r + 30 ? s = t : "right" === i && e > r - n - 30 && e < r - n + 30 ? s = t + 1 : this.op(e, "<", r) && this.op(e, ">", o[t + 1] || r - n) && (s = "left" === i ? t + 1 : t), 
+            return "left" === i && r - 30 < e && e < r + 30 ? s = t : "right" === i && r - n - 30 < e && e < r - n + 30 ? s = t + 1 : this.op(e, "<", r) && this.op(e, ">", o[t + 1] || r - n) && (s = "left" === i ? t + 1 : t), 
             -1 === s;
         }, this)), this.settings.loop || (this.op(e, ">", o[this.minimum()]) ? s = e = this.minimum() : this.op(e, "<", o[this.maximum()]) && (s = e = this.maximum())), 
         s;
     }, n.prototype.animate = function(e) {
-        var i = this.speed() > 0;
+        var i = 0 < this.speed();
         this.is("animating") && this.onTransitionEnd(), i && (this.enter("animating"), this.trigger("translate")), 
         t.support.transform3d && t.support.transition ? this.$stage.css({
             transform: "translate3d(" + e + "px,0px,0px)",
@@ -291,7 +290,7 @@
             left: e + "px"
         });
     }, n.prototype.is = function(t) {
-        return this._states.current[t] && this._states.current[t] > 0;
+        return this._states.current[t] && 0 < this._states.current[t];
     }, n.prototype.current = function(t) {
         if (void 0 === t) return this._current;
         if (0 !== this._items.length) {
@@ -322,7 +321,7 @@
         this.animate(this.coordinates(t)), this.release([ "translate", "translated" ]));
     }, n.prototype.normalize = function(t, e) {
         var i = this._items.length, s = e ? 0 : this._clones.length;
-        return !this.isNumeric(t) || i < 1 ? t = void 0 : (t < 0 || t >= i + s) && (t = ((t - s / 2) % i + i) % i + s / 2), 
+        return !this.isNumeric(t) || i < 1 ? t = void 0 : (t < 0 || i + s <= t) && (t = ((t - s / 2) % i + i) % i + s / 2), 
         t;
     }, n.prototype.relative = function(t) {
         return t -= this._clones.length / 2, this.normalize(t, !0);
@@ -360,9 +359,9 @@
     }, n.prototype.duration = function(t, e, i) {
         return 0 === i ? 0 : Math.min(Math.max(Math.abs(e - t), 1), 6) * Math.abs(i || this.settings.smartSpeed);
     }, n.prototype.to = function(t, e) {
-        var i = this.current(), s = null, n = t - this.relative(i), o = (n > 0) - (n < 0), r = this._items.length, a = this.minimum(), h = this.maximum();
+        var i = this.current(), s = null, n = t - this.relative(i), o = (0 < n) - (n < 0), r = this._items.length, a = this.minimum(), h = this.maximum();
         this.settings.loop ? (!this.settings.rewind && Math.abs(n) > r / 2 && (n += -1 * o * r), 
-        (s = (((t = i + n) - a) % r + r) % r + a) !== t && s - n <= h && s - n > 0 && (i = s - n, 
+        (s = (((t = i + n) - a) % r + r) % r + a) !== t && s - n <= h && 0 < s - n && (i = s - n, 
         t = s, this.reset(i))) : t = this.settings.rewind ? (t % (h += 1) + h) % h : Math.max(a, Math.min(h, t)), 
         this.speed(this.duration(i, t, e)), this.current(t), this.$element.is(":visible") && this.update();
     }, n.prototype.next = function(t) {
@@ -415,25 +414,25 @@
             }, this)).attr("src", i.attr("src") || i.attr("data-src") || i.attr("data-src-retina"));
         }, this));
     }, n.prototype.destroy = function() {
-        this.$element.off(".owl.core"), this.$stage.off(".owl.core"), t(i).off(".owl.core"), 
-        !1 !== this.settings.responsive && (e.clearTimeout(this.resizeTimer), this.off(e, "resize", this._handlers.onThrottledResize));
-        for (var s in this._plugins) this._plugins[s].destroy();
+        for (var s in this.$element.off(".owl.core"), this.$stage.off(".owl.core"), t(i).off(".owl.core"), 
+        !1 !== this.settings.responsive && (e.clearTimeout(this.resizeTimer), this.off(e, "resize", this._handlers.onThrottledResize)), 
+        this._plugins) this._plugins[s].destroy();
         this.$stage.children(".cloned").remove(), this.$stage.unwrap(), this.$stage.children().contents().unwrap(), 
         this.$stage.children().unwrap(), this.$element.removeClass(this.options.refreshClass).removeClass(this.options.loadingClass).removeClass(this.options.loadedClass).removeClass(this.options.rtlClass).removeClass(this.options.dragClass).removeClass(this.options.grabClass).attr("class", this.$element.attr("class").replace(new RegExp(this.options.responsiveClass + "-\\S+\\s", "g"), "")).removeData("owl.carousel");
     }, n.prototype.op = function(t, e, i) {
         var s = this.settings.rtl;
         switch (e) {
           case "<":
-            return s ? t > i : t < i;
+            return s ? i < t : t < i;
 
           case ">":
-            return s ? t < i : t > i;
+            return s ? t < i : i < t;
 
           case ">=":
-            return s ? t <= i : t >= i;
+            return s ? t <= i : i <= t;
 
           case "<=":
-            return s ? t >= i : t <= i;
+            return s ? i <= t : t <= i;
         }
     }, n.prototype.on = function(t, e, i, s) {
         t.addEventListener ? t.addEventListener(e, i, s) : t.attachEvent && t.attachEvent("on" + e, i);
@@ -470,7 +469,7 @@
             if (t.event.special[e.name] || (t.event.special[e.name] = {}), !t.event.special[e.name].owl) {
                 var i = t.event.special[e.name]._default;
                 t.event.special[e.name]._default = function(t) {
-                    return !i || !i.apply || t.namespace && -1 !== t.namespace.indexOf("owl") ? t.namespace && t.namespace.indexOf("owl") > -1 : i.apply(this, arguments);
+                    return !i || !i.apply || t.namespace && -1 !== t.namespace.indexOf("owl") ? t.namespace && -1 < t.namespace.indexOf("owl") : i.apply(this, arguments);
                 }, t.event.special[e.name].owl = !0;
             }
         } else e.type === n.Type.State && (this._states.tags[e.name] ? this._states.tags[e.name] = this._states.tags[e.name].concat(e.tags) : this._states.tags[e.name] = e.tags, 
@@ -490,7 +489,7 @@
             x: null,
             y: null
         };
-        return t = t.originalEvent || t || e.event, (t = t.touches && t.touches.length ? t.touches[0] : t.changedTouches && t.changedTouches.length ? t.changedTouches[0] : t).pageX ? (i.x = t.pageX, 
+        return (t = (t = t.originalEvent || t || e.event).touches && t.touches.length ? t.touches[0] : t.changedTouches && t.changedTouches.length ? t.changedTouches[0] : t).pageX ? (i.x = t.pageX, 
         i.y = t.pageY) : (i.x = t.clientX, i.y = t.clientY), i;
     }, n.prototype.isNumeric = function(t) {
         return !isNaN(parseFloat(t));
@@ -532,8 +531,7 @@
         this._core.$element.toggleClass("owl-hidden", !this._visible), this._visible && this._core.invalidate("width") && this._core.refresh());
     }, n.prototype.destroy = function() {
         var t, i;
-        e.clearInterval(this._interval);
-        for (t in this._handlers) this._core.$element.off(t, this._handlers[t]);
+        for (t in e.clearInterval(this._interval), this._handlers) this._core.$element.off(t, this._handlers[t]);
         for (i in Object.getOwnPropertyNames(this)) "function" != typeof this[i] && (this[i] = null);
     }, t.fn.owlCarousel.Constructor.Plugins.AutoRefresh = n;
 }(window.Zepto || window.jQuery, window, document), function(t, e, i, s) {
@@ -551,8 +549,8 @@
         lazyLoad: !1
     }, n.prototype.load = function(i) {
         var s = this._core.$stage.children().eq(i), n = s && s.find(".owl-lazy");
-        !n || t.inArray(s.get(0), this._loaded) > -1 || (n.each(t.proxy(function(i, s) {
-            var n, o = t(s), r = e.devicePixelRatio > 1 && o.attr("data-src-retina") || o.attr("data-src");
+        !n || -1 < t.inArray(s.get(0), this._loaded) || (n.each(t.proxy(function(i, s) {
+            var n, o = t(s), r = 1 < e.devicePixelRatio && o.attr("data-src-retina") || o.attr("data-src");
             this._core.trigger("load", {
                 element: o,
                 url: r
@@ -594,7 +592,7 @@
         autoHeight: !1,
         autoHeightClass: "owl-height"
     }, n.prototype.update = function() {
-        var e = this._core._current, i = e + this._core.settings.items, s = this._core.$stage.children().toArray().slice(e, i), n = [], o = 0;
+        var o, e = this._core._current, i = e + this._core.settings.items, s = this._core.$stage.children().toArray().slice(e, i), n = [];
         t.each(s, function(e, i) {
             n.push(t(i).height());
         }), o = Math.max.apply(null, n), this._core.$stage.parent().height(o).addClass(this._core.settings.autoHeightClass);
@@ -640,8 +638,8 @@
     }, n.prototype.fetch = function(t, e) {
         var i = t.attr("data-vimeo-id") ? "vimeo" : t.attr("data-vzaar-id") ? "vzaar" : "youtube", s = t.attr("data-vimeo-id") || t.attr("data-youtube-id") || t.attr("data-vzaar-id"), n = t.attr("data-width") || this._core.settings.videoWidth, o = t.attr("data-height") || this._core.settings.videoHeight, r = t.attr("href");
         if (!r) throw new Error("Missing video URL.");
-        if ((s = r.match(/(http:|https:|)\/\/(player.|www.|app.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|vzaar\.com)\/(video\/|videos\/|embed\/|channels\/.+\/|groups\/.+\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/))[3].indexOf("youtu") > -1) i = "youtube"; else if (s[3].indexOf("vimeo") > -1) i = "vimeo"; else {
-            if (!(s[3].indexOf("vzaar") > -1)) throw new Error("Video URL not supported.");
+        if (-1 < (s = r.match(/(http:|https:|)\/\/(player.|www.|app.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|vzaar\.com)\/(video\/|videos\/|embed\/|channels\/.+\/|groups\/.+\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/))[3].indexOf("youtu")) i = "youtube"; else if (-1 < s[3].indexOf("vimeo")) i = "vimeo"; else {
+            if (!(-1 < s[3].indexOf("vzaar"))) throw new Error("Video URL not supported.");
             i = "vzaar";
         }
         s = s[6], this._videos[r] = {
@@ -651,9 +649,9 @@
             height: o
         }, e.attr("data-video", r), this.thumbnail(t, this._videos[r]);
     }, n.prototype.thumbnail = function(e, i) {
-        var s, n, o, r = i.width && i.height ? 'style="width:' + i.width + "px;height:" + i.height + 'px;"' : "", a = e.find("img"), h = "src", l = "", c = this._core.settings, p = function(t) {
-            n = '<div class="owl-video-play-icon"></div>', s = c.lazyLoad ? '<div class="owl-video-tn ' + l + '" ' + h + '="' + t + '"></div>' : '<div class="owl-video-tn" style="opacity:1;background-image:url(' + t + ')"></div>', 
-            e.after(s), e.after(n);
+        var s, o, r = i.width && i.height ? 'style="width:' + i.width + "px;height:" + i.height + 'px;"' : "", a = e.find("img"), h = "src", l = "", c = this._core.settings, p = function(t) {
+            '<div class="owl-video-play-icon"></div>', s = c.lazyLoad ? '<div class="owl-video-tn ' + l + '" ' + h + '="' + t + '"></div>' : '<div class="owl-video-tn" style="opacity:1;background-image:url(' + t + ')"></div>', 
+            e.after(s), e.after('<div class="owl-video-play-icon"></div>');
         };
         if (e.wrap('<div class="owl-video-wrapper"' + r + "></div>"), this._core.settings.lazyLoad && (h = "data-src", 
         l = "owl-lazy"), a.length) return p(a.attr(h)), a.remove(), !1;
@@ -690,8 +688,7 @@
         return e && t(e).parent().hasClass("owl-video-frame");
     }, n.prototype.destroy = function() {
         var t, e;
-        this._core.$element.off("click.owl.video");
-        for (t in this._handlers) this._core.$element.off(t, this._handlers[t]);
+        for (t in this._core.$element.off("click.owl.video"), this._handlers) this._core.$element.off(t, this._handlers[t]);
         for (e in Object.getOwnPropertyNames(this)) "function" != typeof this[e] && (this[e] = null);
     }, t.fn.owlCarousel.Constructor.Plugins.Video = n;
 }(window.Zepto || window.jQuery, window, document), function(t, e, i, s) {
@@ -780,8 +777,7 @@
         this._core.is("rotating") && (this._paused = !0);
     }, n.prototype.destroy = function() {
         var t, e;
-        this.stop();
-        for (t in this._handlers) this._core.$element.off(t, this._handlers[t]);
+        for (t in this.stop(), this._handlers) this._core.$element.off(t, this._handlers[t]);
         for (e in Object.getOwnPropertyNames(this)) "function" != typeof this[e] && (this[e] = null);
     }, t.fn.owlCarousel.Constructor.Plugins.autoplay = n;
 }(window.Zepto || window.jQuery, window, document), function(t, e, i, s) {
@@ -833,7 +829,7 @@
         dotsContainer: !1
     }, n.prototype.initialize = function() {
         var e, i = this._core.settings;
-        this._controls.$relative = (i.navContainer ? t(i.navContainer) : t("<div>").addClass(i.navContainerClass).appendTo(this.$element)).addClass("disabled"), 
+        for (e in this._controls.$relative = (i.navContainer ? t(i.navContainer) : t("<div>").addClass(i.navContainerClass).appendTo(this.$element)).addClass("disabled"), 
         this._controls.$previous = t("<" + i.navElement + ">").addClass(i.navClass[0]).html(i.navText[0]).prependTo(this._controls.$relative).on("click", t.proxy(function(t) {
             this.prev(i.navSpeed);
         }, this)), this._controls.$next = t("<" + i.navElement + ">").addClass(i.navClass[1]).html(i.navText[1]).appendTo(this._controls.$relative).on("click", t.proxy(function(t) {
@@ -843,8 +839,7 @@
         this._controls.$absolute.on("click", "div", t.proxy(function(e) {
             var s = t(e.target).parent().is(this._controls.$absolute) ? t(e.target).index() : t(e.target).parent().index();
             e.preventDefault(), this.to(s, i.dotsSpeed);
-        }, this));
-        for (e in this._overrides) this._core[e] = t.proxy(this[e], this);
+        }, this)), this._overrides) this._core[e] = t.proxy(this[e], this);
     }, n.prototype.destroy = function() {
         var t, e, i, s;
         for (t in this._handlers) this.$element.off(t, this._handlers[t]);
@@ -854,13 +849,13 @@
     }, n.prototype.update = function() {
         var t, e, i = this._core.clones().length / 2, s = i + this._core.items().length, n = this._core.maximum(!0), o = this._core.settings, r = o.center || o.autoWidth || o.dotsData ? 1 : o.dotsEach || o.items;
         if ("page" !== o.slideBy && (o.slideBy = Math.min(o.slideBy, o.items)), o.dots || "page" == o.slideBy) for (this._pages = [], 
-        t = i, e = 0, 0; t < s; t++) {
-            if (e >= r || 0 === e) {
+        t = i, e = 0; t < s; t++) {
+            if (r <= e || 0 === e) {
                 if (this._pages.push({
                     start: Math.min(n, t - i),
                     end: t - i + r - 1
                 }), Math.min(n, t - i) === n) break;
-                e = 0, 0;
+                e = 0;
             }
             e += this._core.mergers(this._core.relative(t));
         }
@@ -869,7 +864,7 @@
         this._controls.$relative.toggleClass("disabled", !i.nav || s), i.nav && (this._controls.$previous.toggleClass("disabled", !o && n <= this._core.minimum(!0)), 
         this._controls.$next.toggleClass("disabled", !o && n >= this._core.maximum(!0))), 
         this._controls.$absolute.toggleClass("disabled", !i.dots || s), i.dots && (e = this._pages.length - this._controls.$absolute.children().length, 
-        i.dotsData && 0 !== e ? this._controls.$absolute.html(this._templates.join("")) : e > 0 ? this._controls.$absolute.append(new Array(e + 1).join(this._templates[0])) : e < 0 && this._controls.$absolute.children().slice(e).remove(), 
+        i.dotsData && 0 !== e ? this._controls.$absolute.html(this._templates.join("")) : 0 < e ? this._controls.$absolute.append(new Array(e + 1).join(this._templates[0])) : e < 0 && this._controls.$absolute.children().slice(e).remove(), 
         this._controls.$absolute.find(".active").removeClass("active"), this._controls.$absolute.children().eq(t.inArray(this.current(), this._pages)).addClass("active"));
     }, n.prototype.onTrigger = function(e) {
         var i = this._core.settings;
@@ -929,8 +924,7 @@
         URLhashListener: !1
     }, n.prototype.destroy = function() {
         var i, s;
-        t(e).off("hashchange.owl.navigation");
-        for (i in this._handlers) this._core.$element.off(i, this._handlers[i]);
+        for (i in t(e).off("hashchange.owl.navigation"), this._handlers) this._core.$element.off(i, this._handlers[i]);
         for (s in Object.getOwnPropertyNames(this)) "function" != typeof this[s] && (this[s] = null);
     }, t.fn.owlCarousel.Constructor.Plugins.Hash = n;
 }(window.Zepto || window.jQuery, window, document), function(t, e, i, s) {
@@ -960,21 +954,16 @@
                 animation: "animationend"
             }
         }
-    }, l = {
-        csstransforms: function() {
-            return !!n("transform");
-        },
-        csstransforms3d: function() {
-            return !!n("perspective");
-        },
-        csstransitions: function() {
-            return !!n("transition");
-        },
-        cssanimations: function() {
-            return !!n("animation");
-        }
+    }, l_csstransforms = function() {
+        return !!n("transform");
+    }, l_csstransforms3d = function() {
+        return !!n("perspective");
+    }, l_cssanimations = function() {
+        return !!n("animation");
     };
-    l.csstransitions() && (t.support.transition = new String(o("transition")), t.support.transition.end = h.transition.end[t.support.transition]), 
-    l.cssanimations() && (t.support.animation = new String(o("animation")), t.support.animation.end = h.animation.end[t.support.animation]), 
-    l.csstransforms() && (t.support.transform = new String(o("transform")), t.support.transform3d = l.csstransforms3d());
+    (function() {
+        return !!n("transition");
+    })() && (t.support.transition = new String(o("transition")), t.support.transition.end = h.transition.end[t.support.transition]), 
+    l_cssanimations() && (t.support.animation = new String(o("animation")), t.support.animation.end = h.animation.end[t.support.animation]), 
+    l_csstransforms() && (t.support.transform = new String(o("transform")), t.support.transform3d = l_csstransforms3d());
 }(window.Zepto || window.jQuery, window, document);

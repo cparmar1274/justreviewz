@@ -9,11 +9,6 @@ function _defineProperty(n, t, i) {
 
 function nouisliderDirective(n, t) {
     "use strict";
-    function i(n) {
-        return n.replace(/^on([A-Z])/, function(n, t) {
-            return t.toLowerCase();
-        });
-    }
     var e = [ "start", "margin", "limit", "step", "range", "animate", "snap", "pips", "disable" ], r = [ "connect", "direction", "orientation", "behaviour", "tooltips", "format", "animationDuration" ], o = [ "onUpdate", "onSlide", "onSet", "onChange", "onStart", "onEnd" ];
     return {
         restrict: "E",
@@ -48,7 +43,11 @@ function nouisliderDirective(n, t) {
             }), r.forEach(function(n) {
                 void 0 !== u[n] && (l[n] = t(u[n])(a.$parent));
             }), o.forEach(function(n) {
-                void 0 !== u[n] && (v[i(n)] = t(u[n])(a.$parent));
+                void 0 !== u[n] && (v[function(n) {
+                    return n.replace(/^on([A-Z])/, function(n, t) {
+                        return t.toLowerCase();
+                    });
+                }(n)] = t(u[n])(a.$parent));
             });
             var b = v.update || function() {};
             v.update = function() {

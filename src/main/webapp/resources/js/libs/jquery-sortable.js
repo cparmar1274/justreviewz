@@ -20,7 +20,7 @@
     function a(t, e, i) {
         e = [ e.left, e.top ], i = i && [ i.left, i.top ];
         for (var o, n = t.length, r = []; n--; ) o = t[n], r[n] = [ n, s(o, e), i && s(o, i) ];
-        return r = r.sort(function(t, e) {
+        return r.sort(function(t, e) {
             return e[1] - t[1] || e[2] - t[2] || e[0] - t[0];
         });
     }

@@ -17,7 +17,7 @@
                         s && s.remove(), void 0 !== n && n);
                     }
                     return i.settings.debug && e.preventDefault(), i.cancelSubmit ? (i.cancelSubmit = !1, 
-                    s()) : i.form() ? i.pendingRequest ? (i.formSubmitted = !0, !1) : s() : (i.focusInvalid(), 
+                    s()) : i.form() ? i.pendingRequest ? !(i.formSubmitted = !0) : s() : (i.focusInvalid(), 
                     !1);
                 })), i);
             }
@@ -71,12 +71,12 @@
         return 1 === arguments.length ? function() {
             var i = t.makeArray(arguments);
             return i.unshift(e), t.validator.format.apply(this, i);
-        } : void 0 === i ? e : (arguments.length > 2 && i.constructor !== Array && (i = t.makeArray(arguments).slice(1)), 
+        } : (void 0 === i || (2 < arguments.length && i.constructor !== Array && (i = t.makeArray(arguments).slice(1)), 
         i.constructor !== Array && (i = [ i ]), t.each(i, function(t, i) {
             e = e.replace(new RegExp("\\{" + t + "\\}", "g"), function() {
                 return i;
             });
-        }), e);
+        })), e);
     }, t.extend(t.validator, {
         defaults: {
             messages: {},
@@ -238,7 +238,7 @@
                     var s = this.name || t(this).attr("name");
                     return !s && e.settings.debug && window.console && console.error("%o has no name assigned", this), 
                     this.hasAttribute("contenteditable") && (this.form = t(this).closest("form")[0], 
-                    this.name = s), !(s in i || !e.objectLength(t(this).rules())) && (i[s] = !0, !0);
+                    this.name = s), !(s in i || !e.objectLength(t(this).rules()) || (i[s] = !0, 0));
                 });
             },
             clean: function(e) {
@@ -264,7 +264,7 @@
             elementValue: function(e) {
                 var i, s, n = t(e), r = e.type;
                 return "radio" === r || "checkbox" === r ? this.findByName(e.name).filter(":checked").val() : "number" === r && void 0 !== e.validity ? e.validity.badInput ? "NaN" : n.val() : (i = e.hasAttribute("contenteditable") ? n.text() : n.val(), 
-                "file" === r ? "C:\\fakepath\\" === i.substr(0, 12) ? i.substr(12) : (s = i.lastIndexOf("/")) >= 0 ? i.substr(s + 1) : (s = i.lastIndexOf("\\")) >= 0 ? i.substr(s + 1) : i : "string" == typeof i ? i.replace(/\r/g, "") : i);
+                "file" === r ? "C:\\fakepath\\" === i.substr(0, 12) ? i.substr(12) : 0 <= (s = i.lastIndexOf("/")) ? i.substr(s + 1) : 0 <= (s = i.lastIndexOf("\\")) ? i.substr(s + 1) : i : "string" == typeof i ? i.replace(/\r/g, "") : i);
             },
             check: function(e) {
                 e = this.validationTargetFor(this.clean(e));
@@ -466,8 +466,8 @@
         },
         attributeRules: function(e) {
             var i, s, n = {}, r = t(e), a = e.getAttribute("type");
-            for (i in t.validator.methods) "required" === i ? ("" === (s = e.getAttribute(i)) && (s = !0), 
-            s = !!s) : s = r.attr(i), this.normalizeAttributeRule(n, a, i, s);
+            for (i in t.validator.methods) s = "required" === i ? ("" === (s = e.getAttribute(i)) && (s = !0), 
+            !!s) : r.attr(i), this.normalizeAttributeRule(n, a, i, s);
             return n.maxlength && /-1|2147483647|524288/.test(n.maxlength) && delete n.maxlength, 
             n;
         },
@@ -527,11 +527,9 @@
         methods: {
             required: function(e, i, s) {
                 if (!this.depend(s, i)) return "dependency-mismatch";
-                if ("select" === i.nodeName.toLowerCase()) {
-                    var n = t(i).val();
-                    return n && n.length > 0;
-                }
-                return this.checkable(i) ? this.getLength(e, i) > 0 : e.length > 0;
+                if ("select" !== i.nodeName.toLowerCase()) return this.checkable(i) ? 0 < this.getLength(e, i) : 0 < e.length;
+                var n = t(i).val();
+                return n && 0 < n.length;
             },
             email: function(t, e) {
                 return this.optional(e) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(t);
@@ -553,7 +551,7 @@
             },
             minlength: function(e, i, s) {
                 var n = t.isArray(e) ? e.length : this.getLength(e, i);
-                return this.optional(i) || n >= s;
+                return this.optional(i) || s <= n;
             },
             maxlength: function(e, i, s) {
                 var n = t.isArray(e) ? e.length : this.getLength(e, i);
@@ -564,7 +562,7 @@
                 return this.optional(i) || n >= s[0] && n <= s[1];
             },
             min: function(t, e, i) {
-                return this.optional(e) || t >= i;
+                return this.optional(e) || i <= t;
             },
             max: function(t, e, i) {
                 return this.optional(e) || t <= i;
@@ -598,8 +596,8 @@
                     url: s
                 } || s, o = t.param(t.extend({
                     data: e
-                }, s.data)), l.old === o ? l.valid : (l.old = o, r = this, this.startRequest(i), 
-                a = {}, a[i.name] = e, t.ajax(t.extend(!0, {
+                }, s.data)), l.old === o ? l.valid : (l.old = o, (r = this).startRequest(i), (a = {})[i.name] = e, 
+                t.ajax(t.extend(!0, {
                     mode: "abort",
                     port: "validate" + i.name,
                     dataType: "json",

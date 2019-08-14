@@ -1,14 +1,26 @@
 angular.module("myapp", [ "ngMaterial", "ngMessages" ]).controller("MyController", function($scope, $sce, $window, $http, $httpParamSerializerJQLike, $timeout, $q) {
     var self = $scope;
-    self.myDashboard = {};
-    self.myDashboard.searchFor = "Search Reviews...";
-    self.states = [];
-    self.selectedItem = null;
-    self.searchText = null;
-    self.querySearch = querySearch;
-    self.reportedIncidents = [];
-    self.selectedReviewType = "";
-    self.reviewTypes = [ {
+    self.myDashboard = {}, self.myDashboard.searchFor = "Search Reviews...", self.states = [], 
+    self.selectedItem = null, self.searchText = null, self.querySearch = function(query) {
+        return function(query) {
+            return $http.get("getReportedVehicle", {
+                params: {
+                    vehicleNumber: query
+                }
+            }).then(function(response) {
+                return response;
+            });
+        }(query).then(function(response) {
+            var result = [];
+            return console.log(response), angular.forEach(response.data.result.hits, function(item) {
+                var itemData = item.sourceAsMap.vehicleNumber, obj = {
+                    value: itemData,
+                    display: itemData
+                };
+                result.push(obj);
+            }), result;
+        });
+    }, self.reportedIncidents = [], self.selectedReviewType = "", self.reviewTypes = [ {
         id: 1,
         name: "All"
     }, {
@@ -20,9 +32,7 @@ angular.module("myapp", [ "ngMaterial", "ngMessages" ]).controller("MyController
     }, {
         id: 4,
         name: "Neutral"
-    } ];
-    self.selectedReviewSource = "";
-    self.reviewSources = [ {
+    } ], self.selectedReviewSource = "", self.reviewSources = [ {
         id: 1,
         name: "All"
     }, {
@@ -34,12 +44,9 @@ angular.module("myapp", [ "ngMaterial", "ngMessages" ]).controller("MyController
     }, {
         id: 4,
         name: "Yelp"
-    } ];
-    self.changeInItem = function() {
+    } ], self.changeInItem = function() {
         var vehicleNumber = self.selectedItem.display;
-        console.log("selected", vehicleNumber);
-        self.reportedIncidents = [];
-        $http.get("getReportedIncident", {
+        console.log("selected", vehicleNumber), self.reportedIncidents = [], $http.get("getReportedIncident", {
             params: {
                 vehicleNumber: vehicleNumber
             }
@@ -53,29 +60,4 @@ angular.module("myapp", [ "ngMaterial", "ngMessages" ]).controller("MyController
             });
         });
     };
-    function getElastic(query) {
-        return $http.get("getReportedVehicle", {
-            params: {
-                vehicleNumber: query
-            }
-        }).then(function(response) {
-            return response;
-        });
-    }
-    function querySearch(query) {
-        var deferred = getElastic(query);
-        return deferred.then(function(response) {
-            var result = [];
-            console.log(response);
-            angular.forEach(response.data.result.hits, function(item) {
-                var itemData = item.sourceAsMap.vehicleNumber;
-                var obj = {
-                    value: itemData,
-                    display: itemData
-                };
-                result.push(obj);
-            });
-            return result;
-        });
-    }
 });

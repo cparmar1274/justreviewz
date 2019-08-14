@@ -1,6 +1,1 @@
-(function() {
-    function WeeklyReportCtrl($http) {
-        var self = this;
-    }
-    angular.module("pixeladmin").controller("WeeklyReportCtrl", [ "$http", WeeklyReportCtrl ]);
-})();
+angular.module("pixeladmin").controller("WeeklyReportCtrl", [ "$http", function($http) {} ]);

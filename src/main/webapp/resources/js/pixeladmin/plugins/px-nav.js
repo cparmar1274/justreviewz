@@ -32,49 +32,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             tablet: [ "sm", "md" ],
             desktop: [ "lg", "xl" ]
         }
-    }, o = {
-        NAV: "px-nav",
-        NAV_LEFT: "px-nav-left",
-        CONTENT: "px-nav-content",
-        EXPAND: "px-nav-expand",
-        STATIC: "px-nav-static",
-        COLLAPSE: "px-nav-collapse",
-        ANIMATE: "px-nav-animate",
-        NAV_TRANSITIONING: "px-nav-transitioning",
-        DIMMER: "px-nav-dimmer",
-        FIXED: "px-nav-fixed",
-        OFF_CANVAS: "px-nav-off-canvas",
-        SCROLLABLE_AREA: "px-nav-scrollable-area",
-        ITEM: "px-nav-item",
-        TOOLTIP: "px-nav-tooltip",
-        DROPDOWN: "px-nav-dropdown",
-        DROPDOWN_MENU: "px-nav-dropdown-menu",
-        DROPDOWN_MENU_TITLE: "px-nav-dropdown-menu-title",
-        DROPDOWN_MENU_SHOW: "px-nav-dropdown-menu-show",
-        DROPDOWN_MENU_WRAPPER: "px-nav-dropdown-menu-wrapper",
-        DROPDOWN_MENU_TOP: "px-nav-dropdown-menu-top",
-        OPEN: "px-open",
-        SHOW: "px-show",
-        FREEZE: "freeze",
-        ACTIVE: "active",
-        TRANSITIONING: "transitioning",
-        PERFECT_SCROLLBAR_CONTAINER: "ps-container",
-        NAVBAR_FIXED: "px-navbar-fixed"
-    }, s = {
-        DATA_TOGGLE: '[data-toggle="px-nav"]',
-        CONTENT: ".px-nav-content",
-        ITEM: "> .px-nav-item",
-        ITEM_LABEL: "> a > .px-nav-label",
-        ROOT_LINK: "> .px-nav-item:not(.px-nav-dropdown) > a",
-        DROPDOWN_LINK: ".px-nav-dropdown > a",
-        DROPDOWN_MENU: "> .px-nav-dropdown-menu",
-        DROPDOWN_MENU_TITLE: "> .px-nav-dropdown-menu-title",
-        OPENED_DROPDOWNS: "> .px-nav-dropdown.px-open",
-        SHOWN_DROPDOWNS: "> .px-nav-dropdown.px-show",
-        FROZEN_DROPDOWNS: ".px-nav-dropdown.freeze",
-        SCROLLABLE_AREA: ".px-nav-scrollable-area",
-        NEAR_NAVBAR: "~ .px-navbar"
-    }, a = {
+    }, o_NAV = "px-nav", o_NAV_LEFT = "px-nav-left", o_CONTENT = "px-nav-content", o_EXPAND = "px-nav-expand", o_STATIC = "px-nav-static", o_COLLAPSE = "px-nav-collapse", o_ANIMATE = "px-nav-animate", o_NAV_TRANSITIONING = "px-nav-transitioning", o_DIMMER = "px-nav-dimmer", o_FIXED = "px-nav-fixed", o_OFF_CANVAS = "px-nav-off-canvas", o_SCROLLABLE_AREA = "px-nav-scrollable-area", o_ITEM = "px-nav-item", o_TOOLTIP = "px-nav-tooltip", o_DROPDOWN = "px-nav-dropdown", o_DROPDOWN_MENU = "px-nav-dropdown-menu", o_DROPDOWN_MENU_TITLE = "px-nav-dropdown-menu-title", o_DROPDOWN_MENU_WRAPPER = "px-nav-dropdown-menu-wrapper", o_DROPDOWN_MENU_TOP = "px-nav-dropdown-menu-top", o_OPEN = "px-open", o_SHOW = "px-show", o_FREEZE = "freeze", o_ACTIVE = "active", o_TRANSITIONING = "transitioning", o_PERFECT_SCROLLBAR_CONTAINER = "ps-container", o_NAVBAR_FIXED = "px-navbar-fixed", s_DATA_TOGGLE = '[data-toggle="px-nav"]', s_CONTENT = ".px-nav-content", s_ITEM = "> .px-nav-item", s_ITEM_LABEL = "> a > .px-nav-label", s_ROOT_LINK = "> .px-nav-item:not(.px-nav-dropdown) > a", s_DROPDOWN_LINK = ".px-nav-dropdown > a", s_DROPDOWN_MENU = "> .px-nav-dropdown-menu", s_OPENED_DROPDOWNS = "> .px-nav-dropdown.px-open", s_SHOWN_DROPDOWNS = "> .px-nav-dropdown.px-show", s_FROZEN_DROPDOWNS = ".px-nav-dropdown.freeze", s_SCROLLABLE_AREA = ".px-nav-scrollable-area", s_NEAR_NAVBAR = "~ .px-navbar", a = {
         CLICK_DATA_API: "click.px.nav.data-api",
         RESIZE: "resize.px.nav",
         CLICK: "click.px.nav",
@@ -100,31 +58,31 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
     }, l = function() {
         function n(t, i) {
             _classCallCheck(this, n), this.uniqueId = pxUtil.generateUniqueId(), this.element = t, 
-            this.content = e(t).find(s.CONTENT)[0], this.config = this._getConfig(i), this._curMode = this._getMode(), 
+            this.content = e(t).find(s_CONTENT)[0], this.config = this._getConfig(i), this._curMode = this._getMode(), 
             this._isCollapsed = this._getNavState(), this._stateChanging = 0, this._setupMarkup(), 
-            this.dimmer = e(t).parent().find("> ." + o.DIMMER)[0], this._setListeners(), this._restoreNavState(), 
+            this.dimmer = e(t).parent().find("> ." + o_DIMMER)[0], this._setListeners(), this._restoreNavState(), 
             this._detectActiveItem(), this._enableAnimation(), this._checkNavbarPosition(), 
             this._triggerEvent("INITIALIZED", t);
         }
         return _createClass(n, [ {
             key: "toggle",
             value: function() {
-                this["desktop" !== this._curMode && pxUtil.hasClass(this.element, o.EXPAND) || "desktop" === this._curMode && !pxUtil.hasClass(this.element, o.COLLAPSE) ? "collapse" : "expand"]();
+                this["desktop" !== this._curMode && pxUtil.hasClass(this.element, o_EXPAND) || "desktop" === this._curMode && !pxUtil.hasClass(this.element, o_COLLAPSE) ? "collapse" : "expand"]();
             }
         }, {
             key: "expand",
             value: function() {
-                ("phone" === this._curMode || this.isCollapsed()) && ("phone" === this._curMode && pxUtil.hasClass(this.element, o.EXPAND) || this._triggerPreventableEvent("EXPAND", this.element) && ("phone" !== this._curMode && this.closeAllDropdowns(), 
+                ("phone" === this._curMode || this.isCollapsed()) && ("phone" === this._curMode && pxUtil.hasClass(this.element, o_EXPAND) || this._triggerPreventableEvent("EXPAND", this.element) && ("phone" !== this._curMode && this.closeAllDropdowns(), 
                 this.config.enableTooltips && this._clearTooltips(), this._changeNavState(function() {
                     var n = this;
                     if ("desktop" !== this._curMode) {
                         var i = this;
-                        e(this.element).parent().find("> ." + o.EXPAND).each(function() {
+                        e(this.element).parent().find("> ." + o_EXPAND).each(function() {
                             this !== i.element && e(this)[t]("collapse");
                         }), e(this.dimmer).on(this.constructor.Event.CLICK, function() {
                             return n.collapse();
-                        }), pxUtil.addClass(this.element, o.EXPAND);
-                    } else pxUtil.removeClass(this.element, o.COLLAPSE);
+                        }), pxUtil.addClass(this.element, o_EXPAND);
+                    } else pxUtil.removeClass(this.element, o_COLLAPSE);
                     this._triggerEvent("EXPANDED", this.element);
                 })));
             }
@@ -132,19 +90,19 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             key: "collapse",
             value: function() {
                 this.isCollapsed() || this._triggerPreventableEvent("COLLAPSE", this.element) && this._changeNavState(function() {
-                    "desktop" !== this._curMode ? (e(this.dimmer).off("click"), pxUtil.removeClass(this.element, o.EXPAND)) : pxUtil.addClass(this.element, o.COLLAPSE), 
+                    "desktop" !== this._curMode ? (e(this.dimmer).off("click"), pxUtil.removeClass(this.element, o_EXPAND)) : pxUtil.addClass(this.element, o_COLLAPSE), 
                     e(window).trigger("scroll"), this._triggerEvent("COLLAPSED", this.element);
                 });
             }
         }, {
             key: "isFixed",
             value: function() {
-                return pxUtil.hasClass(this.element, o.FIXED);
+                return pxUtil.hasClass(this.element, o_FIXED);
             }
         }, {
             key: "isStatic",
             value: function() {
-                return pxUtil.hasClass(this.element, o.STATIC);
+                return pxUtil.hasClass(this.element, o_STATIC);
             }
         }, {
             key: "isCollapsed",
@@ -154,28 +112,28 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "activateItem",
             value: function(t) {
-                var n = this._getNode(t, o.ITEM);
-                if (!pxUtil.hasClass(n, o.DROPDOWN) && (e(this.element).find("." + o.ITEM + "." + o.ACTIVE).removeClass(o.ACTIVE), 
-                pxUtil.addClass(n, o.ACTIVE), !pxUtil.hasClass(n.parentNode, o.CONTENT))) if (pxUtil.hasClass(n.parentNode, o.DROPDOWN_MENU_WRAPPER)) {
-                    var i = e(n).parents("." + o.DROPDOWN_MENU).data("dropdown");
+                var n = this._getNode(t, o_ITEM);
+                if (!pxUtil.hasClass(n, o_DROPDOWN) && (e(this.element).find("." + o_ITEM + "." + o_ACTIVE).removeClass(o_ACTIVE), 
+                pxUtil.addClass(n, o_ACTIVE), !pxUtil.hasClass(n.parentNode, o_CONTENT))) if (pxUtil.hasClass(n.parentNode, o_DROPDOWN_MENU_WRAPPER)) {
+                    var i = e(n).parents("." + o_DROPDOWN_MENU).data("dropdown");
                     if (!i) return;
-                    i.addClass(o.ACTIVE);
+                    i.addClass(o_ACTIVE);
                 } else {
-                    var a = e(n).parents("." + o.DROPDOWN)[0], r = void 0;
-                    for (this.openDropdown(a, !1); a; ) if (pxUtil.addClass(a, o.ACTIVE), pxUtil.hasClass(a.parentNode, o.DROPDOWN_MENU_WRAPPER)) {
-                        if (r = e(a).parents("." + o.DROPDOWN_MENU).data("dropdown"), a = null, !r) return;
-                        pxUtil.addClass(r, o.ACTIVE);
-                    } else r = a, a = e(a).parents("." + o.DROPDOWN)[0];
-                    this.isCollapsed() && (e(this.content).find(s.OPENED_DROPDOWNS).removeClass(o.OPEN), 
-                    pxUtil.addClass(r, o.OPEN));
+                    var a = e(n).parents("." + o_DROPDOWN)[0], r = void 0;
+                    for (this.openDropdown(a, !1); a; ) if (pxUtil.addClass(a, o_ACTIVE), pxUtil.hasClass(a.parentNode, o_DROPDOWN_MENU_WRAPPER)) {
+                        if (r = e(a).parents("." + o_DROPDOWN_MENU).data("dropdown"), a = null, !r) return;
+                        pxUtil.addClass(r, o_ACTIVE);
+                    } else a = e(r = a).parents("." + o_DROPDOWN)[0];
+                    this.isCollapsed() && (e(this.content).find(s_OPENED_DROPDOWNS).removeClass(o_OPEN), 
+                    pxUtil.addClass(r, o_OPEN));
                 }
             }
         }, {
             key: "openDropdown",
             value: function(t) {
-                var n = !(arguments.length > 1 && void 0 !== arguments[1]) || arguments[1], i = this._getNode(t);
+                var n = !(1 < arguments.length && void 0 !== arguments[1]) || arguments[1], i = this._getNode(t);
                 if ((!this.isStatic() || this._isFloatingDropdown(i)) && (this._isFloatingDropdown(i) && !n || this.isDropdownOpened(i) || this._triggerPreventableEvent("DROPDOWN_OPEN", i))) {
-                    for (var s = this.isDropdownOpened(i) ? [] : [ i ], a = i; a = e(a).parents("." + o.DROPDOWN)[0]; ) this.isDropdownOpened(a) || s.push(a);
+                    for (var s = this.isDropdownOpened(i) ? [] : [ i ], a = i; a = e(a).parents("." + o_DROPDOWN)[0]; ) this.isDropdownOpened(a) || s.push(a);
                     var r = s.pop();
                     if (r) {
                         for (var l = 0, d = s.length; l < d; l++) this._expandDropdown(s[l], !1);
@@ -201,28 +159,28 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "closeAllDropdowns",
             value: function() {
-                var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : e(this.element).find("." + o.CONTENT);
+                var t = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : e(this.element).find("." + o_CONTENT);
                 this._closeAllDropdowns(this._getNode(t, null));
             }
         }, {
             key: "freezeDropdown",
             value: function(e) {
                 var t = this._getNode(e);
-                this._isFloatingDropdown(t) && this.isDropdownOpened(t) && (pxUtil.hasClass(t, o.FREEZE) || (pxUtil.addClass(t, o.FREEZE), 
+                this._isFloatingDropdown(t) && this.isDropdownOpened(t) && (pxUtil.hasClass(t, o_FREEZE) || (pxUtil.addClass(t, o_FREEZE), 
                 this._clearDropdownTimer(t), this._triggerEvent("DROPDOWN_FROZEN", t)));
             }
         }, {
             key: "unfreezeDropdown",
             value: function(e) {
                 var t = this._getNode(e);
-                this._isFloatingDropdown(t) && this.isDropdownOpened(t) && pxUtil.hasClass(t, o.FREEZE) && (pxUtil.removeClass(t, o.FREEZE), 
+                this._isFloatingDropdown(t) && this.isDropdownOpened(t) && pxUtil.hasClass(t, o_FREEZE) && (pxUtil.removeClass(t, o_FREEZE), 
                 this._triggerEvent("DROPDOWN_UNFROZEN", t));
             }
         }, {
             key: "getDropdownContainer",
             value: function(t) {
                 var n = this._getNode(t);
-                return this._isFloatingDropdown(n) && this.isDropdownOpened(n) ? e(e(n).data("dropdown")).find("." + o.DROPDOWN_MENU_WRAPPER) : e(n).find(s.DROPDOWN_MENU);
+                return this._isFloatingDropdown(n) && this.isDropdownOpened(n) ? e(e(n).data("dropdown")).find("." + o_DROPDOWN_MENU_WRAPPER) : e(n).find(s_DROPDOWN_MENU);
             }
         }, {
             key: "isFloatingDropdown",
@@ -233,64 +191,64 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             key: "isDropdownOpened",
             value: function(e) {
                 var t = this._getNode(e), n = this._isRootDropdown(t), i = this.isCollapsed();
-                return i && n && pxUtil.hasClass(t, o.SHOW) || i && !n && pxUtil.hasClass(t, o.OPEN) || !i && pxUtil.hasClass(t, o.OPEN);
+                return i && n && pxUtil.hasClass(t, o_SHOW) || i && !n && pxUtil.hasClass(t, o_OPEN) || !i && pxUtil.hasClass(t, o_OPEN);
             }
         }, {
             key: "isDropdownFrozen",
             value: function(e) {
-                return pxUtil.hasClass(this._getNode(e), o.FREEZE);
+                return pxUtil.hasClass(this._getNode(e), o_FREEZE);
             }
         }, {
             key: "append",
             value: function(e) {
-                var t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : null;
+                var t = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : null;
                 return this.insert(e, null, t);
             }
         }, {
             key: "prepend",
             value: function(e) {
-                var t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : null;
+                var t = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : null;
                 return this.insert(e, 0, t);
             }
         }, {
             key: "insert",
             value: function(t, n) {
-                var i = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : null, a = this._getNodeOrCreate(t, o.ITEM, !1);
-                if (a.hasClass(o.DROPDOWN) && !a.find(s.DROPDOWN_MENU).length) throw new Error("The ." + o.DROPDOWN + " item(s) must contain the child ." + o.DROPDOWN_MENU + " element.");
-                var r = null === i ? e(this.content) : this._getNode(i, o.DROPDOWN, !1), l = void 0;
-                if (r.hasClass(o.CONTENT)) l = r; else if (!(l = this._isFloatingDropdown(r[0]) && this.isDropdownOpened(r[0]) ? e(r.data("dropdown")).find("." + o.DROPDOWN_MENU_WRAPPER) : r.find(s.DROPDOWN_MENU)).length) throw new Error("Targeted element is not found.");
-                var d = l.find(s.ITEM);
+                var i = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : null, a = this._getNodeOrCreate(t, o_ITEM, !1);
+                if (a.hasClass(o_DROPDOWN) && !a.find(s_DROPDOWN_MENU).length) throw new Error("The ." + o_DROPDOWN + " item(s) must contain the child ." + o_DROPDOWN_MENU + " element.");
+                var r = null === i ? e(this.content) : this._getNode(i, o_DROPDOWN, !1), l = void 0;
+                if (r.hasClass(o_CONTENT)) l = r; else if (!(l = this._isFloatingDropdown(r[0]) && this.isDropdownOpened(r[0]) ? e(r.data("dropdown")).find("." + o_DROPDOWN_MENU_WRAPPER) : r.find(s_DROPDOWN_MENU)).length) throw new Error("Targeted element is not found.");
+                var d = l.find(s_ITEM);
                 if (d.length) if (null === n) a.insertAfter(d.last()); else {
                     var p = d.eq(n);
                     p.length ? a.insertBefore(p) : a.insertAfter(d.last());
                 } else l.append(a);
-                return !this.isCollapsed() || r.hasClass(o.CONTENT) ? this._updateScrollbar(this.content) : l.hasClass(o.DROPDOWN_MENU_WRAPPER) ? this._updateScrollbar(l[0]) : this._updateScrollbar(l.parents("." + o.DROPDOWN_MENU_WRAPPER)[0]), 
+                return !this.isCollapsed() || r.hasClass(o_CONTENT) ? this._updateScrollbar(this.content) : l.hasClass(o_DROPDOWN_MENU_WRAPPER) ? this._updateScrollbar(l[0]) : this._updateScrollbar(l.parents("." + o_DROPDOWN_MENU_WRAPPER)[0]), 
                 a;
             }
         }, {
             key: "remove",
             value: function(t) {
-                var n = this._getNode(t, o.ITEM, !1), i = n.parent();
-                n.hasClass(o.DROPDOWN) && e(n.data("dropdown")).remove(), n.remove(), !this.isCollapsed() || i.hasClass(o.CONTENT) ? this._updateScrollbar(this.content) : i.hasClass(o.DROPDOWN_MENU_WRAPPER) ? this._updateScrollbar(i[0]) : this._updateScrollbar(i.parents("." + o.DROPDOWN_MENU_WRAPPER)[0]);
+                var n = this._getNode(t, o_ITEM, !1), i = n.parent();
+                n.hasClass(o_DROPDOWN) && e(n.data("dropdown")).remove(), n.remove(), !this.isCollapsed() || i.hasClass(o_CONTENT) ? this._updateScrollbar(this.content) : i.hasClass(o_DROPDOWN_MENU_WRAPPER) ? this._updateScrollbar(i[0]) : this._updateScrollbar(i.parents("." + o_DROPDOWN_MENU_WRAPPER)[0]);
             }
         }, {
             key: "destroy",
             value: function() {
                 if (this._triggerPreventableEvent("DESTROY", this.element)) {
-                    this._unsetListeners(), e(this.element).removeData("px.nav"), pxUtil.removeClass(this.element, o.ANIMATE), 
-                    pxUtil.removeClass(this.element, o.TRANSITIONING), pxUtil.removeClass(this.element, o.EXPAND), 
+                    this._unsetListeners(), e(this.element).removeData("px.nav"), pxUtil.removeClass(this.element, o_ANIMATE), 
+                    pxUtil.removeClass(this.element, o_TRANSITIONING), pxUtil.removeClass(this.element, o_EXPAND), 
                     this.isCollapsed() && this.closeAllDropdowns();
                     var t = 0;
-                    e(this.element.parentNode).find("> ." + o.NAV).each(function() {
+                    e(this.element.parentNode).find("> ." + o_NAV).each(function() {
                         e(this).data("px.nav") && t++;
-                    }), t || e(this.dimmer).remove(), e(this.element).find("." + o.CONTENT).perfectScrollbar("destroy"), 
-                    e(this.content).unwrap(s.SCROLLABLE_AREA);
+                    }), t || e(this.dimmer).remove(), e(this.element).find("." + o_CONTENT).perfectScrollbar("destroy"), 
+                    e(this.content).unwrap(s_SCROLLABLE_AREA);
                 }
             }
         }, {
             key: "_getNode",
             value: function(t) {
-                var n = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : o.DROPDOWN, i = !(arguments.length > 2 && void 0 !== arguments[2]) || arguments[2], s = "string" == typeof t ? e(this.element).find(t) : e(t);
+                var n = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : o_DROPDOWN, i = !(2 < arguments.length && void 0 !== arguments[2]) || arguments[2], s = "string" == typeof t ? e(this.element).find(t) : e(t);
                 if (!s.length) throw new Error("Element is not found.");
                 if (n && !s.hasClass(n)) throw new Error("Element(s) must have the ." + n + " class.");
                 return i ? s[0] : s;
@@ -298,58 +256,58 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_getNodeOrCreate",
             value: function(t) {
-                var n = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : o.DROPDOWN, i = !(arguments.length > 2 && void 0 !== arguments[2]) || arguments[2];
+                var n = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : o_DROPDOWN, i = !(2 < arguments.length && void 0 !== arguments[2]) || arguments[2];
                 return this._getNode("string" != typeof t || "#" !== t[0] && "." !== t[0] ? e(t) : t, n, i);
             }
         }, {
             key: "_detectActiveItem",
             value: function() {
-                var t = e(this.content).find("." + o.ITEM + "." + o.ACTIVE + ":not(." + o.DROPDOWN + ")");
+                var t = e(this.content).find("." + o_ITEM + "." + o_ACTIVE + ":not(." + o_DROPDOWN + ")");
                 t.length && this.activateItem(t.first());
             }
         }, {
             key: "_expandDropdown",
             value: function(t) {
                 function n() {
-                    a.removeClass(o.TRANSITIONING).height(""), this._updateScrollbar(this.isCollapsed() ? e(t).parents("." + o.DROPDOWN_MENU_WRAPPER)[0] : this.content), 
+                    a.removeClass(o_TRANSITIONING).height(""), this._updateScrollbar(this.isCollapsed() ? e(t).parents("." + o_DROPDOWN_MENU_WRAPPER)[0] : this.content), 
                     this._triggerEvent("DROPDOWN_OPENED", t);
                 }
-                var i = !(arguments.length > 1 && void 0 !== arguments[1]) || arguments[1];
-                if (!pxUtil.hasClass(t, o.OPEN)) {
-                    var a = e(t).find(s.DROPDOWN_MENU);
-                    if (this.config.accordion && this._closeAllDropdowns(t.parentNode, i, e(t)), pxUtil.addClass(t, o.OPEN), 
+                var i = !(1 < arguments.length && void 0 !== arguments[1]) || arguments[1];
+                if (!pxUtil.hasClass(t, o_OPEN)) {
+                    var a = e(t).find(s_DROPDOWN_MENU);
+                    if (this.config.accordion && this._closeAllDropdowns(t.parentNode, i, e(t)), pxUtil.addClass(t, o_OPEN), 
                     !e.support.transition || !i) return n.call(this);
-                    a.height(0).addClass(o.TRANSITIONING).one("bsTransitionEnd", e.proxy(n, this)).emulateTransitionEnd(this.config.transitionDuration).height(a[0].scrollHeight);
+                    a.height(0).addClass(o_TRANSITIONING).one("bsTransitionEnd", e.proxy(n, this)).emulateTransitionEnd(this.config.transitionDuration).height(a[0].scrollHeight);
                 }
             }
         }, {
             key: "_collapseDropdown",
             value: function(t) {
                 function n() {
-                    pxUtil.removeClass(t, o.OPEN), a.removeClass(o.TRANSITIONING).height(""), e(t).find("." + o.OPEN).removeClass(o.OPEN), 
-                    this._updateScrollbar(this.isCollapsed() ? e(t).parents("." + o.DROPDOWN_MENU_WRAPPER)[0] : this.content), 
+                    pxUtil.removeClass(t, o_OPEN), a.removeClass(o_TRANSITIONING).height(""), e(t).find("." + o_OPEN).removeClass(o_OPEN), 
+                    this._updateScrollbar(this.isCollapsed() ? e(t).parents("." + o_DROPDOWN_MENU_WRAPPER)[0] : this.content), 
                     this._triggerEvent("DROPDOWN_CLOSED", t);
                 }
-                var i = !(arguments.length > 1 && void 0 !== arguments[1]) || arguments[1];
-                if (pxUtil.hasClass(t, o.OPEN)) {
-                    var a = e(t).find(s.DROPDOWN_MENU);
+                var i = !(1 < arguments.length && void 0 !== arguments[1]) || arguments[1];
+                if (pxUtil.hasClass(t, o_OPEN)) {
+                    var a = e(t).find(s_DROPDOWN_MENU);
                     if (!e.support.transition || !i) return n.call(this);
-                    a.height(a.height())[0].offsetHeight, a.addClass(o.TRANSITIONING).height(0).one("bsTransitionEnd", e.proxy(n, this)).emulateTransitionEnd(this.config.transitionDuration);
+                    a.height(a.height())[0].offsetHeight, a.addClass(o_TRANSITIONING).height(0).one("bsTransitionEnd", e.proxy(n, this)).emulateTransitionEnd(this.config.transitionDuration);
                 }
             }
         }, {
             key: "_showDropdown",
             value: function(t) {
                 var n = this;
-                if (!pxUtil.hasClass(t, o.SHOW) && this._isRootDropdown(t)) {
-                    var i = t.parentNode.parentNode, a = e(t).find(s.DROPDOWN_MENU)[0];
+                if (!pxUtil.hasClass(t, o_SHOW) && this._isRootDropdown(t)) {
+                    var i = t.parentNode.parentNode, a = e(t).find(s_DROPDOWN_MENU)[0];
                     if (a) {
                         this.closeAllDropdowns();
-                        var l = t.parentNode.offsetTop, d = t.offsetTop - t.parentNode.scrollTop, p = e('<div class="' + o.DROPDOWN_MENU_TITLE + '"></div>').html(e(t).find(s.ITEM_LABEL).html()).prependTo(a);
-                        pxUtil.addClass(t, o.SHOW), pxUtil.addClass(a, o.SHOW), i.appendChild(a);
-                        var h = e(t).outerHeight(), u = e(a).find(s.ITEM), c = u.first().find("> a").outerHeight(), v = e(this.element).outerHeight() - l, f = p.outerHeight(), N = f + 3 * c, E = e('<div class="' + o.DROPDOWN_MENU_WRAPPER + '"></div>').append(u).appendTo(a)[0], D = void 0;
-                        d + N > v ? (D = d, this.isFixed() || "tablet" === this._curMode ? a.style.bottom = v - d - h + "px" : a.style.bottom = "0px", 
-                        pxUtil.addClass(a, o.DROPDOWN_MENU_TOP), a.appendChild(p[0])) : (D = v - d - f, 
+                        var l = t.parentNode.offsetTop, d = t.offsetTop - t.parentNode.scrollTop, p = e('<div class="' + o_DROPDOWN_MENU_TITLE + '"></div>').html(e(t).find(s_ITEM_LABEL).html()).prependTo(a);
+                        pxUtil.addClass(t, o_SHOW), pxUtil.addClass(a, o_SHOW), i.appendChild(a);
+                        var h = e(t).outerHeight(), u = e(a).find(s_ITEM), c = u.first().find("> a").outerHeight(), v = e(this.element).outerHeight() - l, f = p.outerHeight(), N = f + 3 * c, E = e('<div class="' + o_DROPDOWN_MENU_WRAPPER + '"></div>').append(u).appendTo(a)[0], D = void 0;
+                        v < d + N ? (D = d, this.isFixed() || "tablet" === this._curMode ? a.style.bottom = v - d - h + "px" : a.style.bottom = "0px", 
+                        pxUtil.addClass(a, o_DROPDOWN_MENU_TOP), a.appendChild(p[0])) : (D = v - d - f, 
                         a.style.top = l + d + "px", a.insertBefore(p[0], a.firstChild)), E.style.maxHeight = D - 10 + "px", 
                         e(E).perfectScrollbar(r), e(a).on(this.constructor.Event.MOUSEENTER, function() {
                             return n._clearDropdownTimer(t);
@@ -363,13 +321,13 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_hideDropdown",
             value: function(t) {
-                if (pxUtil.hasClass(t, o.SHOW)) {
+                if (pxUtil.hasClass(t, o_SHOW)) {
                     var n = e(t).data("dropdown");
                     if (n) {
-                        pxUtil.removeClass(t, [ o.SHOW, o.FREEZE ]), pxUtil.removeClass(n, o.SHOW), pxUtil.removeClass(n, o.DROPDOWN_MENU_TOP), 
+                        pxUtil.removeClass(t, [ o_SHOW, o_FREEZE ]), pxUtil.removeClass(n, o_SHOW), pxUtil.removeClass(n, o_DROPDOWN_MENU_TOP), 
                         this.unfreezeDropdown(t);
-                        var i = e(n).find("." + o.DROPDOWN_MENU_WRAPPER);
-                        e(n).find("." + o.DROPDOWN_MENU_TITLE).remove(), e(n).append(i.find(s.ITEM)), i.perfectScrollbar("destroy").remove(), 
+                        var i = e(n).find("." + o_DROPDOWN_MENU_WRAPPER);
+                        e(n).find("." + o_DROPDOWN_MENU_TITLE).remove(), e(n).append(i.find(s_ITEM)), i.perfectScrollbar("destroy").remove(), 
                         n.setAttribute("style", ""), t.appendChild(n), e(t).data("dropdown", null), e(n).data("element", null), 
                         this._clearDropdownTimer(t), e(n).off("mouseenter").off("mouseleave"), this._updateScrollbar(t.parentNode), 
                         this._triggerEvent("DROPDOWN_CLOSED", t);
@@ -382,13 +340,13 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 this._clearTooltips();
                 var n = e(t).find(".px-nav-label").contents().filter(function() {
                     return 3 === this.nodeType;
-                }).text(), i = e('<div class="' + o.TOOLTIP + '"></div>').text(n)[0], s = t.parentNode.offsetTop, a = t.offsetTop - t.parentNode.scrollTop;
+                }).text(), i = e('<div class="' + o_TOOLTIP + '"></div>').text(n)[0], s = t.parentNode.offsetTop, a = t.offsetTop - t.parentNode.scrollTop;
                 i.style.top = s + a + "px", e(i).data("dropdown", t), t.parentNode.parentNode.appendChild(i);
             }
         }, {
             key: "_updateTooltipPosition",
             value: function() {
-                var t = e(this.element).find("." + o.TOOLTIP)[0];
+                var t = e(this.element).find("." + o_TOOLTIP)[0];
                 if (t) {
                     var n = e(t).data("dropdown");
                     if (n) {
@@ -400,21 +358,22 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_clearTooltips",
             value: function() {
-                e(this.element).find("." + o.TOOLTIP).remove();
+                e(this.element).find("." + o_TOOLTIP).remove();
             }
         }, {
             key: "_closeAllDropdowns",
             value: function(t, n) {
-                var i = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : null, a = this, r = void 0, l = void 0, d = t;
-                this.isCollapsed() && pxUtil.hasClass(d, o.CONTENT) ? (r = s.SHOWN_DROPDOWNS, l = "_hideDropdown") : (this._isFloatingDropdown(d) && this.isDropdownOpened(d) ? d = e(e(d).data("dropdown")).find("." + o.DROPDOWN_MENU_WRAPPER)[0] : pxUtil.hasClass(d, o.DROPDOWN) && (d = e(d).find(s.DROPDOWN_MENU)[0]), 
-                r = s.OPENED_DROPDOWNS, l = "_collapseDropdown"), e(d).find(r).each(function() {
+                var i = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : null, a = this, r = void 0, l = void 0, d = t;
+                l = this.isCollapsed() && pxUtil.hasClass(d, o_CONTENT) ? (r = s_SHOWN_DROPDOWNS, 
+                "_hideDropdown") : (this._isFloatingDropdown(d) && this.isDropdownOpened(d) ? d = e(e(d).data("dropdown")).find("." + o_DROPDOWN_MENU_WRAPPER)[0] : pxUtil.hasClass(d, o_DROPDOWN) && (d = e(d).find(s_DROPDOWN_MENU)[0]), 
+                r = s_OPENED_DROPDOWNS, "_collapseDropdown"), e(d).find(r).each(function() {
                     i && i === e(this) || a[l](this, n);
                 });
             }
         }, {
             key: "_isRootDropdown",
             value: function(e) {
-                return pxUtil.hasClass(e.parentNode, o.CONTENT);
+                return pxUtil.hasClass(e.parentNode, o_CONTENT);
             }
         }, {
             key: "_isFloatingDropdown",
@@ -424,7 +383,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_getNavState",
             value: function() {
-                return ("phone" === this._curMode || "tablet" === this._curMode) && !pxUtil.hasClass(this.element, o.EXPAND) || "desktop" === this._curMode && pxUtil.hasClass(this.element, o.COLLAPSE);
+                return ("phone" === this._curMode || "tablet" === this._curMode) && !pxUtil.hasClass(this.element, o_EXPAND) || "desktop" === this._curMode && pxUtil.hasClass(this.element, o_COLLAPSE);
             }
         }, {
             key: "_setDropdownTimer",
@@ -447,16 +406,16 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_updateScrollbar",
             value: function(t) {
-                t && pxUtil.hasClass(t, o.PERFECT_SCROLLBAR_CONTAINER) && e(t).perfectScrollbar("update");
+                t && pxUtil.hasClass(t, o_PERFECT_SCROLLBAR_CONTAINER) && e(t).perfectScrollbar("update");
             }
         }, {
             key: "_changeNavState",
             value: function(t) {
                 function n() {
-                    this._stateChanging = this._stateChanging < 2 ? 0 : this._stateChanging - 1, this._stateChanging || pxUtil.removeClass(this.element, o.NAV_TRANSITIONING), 
+                    this._stateChanging = this._stateChanging < 2 ? 0 : this._stateChanging - 1, this._stateChanging || pxUtil.removeClass(this.element, o_NAV_TRANSITIONING), 
                     this._updateScrollbar(this.content), pxUtil.triggerResizeEvent();
                 }
-                if (this._stateChanging++, this.config.animate && e.support.transition && pxUtil.addClass(this.element, o.NAV_TRANSITIONING), 
+                if (this._stateChanging++, this.config.animate && e.support.transition && pxUtil.addClass(this.element, o_NAV_TRANSITIONING), 
                 t.call(this), this._isCollapsed = this._getNavState(), this._storeNavState(), !this.config.animate || !e.support.transition) return n.call(this);
                 e(this.element).one("bsTransitionEnd", e.proxy(n, this)).emulateTransitionEnd(this.config.transitionDuration);
             }
@@ -473,13 +432,13 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_prefixStorageKey",
             value: function(e) {
-                return this.config.storagePrefix + (pxUtil.hasClass(this.element, o.NAV_LEFT) ? "left." : "right.") + e;
+                return this.config.storagePrefix + (pxUtil.hasClass(this.element, o_NAV_LEFT) ? "left." : "right.") + e;
             }
         }, {
             key: "_storeNavState",
             value: function() {
                 if (this.config.storeState) {
-                    var e = this._prefixStorageKey("state"), t = pxUtil.hasClass(this.element, o.COLLAPSE) ? "collapsed" : "expanded";
+                    var e = this._prefixStorageKey("state"), t = pxUtil.hasClass(this.element, o_COLLAPSE) ? "collapsed" : "expanded";
                     window.PixelAdmin.storage.set(e, t);
                 }
             }
@@ -488,7 +447,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             value: function() {
                 if (this.config.storeState) {
                     var e = this._prefixStorageKey("state"), t = window.PixelAdmin.storage.get(e) || "expanded";
-                    pxUtil["collapsed" === t ? "addClass" : "removeClass"](this.element, o.COLLAPSE), 
+                    pxUtil["collapsed" === t ? "addClass" : "removeClass"](this.element, o_COLLAPSE), 
                     this._isCollapsed = this._getNavState(), pxUtil.triggerResizeEvent();
                 }
             }
@@ -496,19 +455,19 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             key: "_checkNavbarPosition",
             value: function() {
                 if (this.isFixed()) {
-                    var t = e(this.element).find(s.NEAR_NAVBAR)[0];
-                    t && (pxUtil.hasClass(t.parentNode, o.NAVBAR_FIXED) || (console.warn("The " + (pxUtil.hasClass(this.element, o.NAV_LEFT) ? "left" : "right") + " .px-nav is fixed, but the coterminous .px-navbar isn't. You need to explicitly add the ." + o.NAVBAR_FIXED + " class to the parent element to fix the navbar."), 
-                    pxUtil.addClass(t.parentNode, o.NAVBAR_FIXED)));
+                    var t = e(this.element).find(s_NEAR_NAVBAR)[0];
+                    t && (pxUtil.hasClass(t.parentNode, o_NAVBAR_FIXED) || (console.warn("The " + (pxUtil.hasClass(this.element, o_NAV_LEFT) ? "left" : "right") + " .px-nav is fixed, but the coterminous .px-navbar isn't. You need to explicitly add the ." + o_NAVBAR_FIXED + " class to the parent element to fix the navbar."), 
+                    pxUtil.addClass(t.parentNode, o_NAVBAR_FIXED)));
                 }
             }
         }, {
             key: "_setupMarkup",
             value: function() {
                 var t = e(this.element).parent();
-                if (t.find("> ." + o.DIMMER).length || t.append('<div class="' + o.DIMMER + '"></div>'), 
+                if (t.find("> ." + o_DIMMER).length || t.append('<div class="' + o_DIMMER + '"></div>'), 
                 !e.fn.perfectScrollbar) throw new Error('Scrolling feature requires the "perfect-scrollbar" plugin included.');
                 var n = e(this.content);
-                n.length && n.wrap('<div class="' + o.SCROLLABLE_AREA + '"></div>').perfectScrollbar(r);
+                n.length && n.wrap('<div class="' + o_SCROLLABLE_AREA + '"></div>').perfectScrollbar(r);
             }
         }, {
             key: "_setListeners",
@@ -517,27 +476,27 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 e(window).on(this.constructor.Event.RESIZE + "." + this.uniqueId, function() {
                     n._curMode = n._getMode(), n._isCollapsed = n._getNavState(), n.isCollapsed() && n.closeAllDropdowns(), 
                     n.config.enableTooltips && n._clearTooltips(), n._updateScrollbar(n.content);
-                }), e(this.element).on(this.constructor.Event.CLICK, s.DROPDOWN_LINK, function(e) {
+                }), e(this.element).on(this.constructor.Event.CLICK, s_DROPDOWN_LINK, function(e) {
                     e.preventDefault();
                     var t = this.parentNode;
                     n._isFloatingDropdown(t) ? n.isDropdownOpened(t) ? n[n.isDropdownFrozen(t) ? "closeDropdown" : "freezeDropdown"](t) : (n.openDropdown(t), 
                     n.freezeDropdown(t)) : n.toggleDropdown(t);
-                }), e(this.content).on(this.constructor.Event.MOUSEENTER, s.DROPDOWN_LINK, function() {
+                }), e(this.content).on(this.constructor.Event.MOUSEENTER, s_DROPDOWN_LINK, function() {
                     if (!window.PixelAdmin.isMobile) {
                         var t = this.parentNode;
-                        if (n._isFloatingDropdown(t) && !pxUtil.hasClass(n.element, o.OFF_CANVAS)) if (n.isDropdownOpened(t)) n._clearDropdownTimer(t); else {
-                            if (e(n.element).find(s.FROZEN_DROPDOWNS).length) return;
+                        if (n._isFloatingDropdown(t) && !pxUtil.hasClass(n.element, o_OFF_CANVAS)) if (n.isDropdownOpened(t)) n._clearDropdownTimer(t); else {
+                            if (e(n.element).find(s_FROZEN_DROPDOWNS).length) return;
                             n.openDropdown(t);
                         }
                     }
-                }).on(this.constructor.Event.MOUSELEAVE, s.DROPDOWN_LINK, function() {
+                }).on(this.constructor.Event.MOUSELEAVE, s_DROPDOWN_LINK, function() {
                     if (!window.PixelAdmin.isMobile) {
                         var e = this.parentNode;
                         n._isFloatingDropdown(e) && n.isDropdownOpened(e) && n._setDropdownTimer(e);
                     }
-                }).on(this.constructor.Event.MOUSEENTER, s.ROOT_LINK, function() {
-                    window.PixelAdmin.isMobile || n.config.enableTooltips && n.isCollapsed() && !pxUtil.hasClass(n.element, o.OFF_CANVAS) && n._showTooltip(this.parentNode);
-                }).on(this.constructor.Event.MOUSELEAVE, s.ROOT_LINK, function() {
+                }).on(this.constructor.Event.MOUSEENTER, s_ROOT_LINK, function() {
+                    window.PixelAdmin.isMobile || n.config.enableTooltips && n.isCollapsed() && !pxUtil.hasClass(n.element, o_OFF_CANVAS) && n._showTooltip(this.parentNode);
+                }).on(this.constructor.Event.MOUSELEAVE, s_ROOT_LINK, function() {
                     window.PixelAdmin.isMobile || n.config.enableTooltips && n._clearTooltips();
                 }).on(this.constructor.Event.SCROLL, function() {
                     t.isCollapsed() && (t.config.enableTooltips && t._updateTooltipPosition(), t.closeAllDropdowns());
@@ -547,20 +506,20 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             key: "_unsetListeners",
             value: function() {
                 e(window).off(this.constructor.Event.RESIZE + "." + this.uniqueId), e(this.element).off(".px.nav"), 
-                e(this.content).off(".px.nav").find("." + o.DROPDOWN_MENU).off(".px.nav"), "desktop" !== this._curMode && pxUtil.hasClass(this.element, o.EXPAND) && e(this.dimmer).off(".px.nav");
+                e(this.content).off(".px.nav").find("." + o_DROPDOWN_MENU).off(".px.nav"), "desktop" !== this._curMode && pxUtil.hasClass(this.element, o_EXPAND) && e(this.dimmer).off(".px.nav");
             }
         }, {
             key: "_enableAnimation",
             value: function() {
                 var e = this;
-                this.config.animate && (pxUtil.addClass(this.element, [ "off", o.ANIMATE ]), setTimeout(function() {
+                this.config.animate && (pxUtil.addClass(this.element, [ "off", o_ANIMATE ]), setTimeout(function() {
                     pxUtil.removeClass(e.element, "off");
                 }, this.config.transitionDuration));
             }
         }, {
             key: "_triggerEvent",
             value: function(t, n) {
-                var i = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {};
+                var i = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : {};
                 e(this.element).trigger(e.Event(this.constructor.Event[t], {
                     target: n
                 }), [ i ]);
@@ -568,7 +527,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_triggerPreventableEvent",
             value: function(t, n) {
-                var i = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {}, o = e.Event(this.constructor.Event[t], {
+                var i = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : {}, o = e.Event(this.constructor.Event[t], {
                     target: n
                 });
                 return e(this.element).trigger(o, [ i ]), !o.isDefaultPrevented();
@@ -581,7 +540,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         } ], [ {
             key: "_jQueryInterface",
             value: function(t) {
-                for (var i = arguments.length, o = Array(i > 1 ? i - 1 : 0), s = 1; s < i; s++) o[s - 1] = arguments[s];
+                for (var i = arguments.length, o = Array(1 < i ? i - 1 : 0), s = 1; s < i; s++) o[s - 1] = arguments[s];
                 var a = void 0, r = this.each(function() {
                     var i = e(this).data("px.nav"), s = "object" === (void 0 === t ? "undefined" : _typeof(t)) ? t : null;
                     if (i || (i = new n(this, s), e(this).data("px.nav", i)), "string" == typeof t) {
@@ -618,10 +577,10 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             }
         } ]), n;
     }();
-    return e(document).on(a.CLICK_DATA_API, s.DATA_TOGGLE, function(t) {
+    return e(document).on(a.CLICK_DATA_API, s_DATA_TOGGLE, function(t) {
         t.preventDefault();
         var n = e(e(this).data("target"));
-        n.length || (n = e(this).parents("." + o.NAV)), n.length && (n.data("px.nav") || l._jQueryInterface.call(n, e(this).data()), 
+        n.length || (n = e(this).parents("." + o_NAV)), n.length && (n.data("px.nav") || l._jQueryInterface.call(n, e(this).data()), 
         l._jQueryInterface.call(n, "toggle"));
     }), e.fn[t] = l._jQueryInterface, e.fn[t].Constructor = l, e.fn[t].noConflict = function() {
         return e.fn[t] = n, l._jQueryInterface;

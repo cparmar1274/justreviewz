@@ -18,15 +18,14 @@ function(e, n, t, r) {
             function d(e) {
                 r.isFunction(s.dtInstance) ? s.dtInstance(e) : r.isDefined(s.dtInstance) && (s.dtInstance = e);
             }
-            var u, c = this;
-            c.buildOptionsPromise = function() {
+            var u;
+            this.buildOptionsPromise = function() {
                 var a = e.defer();
                 return e.all([ e.when(s.dtOptions), e.when(s.dtColumns), e.when(s.dtColumnDefs) ]).then(function(a) {
-                    var o = a[0], s = a[1], d = a[2];
-                    i.deleteProperty(o, "$promise"), i.deleteProperty(s, "$promise"), i.deleteProperty(d, "$promise");
-                    var u;
-                    if (r.isDefined(o) && (u = {}, r.extend(u, o), r.isArray(s) && (u.aoColumns = s), 
-                    r.isArray(d) && (u.aoColumnDefs = d), u.language && u.language.url)) {
+                    var u, o = a[0], s = a[1], d = a[2];
+                    if (i.deleteProperty(o, "$promise"), i.deleteProperty(s, "$promise"), i.deleteProperty(d, "$promise"), 
+                    r.isDefined(o) && (u = {}, r.extend(u, o), r.isArray(s) && (u.aoColumns = s), r.isArray(d) && (u.aoColumnDefs = d), 
+                    u.language && u.language.url)) {
                         var c = e.defer(), l = u.language.url;
                         n.get(u.language.url).then(function(e) {
                             c.resolve(e.data);
@@ -38,14 +37,14 @@ function(e, n, t, r) {
                 }).then(function(e) {
                     a.resolve(e);
                 }), a.promise;
-            }, c.render = function(e, n, t) {
+            }, this.render = function(e, n, t) {
                 n.then(function(n) {
                     o.preRender(n);
                     var r = s.datatable && "ng" === s.datatable;
                     u && u._renderer ? u._renderer.withOptions(n).render(e, s, t).then(function(e) {
-                        u = e, d(e);
+                        d(u = e);
                     }) : a.fromOptions(n, r).render(e, s, t).then(function(e) {
-                        u = e, d(e);
+                        d(u = e);
                     });
                 });
             };
@@ -244,7 +243,7 @@ function(e, n, t, r) {
                     }, 0, !1) : o.resolve(a.renderDataTable(r, t)), o.promise;
                 }
                 function c(e) {
-                    return !(!r.isDefined(e) || !r.isDefined(e.dom)) && e.dom.indexOf("S") >= 0;
+                    return !(!r.isDefined(e) || !r.isDefined(e.dom)) && 0 <= e.dom.indexOf("S");
                 }
                 var l, f, p, h = Object.create(t);
                 return h.name = "DTAjaxRenderer", h.options = s, h.render = d, h.reloadData = function(e, n) {
@@ -276,17 +275,10 @@ function(e, n, t, r) {
         };
     }
     function p(e) {
-        function n(e, t) {
-            var a = r.copy(e);
-            if ((r.isUndefined(a) || null === a) && (a = {}), r.isUndefined(t) || null === t) return a;
-            if (r.isObject(t)) for (var o in t) t.hasOwnProperty(o) && (a[o] = n(a[o], t[o])); else a = r.copy(t);
-            return a;
-        }
         function a(n, a) {
             var i = e.defer(), s = [], d = {}, u = a || [];
             if (!r.isObject(n) || r.isArray(n)) i.resolve(n); else {
-                d = r.extend(d, n);
-                for (var c in d) d.hasOwnProperty(c) && -1 === t.inArray(c, u) && (r.isArray(d[c]) ? s.push(o(d[c])) : s.push(e.when(d[c])));
+                for (var c in d = r.extend(d, n)) d.hasOwnProperty(c) && -1 === t.inArray(c, u) && (r.isArray(d[c]) ? s.push(o(d[c])) : s.push(e.when(d[c])));
                 e.all(s).then(function(e) {
                     var n = 0;
                     for (var r in d) d.hasOwnProperty(r) && -1 === t.inArray(r, u) && (d[r] = e[n++]);
@@ -306,7 +298,12 @@ function(e, n, t, r) {
             })) : t.resolve(n), t.promise;
         }
         return {
-            overrideProperties: n,
+            overrideProperties: function n(e, t) {
+                var a = r.copy(e);
+                if ((r.isUndefined(a) || null === a) && (a = {}), r.isUndefined(t) || null === t) return a;
+                if (r.isObject(t)) for (var o in t) t.hasOwnProperty(o) && (a[o] = n(a[o], t[o])); else a = r.copy(t);
+                return a;
+            },
             deleteProperty: function(e, n) {
                 r.isObject(e) && delete e[n];
             },

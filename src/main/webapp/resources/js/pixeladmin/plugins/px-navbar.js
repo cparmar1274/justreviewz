@@ -15,17 +15,7 @@ var _createClass = function() {
     };
 }(), PxNavbar = function(e) {
     "use strict";
-    var t = "pxNavbar", n = ".px.navbar", r = e.fn[t], a = {
-        NAVBAR: "px-navbar",
-        INNER: "px-navbar-collapse-inner",
-        IN: "in",
-        COLLAPSED: "collapsed"
-    }, o = {
-        DATA_TOGGLE: '.navbar-toggle[data-toggle="collapse"]',
-        DROPDOWN_TOGGLE: '.dropdown-toggle[data-toggle="dropdown"]',
-        COLLAPSE: ".navbar-collapse",
-        DROPDOWN: ".dropdown"
-    }, l = {
+    var t = "pxNavbar", n = ".px.navbar", r = e.fn[t], a_NAVBAR = "px-navbar", a_INNER = "px-navbar-collapse-inner", a_IN = "in", a_COLLAPSED = "collapsed", o_DATA_TOGGLE = '.navbar-toggle[data-toggle="collapse"]', o_DROPDOWN_TOGGLE = '.dropdown-toggle[data-toggle="dropdown"]', o_COLLAPSE = ".navbar-collapse", o_DROPDOWN = ".dropdown", l = {
         CLICK_DATA_API: "click.px.navbar.data-api",
         RESIZE: "resize.px.navbar",
         CLICK: "click.px.navbar",
@@ -38,8 +28,8 @@ var _createClass = function() {
     }, i = function() {
         function r(t) {
             if (_classCallCheck(this, r), !e.fn.perfectScrollbar) throw new Error('Scrolling feature requires the "perfect-scrollbar" plugin included.');
-            this.uniqueId = pxUtil.generateUniqueId(), this.element = t, this.$collapse = e(t).find(o.COLLAPSE), 
-            this.$toggle = e(t).find(o.DATA_TOGGLE), this._scrollbarEnabled = 0, this._curScrollTop = 0, 
+            this.uniqueId = pxUtil.generateUniqueId(), this.element = t, this.$collapse = e(t).find(o_COLLAPSE), 
+            this.$toggle = e(t).find(o_DATA_TOGGLE), this._scrollbarEnabled = 0, this._curScrollTop = 0, 
             this.$collapse.length && this.$toggle.length && (this.$inner = this._setupInnerContainer(), 
             this._setListeners());
         }
@@ -76,7 +66,7 @@ var _createClass = function() {
         }, {
             key: "_setupInnerContainer",
             value: function() {
-                var t = e('<div class="' + a.INNER + '"></div>');
+                var t = e('<div class="' + a_INNER + '"></div>');
                 return t.append(this.$collapse.find("> *")), this.$collapse.append(t), t;
             }
         }, {
@@ -85,22 +75,22 @@ var _createClass = function() {
                 var t = this, n = this;
                 e(window).on(this.constructor.Event.RESIZE + "." + this.uniqueId, function() {
                     t._scrollbarEnabled && (t.$toggle.is(":visible") ? (t._curScrollTop = t.$inner[0].scrollTop, 
-                    t.updateScrollbar()) : (t._disableScrollbar(), t.$collapse.removeClass(a.IN), t.$toggle.addClass(a.COLLAPSED), 
+                    t.updateScrollbar()) : (t._disableScrollbar(), t.$collapse.removeClass(a_IN), t.$toggle.addClass(a_COLLAPSED), 
                     t.$collapse.attr("aria-expanded", "false"), t.$toggle.attr("aria-expanded", "false")));
-                }), e(this.element).on(this.constructor.Event.COLLAPSE_SHOW, o.COLLAPSE, function() {
+                }), e(this.element).on(this.constructor.Event.COLLAPSE_SHOW, o_COLLAPSE, function() {
                     t.$collapse.find(".dropdown.open").removeClass("open");
-                }).on(this.constructor.Event.COLLAPSE_SHOWN, o.COLLAPSE, function() {
+                }).on(this.constructor.Event.COLLAPSE_SHOWN, o_COLLAPSE, function() {
                     t._enableScrollbar();
-                }).on(this.constructor.Event.COLLAPSE_HIDDEN, o.COLLAPSE, function() {
+                }).on(this.constructor.Event.COLLAPSE_HIDDEN, o_COLLAPSE, function() {
                     t._disableScrollbar();
-                }).on(this.constructor.Event.DROPDOWN_SHOWN + " " + this.constructor.Event.DROPDOWN_HIDDEN, o.DROPDOWN, function() {
+                }).on(this.constructor.Event.DROPDOWN_SHOWN + " " + this.constructor.Event.DROPDOWN_HIDDEN, o_DROPDOWN, function() {
                     t.updateScrollbar();
-                }).on(this.constructor.Event.MOUSEDOWN, o.DROPDOWN_TOGGLE, function() {
+                }).on(this.constructor.Event.MOUSEDOWN, o_DROPDOWN_TOGGLE, function() {
                     if (!t._scrollbarEnabled) return !0;
                     t._curScrollTop = t.$inner[0].scrollTop;
-                }).on(this.constructor.Event.CLICK, o.DROPDOWN_TOGGLE, function(e) {
-                    return !n._scrollbarEnabled || (!this.getAttribute("href") || "#" === this.getAttribute("href") || (e.preventDefault(), 
-                    e.stopPropagation(), this.removeAttribute("data-toggle"), this.click(), void this.setAttribute("data-toggle", "dropdown")));
+                }).on(this.constructor.Event.CLICK, o_DROPDOWN_TOGGLE, function(e) {
+                    return !n._scrollbarEnabled || !this.getAttribute("href") || "#" === this.getAttribute("href") || (e.preventDefault(), 
+                    e.stopPropagation(), this.removeAttribute("data-toggle"), this.click(), void this.setAttribute("data-toggle", "dropdown"));
                 });
             }
         }, {
@@ -111,10 +101,10 @@ var _createClass = function() {
         } ], [ {
             key: "_jQueryInterface",
             value: function(t) {
-                for (var n = arguments.length, a = Array(n > 1 ? n - 1 : 0), l = 1; l < n; l++) a[l - 1] = arguments[l];
+                for (var n = arguments.length, a = Array(1 < n ? n - 1 : 0), l = 1; l < n; l++) a[l - 1] = arguments[l];
                 return this.each(function() {
                     var n = e(this).data("px.navbar");
-                    if (n || (n = new r(this), e(this).data("px.navbar", n), e.support.transition || "true" !== e(this).find(o.DATA_TOGGLE).attr("aria-expanded") || n._enableScrollbar()), 
+                    if (n || (n = new r(this), e(this).data("px.navbar", n), e.support.transition || "true" !== e(this).find(o_DATA_TOGGLE).attr("aria-expanded") || n._enableScrollbar()), 
                     "string" == typeof t) {
                         if (!n[t]) throw new Error('No method named "' + t + '"');
                         n[t].apply(n, a);
@@ -143,9 +133,9 @@ var _createClass = function() {
             }
         } ]), r;
     }();
-    return e(document).on(l.CLICK_DATA_API, "." + a.NAVBAR + " " + o.DATA_TOGGLE, function(t) {
+    return e(document).on(l.CLICK_DATA_API, "." + a_NAVBAR + " " + o_DATA_TOGGLE, function(t) {
         t.preventDefault();
-        var n = e(this).parents("." + a.NAVBAR);
+        var n = e(this).parents("." + a_NAVBAR);
         n.length && (n.data("px.navbar") || i._jQueryInterface.call(n));
     }), e.fn[t] = i._jQueryInterface, e.fn[t].Constructor = i, e.fn[t].noConflict = function() {
         return e.fn[t] = r, i._jQueryInterface;
