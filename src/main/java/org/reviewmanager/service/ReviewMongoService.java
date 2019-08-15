@@ -42,6 +42,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mongodb.BasicDBObject;
@@ -160,7 +161,10 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	private UpdateResult updateHistoricAnswer(QueryObject queryObject) {
 		QueryAnswers queryAnswers = new QueryAnswers(queryObject);
 		BasicDBObject queryAnswer = new BasicDBObject();
-		queryAnswer.putAll(RMUtil.getMap(queryAnswers));
+		queryAnswer.append("queryId", queryAnswers.getQueryId())
+		.append("answerByName", queryAnswers.getAnswerByName())
+		.append("answerByEmail", queryAnswers.getAnswerByEmail())
+		.append("answerText", queryAnswers.getAnswerText());
 		return mongoService.addObject(RMUtil.QUERY_ANSWERS, queryAnswer, queryAnswer);
 	}
 
