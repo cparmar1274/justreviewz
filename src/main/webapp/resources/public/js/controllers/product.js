@@ -1,4 +1,8 @@
-angular.module("pixeladmin").controller("ProductReviewCtrl", function($http, $scope, $stateParams, $state, $timeout) {
+angular.module("pixeladmin").filter("justreviewzdate", function() {
+    return function(a, b) {
+        return moment(a).fromNow();
+    };
+}).controller("ProductReviewCtrl", function($http, $scope, $stateParams, $state, $timeout) {
     var self = this;
     self.productName = "", self.productId = "", null != $stateParams.productId && null != $stateParams.productId && (self.productId = $stateParams.productId), 
     self.product = {}, self.subscribeStatus = !0, self.sortingOptions = [ "Latest Reviews First", "Oldest Reviews First", "Highest Rating First", "Lowest Rating First" ], 

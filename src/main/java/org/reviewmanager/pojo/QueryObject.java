@@ -1,6 +1,7 @@
 package org.reviewmanager.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -48,7 +49,7 @@ public class QueryObject {
 
 	@JsonProperty("answeredEmail")
 	public String answeredEmail;
-
+	
 	/**
 	 * Instantiates a new query object.
 	 */
@@ -225,9 +226,18 @@ public class QueryObject {
 	public String getAnsweredEmail() {
 		return answeredEmail;
 	}
-
+	
+	
 	public void setAnsweredEmail(String answeredEmail) {
 		this.answeredEmail = answeredEmail;
+	}
+
+	List<QueryAnswers> queryAnswers;
+	public List<QueryAnswers> getQueryAnswers() {
+		return queryAnswers;
+	}
+	public void setQueryAnswers(List<QueryAnswers> queryAnswers) {
+		this.queryAnswers = queryAnswers;
 	}
 
 	@Override
@@ -249,6 +259,7 @@ public class QueryObject {
 		result = prime * result + ((postedBy == null) ? 0 : postedBy.hashCode());
 		result = prime * result + ((postedDate == null) ? 0 : postedDate.hashCode());
 		result = prime * result + ((postedEmail == null) ? 0 : postedEmail.hashCode());
+		result = prime * result + ((queryAnswers == null) ? 0 : queryAnswers.hashCode());
 		result = prime * result + ((queryId == null) ? 0 : queryId.hashCode());
 		result = prime * result + ((question == null) ? 0 : question.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -299,6 +310,11 @@ public class QueryObject {
 				return false;
 		} else if (!postedEmail.equals(other.postedEmail))
 			return false;
+		if (queryAnswers == null) {
+			if (other.queryAnswers != null)
+				return false;
+		} else if (!queryAnswers.equals(other.queryAnswers))
+			return false;
 		if (queryId == null) {
 			if (other.queryId != null)
 				return false;
@@ -316,5 +332,8 @@ public class QueryObject {
 			return false;
 		return true;
 	}
+
+	
+
 
 }

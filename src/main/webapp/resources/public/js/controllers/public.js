@@ -1,4 +1,8 @@
-angular.module("pixeladmin").controller("PublicReviewCtrl", function($http, $scope, $stateParams, $state, $timeout) {
+angular.module("pixeladmin").filter("justreviewzdate", function() {
+    return function(a, b) {
+        return moment(a).fromNow();
+    };
+}).controller("PublicReviewCtrl", function($http, $scope, $stateParams, $state, $timeout) {
     var self = this;
     self.reviewText = "", self.reviewList = [], self.averageRating = 0, self.totalReviews = 0, 
     self.totalReplies = 0, self.totalQueries = 0, self.reviewMessage = "", self.sortingOrder = "", 

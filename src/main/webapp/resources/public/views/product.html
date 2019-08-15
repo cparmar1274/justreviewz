@@ -132,9 +132,12 @@
 							<div class="widget-tree-comments-header">
 								<span class="text text-default" style="font-size: 14px;">{{query.question}}</span>
 								<span>&nbsp;&nbsp;{{query.postedDate | date}}</span>
-								<span ng-click="productCtrl.stateAsk(query)">&nbsp;&nbsp;(Change Answer)</span>
+								<span class="text text-warning cursor" ng-click="productCtrl.stateAsk(query)">&nbsp;&nbsp;(Change Answer)</span>
 							</div>
 							<div class="widget-tree-comments-text text-success" style="word-wrap: break-word;">{{query.answer}}
+							</div>
+							<div class="widget-tree-comments-footer">
+							   <span ng-repeat="ans in query.queryAnswers">{{ans.answerText}} &nbsp;&nbsp; <small>{{ans.answerDate | justreviewzdate}}</small><br></span>
 							</div>
 						</div>
 						

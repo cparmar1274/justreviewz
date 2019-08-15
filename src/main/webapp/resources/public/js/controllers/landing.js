@@ -58,7 +58,13 @@ angular.module("pixeladmin").filter("justreviewzdate", function() {
                 clientEmail: "",
                 clientName: item.name,
                 clientBusinessPhoneNumber: item.phone,
-                address: item.location,
+                address: {
+                    streetName: item.location.address1,
+                    city: item.location.city,
+                    postalCode:item.location.zip_code,
+                    province:item.location.state,
+                    country:item.location.country,
+                    },
                 clientType: clientType
             };
             $http.post("addUser", params).then(function(data) {

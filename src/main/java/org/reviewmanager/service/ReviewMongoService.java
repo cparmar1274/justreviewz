@@ -25,6 +25,7 @@ import org.reviewmanager.pojo.LabelValue;
 import org.reviewmanager.pojo.ProductObject;
 import org.reviewmanager.pojo.PromotionCounterObject;
 import org.reviewmanager.pojo.PromotionObject;
+import org.reviewmanager.pojo.QueryAnswers;
 import org.reviewmanager.pojo.QueryObject;
 import org.reviewmanager.pojo.ReviewObject;
 import org.reviewmanager.pojo.SearchBusinessObject;
@@ -149,9 +150,18 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		recentService.addQueryObject(queryObject);
 
 		UpdateResult data = mongoService.addObject(RMUtil.QUERY_INDEX, searchDoc, document);
+		
 		reportResult.put("result", data.toString());
 		reportResult.put("updateOfExisting", data.getUpsertedId());
+		reportResult.put("historicAnswer", this.updateHistoricAnswer(queryObject));
 		return reportResult;
+	}
+
+	private UpdateResult updateHistoricAnswer(QueryObject queryObject) {
+		QueryAnswers queryAnswers = new QueryAnswers(queryObject);
+		BasicDBObject queryAnswer = new BasicDBObject();
+		queryAnswer.putAll(RMUtil.getMap(queryAnswers));
+		return mongoService.addObject(RMUtil.QUERY_ANSWERS, queryAnswer, queryAnswer);
 	}
 
 	/*
@@ -173,6 +183,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		for (Document searchHit : cursor) {
 			try {
 				object = RMUtil.gson.fromJson(searchHit.toJson(), QueryObject.class);
+				object.setQueryAnswers(this.getPublicQueryAnswers(object));
 				queryObjects.add(object);
 			} catch (Exception ex) {
 				System.out.println("Error Serializing :" + searchHit.toString());
@@ -181,6 +192,24 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		reportResult.put("result", queryObjects);
 		reportResult.put("total", queryObjects.size());
 		return reportResult;
+	}
+	
+	private List<QueryAnswers> getPublicQueryAnswers(QueryObject queryObject) {
+		BasicDBObject document = new BasicDBObject();
+		document.append("queryId", queryObject.getQueryId());
+		List<Document> cursor = mongoService.getObject(RMUtil.QUERY_ANSWERS, document,
+				new BasicDBObject().append("answerDate", -1));
+		QueryAnswers object = null;
+		List<QueryAnswers> queryAnswers = new ArrayList<>();
+		for (Document searchHit : cursor) {
+			try {
+				object = RMUtil.gson.fromJson(searchHit.toJson(), QueryAnswers.class);
+				queryAnswers.add(object);
+			} catch (Exception ex) {
+				System.out.println("Error Serializing :" + searchHit.toString());
+			}
+		}
+		return queryAnswers;
 	}
 
 	/*

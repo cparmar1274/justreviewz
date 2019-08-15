@@ -75,6 +75,7 @@ public class RMUtil {
 	public static final String ONBOARDED_BUSINESS = "onboarded_business";
 
 	public static final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
+	public static final String QUERY_ANSWERS = "query_answer_index";
 
 	/**
 	 * Gets the sessioned user.
