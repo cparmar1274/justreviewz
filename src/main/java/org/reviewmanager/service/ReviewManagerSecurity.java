@@ -45,7 +45,7 @@ public class ReviewManagerSecurity extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		http.userDetailsService(reviewManagerUserService);
 
-		http.authorizeRequests().antMatchers("/business**").authenticated();
+		http.authorizeRequests().antMatchers("/business/**").authenticated();
 
 		// http.formLogin().and().rememberMe();
 		http.formLogin().loginPage("/login").failureUrl("/login?error").permitAll().and().rememberMe()
