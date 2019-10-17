@@ -80,6 +80,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 
 	/** The headers. */
 	public HttpHeaders headers;
+	
 
 	/**
 	 * Instantiates a new review mongo service.
@@ -1258,32 +1259,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		}
 		return product;
 	}
+	
 
-	/*
-	 * public static void main(String[] args) {
-	 * 
-	 * ReviewMongoService reviewService = new ReviewMongoService(); MongoService
-	 * mongoService = new MongoService(); Gson gson = new
-	 * GsonBuilder().registerTypeAdapter(Date.class,new JsonDeserializer<Date>()
-	 * { SimpleDateFormat dateformat = new
-	 * SimpleDateFormat("MMM dd, yyyy, hh:mm:ss a",Locale.US);
-	 * 
-	 * @Override public Date deserialize(JsonElement json, Type typeOfT,
-	 * JsonDeserializationContext context) throws JsonParseException { try {
-	 * return dateformat.parse(json.getAsString()); } catch (ParseException e) {
-	 * System.out.println("Error while parsing date :"+json.getAsString());
-	 * return null; } }
-	 * 
-	 * 
-	 * }).create(); List<Document> cursor =
-	 * mongoService.getObject(RMUtil.REVIEW_INDEX, new BasicDBObject());
-	 * ReviewObject reviewObject = null; for (DBObject review :
-	 * cursor.toArray()) { try { reviewObject =
-	 * gson.fromJson(gson.toJson(review), ReviewObject.class);
-	 * reviewService.updateDashboard(); }catch(Exception e) {
-	 * e.printStackTrace(); } }
-	 * 
-	 * }
-	 */
 
 }

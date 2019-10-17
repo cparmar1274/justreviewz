@@ -288,7 +288,7 @@
 			<version>2.3.0</version>
 		</dependency>
 
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>com.typesafe.akka</groupId>
 			<artifactId>akka-actor_2.12</artifactId>
 			<version>${akka.version}</version>
@@ -298,13 +298,17 @@
 			<groupId>com.typesafe.akka</groupId>
 			<artifactId>akka-stream_2.12</artifactId>
 			<version>${akka.version}</version>
-		</dependency>
+		</dependency> -->
 
 	</dependencies>
 
-	<!-- <repositories> <repository> <id>springsource-milestones</id> <name>SpringSource 
-		Milestones Proxy</name> <url>https://oss.sonatype.org/content/repositories/springsource-milestones</url> 
-		</repository> </repositories> -->
+	<repositories>
+		<repository>
+			<id>springsource-milestones</id>
+			<name>SpringSource Milestones Proxy</name>
+			<url>https://oss.sonatype.org/content/repositories/springsource-milestones</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<finalName>reviewanalyticsv1</finalName>

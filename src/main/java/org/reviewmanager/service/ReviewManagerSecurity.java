@@ -1,5 +1,6 @@
 package org.reviewmanager.service;
 
+import org.reviewmanager.controller.JRActorSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReviewManagerSecurity.
@@ -34,6 +36,8 @@ public class ReviewManagerSecurity extends WebSecurityConfigurerAdapter {
 	/** The review manager user service. */
 	@Autowired
 	ReviewManagerUserService reviewManagerUserService;
+	
+	
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -50,6 +54,8 @@ public class ReviewManagerSecurity extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().accessDeniedPage("/access_denied");
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).maximumSessions(1);
+		
+		
 	}
 
 	@Autowired
