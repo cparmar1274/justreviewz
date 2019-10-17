@@ -4,7 +4,7 @@ function angularDropzoneDirective(e, r) {
     return {
         restrict: "A",
         link: function(a, o, t) {
-            var l = t.instance ? r(t.instance).assign : angular.noop, s = t.options ? r(t.options)(a) || {} : {}, i = t.callbacks ? r(t.callbacks)(a) || {} : {};
+            var l = t.instance ? r(t.instance).assign : angular.noop, s = t.options && r(t.options)(a) || {}, i = t.callbacks && r(t.callbacks)(a) || {};
             e(function() {
                 o.addClass("dropzone-box"), o.dropzone(s), n.forEach(function(e) {
                     i[e] && o.dropzone("on", e, i[e]);

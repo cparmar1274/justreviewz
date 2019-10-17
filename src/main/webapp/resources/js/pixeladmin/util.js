@@ -23,10 +23,7 @@ var pxUtil = function() {
     return {
         generateUniqueId: function() {
             var e = (Math.floor(25 * Math.random()) + 10).toString(36) + "_";
-            e += new Date().getTime().toString(36) + "_";
-            do {
-                e += Math.floor(35 * Math.random()).toString(36);
-            } while (e.length < 32);
+            for (e += new Date().getTime().toString(36) + "_"; (e += Math.floor(35 * Math.random()).toString(36)).length < 32; ) ;
             return e;
         },
         escapeRegExp: function(e) {

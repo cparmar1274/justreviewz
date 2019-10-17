@@ -24,7 +24,7 @@ var PxBlockAlert = function(e) {
         closeButton: !0
     }, l = {
         add: function(t, n) {
-            var a = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {};
+            var a = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : {};
             if (!n) throw new Error("Content is not specified");
             var r = l._getConfig(a), i = l._getContainer(t), o = "px-block-alerts-namespace--" + r.namespace, s = e(i.find("." + o)[0] || e('<div class="' + o + '"></div>').appendTo(i)[0]), c = e('<div class="alert"></div>');
             r.closeButton && c.append('<button type="button" class="close">×</button>'), r.type && c.addClass("alert-" + r.type), 
@@ -39,7 +39,7 @@ var PxBlockAlert = function(e) {
                 var t = e.find("> .px-block-alerts");
                 r.remove(), t.find(".alert").length || t.addClass("px-block-alerts-empty");
             }
-            var a = !(arguments.length > 2 && void 0 !== arguments[2]) || arguments[2], r = e.find(t);
+            var a = !(2 < arguments.length && void 0 !== arguments[2]) || arguments[2], r = e.find(t);
             if (r.length) {
                 var l = r.data("px-block-alert-timer");
                 if (l && (clearTimeout(l), r.data("px-block-alert-timer", null)), "true" === r.attr("data-animate") && !0 === a) return r.slideUp(300, n);
@@ -47,7 +47,7 @@ var PxBlockAlert = function(e) {
             }
         },
         clear: function(t) {
-            var n = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "default", a = !(arguments.length > 2 && void 0 !== arguments[2]) || arguments[2];
+            var n = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : "default", a = !(2 < arguments.length && void 0 !== arguments[2]) || arguments[2];
             if ("string" != typeof n) throw new Error("Namespace must be a string.");
             var r = t.find("> .px-block-alerts .px-block-alerts-namespace--" + n);
             r.length && r.find(".alert").each(function() {
@@ -55,7 +55,7 @@ var PxBlockAlert = function(e) {
             });
         },
         clearAll: function(t) {
-            var n = !(arguments.length > 1 && void 0 !== arguments[1]) || arguments[1];
+            var n = !(1 < arguments.length && void 0 !== arguments[1]) || arguments[1];
             t.find("> .px-block-alerts .alert").each(function() {
                 l.remove(t, e(this), n);
             });

@@ -15,11 +15,11 @@
 <link href="http://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.7/angular-material.css" rel="stylesheet">
 
 
-<link href="../landing/css/yellowstars.css?v=20190719" rel="stylesheet" type="text/css">
-<link href="../landing/css/bootstrap.min.css?v=20190719" rel="stylesheet">
-<link href="../landing/css/pixeladmin.min.css?v=20190719" rel="stylesheet">
-<link href="../landing/css/widgets.min.css?v=20190719" rel="stylesheet">
-<link href="../landing/css/themes/frost.min.css?v=20190719" rel="stylesheet">
+<link href="../landing/css/yellowstars.css?v=20190814" rel="stylesheet" type="text/css">
+<link href="../landing/css/bootstrap.min.css?v=20190814" rel="stylesheet">
+<link href="../landing/css/pixeladmin.min.css?v=20190814" rel="stylesheet">
+<link href="../landing/css/widgets.min.css?v=20190814" rel="stylesheet">
+<link href="../landing/css/themes/frost.min.css?v=20190814" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../landing/css/landingpage.css" >
 </head>
 
@@ -33,22 +33,22 @@
 
   <!-- General scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="../landing/js/pace/pace.min.js?v=20190719"></script>
+<script src="../landing/js/pace/pace.min.js?v=20190814"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.0/holder.js"></script>
-<script src="../landing/js/angular.js?v=20190719"></script>
-<script src="../landing/js/bootstrap.js?v=20190719"></script>
-<script src="../landing/js/ui-bootstrap.js?v=20190719"></script>
-<script src="../landing/js/pixeladmin/util.js?v=20190719"></script>
-<script src="../landing/js/pixeladmin/pixeladmin.js?v=20190719"></script>
-<script src="../landing/js/libs/perfect-scrollbar.jquery.js?v=20190719"></script>
-<script src="../landing/js/pixeladmin/extensions/perfect-scrollbar.jquery.js?v=20190719"></script>
-<script src="../landing/js/libs/angular-perfect-scrollbar.js?v=20190719"></script>
-<script src="../landing/js/pixeladmin/plugins/px-navbar.js?v=20190719"></script>
-<script src="../landing/js/pixeladmin/directives/angular-px-navbar.js?v=20190719"></script>
-<script src="../landing/js/pixeladmin/plugins/px-nav.js?v=20190719"></script>
-<script src="../landing/js/pixeladmin/directives/angular-px-nav.js?v=20190719"></script>
-<script src="../landing/js/pixeladmin/plugins/px-footer.js?v=20190719"></script>
-<script src="../landing/js/pixeladmin/directives/angular-px-footer.js?v=20190719"></script>
+<script src="../landing/js/angular.js?v=20190814"></script>
+<script src="../landing/js/bootstrap.js?v=20190814"></script>
+<script src="../landing/js/ui-bootstrap.js?v=20190814"></script>
+<script src="../landing/js/pixeladmin/util.js?v=20190814"></script>
+<script src="../landing/js/pixeladmin/pixeladmin.js?v=20190814"></script>
+<script src="../landing/js/libs/perfect-scrollbar.jquery.js?v=20190814"></script>
+<script src="../landing/js/pixeladmin/extensions/perfect-scrollbar.jquery.js?v=20190814"></script>
+<script src="../landing/js/libs/angular-perfect-scrollbar.js?v=20190814"></script>
+<script src="../landing/js/pixeladmin/plugins/px-navbar.js?v=20190814"></script>
+<script src="../landing/js/pixeladmin/directives/angular-px-navbar.js?v=20190814"></script>
+<script src="../landing/js/pixeladmin/plugins/px-nav.js?v=20190814"></script>
+<script src="../landing/js/pixeladmin/directives/angular-px-nav.js?v=20190814"></script>
+<script src="../landing/js/pixeladmin/plugins/px-footer.js?v=20190814"></script>
+<script src="../landing/js/pixeladmin/directives/angular-px-footer.js?v=20190814"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"> </script>
 <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js'></script>
 <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js'></script>
@@ -58,9 +58,9 @@
 <script src="https://checkout.stripe.com/checkout.js"></script>
  
   <!-- Application -->
-  <script src="../landing/assets/js/app.js?v=20190719"></script>
-  <script src="../landing/assets/js/config.js?v=20190719"></script>
-  <script src="../landing/assets/js/directives.js?v=20190719"></script>
-  <script src="../landing/assets/js/controllers/main.js?v=20190719"></script>
+  <script src="../landing/assets/js/app.js?v=20190814"></script>
+  <script src="../landing/assets/js/config.js?v=20190814"></script>
+  <script src="../landing/assets/js/directives.js?v=20190814"></script>
+  <script src="../landing/assets/js/controllers/main.js?v=20190814"></script>
 </body>
 </html>

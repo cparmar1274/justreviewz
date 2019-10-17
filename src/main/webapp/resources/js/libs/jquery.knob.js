@@ -23,7 +23,7 @@
                     max: void 0 !== this.$.data("max") ? this.$.data("max") : 100,
                     stopper: !0,
                     readOnly: this.$.data("readonly") || "readonly" === this.$.attr("readonly"),
-                    cursor: !0 === this.$.data("cursor") && 30 || this.$.data("cursor") || 0,
+                    cursor: (!0 === this.$.data("cursor") ? 30 : this.$.data("cursor")) || 0,
                     thickness: this.$.data("thickness") && Math.max(Math.min(this.$.data("thickness"), 1), .01) || .35,
                     lineCap: this.$.data("linecap") || "butt",
                     width: this.$.data("width") || 200,
@@ -161,13 +161,13 @@
         }, this.xy2val = function(t, i) {
             var e, n;
             return e = Math.atan2(t - (this.x + this.w2), -(i - this.y - this.w2)) - this.angleOffset, 
-            this.o.flip && (e = this.angleArc - e - this.PI2), this.angleArc != this.PI2 && e < 0 && e > -.5 ? e = 0 : e < 0 && (e += this.PI2), 
+            this.o.flip && (e = this.angleArc - e - this.PI2), this.angleArc != this.PI2 && e < 0 && -.5 < e ? e = 0 : e < 0 && (e += this.PI2), 
             n = e * (this.o.max - this.o.min) / this.angleArc + this.o.min, this.o.stopper && (n = s(h(n, this.o.max), this.o.min)), 
             n;
         }, this.listen = function() {
             var i, e, n, a, o = this, r = function(t) {
                 t.preventDefault();
-                var n = t.originalEvent, a = n.detail || n.wheelDeltaX, r = n.detail || n.wheelDeltaY, l = o._validate(o.o.parse(o.$.val())) + (a > 0 || r > 0 ? o.o.step : a < 0 || r < 0 ? -o.o.step : 0);
+                var n = t.originalEvent, a = n.detail || n.wheelDeltaX, r = n.detail || n.wheelDeltaY, l = o._validate(o.o.parse(o.$.val())) + (0 < a || 0 < r ? o.o.step : a < 0 || r < 0 ? -o.o.step : 0);
                 l = s(h(l, o.o.max), o.o.min), o.val(l, !1), o.rH && (clearTimeout(i), i = setTimeout(function() {
                     o.rH(l), i = null;
                 }, 100), e || (e = setTimeout(function() {
@@ -181,9 +181,9 @@
             };
             this.$.bind("keydown", function(i) {
                 var e = i.keyCode;
-                if (e >= 96 && e <= 105 && (e = i.keyCode = e - 48), n = parseInt(String.fromCharCode(e)), 
+                if (96 <= e && e <= 105 && (e = i.keyCode = e - 48), n = parseInt(String.fromCharCode(e)), 
                 isNaN(n) && (13 !== e && 8 !== e && 9 !== e && 189 !== e && (190 !== e || o.$.val().match(/\./)) && i.preventDefault(), 
-                t.inArray(e, [ 37, 38, 39, 40 ]) > -1)) {
+                -1 < t.inArray(e, [ 37, 38, 39, 40 ]))) {
                     i.preventDefault();
                     var r = o.o.parse(o.$.val()) + c[e] * l;
                     o.o.stopper && (r = s(h(r, o.o.max), o.o.min)), o.change(o._validate(r)), o._draw(), 

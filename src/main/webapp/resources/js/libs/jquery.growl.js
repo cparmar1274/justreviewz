@@ -14,8 +14,7 @@
             transition: "transitionend"
         }, t.transition = function(t) {
             var i, s, n, e;
-            i = t[0], s = this.transitions;
-            for (e in s) if (n = s[e], null != i.style[e]) return n;
+            for (e in i = t[0], s = this.transitions) if (n = s[e], null != i.style[e]) return n;
         }, t;
     }(), s = function() {
         function s(i) {

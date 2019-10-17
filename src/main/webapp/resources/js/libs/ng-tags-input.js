@@ -1,18 +1,6 @@
 !function() {
     "use strict";
-    var e = {
-        backspace: 8,
-        tab: 9,
-        enter: 13,
-        escape: 27,
-        space: 32,
-        up: 38,
-        down: 40,
-        left: 37,
-        right: 39,
-        delete: 46,
-        comma: 188
-    }, t = [ "text", "email", "url" ], n = angular.module("ngTagsInput", []);
+    var e_backspace = 8, e_tab = 9, e_enter = 13, e_escape = 27, e_space = 32, e_up = 38, e_down = 40, e_left = 37, e_right = 39, e_delete = 46, e_comma = 188, t = [ "text", "email", "url" ], n = angular.module("ngTagsInput", []);
     n.directive("tagsInput", [ "$timeout", "$document", "$window", "$q", "tagsInputConfig", "tiUtil", function(n, i, a, r, o, s) {
         function u(e, t, n, i) {
             var a, o, u, l, c = {};
@@ -114,8 +102,7 @@
                     useStrings: [ Boolean, !1 ]
                 }), e.tagList = new u(e.options, e.events, s.handleUndefinedResult(e.onTagAdding, !0), s.handleUndefinedResult(e.onTagRemoving, !0)), 
                 this.registerAutocomplete = function() {
-                    n.find("input");
-                    return {
+                    return n.find("input"), {
                         addTag: function(t) {
                             return e.tagList.add(t);
                         },
@@ -147,10 +134,10 @@
                 };
             } ],
             link: function(t, r, o, u) {
-                var l, c, g = [ e.enter, e.comma, e.space, e.backspace, e.delete, e.left, e.right ], d = t.tagList, p = t.events, f = t.options, m = r.find("input"), h = [ "minTags", "maxTags", "allowLeftoverText" ];
+                var l, c, g = [ e_enter, e_comma, e_space, e_backspace, e_delete, e_left, e_right ], d = t.tagList, p = t.events, f = t.options, m = r.find("input"), h = [ "minTags", "maxTags", "allowLeftoverText" ];
                 l = function() {
                     u.$setValidity("maxTags", d.items.length <= f.maxTags), u.$setValidity("minTags", d.items.length >= f.minTags), 
-                    u.$setValidity("leftoverText", !(!t.hasFocus && !f.allowLeftoverText) || !t.newTag.text());
+                    u.$setValidity("leftoverText", !(!t.hasFocus && !f.allowLeftoverText && t.newTag.text()));
                 }, c = function() {
                     n(function() {
                         m[0].focus();
@@ -233,18 +220,18 @@
                     l();
                 }).on("input-keydown", function(n) {
                     var i, a, r, o, u = n.keyCode, l = {};
-                    s.isModifierOn(n) || -1 === g.indexOf(u) || (l[e.enter] = f.addOnEnter, l[e.comma] = f.addOnComma, 
-                    l[e.space] = f.addOnSpace, i = !f.addFromAutocompleteOnly && l[u], a = (u === e.backspace || u === e.delete) && d.selected, 
-                    o = u === e.backspace && 0 === t.newTag.text().length && f.enableEditingLastTag, 
-                    r = (u === e.backspace || u === e.left || u === e.right) && 0 === t.newTag.text().length && !f.enableEditingLastTag, 
+                    s.isModifierOn(n) || -1 === g.indexOf(u) || (l[e_enter] = f.addOnEnter, l[e_comma] = f.addOnComma, 
+                    l[e_space] = f.addOnSpace, i = !f.addFromAutocompleteOnly && l[u], a = (u === e_backspace || u === e_delete) && d.selected, 
+                    o = u === e_backspace && 0 === t.newTag.text().length && f.enableEditingLastTag, 
+                    r = (u === e_backspace || u === e_left || u === e_right) && 0 === t.newTag.text().length && !f.enableEditingLastTag, 
                     i ? d.addText(t.newTag.text()) : o ? (d.selectPrior(), d.removeSelected().then(function(e) {
                         e && t.newTag.text(e[f.displayProperty]);
-                    })) : a ? d.removeSelected() : r && (u === e.left || u === e.backspace ? d.selectPrior() : u === e.right && d.selectNext()), 
+                    })) : a ? d.removeSelected() : r && (u === e_left || u === e_backspace ? d.selectPrior() : u === e_right && d.selectNext()), 
                     (i || r || a || o) && n.preventDefault());
                 }).on("input-paste", function(e) {
                     if (f.addOnPaste) {
                         var t = e.getTextData().split(f.pasteSplitPattern);
-                        t.length > 1 && (t.forEach(function(e) {
+                        1 < t.length && (t.forEach(function(e) {
                             d.addText(e);
                         }), e.preventDefault());
                     }
@@ -292,9 +279,9 @@
                 var c = a.when(e({
                     $query: n
                 }));
-                r = c, c.then(function(e) {
+                (r = c).then(function(e) {
                     c === r && (e = o.makeObjectArray(e.data || e, s()), e = i(e, l), u.items = e.slice(0, t.maxResultsToShow), 
-                    u.items.length > 0 ? u.show() : u.reset());
+                    0 < u.items.length ? u.show() : u.reset());
                 });
             }, t.debounceDelay), u.selectNext = function() {
                 u.select(++u.index);
@@ -304,10 +291,6 @@
                 e < 0 ? e = u.items.length - 1 : e >= u.items.length && (e = 0), u.index = e, u.selected = u.items[e], 
                 n.trigger("suggestion-selected", e);
             }, u.reset(), u;
-        }
-        function u(e, t) {
-            var n = e.find("li").eq(t), i = n.parent(), a = n.prop("offsetTop"), r = n.prop("offsetHeight"), o = i.prop("clientHeight"), s = i.prop("scrollTop");
-            a < s ? i.prop("scrollTop", a) : a + r > o + s && i.prop("scrollTop", a + r - o);
         }
         return {
             restrict: "E",
@@ -341,7 +324,7 @@
                 };
             } ],
             link: function(t, n, i, a) {
-                var r, s = [ e.enter, e.tab, e.escape, e.up, e.down ], l = t.suggestionList, c = a.registerAutocomplete(), g = t.options, d = t.events;
+                var r, s = [ e_enter, e_tab, e_escape, e_up, e_down ], l = t.suggestionList, c = a.registerAutocomplete(), g = t.options, d = t.events;
                 g.tagsInput = c.getOptions(), r = function(e) {
                     return e && e.length >= g.minLength || !e && g.loadOnEmpty;
                 }, t.templateScope = c.getTemplateScope(), t.addSuggestionByIndex = function(e) {
@@ -369,12 +352,15 @@
                     g.loadOnFocus && r(e) && l.load(e, c.getTags());
                 }).on("input-keydown", function(n) {
                     var i = n.keyCode, a = !1;
-                    if (!o.isModifierOn(n) && -1 !== s.indexOf(i)) return l.visible ? i === e.down ? (l.selectNext(), 
-                    a = !0) : i === e.up ? (l.selectPrior(), a = !0) : i === e.escape ? (l.reset(), 
-                    a = !0) : i !== e.enter && i !== e.tab || (a = t.addSuggestion()) : i === e.down && t.options.loadOnDownArrow && (l.load(c.getCurrentTagText(), c.getTags()), 
+                    if (!o.isModifierOn(n) && -1 !== s.indexOf(i)) return l.visible ? i === e_down ? (l.selectNext(), 
+                    a = !0) : i === e_up ? (l.selectPrior(), a = !0) : i === e_escape ? (l.reset(), 
+                    a = !0) : i !== e_enter && i !== e_tab || (a = t.addSuggestion()) : i === e_down && t.options.loadOnDownArrow && (l.load(c.getCurrentTagText(), c.getTags()), 
                     a = !0), a ? (n.preventDefault(), n.stopImmediatePropagation(), !1) : void 0;
                 }), d.on("suggestion-selected", function(e) {
-                    u(n, e);
+                    !function(e, t) {
+                        var n = e.find("li").eq(t), i = n.parent(), a = n.prop("offsetTop"), r = n.prop("offsetHeight"), o = i.prop("clientHeight"), s = i.prop("scrollTop");
+                        a < s ? i.prop("scrollTop", a) : o + s < a + r && i.prop("scrollTop", a + r - o);
+                    }(n, e);
                 });
             }
         };
@@ -471,67 +457,78 @@
             };
         } ];
     }), n.factory("tiUtil", [ "$timeout", "$q", function(e, t) {
-        var n = {};
-        return n.debounce = function(t, n) {
-            var i;
-            return function() {
-                var a = arguments;
-                e.cancel(i), i = e(function() {
-                    t.apply(null, a);
-                }, n);
-            };
-        }, n.makeObjectArray = function(e, t) {
-            if (!angular.isArray(e) || 0 === e.length || angular.isObject(e[0])) return e;
-            var n = [];
-            return e.forEach(function(e) {
-                var i = {};
-                i[t] = e, n.push(i);
-            }), n;
-        }, n.findInObjectArray = function(e, t, i, a) {
-            var r = null;
-            return a = a || n.defaultComparer, e.some(function(e) {
-                if (a(e[i], t[i])) return r = e, !0;
-            }), r;
-        }, n.defaultComparer = function(e, t) {
-            return n.safeToString(e).toLowerCase() === n.safeToString(t).toLowerCase();
-        }, n.safeHighlight = function(e, t) {
-            if (e = n.encodeHTML(e), !(t = n.encodeHTML(t))) return e;
-            var i = new RegExp("&[^;]+;|" + function(e) {
-                return e.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
-            }(t), "gi");
-            return e.replace(i, function(e) {
-                return e.toLowerCase() === t.toLowerCase() ? "<em>" + e + "</em>" : e;
-            });
-        }, n.safeToString = function(e) {
-            return angular.isUndefined(e) || null == e ? "" : e.toString().trim();
-        }, n.encodeHTML = function(e) {
-            return n.safeToString(e).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }, n.handleUndefinedResult = function(e, t) {
-            return function() {
-                var n = e.apply(null, arguments);
-                return angular.isUndefined(n) ? t : n;
-            };
-        }, n.replaceSpacesWithDashes = function(e) {
-            return n.safeToString(e).replace(/\s/g, "-");
-        }, n.isModifierOn = function(e) {
-            return e.shiftKey || e.ctrlKey || e.altKey || e.metaKey;
-        }, n.promisifyValue = function(e) {
-            return e = !!angular.isUndefined(e) || e, t[e ? "when" : "reject"]();
-        }, n.simplePubSub = function() {
-            var e = {};
-            return {
-                on: function(t, n, i) {
-                    return t.split(" ").forEach(function(t) {
-                        e[t] || (e[t] = []), (i ? [].unshift : [].push).call(e[t], n);
-                    }), this;
-                },
-                trigger: function(t, i) {
-                    return (e[t] || []).every(function(e) {
-                        return n.handleUndefinedResult(e, !0)(i);
-                    }), this;
-                }
-            };
-        }, n;
+        var n = {
+            debounce: function(t, n) {
+                var i;
+                return function() {
+                    var a = arguments;
+                    e.cancel(i), i = e(function() {
+                        t.apply(null, a);
+                    }, n);
+                };
+            },
+            makeObjectArray: function(e, t) {
+                if (!angular.isArray(e) || 0 === e.length || angular.isObject(e[0])) return e;
+                var n = [];
+                return e.forEach(function(e) {
+                    var i = {};
+                    i[t] = e, n.push(i);
+                }), n;
+            },
+            findInObjectArray: function(e, t, i, a) {
+                var r = null;
+                return a = a || n.defaultComparer, e.some(function(e) {
+                    if (a(e[i], t[i])) return r = e, !0;
+                }), r;
+            },
+            defaultComparer: function(e, t) {
+                return n.safeToString(e).toLowerCase() === n.safeToString(t).toLowerCase();
+            },
+            safeHighlight: function(e, t) {
+                if (e = n.encodeHTML(e), !(t = n.encodeHTML(t))) return e;
+                var i = new RegExp("&[^;]+;|" + t.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1"), "gi");
+                return e.replace(i, function(e) {
+                    return e.toLowerCase() === t.toLowerCase() ? "<em>" + e + "</em>" : e;
+                });
+            },
+            safeToString: function(e) {
+                return angular.isUndefined(e) || null == e ? "" : e.toString().trim();
+            },
+            encodeHTML: function(e) {
+                return n.safeToString(e).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            },
+            handleUndefinedResult: function(e, t) {
+                return function() {
+                    var n = e.apply(null, arguments);
+                    return angular.isUndefined(n) ? t : n;
+                };
+            },
+            replaceSpacesWithDashes: function(e) {
+                return n.safeToString(e).replace(/\s/g, "-");
+            },
+            isModifierOn: function(e) {
+                return e.shiftKey || e.ctrlKey || e.altKey || e.metaKey;
+            },
+            promisifyValue: function(e) {
+                return e = !!angular.isUndefined(e) || e, t[e ? "when" : "reject"]();
+            },
+            simplePubSub: function() {
+                var e = {};
+                return {
+                    on: function(t, n, i) {
+                        return t.split(" ").forEach(function(t) {
+                            e[t] || (e[t] = []), (i ? [].unshift : [].push).call(e[t], n);
+                        }), this;
+                    },
+                    trigger: function(t, i) {
+                        return (e[t] || []).every(function(e) {
+                            return n.handleUndefinedResult(e, !0)(i);
+                        }), this;
+                    }
+                };
+            }
+        };
+        return n;
     } ]), n.run([ "$templateCache", function(e) {
         e.put("ngTagsInput/tags-input.html", '<div class="host" tabindex="-1" ng-click="eventHandlers.host.click()" ti-transclude-append><div class="tags" ng-class="{focused: hasFocus}"><ul class="tag-list"><li class="tag-item" ng-repeat="tag in tagList.items track by track(tag)" ng-class="getTagClass(tag, $index)" ng-click="eventHandlers.tag.click(tag)"><ti-tag-item scope="templateScope" data="::tag"></ti-tag-item></li></ul><input class="input" autocomplete="off" ng-model="newTag.text" ng-model-options="{getterSetter: true}" ng-keydown="eventHandlers.input.keydown($event)" ng-focus="eventHandlers.input.focus($event)" ng-blur="eventHandlers.input.blur($event)" ng-paste="eventHandlers.input.paste($event)" ng-trim="false" ng-class="{\'invalid-tag\': newTag.invalid}" ng-disabled="disabled" ti-bind-attrs="{type: options.type, placeholder: options.placeholder, tabindex: options.tabindex, spellcheck: options.spellcheck}" ti-autosize></div></div>'), 
         e.put("ngTagsInput/tag-item.html", '<span ng-bind="$getDisplayText()"></span> <a class="remove-button" ng-click="$removeTag()" ng-bind="::$$removeTagSymbol"></a>'), 

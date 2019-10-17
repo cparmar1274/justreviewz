@@ -79,7 +79,7 @@
                             }), d = i.$on("$destroy", function() {
                                 d(), e.forEach(y, function(e) {
                                     e();
-                                }), p.destroy(), S[t] = null, S = null, y = null, p = null, l = null;
+                                }), p.destroy(), S[t] = null, l = p = y = S = null;
                             });
                         };
                     }

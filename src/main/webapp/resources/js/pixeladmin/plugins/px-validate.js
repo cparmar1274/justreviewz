@@ -20,16 +20,10 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
 }(), PxValidate = function(e) {
     "use strict";
     if (!e.fn.validate) throw new Error("jquery.validate.js required.");
-    var t = "pxValidate", r = e.fn[t], n = {
-        FORM_HELP: "form-help-text",
-        HAS_ERROR: "has-validation-error",
-        ERROR: "validation-error",
-        CONTAINER: "validation-container",
-        NO_ARROW: "validation-error-no-arrow"
-    }, o = {
+    var t = "pxValidate", r = e.fn[t], n_FORM_HELP = "form-help-text", n_HAS_ERROR = "has-validation-error", n_ERROR = "validation-error", n_NO_ARROW = "validation-error-no-arrow", o = {
         errorElement: "div",
-        errorClass: "form-message " + n.ERROR
-    }, a = new RegExp("(^|\\s)(?:" + n.CONTAINER + "|form-group|col-(?:xs|sm|md|lg)-\\d+)(\\s|$)"), i = function() {
+        errorClass: "form-message " + n_ERROR
+    }, a = new RegExp("(^|\\s)(?:" + "validation-container" + "|form-group|col-(?:xs|sm|md|lg)-\\d+)(\\s|$)"), i = function() {
         function r(t, n) {
             _classCallCheck(this, r), this.element = t, this.validator = e(t).validate(this._getConfig(t, n));
         }
@@ -46,22 +40,22 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_highlight",
             value: function(t) {
-                pxUtil.addClass(e(t).parents(".form-group")[0], "has-error " + n.HAS_ERROR);
+                pxUtil.addClass(e(t).parents(".form-group")[0], "has-error " + n_HAS_ERROR);
             }
         }, {
             key: "_unhighlight",
             value: function(t) {
-                pxUtil.removeClass(e(t).parents(".form-group")[0], "has-error " + n.HAS_ERROR);
+                pxUtil.removeClass(e(t).parents(".form-group")[0], "has-error " + n_HAS_ERROR);
             }
         }, {
             key: "_errorPlacement",
             value: function(t, r) {
                 var o = e(this._getParentContainer(r[0]));
                 if (o.length) {
-                    o.find("." + n.ERROR).remove();
+                    o.find("." + n_ERROR).remove();
                     var a = r[0].getAttribute("type");
-                    "checkbox" !== (a = a ? a.toLowerCase() : null) && "radio" !== a || pxUtil.addClass(t[0], n.NO_ARROW);
-                    var i = o.find("." + n.FORM_HELP).first();
+                    "checkbox" !== (a = a ? a.toLowerCase() : null) && "radio" !== a || pxUtil.addClass(t[0], n_NO_ARROW);
+                    var i = o.find("." + n_FORM_HELP).first();
                     i.length ? t.insertBefore(i) : o.append(t);
                 }
             }

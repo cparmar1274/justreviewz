@@ -2,28 +2,6 @@
     "function" == typeof define && define.amd ? define([ "jquery" ], i) : "object" == typeof exports ? module.exports = i(require("jquery")) : i(jQuery);
 }(function(i) {
     "use strict";
-    function t(t, o) {
-        var s, a, n, r, e, l = i('<div class="minicolors" />'), h = i.minicolors.defaults;
-        if (!t.data("minicolors-initialized")) {
-            if (o = i.extend(!0, {}, h, o), l.addClass("minicolors-theme-" + o.theme).toggleClass("minicolors-with-opacity", o.opacity), 
-            void 0 !== o.position && i.each(o.position.split(" "), function() {
-                l.addClass("minicolors-position-" + this);
-            }), s = "rgb" === o.format ? o.opacity ? "25" : "20" : o.keywords ? "11" : "7", 
-            t.addClass("minicolors-input").data("minicolors-initialized", !1).data("minicolors-settings", o).prop("size", s).wrap(l).after('<div class="minicolors-panel minicolors-slider-' + o.control + '"><div class="minicolors-slider minicolors-sprite"><div class="minicolors-picker"></div></div><div class="minicolors-opacity-slider minicolors-sprite"><div class="minicolors-picker"></div></div><div class="minicolors-grid minicolors-sprite"><div class="minicolors-grid-inner"></div><div class="minicolors-picker"><div></div></div></div></div>'), 
-            o.inline || (t.after('<span class="minicolors-swatch minicolors-sprite minicolors-input-swatch"><span class="minicolors-swatch-color"></span></span>'), 
-            t.next(".minicolors-input-swatch").on("click", function(i) {
-                i.preventDefault(), t.focus();
-            })), (r = t.parent().find(".minicolors-panel")).on("selectstart", function() {
-                return !1;
-            }).end(), o.swatches && 0 !== o.swatches.length) for (r.addClass("minicolors-with-swatches"), 
-            a = i('<ul class="minicolors-swatches"></ul>').appendTo(r), e = 0; e < o.swatches.length; ++e) n = v(n = o.swatches[e]) ? g(n, !0) : I(u(n, !0)), 
-            i('<li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color"></span></li>').appendTo(a).data("swatch-color", o.swatches[e]).find(".minicolors-swatch-color").css({
-                backgroundColor: C(n),
-                opacity: n.a
-            }), o.swatches[e] = n;
-            o.inline && t.parent().addClass("minicolors-inline"), c(t, !1), t.data("minicolors-initialized", !0);
-        }
-    }
     function o(i) {
         var t = i.parent();
         i.removeData("minicolors-initialized").removeData("minicolors-settings").removeProp("size").removeClass("minicolors-input"), 
@@ -50,7 +28,7 @@
         g = t.originalEvent.changedTouches[0].pageY - p), u < 0 && (u = 0), g < 0 && (g = 0), 
         u > i.width() && (u = i.width()), g > i.height() && (g = i.height()), i.parent().is(".minicolors-slider-wheel") && h.parent().is(".minicolors-grid") && (s = 75 - u, 
         a = 75 - g, n = Math.sqrt(s * s + a * a), (e = Math.atan2(a, s)) < 0 && (e += 2 * Math.PI), 
-        n > 75 && (n = 75, u = 75 - 75 * Math.cos(e), g = 75 - 75 * Math.sin(e)), u = Math.round(u), 
+        75 < n && (u = (n = 75) - 75 * Math.cos(e), g = 75 - 75 * Math.sin(e)), u = Math.round(u), 
         g = Math.round(g)), i.is(".minicolors-grid") ? h.stop(!0).animate({
             top: g + "px",
             left: u + "px"
@@ -75,7 +53,7 @@
             switch (m.control) {
               case "wheel":
                 r = b.width() / 2 - I.x, c = b.height() / 2 - I.y, h = Math.sqrt(r * r + c * c), 
-                (d = Math.atan2(c, r)) < 0 && (d += 2 * Math.PI), h > 75 && (h = 75, I.x = 69 - 75 * Math.cos(d), 
+                (d = Math.atan2(c, r)) < 0 && (d += 2 * Math.PI), 75 < h && (h = 75, I.x = 69 - 75 * Math.cos(d), 
                 I.y = 69 - 75 * Math.sin(d)), a = f(h / .75, 0, 100), p = k({
                     h: s = f(180 * d / Math.PI, 0, 360),
                     s: a,
@@ -130,10 +108,10 @@
     }
     function e(i, t, o) {
         var s, a = i.parent(), n = i.data("minicolors-settings"), r = a.find(".minicolors-input-swatch");
-        n.opacity && i.attr("data-opacity", o), "rgb" === n.format ? (s = v(t) ? g(t, !0) : I(u(t, !0)), 
+        n.opacity && i.attr("data-opacity", o), t = "rgb" === n.format ? (s = v(t) ? g(t, !0) : I(u(t, !0)), 
         o = "" === i.attr("data-opacity") ? 1 : f(parseFloat(i.attr("data-opacity")).toFixed(2), 0, 1), 
-        !isNaN(o) && n.opacity || (o = 1), t = i.minicolors("rgbObject").a <= 1 && s && n.opacity ? "rgba(" + s.r + ", " + s.g + ", " + s.b + ", " + parseFloat(o) + ")" : "rgb(" + s.r + ", " + s.g + ", " + s.b + ")") : (v(t) && (t = y(t)), 
-        t = p(t, n.letterCase)), i.val(t), r.find("span").css({
+        !isNaN(o) && n.opacity || (o = 1), i.minicolors("rgbObject").a <= 1 && s && n.opacity ? "rgba(" + s.r + ", " + s.g + ", " + s.b + ", " + parseFloat(o) + ")" : "rgb(" + s.r + ", " + s.g + ", " + s.b + ")") : (v(t) && (t = y(t)), 
+        p(t, n.letterCase)), i.val(t), r.find("span").css({
             backgroundColor: t,
             opacity: o
         }), l(i, t, o);
@@ -143,7 +121,7 @@
         switch (v(t.val()) ? (s = y(t.val()), (e = f(parseFloat(b(t.val())).toFixed(2), 0, 1)) && t.attr("data-opacity", e)) : s = p(u(t.val(), !0), I.letterCase), 
         s || (s = p(m(I.defaultValue, !0), I.letterCase)), a = M(s), r = I.keywords ? i.map(I.keywords.split(","), function(t) {
             return i.trim(t.toLowerCase());
-        }) : [], c = "" !== t.val() && i.inArray(t.val().toLowerCase(), r) > -1 ? p(t.val()) : v(t.val()) ? g(t.val()) : s, 
+        }) : [], c = "" !== t.val() && -1 < i.inArray(t.val().toLowerCase(), r) ? p(t.val()) : v(t.val()) ? g(t.val()) : s, 
         o || t.val(c), I.opacity && (n = "" === t.attr("data-opacity") ? 1 : f(parseFloat(t.attr("data-opacity")).toFixed(2), 0, 1), 
         isNaN(n) && (n = 1), t.attr("data-opacity", n), S.find("span").css("opacity", n), 
         d = f(T.height() - T.height() * n, 0, T.height()), q.css("top", d + "px")), "transparent" === t.val().toLowerCase() && S.find("span").css("opacity", 0), 
@@ -221,17 +199,6 @@
             }, r.changeDelay))) : r.change.call(i.get(0), t, o)), i.trigger("change").trigger("input");
         }
     }
-    function h(t) {
-        var o, s = i(t).attr("data-opacity");
-        return (o = v(i(t).val()) ? g(i(t).val(), !0) : I(u(i(t).val(), !0))) ? (void 0 !== s && i.extend(o, {
-            a: parseFloat(s)
-        }), o) : null;
-    }
-    function d(t, o) {
-        var s, a = i(t).attr("data-opacity");
-        return (s = v(i(t).val()) ? g(i(t).val(), !0) : I(u(i(t).val(), !0))) ? (void 0 === a && (a = 1), 
-        o ? "rgba(" + s.r + ", " + s.g + ", " + s.b + ", " + parseFloat(a) + ")" : "rgb(" + s.r + ", " + s.g + ", " + s.b + ")") : null;
-    }
     function p(i, t) {
         return "uppercase" === t ? i.toUpperCase() : i.toLowerCase();
     }
@@ -258,7 +225,7 @@
         return v(i) ? g(i) : u(i, t);
     }
     function f(i, t, o) {
-        return i < t && (i = t), i > o && (i = o), i;
+        return i < t && (i = t), o < i && (i = o), i;
     }
     function v(i) {
         var t = i.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
@@ -266,21 +233,6 @@
     }
     function b(i) {
         return (i = i.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+(\.\d{1,2})?|\.\d{1,2})[\s+]?/i)) && 6 === i.length ? i[4] : "1";
-    }
-    function w(i) {
-        var t = {}, o = Math.round(i.h), s = Math.round(255 * i.s / 100), a = Math.round(255 * i.b / 100);
-        if (0 === s) t.r = t.g = t.b = a; else {
-            var n = a, r = (255 - s) * a / 255, e = o % 60 * (n - r) / 60;
-            360 === o && (o = 0), o < 60 ? (t.r = n, t.b = r, t.g = r + e) : o < 120 ? (t.g = n, 
-            t.b = r, t.r = n - e) : o < 180 ? (t.g = n, t.r = r, t.b = r + e) : o < 240 ? (t.b = n, 
-            t.r = r, t.g = n - e) : o < 300 ? (t.b = n, t.g = r, t.r = r + e) : o < 360 ? (t.r = n, 
-            t.g = r, t.b = n - e) : (t.r = 0, t.g = 0, t.b = 0);
-        }
-        return {
-            r: Math.round(t.r),
-            g: Math.round(t.g),
-            b: Math.round(t.b)
-        };
     }
     function y(i) {
         return (i = i.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i)) && 4 === i.length ? "#" + ("0" + parseInt(i[1], 10).toString(16)).slice(-2) + ("0" + parseInt(i[2], 10).toString(16)).slice(-2) + ("0" + parseInt(i[3], 10).toString(16)).slice(-2) : "";
@@ -292,24 +244,37 @@
         }), "#" + o.join("");
     }
     function k(i) {
-        return C(w(i));
+        return C(function(i) {
+            var t = {}, o = Math.round(i.h), s = Math.round(255 * i.s / 100), a = Math.round(255 * i.b / 100);
+            if (0 === s) t.r = t.g = t.b = a; else {
+                var n = a, r = (255 - s) * a / 255, e = o % 60 * (n - r) / 60;
+                360 === o && (o = 0), o < 60 ? (t.r = n, t.b = r, t.g = r + e) : o < 120 ? (t.g = n, 
+                t.b = r, t.r = n - e) : o < 180 ? (t.g = n, t.r = r, t.b = r + e) : o < 240 ? (t.b = n, 
+                t.r = r, t.g = n - e) : o < 300 ? (t.b = n, t.g = r, t.r = r + e) : t.b = o < 360 ? (t.r = n, 
+                t.g = r, n - e) : (t.r = 0, t.g = 0);
+            }
+            return {
+                r: Math.round(t.r),
+                g: Math.round(t.g),
+                b: Math.round(t.b)
+            };
+        }(i));
     }
     function M(i) {
-        var t = x(I(i));
+        var t = function(i) {
+            var t = {
+                h: 0,
+                s: 0,
+                b: 0
+            }, o = Math.min(i.r, i.g, i.b), s = Math.max(i.r, i.g, i.b), a = s - o;
+            return t.b = s, t.s = 0 !== s ? 255 * a / s : 0, 0 !== t.s ? i.r === s ? t.h = (i.g - i.b) / a : i.g === s ? t.h = 2 + (i.b - i.r) / a : t.h = 4 + (i.r - i.g) / a : t.h = -1, 
+            t.h *= 60, t.h < 0 && (t.h += 360), t.s *= 100 / 255, t.b *= 100 / 255, t;
+        }(I(i));
         return 0 === t.s && (t.h = 360), t;
     }
-    function x(i) {
-        var t = {
-            h: 0,
-            s: 0,
-            b: 0
-        }, o = Math.min(i.r, i.g, i.b), s = Math.max(i.r, i.g, i.b), a = s - o;
-        return t.b = s, t.s = 0 !== s ? 255 * a / s : 0, 0 !== t.s ? i.r === s ? t.h = (i.g - i.b) / a : i.g === s ? t.h = 2 + (i.b - i.r) / a : t.h = 4 + (i.r - i.g) / a : t.h = -1, 
-        t.h *= 60, t.h < 0 && (t.h += 360), t.s *= 100 / 255, t.b *= 100 / 255, t;
-    }
     function I(i) {
-        return i = parseInt(i.indexOf("#") > -1 ? i.substring(1) : i, 16), {
-            r: i >> 16,
+        return {
+            r: (i = parseInt(-1 < i.indexOf("#") ? i.substring(1) : i, 16)) >> 16,
             g: (65280 & i) >> 8,
             b: 255 & i
         };
@@ -352,11 +317,20 @@
                 }), i(this));
 
               case "rgbObject":
-                return h(i(this));
+                return function(t) {
+                    var o, s = i(t).attr("data-opacity");
+                    return (o = v(i(t).val()) ? g(i(t).val(), !0) : I(u(i(t).val(), !0))) ? (void 0 !== s && i.extend(o, {
+                        a: parseFloat(s)
+                    }), o) : null;
+                }(i(this));
 
               case "rgbString":
               case "rgbaString":
-                return d(i(this), "rgbaString" === n);
+                return function(t, o) {
+                    var s, a = i(t).attr("data-opacity");
+                    return (s = v(i(t).val()) ? g(i(t).val(), !0) : I(u(i(t).val(), !0))) ? (void 0 === a && (a = 1), 
+                    o ? "rgba(" + s.r + ", " + s.g + ", " + s.b + ", " + parseFloat(a) + ")" : "rgb(" + s.r + ", " + s.g + ", " + s.b + ")") : null;
+                }(i(this), "rgbaString" === n);
 
               case "settings":
                 return void 0 === r ? i(this).data("minicolors-settings") : (i(this).each(function() {
@@ -375,7 +349,28 @@
 
               default:
                 return "create" !== n && (r = n), i(this).each(function() {
-                    t(i(this), r);
+                    !function(t, o) {
+                        var s, a, n, r, e, l = i('<div class="minicolors" />'), h = i.minicolors.defaults;
+                        if (!t.data("minicolors-initialized")) {
+                            if (o = i.extend(!0, {}, h, o), l.addClass("minicolors-theme-" + o.theme).toggleClass("minicolors-with-opacity", o.opacity), 
+                            void 0 !== o.position && i.each(o.position.split(" "), function() {
+                                l.addClass("minicolors-position-" + this);
+                            }), s = "rgb" === o.format ? o.opacity ? "25" : "20" : o.keywords ? "11" : "7", 
+                            t.addClass("minicolors-input").data("minicolors-initialized", !1).data("minicolors-settings", o).prop("size", s).wrap(l).after('<div class="minicolors-panel minicolors-slider-' + o.control + '"><div class="minicolors-slider minicolors-sprite"><div class="minicolors-picker"></div></div><div class="minicolors-opacity-slider minicolors-sprite"><div class="minicolors-picker"></div></div><div class="minicolors-grid minicolors-sprite"><div class="minicolors-grid-inner"></div><div class="minicolors-picker"><div></div></div></div></div>'), 
+                            o.inline || (t.after('<span class="minicolors-swatch minicolors-sprite minicolors-input-swatch"><span class="minicolors-swatch-color"></span></span>'), 
+                            t.next(".minicolors-input-swatch").on("click", function(i) {
+                                i.preventDefault(), t.focus();
+                            })), (r = t.parent().find(".minicolors-panel")).on("selectstart", function() {
+                                return !1;
+                            }).end(), o.swatches && 0 !== o.swatches.length) for (r.addClass("minicolors-with-swatches"), 
+                            a = i('<ul class="minicolors-swatches"></ul>').appendTo(r), e = 0; e < o.swatches.length; ++e) n = v(n = o.swatches[e]) ? g(n, !0) : I(u(n, !0)), 
+                            i('<li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color"></span></li>').appendTo(a).data("swatch-color", o.swatches[e]).find(".minicolors-swatch-color").css({
+                                backgroundColor: C(n),
+                                opacity: n.a
+                            }), o.swatches[e] = n;
+                            o.inline && t.parent().addClass("minicolors-inline"), c(t, !1), t.data("minicolors-initialized", !0);
+                        }
+                    }(i(this), r);
                 }), i(this);
             }
         }
@@ -403,7 +398,7 @@
         var t, o, s, a, n, r = i(this), e = r.data("minicolors-settings");
         r.data("minicolors-initialized") && (t = e.keywords ? i.map(e.keywords.split(","), function(t) {
             return i.trim(t.toLowerCase());
-        }) : [], n = "" !== r.val() && i.inArray(r.val().toLowerCase(), t) > -1 ? r.val() : null === (s = v(r.val()) ? g(r.val(), !0) : (o = u(r.val(), !0)) ? I(o) : null) ? e.defaultValue : "rgb" === e.format ? g(e.opacity ? "rgba(" + s.r + "," + s.g + "," + s.b + "," + r.attr("data-opacity") + ")" : "rgb(" + s.r + "," + s.g + "," + s.b + ")") : C(s), 
+        }) : [], n = "" !== r.val() && -1 < i.inArray(r.val().toLowerCase(), t) ? r.val() : null === (s = v(r.val()) ? g(r.val(), !0) : (o = u(r.val(), !0)) ? I(o) : null) ? e.defaultValue : "rgb" === e.format ? g(e.opacity ? "rgba(" + s.r + "," + s.g + "," + s.b + "," + r.attr("data-opacity") + ")" : "rgb(" + s.r + "," + s.g + "," + s.b + ")") : C(s), 
         a = e.opacity ? r.attr("data-opacity") : 1, "transparent" === n.toLowerCase() && (a = 0), 
         r.closest(".minicolors").find(".minicolors-input-swatch > span").css("opacity", a), 
         r.val(n), "" === r.val() && r.val(m(e.defaultValue, !0)), r.val(p(r.val(), e.letterCase)));

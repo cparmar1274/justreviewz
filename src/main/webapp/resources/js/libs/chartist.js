@@ -20,25 +20,20 @@
             return String.fromCharCode(97 + e % 26);
         }, i.extend = function(e) {
             var t, n, s;
-            for (e = e || {}, t = 1; t < arguments.length; t++) {
-                n = arguments[t];
-                for (var r in n) "object" != typeof (s = n[r]) || null === s || s instanceof Array ? e[r] = s : e[r] = i.extend(e[r], s);
-            }
+            for (e = e || {}, t = 1; t < arguments.length; t++) for (var r in n = arguments[t]) "object" != typeof (s = n[r]) || null === s || s instanceof Array ? e[r] = s : e[r] = i.extend(e[r], s);
             return e;
         }, i.replaceAll = function(e, t, i) {
             return e.replace(new RegExp(t, "g"), i);
         }, i.ensureUnit = function(e, t) {
             return "number" == typeof e && (e += t), e;
         }, i.quantity = function(e) {
-            if ("string" == typeof e) {
-                var t = /^(\d+)\s*(.*)$/g.exec(e);
-                return {
-                    value: +t[1],
-                    unit: t[2] || void 0
-                };
-            }
-            return {
+            if ("string" != typeof e) return {
                 value: e
+            };
+            var t = /^(\d+)\s*(.*)$/g.exec(e);
+            return {
+                value: +t[1],
+                unit: t[2] || void 0
             };
         }, i.querySelector = function(e) {
             return e instanceof Node ? e : t.querySelector(e);
@@ -74,7 +69,7 @@
             '"': "&quot;",
             "'": "&#039;"
         }, i.serialize = function(e) {
-            return null === e || void 0 === e ? e : ("number" == typeof e ? e = "" + e : "object" == typeof e && (e = JSON.stringify({
+            return null == e ? e : ("number" == typeof e ? e = "" + e : "object" == typeof e && (e = JSON.stringify({
                 data: e
             })), Object.keys(i.escapingMap).reduce(function(e, t) {
                 return i.replaceAll(e, t, i.escapingMap[t]);
@@ -94,10 +89,10 @@
                 return e.getAttributeNS(i.namespaces.xmlns, "ct");
             }).forEach(function(t) {
                 e.removeChild(t);
-            }), r = new i.Svg("svg").attr({
+            }), (r = new i.Svg("svg").attr({
                 width: t,
                 height: n
-            }).addClass(s), r._node.style.width = t, r._node.style.height = n, e.appendChild(r._node), 
+            }).addClass(s))._node.style.width = t, r._node.style.height = n, e.appendChild(r._node), 
             r;
         }, i.normalizeData = function(e, t, n) {
             var s, r = {
@@ -117,12 +112,12 @@
         }, i.safeHasProperty = function(e, t) {
             return null !== e && "object" == typeof e && e.hasOwnProperty(t);
         }, i.isDataHoleValue = function(e) {
-            return null === e || void 0 === e || "number" == typeof e && isNaN(e);
+            return null == e || "number" == typeof e && isNaN(e);
         }, i.reverseData = function(e) {
             e.labels.reverse(), e.series.reverse();
             for (var t = 0; t < e.series.length; t++) "object" == typeof e.series[t] && void 0 !== e.series[t].data ? e.series[t].data.reverse() : e.series[t] instanceof Array && e.series[t].reverse();
         }, i.getDataArray = function(e, t, n) {
-            function s(e) {
+            return e.series.map(function s(e) {
                 if (i.safeHasProperty(e, "value")) return s(e.value);
                 if (i.safeHasProperty(e, "data")) return s(e.data);
                 if (e instanceof Array) return e.map(s);
@@ -135,8 +130,7 @@
                     }
                     return i.getNumberOrUndefined(e);
                 }
-            }
-            return e.series.map(s);
+            });
         }, i.normalizePadding = function(e, t) {
             return t = t || 0, "number" == typeof e ? {
                 top: e,
@@ -159,18 +153,17 @@
         }, i.getAvailableHeight = function(e, t) {
             return Math.max((i.quantity(t.height).value || e.height()) - (t.chartPadding.top + t.chartPadding.bottom) - t.axisX.offset, 0);
         }, i.getHighLow = function(e, t, n) {
-            function s(e) {
-                if (void 0 !== e) if (e instanceof Array) for (var t = 0; t < e.length; t++) s(e[t]); else {
-                    var i = n ? +e[n] : +e;
-                    a && i > r.high && (r.high = i), o && i < r.low && (r.low = i);
-                }
-            }
             var r = {
                 high: void 0 === (t = i.extend({}, t, n ? t["axis" + n.toUpperCase()] : {})).high ? -Number.MAX_VALUE : +t.high,
                 low: void 0 === t.low ? Number.MAX_VALUE : +t.low
             }, a = void 0 === t.high, o = void 0 === t.low;
-            return (a || o) && s(e), (t.referenceValue || 0 === t.referenceValue) && (r.high = Math.max(t.referenceValue, r.high), 
-            r.low = Math.min(t.referenceValue, r.low)), r.high <= r.low && (0 === r.low ? r.high = 1 : r.low < 0 ? r.high = 0 : r.high > 0 ? r.low = 0 : (r.high = 1, 
+            return (a || o) && function s(e) {
+                if (void 0 !== e) if (e instanceof Array) for (var t = 0; t < e.length; t++) s(e[t]); else {
+                    var i = n ? +e[n] : +e;
+                    a && i > r.high && (r.high = i), o && i < r.low && (r.low = i);
+                }
+            }(e), (t.referenceValue || 0 === t.referenceValue) && (r.high = Math.max(t.referenceValue, r.high), 
+            r.low = Math.min(t.referenceValue, r.low)), r.high <= r.low && (0 === r.low ? r.high = 1 : r.low < 0 ? r.high = 0 : (0 < r.high || (r.high = 1), 
             r.low = 0)), r;
         }, i.isNumeric = function(e) {
             return null !== e && isFinite(e);
@@ -192,13 +185,11 @@
             if (1 === e) return e;
             var n, s = 2, r = 2;
             if (e % 2 == 0) return 2;
-            do {
-                s = i(s) % e, r = i(i(r)) % e, n = t(Math.abs(s - r), e);
-            } while (1 === n);
+            for (;s = i(s) % e, r = i(i(r)) % e, 1 === (n = t(Math.abs(s - r), e)); ) ;
             return n;
         }, i.getBounds = function(e, t, n, s) {
             function r(e, t) {
-                return e === (e += t) && (e *= 1 + (t > 0 ? p : -p)), e;
+                return e === (e += t) && (e *= 1 + (0 < t ? p : -p)), e;
             }
             var a, o, l, u = 0, c = {
                 high: t.high,
@@ -216,7 +207,7 @@
                         break;
                     }
                 }
-                if (u++ > 1e3) throw new Error("Exceeded maximum number of iterations while optimizing scale step!");
+                if (1e3 < u++) throw new Error("Exceeded maximum number of iterations while optimizing scale step!");
             }
             var p = 2221e-19;
             for (c.step = Math.max(c.step, p), o = c.min, l = c.max; o + c.step <= c.low; ) o = r(o, c.step);
@@ -330,7 +321,7 @@
                 increasingX: !1,
                 fillHoles: !1
             }, n);
-            for (var s = [], r = !0, a = 0; a < e.length; a += 2) void 0 === i.getMultiValue(t[a / 2].value) ? n.fillHoles || (r = !0) : (n.increasingX && a >= 2 && e[a] <= e[a - 2] && (r = !0), 
+            for (var s = [], r = !0, a = 0; a < e.length; a += 2) void 0 === i.getMultiValue(t[a / 2].value) ? n.fillHoles || (r = !0) : (n.increasingX && 2 <= a && e[a] <= e[a - 2] && (r = !0), 
             r && (s.push({
                 pathCoordinates: [],
                 valueData: []
@@ -375,14 +366,14 @@
                     fillHoles: e.fillHoles
                 });
                 if (o.length) {
-                    if (o.length > 1) {
+                    if (1 < o.length) {
                         var l = [];
                         return o.forEach(function(e) {
                             l.push(s(e.pathCoordinates, e.valueData));
                         }), i.Svg.Path.join(l);
                     }
                     if (r = o[0].pathCoordinates, a = o[0].valueData, r.length <= 4) return i.Interpolation.none()(r, a);
-                    for (var u = new i.Svg.Path().move(r[0], r[1], !1, a[0]), c = 0, h = r.length; h - 2 > c; c += 2) {
+                    for (var u = new i.Svg.Path().move(r[0], r[1], !1, a[0]), c = 0, h = r.length; c < h - 2; c += 2) {
                         var d = [ {
                             x: +r[c - 2],
                             y: +r[c - 1]
@@ -414,7 +405,7 @@
                     increasingX: !0
                 });
                 if (r.length) {
-                    if (r.length > 1) {
+                    if (1 < r.length) {
                         var a = [];
                         return r.forEach(function(e) {
                             a.push(t(e.pathCoordinates, e.valueData));
@@ -424,7 +415,7 @@
                     var o, l, u = [], c = [], h = n.length / 2, d = [], p = [], m = [], f = [];
                     for (o = 0; o < h; o++) u[o] = n[2 * o], c[o] = n[2 * o + 1];
                     for (o = 0; o < h - 1; o++) m[o] = c[o + 1] - c[o], f[o] = u[o + 1] - u[o], p[o] = m[o] / f[o];
-                    for (d[0] = p[0], d[h - 1] = p[h - 2], o = 1; o < h - 1; o++) 0 === p[o] || 0 === p[o - 1] || p[o - 1] > 0 != p[o] > 0 ? d[o] = 0 : (d[o] = 3 * (f[o - 1] + f[o]) / ((2 * f[o] + f[o - 1]) / p[o - 1] + (f[o] + 2 * f[o - 1]) / p[o]), 
+                    for (d[0] = p[0], d[h - 1] = p[h - 2], o = 1; o < h - 1; o++) 0 === p[o] || 0 === p[o - 1] || 0 < p[o - 1] != 0 < p[o] ? d[o] = 0 : (d[o] = 3 * (f[o - 1] + f[o]) / ((2 * f[o] + f[o - 1]) / p[o - 1] + (f[o] + 2 * f[o - 1]) / p[o]), 
                     isFinite(d[o]) || (d[o] = 0));
                     for (l = new i.Svg.Path().move(u[0], c[0], !1, s[0]), o = 0; o < h - 1; o++) l.curve(u[o] + f[o] / 3, c[o] + d[o] * f[o] / 3, u[o + 1] - f[o] / 3, c[o + 1] - d[o + 1] * f[o] / 3, u[o + 1], c[o + 1], !1, s[o + 1]);
                     return l;
@@ -466,11 +457,6 @@
         };
     }(window, document, e), function(e, t, i) {
         "use strict";
-        function n(e) {
-            var t = [];
-            if (e.length) for (var i = 0; i < e.length; i++) t.push(e[i]);
-            return t;
-        }
         i.Class = {
             extend: function(e, t) {
                 var n = t || this.prototype || i.Class, s = Object.create(n);
@@ -483,7 +469,11 @@
                 return r.prototype = s, r.super = n, r.extend = this.extend, r;
             },
             cloneDefinitions: function() {
-                var e = n(arguments), t = e[0];
+                var e = function(e) {
+                    var t = [];
+                    if (e.length) for (var i = 0; i < e.length; i++) t.push(e[i]);
+                    return t;
+                }(arguments), t = e[0];
                 return e.splice(1, e.length - 1).forEach(function(e) {
                     Object.getOwnPropertyNames(e).forEach(function(i) {
                         delete t[i], Object.defineProperty(t, i, Object.getOwnPropertyDescriptor(e, i));
@@ -668,8 +658,7 @@
             }
         }), i.Svg.isSupported = function(e) {
             return t.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#" + e, "1.1");
-        };
-        i.Svg.Easing = {
+        }, i.Svg.Easing = {
             easeInSine: [ .47, 0, .745, .715 ],
             easeOutSine: [ .39, .575, .565, 1 ],
             easeInOutSine: [ .445, .05, .55, .95 ],
@@ -1077,7 +1066,7 @@
                     if (d.showArea && r.range) {
                         var f = Math.max(Math.min(d.areaBase, r.range.max), r.range.min), g = u.y1 - r.projectValue(f);
                         p.splitByCommand("M").filter(function(e) {
-                            return e.pathElements.length > 1;
+                            return 1 < e.pathElements.length;
                         }).map(function(e) {
                             var t = e.pathElements[0], i = e.pathElements[e.pathElements.length - 1];
                             return e.clone(!0).position(0).remove(1).move(t.x, g).line(t.x, t.y).position(e.pathElements.length + 1).line(i.x, g);
@@ -1337,11 +1326,11 @@
                         c[r].attr({
                             "ct:series-name": s.name
                         }), c[r].addClass([ e.classNames.series, s.className || e.classNames.series + "-" + i.alphaNumerate(r) ].join(" "));
-                        var f = l > 0 ? h + u.normalized.series[r] / l * 360 : 0, g = Math.max(0, h - (0 === r || m ? 0 : .2));
-                        f - g >= 359.99 && (f = g + 359.99);
-                        var v, x, y, b = i.polarToCartesian(p.x, p.y, a, g), w = i.polarToCartesian(p.x, p.y, a, f), E = new i.Svg.Path(!e.donut || e.donutSolid).move(w.x, w.y).arc(a, a, 0, f - h > 180, 0, b.x, b.y);
+                        var f = 0 < l ? h + u.normalized.series[r] / l * 360 : 0, g = Math.max(0, h - (0 === r || m ? 0 : .2));
+                        359.99 <= f - g && (f = g + 359.99);
+                        var v, x, y, b = i.polarToCartesian(p.x, p.y, a, g), w = i.polarToCartesian(p.x, p.y, a, f), E = new i.Svg.Path(!e.donut || e.donutSolid).move(w.x, w.y).arc(a, a, 0, 180 < f - h, 0, b.x, b.y);
                         e.donut ? e.donutSolid && (y = a - d.value, v = i.polarToCartesian(p.x, p.y, y, h - (0 === r || m ? 0 : .2)), 
-                        x = i.polarToCartesian(p.x, p.y, y, f), E.line(v.x, v.y), E.arc(y, y, 0, f - h > 180, 1, x.x, x.y)) : E.line(p.x, p.y);
+                        x = i.polarToCartesian(p.x, p.y, y, f), E.line(v.x, v.y), E.arc(y, y, 0, 180 < f - h, 1, x.x, x.y)) : E.line(p.x, p.y);
                         var S = e.classNames.slicePie;
                         e.donut && (S = e.classNames.sliceDonut, e.donutSolid && (S = e.classNames.sliceDonutSolid));
                         var A = c[r].elem("path", {
@@ -1365,13 +1354,11 @@
                             startAngle: h,
                             endAngle: f
                         }), e.showLabel) {
-                            var z;
+                            var z, M;
                             z = 1 === u.raw.series.length ? {
                                 x: p.x,
                                 y: p.y
-                            } : i.polarToCartesian(p.x, p.y, o, h + (f - h) / 2);
-                            var M;
-                            M = u.normalized.labels && !i.isFalseyButZero(u.normalized.labels[r]) ? u.normalized.labels[r] : u.normalized.series[r];
+                            } : i.polarToCartesian(p.x, p.y, o, h + (f - h) / 2), M = u.normalized.labels && !i.isFalseyButZero(u.normalized.labels[r]) ? u.normalized.labels[r] : u.normalized.series[r];
                             var O = e.labelInterpolationFnc(M, r);
                             if (O || 0 === O) {
                                 var C = t.elem("text", {

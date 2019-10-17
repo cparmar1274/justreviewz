@@ -12,8 +12,7 @@
                 exports: {}
             };
             e[i][0].call(u.exports, function(t) {
-                var n = e[i][1][t];
-                return o(n || t);
+                return o(e[i][1][t] || t);
             }, u, u.exports, t, e, n, r);
         }
         return n[i].exports;
@@ -48,45 +47,43 @@
     } ],
     2: [ function(t, e, n) {
         "use strict";
-        function r(t, e) {
-            var n = t.className.split(" ");
-            n.indexOf(e) < 0 && n.push(e), t.className = n.join(" ");
-        }
-        function o(t, e) {
-            var n = t.className.split(" "), r = n.indexOf(e);
-            r >= 0 && n.splice(r, 1), t.className = n.join(" ");
-        }
         n.add = function(t, e) {
-            t.classList ? t.classList.add(e) : r(t, e);
+            t.classList ? t.classList.add(e) : function(t, e) {
+                var n = t.className.split(" ");
+                n.indexOf(e) < 0 && n.push(e), t.className = n.join(" ");
+            }(t, e);
         }, n.remove = function(t, e) {
-            t.classList ? t.classList.remove(e) : o(t, e);
+            t.classList ? t.classList.remove(e) : function(t, e) {
+                var n = t.className.split(" "), r = n.indexOf(e);
+                0 <= r && n.splice(r, 1), t.className = n.join(" ");
+            }(t, e);
         }, n.list = function(t) {
             return t.classList ? Array.prototype.slice.apply(t.classList) : t.className.split(" ");
         };
     }, {} ],
     3: [ function(t, e, n) {
         "use strict";
-        function r(t, e) {
-            return window.getComputedStyle(t)[e];
-        }
-        function o(t, e, n) {
-            return "number" == typeof n && (n = n.toString() + "px"), t.style[e] = n, t;
-        }
-        function l(t, e) {
-            for (var n in e) {
-                var r = e[n];
-                "number" == typeof r && (r = r.toString() + "px"), t.style[n] = r;
+        var i = {
+            e: function(t, e) {
+                var n = document.createElement(t);
+                return n.className = e, n;
+            },
+            appendTo: function(t, e) {
+                return e.appendChild(t), t;
             }
-            return t;
-        }
-        var i = {};
-        i.e = function(t, e) {
-            var n = document.createElement(t);
-            return n.className = e, n;
-        }, i.appendTo = function(t, e) {
-            return e.appendChild(t), t;
-        }, i.css = function(t, e, n) {
-            return "object" == typeof e ? l(t, e) : void 0 === n ? r(t, e) : o(t, e, n);
+        };
+        i.css = function(t, e, n) {
+            return "object" == typeof e ? function(t, e) {
+                for (var n in e) {
+                    var r = e[n];
+                    "number" == typeof r && (r = r.toString() + "px"), t.style[n] = r;
+                }
+                return t;
+            }(t, e) : void 0 === n ? function(t, e) {
+                return window.getComputedStyle(t)[e];
+            }(t, e) : function(t, e, n) {
+                return "number" == typeof n && (n = n.toString() + "px"), t.style[e] = n, t;
+            }(t, e, n);
         }, i.matches = function(t, e) {
             return void 0 !== t.matches ? t.matches(e) : void 0 !== t.matchesSelector ? t.matchesSelector(e) : void 0 !== t.webkitMatchesSelector ? t.webkitMatchesSelector(e) : void 0 !== t.mozMatchesSelector ? t.mozMatchesSelector(e) : void 0 !== t.msMatchesSelector ? t.msMatchesSelector(e) : void 0;
         }, i.remove = function(t) {
@@ -151,12 +148,10 @@
         }, i = n.clone = function(t) {
             if (t) {
                 if (t.constructor === Array) return t.map(i);
-                if ("object" == typeof t) {
-                    var e = {};
-                    for (var n in t) e[n] = i(t[n]);
-                    return e;
-                }
-                return t;
+                if ("object" != typeof t) return t;
+                var e = {};
+                for (var n in t) e[n] = i(t[n]);
+                return e;
             }
             return null;
         };
@@ -233,24 +228,23 @@
     } ],
     10: [ function(t, e, n) {
         "use strict";
-        function r(t, e) {
-            function n(t) {
-                return t.getBoundingClientRect();
-            }
-            var r = function(t) {
-                t.stopPropagation();
-            };
-            e.event.bind(e.scrollbarY, "click", r), e.event.bind(e.scrollbarYRail, "click", function(r) {
-                var o = r.pageY - window.pageYOffset - n(e.scrollbarYRail).top > e.scrollbarYTop ? 1 : -1;
-                i(t, "top", t.scrollTop + o * e.containerHeight), l(t), r.stopPropagation();
-            }), e.event.bind(e.scrollbarX, "click", r), e.event.bind(e.scrollbarXRail, "click", function(r) {
-                var o = r.pageX - window.pageXOffset - n(e.scrollbarXRail).left > e.scrollbarXLeft ? 1 : -1;
-                i(t, "left", t.scrollLeft + o * e.containerWidth), l(t), r.stopPropagation();
-            });
-        }
         var o = t("../instances"), l = t("../update-geometry"), i = t("../update-scroll");
         e.exports = function(t) {
-            r(t, o.get(t));
+            !function(t, e) {
+                function n(t) {
+                    return t.getBoundingClientRect();
+                }
+                var r = function(t) {
+                    t.stopPropagation();
+                };
+                e.event.bind(e.scrollbarY, "click", r), e.event.bind(e.scrollbarYRail, "click", function(r) {
+                    var o = r.pageY - window.pageYOffset - n(e.scrollbarYRail).top > e.scrollbarYTop ? 1 : -1;
+                    i(t, "top", t.scrollTop + o * e.containerHeight), l(t), r.stopPropagation();
+                }), e.event.bind(e.scrollbarX, "click", r), e.event.bind(e.scrollbarXRail, "click", function(r) {
+                    var o = r.pageX - window.pageXOffset - n(e.scrollbarXRail).left > e.scrollbarXLeft ? 1 : -1;
+                    i(t, "left", t.scrollLeft + o * e.containerWidth), l(t), r.stopPropagation();
+                });
+            }(t, o.get(t));
         };
     }, {
         "../instances": 18,
@@ -259,46 +253,44 @@
     } ],
     11: [ function(t, e, n) {
         "use strict";
-        function r(t, e) {
-            function n(n) {
-                var o = r + n * e.railXRatio, i = Math.max(0, e.scrollbarXRail.getBoundingClientRect().left) + e.railXRatio * (e.railXWidth - e.scrollbarXWidth);
-                e.scrollbarXLeft = o < 0 ? 0 : o > i ? i : o;
-                var s = l.toInt(e.scrollbarXLeft * (e.contentWidth - e.containerWidth) / (e.containerWidth - e.railXRatio * e.scrollbarXWidth)) - e.negativeScrollAdjustment;
-                c(t, "left", s);
-            }
-            var r = null, o = null, s = function(e) {
-                n(e.pageX - o), a(t), e.stopPropagation(), e.preventDefault();
-            }, u = function() {
-                l.stopScrolling(t, "x"), e.event.unbind(e.ownerDocument, "mousemove", s);
-            };
-            e.event.bind(e.scrollbarX, "mousedown", function(n) {
-                o = n.pageX, r = l.toInt(i.css(e.scrollbarX, "left")) * e.railXRatio, l.startScrolling(t, "x"), 
-                e.event.bind(e.ownerDocument, "mousemove", s), e.event.once(e.ownerDocument, "mouseup", u), 
-                n.stopPropagation(), n.preventDefault();
-            });
-        }
-        function o(t, e) {
-            function n(n) {
-                var o = r + n * e.railYRatio, i = Math.max(0, e.scrollbarYRail.getBoundingClientRect().top) + e.railYRatio * (e.railYHeight - e.scrollbarYHeight);
-                e.scrollbarYTop = o < 0 ? 0 : o > i ? i : o;
-                var s = l.toInt(e.scrollbarYTop * (e.contentHeight - e.containerHeight) / (e.containerHeight - e.railYRatio * e.scrollbarYHeight));
-                c(t, "top", s);
-            }
-            var r = null, o = null, s = function(e) {
-                n(e.pageY - o), a(t), e.stopPropagation(), e.preventDefault();
-            }, u = function() {
-                l.stopScrolling(t, "y"), e.event.unbind(e.ownerDocument, "mousemove", s);
-            };
-            e.event.bind(e.scrollbarY, "mousedown", function(n) {
-                o = n.pageY, r = l.toInt(i.css(e.scrollbarY, "top")) * e.railYRatio, l.startScrolling(t, "y"), 
-                e.event.bind(e.ownerDocument, "mousemove", s), e.event.once(e.ownerDocument, "mouseup", u), 
-                n.stopPropagation(), n.preventDefault();
-            });
-        }
         var l = t("../../lib/helper"), i = t("../../lib/dom"), s = t("../instances"), a = t("../update-geometry"), c = t("../update-scroll");
         e.exports = function(t) {
             var e = s.get(t);
-            r(t, e), o(t, e);
+            (function(t, e) {
+                function n(n) {
+                    var o = r + n * e.railXRatio, i = Math.max(0, e.scrollbarXRail.getBoundingClientRect().left) + e.railXRatio * (e.railXWidth - e.scrollbarXWidth);
+                    e.scrollbarXLeft = o < 0 ? 0 : i < o ? i : o;
+                    var s = l.toInt(e.scrollbarXLeft * (e.contentWidth - e.containerWidth) / (e.containerWidth - e.railXRatio * e.scrollbarXWidth)) - e.negativeScrollAdjustment;
+                    c(t, "left", s);
+                }
+                var r = null, o = null, s = function(e) {
+                    n(e.pageX - o), a(t), e.stopPropagation(), e.preventDefault();
+                }, u = function() {
+                    l.stopScrolling(t, "x"), e.event.unbind(e.ownerDocument, "mousemove", s);
+                };
+                e.event.bind(e.scrollbarX, "mousedown", function(n) {
+                    o = n.pageX, r = l.toInt(i.css(e.scrollbarX, "left")) * e.railXRatio, l.startScrolling(t, "x"), 
+                    e.event.bind(e.ownerDocument, "mousemove", s), e.event.once(e.ownerDocument, "mouseup", u), 
+                    n.stopPropagation(), n.preventDefault();
+                });
+            })(t, e), function(t, e) {
+                function n(n) {
+                    var o = r + n * e.railYRatio, i = Math.max(0, e.scrollbarYRail.getBoundingClientRect().top) + e.railYRatio * (e.railYHeight - e.scrollbarYHeight);
+                    e.scrollbarYTop = o < 0 ? 0 : i < o ? i : o;
+                    var s = l.toInt(e.scrollbarYTop * (e.contentHeight - e.containerHeight) / (e.containerHeight - e.railYRatio * e.scrollbarYHeight));
+                    c(t, "top", s);
+                }
+                var r = null, o = null, s = function(e) {
+                    n(e.pageY - o), a(t), e.stopPropagation(), e.preventDefault();
+                }, u = function() {
+                    l.stopScrolling(t, "y"), e.event.unbind(e.ownerDocument, "mousemove", s);
+                };
+                e.event.bind(e.scrollbarY, "mousedown", function(n) {
+                    o = n.pageY, r = l.toInt(i.css(e.scrollbarY, "top")) * e.railYRatio, l.startScrolling(t, "y"), 
+                    e.event.bind(e.ownerDocument, "mousemove", s), e.event.once(e.ownerDocument, "mouseup", u), 
+                    n.stopPropagation(), n.preventDefault();
+                });
+            }(t, e);
         };
     }, {
         "../../lib/dom": 3,
@@ -310,26 +302,12 @@
     12: [ function(t, e, n) {
         "use strict";
         function r(t, e) {
-            function n(n, r) {
-                var o = t.scrollTop;
-                if (0 === n) {
-                    if (!e.scrollbarYActive) return !1;
-                    if (0 === o && r > 0 || o >= e.contentHeight - e.containerHeight && r < 0) return !e.settings.wheelPropagation;
-                }
-                var l = t.scrollLeft;
-                if (0 === r) {
-                    if (!e.scrollbarXActive) return !1;
-                    if (0 === l && n < 0 || l >= e.contentWidth - e.containerWidth && n > 0) return !e.settings.wheelPropagation;
-                }
-                return !0;
-            }
             var r = !1;
             e.event.bind(t, "mouseenter", function() {
                 r = !0;
             }), e.event.bind(t, "mouseleave", function() {
                 r = !1;
             });
-            var i = !1;
             e.event.bind(e.ownerDocument, "keydown", function(c) {
                 if (!(c.isDefaultPrevented && c.isDefaultPrevented() || c.defaultPrevented)) {
                     var u = l.matches(e.scrollbarX, ":focus") || l.matches(e.scrollbarY, ":focus");
@@ -380,7 +358,19 @@
                           default:
                             return;
                         }
-                        a(t, "top", t.scrollTop - h), a(t, "left", t.scrollLeft + p), s(t), (i = n(p, h)) && c.preventDefault();
+                        a(t, "top", t.scrollTop - h), a(t, "left", t.scrollLeft + p), s(t), function(n, r) {
+                            var o = t.scrollTop;
+                            if (0 === n) {
+                                if (!e.scrollbarYActive) return !1;
+                                if (0 === o && 0 < r || o >= e.contentHeight - e.containerHeight && r < 0) return !e.settings.wheelPropagation;
+                            }
+                            var l = t.scrollLeft;
+                            if (0 === r) {
+                                if (!e.scrollbarXActive) return !1;
+                                if (0 === l && n < 0 || l >= e.contentWidth - e.containerWidth && 0 < n) return !e.settings.wheelPropagation;
+                            }
+                            return !0;
+                        }(p, h) && c.preventDefault();
                     }
                 }
             });
@@ -399,42 +389,39 @@
     13: [ function(t, e, n) {
         "use strict";
         function r(t, e) {
-            function n(n, r) {
-                var o = t.scrollTop;
-                if (0 === n) {
-                    if (!e.scrollbarYActive) return !1;
-                    if (0 === o && r > 0 || o >= e.contentHeight - e.containerHeight && r < 0) return !e.settings.wheelPropagation;
-                }
-                var l = t.scrollLeft;
-                if (0 === r) {
-                    if (!e.scrollbarXActive) return !1;
-                    if (0 === l && n < 0 || l >= e.contentWidth - e.containerWidth && n > 0) return !e.settings.wheelPropagation;
-                }
-                return !0;
-            }
-            function r(t) {
-                var e = t.deltaX, n = -1 * t.deltaY;
-                return void 0 !== e && void 0 !== n || (e = -1 * t.wheelDeltaX / 6, n = t.wheelDeltaY / 6), 
-                t.deltaMode && 1 === t.deltaMode && (e *= 10, n *= 10), e !== e && n !== n && (e = 0, 
-                n = t.wheelDelta), t.shiftKey ? [ -n, -e ] : [ e, n ];
-            }
-            function o(e, n) {
-                var r = t.querySelector("textarea:hover, select[multiple]:hover, .ps-child:hover");
-                if (r) {
-                    if (!window.getComputedStyle(r).overflow.match(/(scroll|auto)/)) return !1;
-                    var o = r.scrollHeight - r.clientHeight;
-                    if (o > 0 && !(0 === r.scrollTop && n > 0 || r.scrollTop === o && n < 0)) return !0;
-                    var l = r.scrollLeft - r.clientWidth;
-                    if (l > 0 && !(0 === r.scrollLeft && e < 0 || r.scrollLeft === l && e > 0)) return !0;
-                }
-                return !1;
-            }
             function s(s) {
-                var c = r(s), u = c[0], d = c[1];
-                o(u, d) || (a = !1, e.settings.useBothWheelAxes ? e.scrollbarYActive && !e.scrollbarXActive ? (d ? i(t, "top", t.scrollTop - d * e.settings.wheelSpeed) : i(t, "top", t.scrollTop + u * e.settings.wheelSpeed), 
-                a = !0) : e.scrollbarXActive && !e.scrollbarYActive && (u ? i(t, "left", t.scrollLeft + u * e.settings.wheelSpeed) : i(t, "left", t.scrollLeft - d * e.settings.wheelSpeed), 
+                var c = function(t) {
+                    var e = t.deltaX, n = -1 * t.deltaY;
+                    return void 0 !== e && void 0 !== n || (e = -1 * t.wheelDeltaX / 6, n = t.wheelDeltaY / 6), 
+                    t.deltaMode && 1 === t.deltaMode && (e *= 10, n *= 10), e != e && n != n && (e = 0, 
+                    n = t.wheelDelta), t.shiftKey ? [ -n, -e ] : [ e, n ];
+                }(s), u = c[0], d = c[1];
+                (function(e, n) {
+                    var r = t.querySelector("textarea:hover, select[multiple]:hover, .ps-child:hover");
+                    if (r) {
+                        if (!window.getComputedStyle(r).overflow.match(/(scroll|auto)/)) return !1;
+                        var o = r.scrollHeight - r.clientHeight;
+                        if (0 < o && !(0 === r.scrollTop && 0 < n || r.scrollTop === o && n < 0)) return !0;
+                        var l = r.scrollLeft - r.clientWidth;
+                        if (0 < l && !(0 === r.scrollLeft && e < 0 || r.scrollLeft === l && 0 < e)) return !0;
+                    }
+                    return !1;
+                })(u, d) || (a = !1, e.settings.useBothWheelAxes ? e.scrollbarYActive && !e.scrollbarXActive ? (i(t, "top", d ? t.scrollTop - d * e.settings.wheelSpeed : t.scrollTop + u * e.settings.wheelSpeed), 
+                a = !0) : e.scrollbarXActive && !e.scrollbarYActive && (i(t, "left", u ? t.scrollLeft + u * e.settings.wheelSpeed : t.scrollLeft - d * e.settings.wheelSpeed), 
                 a = !0) : (i(t, "top", t.scrollTop - d * e.settings.wheelSpeed), i(t, "left", t.scrollLeft + u * e.settings.wheelSpeed)), 
-                l(t), (a = a || n(u, d)) && (s.stopPropagation(), s.preventDefault()));
+                l(t), (a = a || function(n, r) {
+                    var o = t.scrollTop;
+                    if (0 === n) {
+                        if (!e.scrollbarYActive) return !1;
+                        if (0 === o && 0 < r || o >= e.contentHeight - e.containerHeight && r < 0) return !e.settings.wheelPropagation;
+                    }
+                    var l = t.scrollLeft;
+                    if (0 === r) {
+                        if (!e.scrollbarXActive) return !1;
+                        if (0 === l && n < 0 || l >= e.contentWidth - e.containerWidth && 0 < n) return !e.settings.wheelPropagation;
+                    }
+                    return !0;
+                }(u, d)) && (s.stopPropagation(), s.preventDefault()));
             }
             var a = !1;
             void 0 !== window.onwheel ? e.event.bind(t, "wheel", s) : void 0 !== window.onmousewheel && e.event.bind(t, "mousewheel", s);
@@ -450,14 +437,13 @@
     } ],
     14: [ function(t, e, n) {
         "use strict";
-        function r(t, e) {
-            e.event.bind(t, "scroll", function() {
-                l(t);
-            });
-        }
         var o = t("../instances"), l = t("../update-geometry");
         e.exports = function(t) {
-            r(t, o.get(t));
+            !function(t, e) {
+                e.event.bind(t, "scroll", function() {
+                    l(t);
+                });
+            }(t, o.get(t));
         };
     }, {
         "../instances": 18,
@@ -466,10 +452,6 @@
     15: [ function(t, e, n) {
         "use strict";
         function r(t, e) {
-            function n() {
-                var t = window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : "";
-                return 0 === t.toString().length ? null : t.getRangeAt(0).commonAncestorContainer;
-            }
             function r() {
                 c || (c = setInterval(function() {
                     l.get(t) ? (s(t, "top", t.scrollTop + u.top), s(t, "left", t.scrollLeft + u.left), 
@@ -484,25 +466,20 @@
                 left: 0
             }, d = !1;
             e.event.bind(e.ownerDocument, "selectionchange", function() {
-                t.contains(n()) ? d = !0 : (d = !1, a());
+                t.contains(function() {
+                    var t = window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : "";
+                    return 0 === t.toString().length ? null : t.getRangeAt(0).commonAncestorContainer;
+                }()) ? d = !0 : (d = !1, a());
             }), e.event.bind(window, "mouseup", function() {
                 d && (d = !1, a());
             }), e.event.bind(window, "keyup", function() {
                 d && (d = !1, a());
             }), e.event.bind(window, "mousemove", function(e) {
                 if (d) {
-                    var n = {
-                        x: e.pageX,
-                        y: e.pageY
-                    }, l = {
-                        left: t.offsetLeft,
-                        right: t.offsetLeft + t.offsetWidth,
-                        top: t.offsetTop,
-                        bottom: t.offsetTop + t.offsetHeight
-                    };
-                    n.x < l.left + 3 ? (u.left = -5, o.startScrolling(t, "x")) : n.x > l.right - 3 ? (u.left = 5, 
-                    o.startScrolling(t, "x")) : u.left = 0, n.y < l.top + 3 ? (u.top = l.top + 3 - n.y < 5 ? -5 : -20, 
-                    o.startScrolling(t, "y")) : n.y > l.bottom - 3 ? (u.top = n.y - l.bottom + 3 < 5 ? 5 : 20, 
+                    var n_x = e.pageX, n_y = e.pageY, l_left = t.offsetLeft, l_right = t.offsetLeft + t.offsetWidth, l_top = t.offsetTop, l_bottom = t.offsetTop + t.offsetHeight;
+                    n_x < l_left + 3 ? (u.left = -5, o.startScrolling(t, "x")) : l_right - 3 < n_x ? (u.left = 5, 
+                    o.startScrolling(t, "x")) : u.left = 0, n_y < l_top + 3 ? (u.top = l_top + 3 - n_y < 5 ? -5 : -20, 
+                    o.startScrolling(t, "y")) : l_bottom - 3 < n_y ? (u.top = n_y - l_bottom + 3 < 5 ? 5 : 20, 
                     o.startScrolling(t, "y")) : u.top = 0, 0 === u.top && 0 === u.left ? a() : r();
                 }
             });
@@ -519,65 +496,64 @@
     } ],
     16: [ function(t, e, n) {
         "use strict";
-        function r(t, e, n, r) {
-            function o(n, r) {
-                var o = t.scrollTop, l = t.scrollLeft, i = Math.abs(n), s = Math.abs(r);
-                if (s > i) {
-                    if (r < 0 && o === e.contentHeight - e.containerHeight || r > 0 && 0 === o) return !e.settings.swipePropagation;
-                } else if (i > s && (n < 0 && l === e.contentWidth - e.containerWidth || n > 0 && 0 === l)) return !e.settings.swipePropagation;
-                return !0;
-            }
-            function a(e, n) {
-                s(t, "top", t.scrollTop - n), s(t, "left", t.scrollLeft - e), i(t);
-            }
-            function c() {
-                Y = !0;
-            }
-            function u() {
-                Y = !1;
-            }
-            function d(t) {
-                return t.targetTouches ? t.targetTouches[0] : t;
-            }
-            function p(t) {
-                return !(!t.targetTouches || 1 !== t.targetTouches.length) || !(!t.pointerType || "mouse" === t.pointerType || t.pointerType === t.MSPOINTER_TYPE_MOUSE);
-            }
-            function h(t) {
-                if (p(t)) {
-                    y = !0;
-                    var e = d(t);
-                    v.pageX = e.pageX, v.pageY = e.pageY, g = new Date().getTime(), null !== w && clearInterval(w), 
-                    t.stopPropagation();
-                }
-            }
-            function f(t) {
-                if (!y && e.settings.swipePropagation && h(t), !Y && y && p(t)) {
-                    var n = d(t), r = {
-                        pageX: n.pageX,
-                        pageY: n.pageY
-                    }, l = r.pageX - v.pageX, i = r.pageY - v.pageY;
-                    a(l, i), v = r;
-                    var s = new Date().getTime(), c = s - g;
-                    c > 0 && (m.x = l / c, m.y = i / c, g = s), o(l, i) && (t.stopPropagation(), t.preventDefault());
-                }
-            }
-            function b() {
-                !Y && y && (y = !1, clearInterval(w), w = setInterval(function() {
-                    l.get(t) && (m.x || m.y) ? Math.abs(m.x) < .01 && Math.abs(m.y) < .01 ? clearInterval(w) : (a(30 * m.x, 30 * m.y), 
-                    m.x *= .8, m.y *= .8) : clearInterval(w);
-                }, 10));
-            }
-            var v = {}, g = 0, m = {}, w = null, Y = !1, y = !1;
-            n ? (e.event.bind(window, "touchstart", c), e.event.bind(window, "touchend", u), 
-            e.event.bind(t, "touchstart", h), e.event.bind(t, "touchmove", f), e.event.bind(t, "touchend", b)) : r && (window.PointerEvent ? (e.event.bind(window, "pointerdown", c), 
-            e.event.bind(window, "pointerup", u), e.event.bind(t, "pointerdown", h), e.event.bind(t, "pointermove", f), 
-            e.event.bind(t, "pointerup", b)) : window.MSPointerEvent && (e.event.bind(window, "MSPointerDown", c), 
-            e.event.bind(window, "MSPointerUp", u), e.event.bind(t, "MSPointerDown", h), e.event.bind(t, "MSPointerMove", f), 
-            e.event.bind(t, "MSPointerUp", b)));
-        }
         var o = t("../../lib/helper"), l = t("../instances"), i = t("../update-geometry"), s = t("../update-scroll");
         e.exports = function(t) {
-            (o.env.supportsTouch || o.env.supportsIePointer) && r(t, l.get(t), o.env.supportsTouch, o.env.supportsIePointer);
+            (o.env.supportsTouch || o.env.supportsIePointer) && function(t, e, n, r) {
+                function o(n, r) {
+                    var o = t.scrollTop, l = t.scrollLeft, i = Math.abs(n), s = Math.abs(r);
+                    if (i < s) {
+                        if (r < 0 && o === e.contentHeight - e.containerHeight || 0 < r && 0 === o) return !e.settings.swipePropagation;
+                    } else if (s < i && (n < 0 && l === e.contentWidth - e.containerWidth || 0 < n && 0 === l)) return !e.settings.swipePropagation;
+                    return !0;
+                }
+                function a(e, n) {
+                    s(t, "top", t.scrollTop - n), s(t, "left", t.scrollLeft - e), i(t);
+                }
+                function c() {
+                    Y = !0;
+                }
+                function u() {
+                    Y = !1;
+                }
+                function d(t) {
+                    return t.targetTouches ? t.targetTouches[0] : t;
+                }
+                function p(t) {
+                    return !(!t.targetTouches || 1 !== t.targetTouches.length) || !(!t.pointerType || "mouse" === t.pointerType || t.pointerType === t.MSPOINTER_TYPE_MOUSE);
+                }
+                function h(t) {
+                    if (p(t)) {
+                        y = !0;
+                        var e = d(t);
+                        v.pageX = e.pageX, v.pageY = e.pageY, g = new Date().getTime(), null !== w && clearInterval(w), 
+                        t.stopPropagation();
+                    }
+                }
+                function f(t) {
+                    if (!y && e.settings.swipePropagation && h(t), !Y && y && p(t)) {
+                        var n = d(t), r = {
+                            pageX: n.pageX,
+                            pageY: n.pageY
+                        }, l = r.pageX - v.pageX, i = r.pageY - v.pageY;
+                        a(l, i), v = r;
+                        var s = new Date().getTime(), c = s - g;
+                        0 < c && (m.x = l / c, m.y = i / c, g = s), o(l, i) && (t.stopPropagation(), t.preventDefault());
+                    }
+                }
+                function b() {
+                    !Y && y && (y = !1, clearInterval(w), w = setInterval(function() {
+                        l.get(t) && (m.x || m.y) ? Math.abs(m.x) < .01 && Math.abs(m.y) < .01 ? clearInterval(w) : (a(30 * m.x, 30 * m.y), 
+                        m.x *= .8, m.y *= .8) : clearInterval(w);
+                    }, 10));
+                }
+                var v = {}, g = 0, m = {}, w = null, Y = !1, y = !1;
+                n ? (e.event.bind(window, "touchstart", c), e.event.bind(window, "touchend", u), 
+                e.event.bind(t, "touchstart", h), e.event.bind(t, "touchmove", f), e.event.bind(t, "touchend", b)) : r && (window.PointerEvent ? (e.event.bind(window, "pointerdown", c), 
+                e.event.bind(window, "pointerup", u), e.event.bind(t, "pointerdown", h), e.event.bind(t, "pointermove", f), 
+                e.event.bind(t, "pointerup", b)) : window.MSPointerEvent && (e.event.bind(window, "MSPointerDown", c), 
+                e.event.bind(window, "MSPointerUp", u), e.event.bind(t, "MSPointerDown", h), e.event.bind(t, "MSPointerMove", f), 
+                e.event.bind(t, "MSPointerUp", b)));
+            }(t, l.get(t), o.env.supportsTouch, o.env.supportsIePointer);
         };
     }, {
         "../../lib/helper": 6,
@@ -628,14 +604,14 @@
             var r = this;
             r.settings = s.clone(c), r.containerWidth = null, r.containerHeight = null, r.contentWidth = null, 
             r.contentHeight = null, r.isRtl = "rtl" === u.css(t, "direction"), r.isNegativeScroll = function() {
-                var e = t.scrollLeft, n = null;
+                var n, e = t.scrollLeft;
                 return t.scrollLeft = -1, n = t.scrollLeft < 0, t.scrollLeft = e, n;
             }(), r.negativeScrollAdjustment = r.isNegativeScroll ? t.scrollWidth - t.clientWidth : 0, 
             r.event = new d(), r.ownerDocument = t.ownerDocument || document, r.scrollbarXRail = u.appendTo(u.e("div", "ps-scrollbar-x-rail"), t), 
             r.scrollbarX = u.appendTo(u.e("div", "ps-scrollbar-x"), r.scrollbarXRail), r.scrollbarX.setAttribute("tabindex", 0), 
             r.event.bind(r.scrollbarX, "focus", e), r.event.bind(r.scrollbarX, "blur", n), r.scrollbarXActive = null, 
             r.scrollbarXWidth = null, r.scrollbarXLeft = null, r.scrollbarXBottom = s.toInt(u.css(r.scrollbarXRail, "bottom")), 
-            r.isScrollbarXUsingBottom = r.scrollbarXBottom === r.scrollbarXBottom, r.scrollbarXTop = r.isScrollbarXUsingBottom ? null : s.toInt(u.css(r.scrollbarXRail, "top")), 
+            r.isScrollbarXUsingBottom = r.scrollbarXBottom == r.scrollbarXBottom, r.scrollbarXTop = r.isScrollbarXUsingBottom ? null : s.toInt(u.css(r.scrollbarXRail, "top")), 
             r.railBorderXWidth = s.toInt(u.css(r.scrollbarXRail, "borderLeftWidth")) + s.toInt(u.css(r.scrollbarXRail, "borderRightWidth")), 
             u.css(r.scrollbarXRail, "display", "block"), r.railXMarginWidth = s.toInt(u.css(r.scrollbarXRail, "marginLeft")) + s.toInt(u.css(r.scrollbarXRail, "marginRight")), 
             u.css(r.scrollbarXRail, "display", ""), r.railXWidth = null, r.railXRatio = null, 
@@ -643,7 +619,7 @@
             r.scrollbarY.setAttribute("tabindex", 0), r.event.bind(r.scrollbarY, "focus", e), 
             r.event.bind(r.scrollbarY, "blur", n), r.scrollbarYActive = null, r.scrollbarYHeight = null, 
             r.scrollbarYTop = null, r.scrollbarYRight = s.toInt(u.css(r.scrollbarYRail, "right")), 
-            r.isScrollbarYUsingRight = r.scrollbarYRight === r.scrollbarYRight, r.scrollbarYLeft = r.isScrollbarYUsingRight ? null : s.toInt(u.css(r.scrollbarYRail, "left")), 
+            r.isScrollbarYUsingRight = r.scrollbarYRight == r.scrollbarYRight, r.scrollbarYLeft = r.isScrollbarYUsingRight ? null : s.toInt(u.css(r.scrollbarYRail, "left")), 
             r.scrollbarYOuterWidth = r.isRtl ? s.outerWidth(r.scrollbarY) : null, r.railBorderYWidth = s.toInt(u.css(r.scrollbarYRail, "borderTopWidth")) + s.toInt(u.css(r.scrollbarYRail, "borderBottomWidth")), 
             u.css(r.scrollbarYRail, "display", "block"), r.railYMarginHeight = s.toInt(u.css(r.scrollbarYRail, "marginTop")) + s.toInt(u.css(r.scrollbarYRail, "marginBottom")), 
             u.css(r.scrollbarYRail, "display", ""), r.railYHeight = null, r.railYRatio = null;
@@ -651,18 +627,16 @@
         function o(t) {
             return t.getAttribute("data-ps-id");
         }
-        function l(t, e) {
-            t.setAttribute("data-ps-id", e);
-        }
-        function i(t) {
-            t.removeAttribute("data-ps-id");
-        }
         var s = t("../lib/helper"), a = t("../lib/class"), c = t("./default-setting"), u = t("../lib/dom"), d = t("../lib/event-manager"), p = t("../lib/guid"), h = {};
         n.add = function(t) {
             var e = p();
-            return l(t, e), h[e] = new r(t), h[e];
+            return function(t, e) {
+                t.setAttribute("data-ps-id", e);
+            }(t, e), h[e] = new r(t), h[e];
         }, n.remove = function(t) {
-            delete h[o(t)], i(t);
+            delete h[o(t)], function(t) {
+                t.removeAttribute("data-ps-id");
+            }(t);
         }, n.get = function(t) {
             return h[o(t)];
         };
@@ -681,35 +655,13 @@
             t.settings.maxScrollbarLength && (e = Math.min(e, t.settings.maxScrollbarLength)), 
             e;
         }
-        function o(t, e) {
-            var n = {
-                width: e.railXWidth
-            };
-            e.isRtl ? n.left = e.negativeScrollAdjustment + t.scrollLeft + e.containerWidth - e.contentWidth : n.left = t.scrollLeft, 
-            e.isScrollbarXUsingBottom ? n.bottom = e.scrollbarXBottom - t.scrollTop : n.top = e.scrollbarXTop + t.scrollTop, 
-            s.css(e.scrollbarXRail, n);
-            var r = {
-                top: t.scrollTop,
-                height: e.railYHeight
-            };
-            e.isScrollbarYUsingRight ? e.isRtl ? r.right = e.contentWidth - (e.negativeScrollAdjustment + t.scrollLeft) - e.scrollbarYRight - e.scrollbarYOuterWidth : r.right = e.scrollbarYRight - t.scrollLeft : e.isRtl ? r.left = e.negativeScrollAdjustment + t.scrollLeft + 2 * e.containerWidth - e.contentWidth - e.scrollbarYLeft - e.scrollbarYOuterWidth : r.left = e.scrollbarYLeft + t.scrollLeft, 
-            s.css(e.scrollbarYRail, r), s.css(e.scrollbarX, {
-                left: e.scrollbarXLeft,
-                width: e.scrollbarXWidth - e.railBorderXWidth
-            }), s.css(e.scrollbarY, {
-                top: e.scrollbarYTop,
-                height: e.scrollbarYHeight - e.railBorderYWidth
-            });
-        }
         var l = t("../lib/helper"), i = t("../lib/class"), s = t("../lib/dom"), a = t("./instances"), c = t("./update-scroll");
         e.exports = function(t) {
-            var e = a.get(t);
+            var n, e = a.get(t);
             e.containerWidth = t.clientWidth, e.containerHeight = t.clientHeight, e.contentWidth = t.scrollWidth, 
-            e.contentHeight = t.scrollHeight;
-            var n;
-            t.contains(e.scrollbarXRail) || ((n = s.queryChildren(t, ".ps-scrollbar-x-rail")).length > 0 && n.forEach(function(t) {
+            e.contentHeight = t.scrollHeight, t.contains(e.scrollbarXRail) || (0 < (n = s.queryChildren(t, ".ps-scrollbar-x-rail")).length && n.forEach(function(t) {
                 s.remove(t);
-            }), s.appendTo(e.scrollbarXRail, t)), t.contains(e.scrollbarYRail) || ((n = s.queryChildren(t, ".ps-scrollbar-y-rail")).length > 0 && n.forEach(function(t) {
+            }), s.appendTo(e.scrollbarXRail, t)), t.contains(e.scrollbarYRail) || (0 < (n = s.queryChildren(t, ".ps-scrollbar-y-rail")).length && n.forEach(function(t) {
                 s.remove(t);
             }), s.appendTo(e.scrollbarYRail, t)), !e.settings.suppressScrollX && e.containerWidth + e.settings.scrollXMarginOffset < e.contentWidth ? (e.scrollbarXActive = !0, 
             e.railXWidth = e.containerWidth - e.railXMarginWidth, e.railXRatio = e.containerWidth / e.railXWidth, 
@@ -721,7 +673,26 @@
             e.scrollbarYTop = l.toInt(t.scrollTop * (e.railYHeight - e.scrollbarYHeight) / (e.contentHeight - e.containerHeight))) : e.scrollbarYActive = !1, 
             e.scrollbarXLeft >= e.railXWidth - e.scrollbarXWidth && (e.scrollbarXLeft = e.railXWidth - e.scrollbarXWidth), 
             e.scrollbarYTop >= e.railYHeight - e.scrollbarYHeight && (e.scrollbarYTop = e.railYHeight - e.scrollbarYHeight), 
-            o(t, e), e.scrollbarXActive ? i.add(t, "ps-active-x") : (i.remove(t, "ps-active-x"), 
+            function(t, e) {
+                var n = {
+                    width: e.railXWidth
+                };
+                e.isRtl ? n.left = e.negativeScrollAdjustment + t.scrollLeft + e.containerWidth - e.contentWidth : n.left = t.scrollLeft, 
+                e.isScrollbarXUsingBottom ? n.bottom = e.scrollbarXBottom - t.scrollTop : n.top = e.scrollbarXTop + t.scrollTop, 
+                s.css(e.scrollbarXRail, n);
+                var r = {
+                    top: t.scrollTop,
+                    height: e.railYHeight
+                };
+                e.isScrollbarYUsingRight ? e.isRtl ? r.right = e.contentWidth - (e.negativeScrollAdjustment + t.scrollLeft) - e.scrollbarYRight - e.scrollbarYOuterWidth : r.right = e.scrollbarYRight - t.scrollLeft : e.isRtl ? r.left = e.negativeScrollAdjustment + t.scrollLeft + 2 * e.containerWidth - e.contentWidth - e.scrollbarYLeft - e.scrollbarYOuterWidth : r.left = e.scrollbarYLeft + t.scrollLeft, 
+                s.css(e.scrollbarYRail, r), s.css(e.scrollbarX, {
+                    left: e.scrollbarXLeft,
+                    width: e.scrollbarXWidth - e.railBorderXWidth
+                }), s.css(e.scrollbarY, {
+                    top: e.scrollbarYTop,
+                    height: e.scrollbarYHeight - e.railBorderYWidth
+                });
+            }(t, e), e.scrollbarXActive ? i.add(t, "ps-active-x") : (i.remove(t, "ps-active-x"), 
             e.scrollbarXWidth = 0, e.scrollbarXLeft = 0, c(t, "left", 0)), e.scrollbarYActive ? i.add(t, "ps-active-y") : (i.remove(t, "ps-active-y"), 
             e.scrollbarYHeight = 0, e.scrollbarYTop = 0, c(t, "top", 0));
         };
@@ -748,8 +719,8 @@
             "top" === e && n >= s.contentHeight - s.containerHeight && ((n = s.contentHeight - s.containerHeight) - t.scrollTop <= 1 ? n = t.scrollTop : t.scrollTop = n, 
             t.dispatchEvent(i("ps-y-reach-end"))), "left" === e && n >= s.contentWidth - s.containerWidth && ((n = s.contentWidth - s.containerWidth) - t.scrollLeft <= 1 ? n = t.scrollLeft : t.scrollLeft = n, 
             t.dispatchEvent(i("ps-x-reach-end"))), r || (r = t.scrollTop), o || (o = t.scrollLeft), 
-            "top" === e && n < r && t.dispatchEvent(i("ps-scroll-up")), "top" === e && n > r && t.dispatchEvent(i("ps-scroll-down")), 
-            "left" === e && n < o && t.dispatchEvent(i("ps-scroll-left")), "left" === e && n > o && t.dispatchEvent(i("ps-scroll-right")), 
+            "top" === e && n < r && t.dispatchEvent(i("ps-scroll-up")), "top" === e && r < n && t.dispatchEvent(i("ps-scroll-down")), 
+            "left" === e && n < o && t.dispatchEvent(i("ps-scroll-left")), "left" === e && o < n && t.dispatchEvent(i("ps-scroll-right")), 
             "top" === e && (t.scrollTop = r = n, t.dispatchEvent(i("ps-scroll-y"))), "left" === e && (t.scrollLeft = o = n, 
             t.dispatchEvent(i("ps-scroll-x")));
         };

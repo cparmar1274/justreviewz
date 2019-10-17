@@ -28,11 +28,6 @@
             for (var f = 0; f < a.length; ++f) a[f].x && s && (a[f].number = !1), a[f].y && n && (a[f].number = !1);
         }
     }
-    function e(r) {
-        var o = -1;
-        for (var e in r) r[e] > o && (o = r[e]);
-        return o + 1;
-    }
     function i(r) {
         var o = [];
         for (var e in r.categories) {
@@ -54,7 +49,11 @@
         }
     }
     function n(r, o, i) {
-        for (var s = r.points, n = r.pointsize, a = r.format, t = o.charAt(0), u = e(i), f = 0; f < s.length; f += n) if (null != s[f]) for (var c = 0; c < n; ++c) {
+        for (var s = r.points, n = r.pointsize, a = r.format, t = o.charAt(0), u = function(r) {
+            var o = -1;
+            for (var e in r) r[e] > o && (o = r[e]);
+            return o + 1;
+        }(i), f = 0; f < s.length; f += n) if (null != s[f]) for (var c = 0; c < n; ++c) {
             var l = s[f + c];
             null != l && a[c][t] && (l in i || (i[l] = u, ++u), s[f + c] = i[l]);
         }

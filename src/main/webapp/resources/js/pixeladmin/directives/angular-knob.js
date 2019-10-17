@@ -1,10 +1,5 @@
 function knobDirective(n, e) {
     "use strict";
-    function r(n) {
-        return n.replace(/^on([A-Z])/, function(n, e) {
-            return e.toLowerCase();
-        });
-    }
     var o = [ "onRelease", "onChange", "onDraw", "onCancel", "onFormat" ];
     return {
         restrict: "A",
@@ -18,7 +13,11 @@ function knobDirective(n, e) {
             }
             var u = {}, f = void 0;
             o.forEach(function(n) {
-                a[n] && (u[r(n)] = e(a[n])(t.$parent));
+                a[n] && (u[function(n) {
+                    return n.replace(/^on([A-Z])/, function(n, e) {
+                        return e.toLowerCase();
+                    });
+                }(n)] = e(a[n])(t.$parent));
             });
             var l = u.release || function() {};
             u.release = function() {

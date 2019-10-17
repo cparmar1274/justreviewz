@@ -75,7 +75,7 @@ angular.module("summernote", []).controller("SummernoteController", [ "$scope", 
         }), r && (r.$render = function() {
             r.$viewValue ? l.summernote("code", r.$viewValue) : l.summernote("empty");
         }), angular.isDefined(n.editable) && (e.editable = d.find(".note-editable")), angular.isDefined(n.editor) && (e.editor = l), 
-        t = l, l.on("$destroy", function() {
+        (t = l).on("$destroy", function() {
             l.summernote("destroy"), e.summernoteDestroyed = !0;
         });
     }, e.$on("$destroy", function() {

@@ -17,10 +17,10 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         module.exports = t(i);
     } else window && (window.Slider = t(window.jQuery));
 }(function(t) {
-    windowIsDefined && !window.console && (window.console = {}), windowIsDefined && !window.console.log && (window.console.log = function() {}), 
-    windowIsDefined && !window.console.warn && (window.console.warn = function() {});
     var i;
-    return function(t) {
+    return windowIsDefined && !window.console && (window.console = {}), windowIsDefined && !window.console.log && (window.console.log = function() {}), 
+    windowIsDefined && !window.console.warn && (window.console.warn = function() {}), 
+    function(t) {
         function i() {}
         var e = Array.prototype.slice;
         !function(t) {
@@ -46,7 +46,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                         return e ? (e.option(o), e._init()) : (e = new s(this, o), t.data(this, i, e)), 
                         t(this);
                     });
-                    return !c || c.length > 1 ? c : c[0];
+                    return !c || 1 < c.length ? c : c[0];
                 };
             }
             if (t) {
@@ -73,13 +73,13 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             for (var s = Object.keys(this.defaultOptions), n = 0; n < s.length; n++) {
                 var a = s[n], h = e[a];
                 h = null !== (h = void 0 !== h ? h : function(t, i) {
-                    var e = "data-slider-" + i.replace(/_/g, "-"), s = t.getAttribute(e);
+                    var e = "data-slider-" + a.replace(/_/g, "-"), s = t.getAttribute(e);
                     try {
                         return JSON.parse(s);
                     } catch (t) {
                         return s;
                     }
-                }(this.element, a)) ? h : this.defaultOptions[a], this.options || (this.options = {}), 
+                }(this.element)) ? h : this.defaultOptions[a], this.options || (this.options = {}), 
                 this.options[a] = h;
             }
             "auto" === this.options.rtl && (this.options.rtl = "rtl" === window.getComputedStyle(this.element).direction), 
@@ -97,7 +97,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 c.setAttribute("aria-valuemax", this.options.max), v.appendChild(r), v.appendChild(l), 
                 v.appendChild(p), this.rangeHighlightElements = [];
                 var f = this.options.rangeHighlights;
-                if (Array.isArray(f) && f.length > 0) for (var g = 0; g < f.length; g++) {
+                if (Array.isArray(f) && 0 < f.length) for (var g = 0; g < f.length; g++) {
                     var y = document.createElement("div"), b = f[g].class || "";
                     y.className = "slider-rangeHighlight slider-selection " + b, this.rangeHighlightElements.push(y), 
                     v.appendChild(y);
@@ -106,7 +106,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 if (k && this.options.labelledby[0] && d.setAttribute("aria-labelledby", this.options.labelledby[0]), 
                 k && this.options.labelledby[1] && c.setAttribute("aria-labelledby", this.options.labelledby[1]), 
                 !k && this.options.labelledby && (d.setAttribute("aria-labelledby", this.options.labelledby), 
-                c.setAttribute("aria-labelledby", this.options.labelledby)), this.ticks = [], Array.isArray(this.options.ticks) && this.options.ticks.length > 0) {
+                c.setAttribute("aria-labelledby", this.options.labelledby)), this.ticks = [], Array.isArray(this.options.ticks) && 0 < this.options.ticks.length) {
                     for (this.ticksContainer = document.createElement("div"), this.ticksContainer.className = "slider-tick-container", 
                     n = 0; n < this.options.ticks.length; n++) {
                         var E = document.createElement("div");
@@ -121,7 +121,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                     }
                     l.className += " tick-slider-selection";
                 }
-                if (this.tickLabels = [], Array.isArray(this.options.ticks_labels) && this.options.ticks_labels.length > 0) for (this.tickLabelContainer = document.createElement("div"), 
+                if (this.tickLabels = [], Array.isArray(this.options.ticks_labels) && 0 < this.options.ticks_labels.length) for (this.tickLabelContainer = document.createElement("div"), 
                 this.tickLabelContainer.className = "slider-tick-label-container", n = 0; n < this.options.ticks_labels.length; n++) {
                     var L = document.createElement("div"), P = 0 === this.options.ticks_positions.length, M = this.options.reversed && P ? this.options.ticks_labels.length - (n + 1) : n;
                     L.className = "slider-tick-label", L.innerHTML = this.options.ticks_labels[M], this.tickLabels.push(L), 
@@ -166,7 +166,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             this.stylePos = "top", this.mousePos = "pageY", this.sizePos = "offsetHeight") : (this._addClass(this.sliderElem, "slider-horizontal"), 
             this.sliderElem.style.width = u, this.options.orientation = "horizontal", this.options.rtl ? this.stylePos = "right" : this.stylePos = "left", 
             this.mousePos = "pageX", this.sizePos = "offsetWidth"), this.options.rtl && this._addClass(this.sliderElem, "slider-rtl"), 
-            this._setTooltipPosition(), Array.isArray(this.options.ticks) && this.options.ticks.length > 0 && (this.options.max = Math.max.apply(Math, this.options.ticks), 
+            this._setTooltipPosition(), Array.isArray(this.options.ticks) && 0 < this.options.ticks.length && (this.options.max = Math.max.apply(Math, this.options.ticks), 
             this.options.min = Math.min.apply(Math, this.options.ticks)), Array.isArray(this.options.value) ? (this.options.range = !0, 
             this._state.value = this.options.value) : this.options.range ? this._state.value = [ this.options.value, this.options.max ] : this._state.value = this.options.value, 
             this.trackLow = r || this.trackLow, this.trackSelection = l || this.trackSelection, 
@@ -218,16 +218,13 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             }
             this.options.enabled ? this.enable() : this.disable();
         }
-        var s = {
-            formatInvalidInputErrorMsg: function(t) {
-                return "Invalid input value '" + t + "' passed in";
-            },
-            callingContextNotSliderInstance: "Calling context element does not have instance of Slider bound to it. Check your code to make sure the JQuery object returned from the call to the slider() initializer is calling the method"
+        var s_formatInvalidInputErrorMsg = function(t) {
+            return "Invalid input value '" + t + "' passed in";
         }, o = {
             linear: {
                 toValue: function(t) {
                     var i = t / 100 * (this.options.max - this.options.min), e = !0;
-                    if (this.options.ticks_positions.length > 0) {
+                    if (0 < this.options.ticks_positions.length) {
                         for (var s, o, n, a = 0, h = 1; h < this.options.ticks_positions.length; h++) if (t <= this.options.ticks_positions[h]) {
                             s = this.options.ticks[h - 1], n = this.options.ticks_positions[h - 1], o = this.options.ticks[h], 
                             a = this.options.ticks_positions[h];
@@ -240,13 +237,13 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 },
                 toPercentage: function(t) {
                     if (this.options.max === this.options.min) return 0;
-                    if (this.options.ticks_positions.length > 0) {
+                    if (0 < this.options.ticks_positions.length) {
                         for (var i, e, s, o = 0, n = 0; n < this.options.ticks.length; n++) if (t <= this.options.ticks[n]) {
-                            i = n > 0 ? this.options.ticks[n - 1] : 0, s = n > 0 ? this.options.ticks_positions[n - 1] : 0, 
+                            i = 0 < n ? this.options.ticks[n - 1] : 0, s = 0 < n ? this.options.ticks_positions[n - 1] : 0, 
                             e = this.options.ticks[n], o = this.options.ticks_positions[n];
                             break;
                         }
-                        if (n > 0) return s + (t - i) / (e - i) * (o - s);
+                        if (0 < n) return s + (t - i) / (e - i) * (o - s);
                     }
                     return 100 * (t - this.options.min) / (this.options.max - this.options.min);
                 }
@@ -263,9 +260,9 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 }
             }
         };
-        if (i = function(t, i) {
+        if ((i = function(t, i) {
             return e.call(this, t, i), this;
-        }, i.prototype = {
+        }).prototype = {
             _init: function() {},
             constructor: i,
             defaultOptions: {
@@ -410,7 +407,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 function i(t, i) {
                     return i ? [ 100 - t.percentage[0], this.options.range ? 100 - t.percentage[1] : t.percentage[1] ] : [ t.percentage[0], t.percentage[1] ];
                 }
-                var e = this.options.formatter(t ? t.value[0] : this._state.value[0]), s = t ? i(t, this.options.reversed) : i(this._state, this.options.reversed);
+                var e = this.options.formatter(t ? t.value[0] : this._state.value[0]), s = i(t || this._state, this.options.reversed);
                 this._setText(this.tooltipInner, e), this.tooltip.style[this.stylePos] = s[0] + "%", 
                 "vertical" === this.options.orientation ? this._css(this.tooltip, "margin-" + this.stylePos, -this.tooltip.offsetHeight / 2 + "px") : this._css(this.tooltip, "margin-" + this.stylePos, -this.tooltip.offsetWidth / 2 + "px");
             },
@@ -418,7 +415,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 return {
                     addMouseEnter: function(t, i, e) {
                         var s = function() {
-                            var i = t._state, s = e >= 0 ? e : this.attributes["aria-valuenow"].value, o = parseInt(s, 10);
+                            var i = t._state, s = 0 <= e ? e : this.attributes["aria-valuenow"].value, o = parseInt(s, 10);
                             i.value[0] = o, i.percentage[0] = t.options.ticks_positions[o], t._setToolTipOnMouseOver(i), 
                             t._showTooltip();
                         };
@@ -433,13 +430,13 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 };
             },
             _layout: function() {
-                var t;
+                var t, c;
                 if (t = this.options.reversed ? [ 100 - this._state.percentage[0], this.options.range ? 100 - this._state.percentage[1] : this._state.percentage[1] ] : [ this._state.percentage[0], this._state.percentage[1] ], 
                 this.handle1.style[this.stylePos] = t[0] + "%", this.handle1.setAttribute("aria-valuenow", this._state.value[0]), 
                 isNaN(this.options.formatter(this._state.value[0])) && this.handle1.setAttribute("aria-valuetext", this.options.formatter(this._state.value[0])), 
                 this.handle2.style[this.stylePos] = t[1] + "%", this.handle2.setAttribute("aria-valuenow", this._state.value[1]), 
                 isNaN(this.options.formatter(this._state.value[1])) && this.handle2.setAttribute("aria-valuetext", this.options.formatter(this._state.value[1])), 
-                this.rangeHighlightElements.length > 0 && Array.isArray(this.options.rangeHighlights) && this.options.rangeHighlights.length > 0) for (var i = 0; i < this.options.rangeHighlights.length; i++) {
+                0 < this.rangeHighlightElements.length && Array.isArray(this.options.rangeHighlights) && 0 < this.options.rangeHighlights.length) for (var i = 0; i < this.options.rangeHighlights.length; i++) {
                     var e = this._toPercentage(this.options.rangeHighlights[i].start), s = this._toPercentage(this.options.rangeHighlights[i].end);
                     if (this.options.reversed) {
                         var o = 100 - s;
@@ -450,7 +447,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                     this.rangeHighlightElements[i].style.height = n.size + "%") : (this.options.rtl ? this.rangeHighlightElements[i].style.right = n.start + "%" : this.rangeHighlightElements[i].style.left = n.start + "%", 
                     this.rangeHighlightElements[i].style.width = n.size + "%") : this.rangeHighlightElements[i].style.display = "none";
                 }
-                if (Array.isArray(this.options.ticks) && this.options.ticks.length > 0) {
+                if (Array.isArray(this.options.ticks) && 0 < this.options.ticks.length) {
                     var a, h = "vertical" === this.options.orientation ? "height" : "width";
                     a = "vertical" === this.options.orientation ? "marginTop" : this.options.rtl ? "marginRight" : "marginLeft";
                     var l = this._state.size / (this.options.ticks.length - 1);
@@ -463,13 +460,12 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                     for (var p = 0; p < this.options.ticks.length; p++) {
                         var d = this.options.ticks_positions[p] || this._toPercentage(this.options.ticks[p]);
                         this.options.reversed && (d = 100 - d), this.ticks[p].style[this.stylePos] = d + "%", 
-                        this._removeClass(this.ticks[p], "in-selection"), this.options.range ? d >= t[0] && d <= t[1] && this._addClass(this.ticks[p], "in-selection") : "after" === this.options.selection && d >= t[0] ? this._addClass(this.ticks[p], "in-selection") : "before" === this.options.selection && d <= t[0] && this._addClass(this.ticks[p], "in-selection"), 
+                        this._removeClass(this.ticks[p], "in-selection"), this.options.range ? t[0] <= d && d <= t[1] && this._addClass(this.ticks[p], "in-selection") : "after" === this.options.selection && t[0] <= d ? this._addClass(this.ticks[p], "in-selection") : "before" === this.options.selection && d <= t[0] && this._addClass(this.ticks[p], "in-selection"), 
                         this.tickLabels[p] && (this.tickLabels[p].style[h] = l + "px", "vertical" !== this.options.orientation && void 0 !== this.options.ticks_positions[p] ? (this.tickLabels[p].style.position = "absolute", 
                         this.tickLabels[p].style[this.stylePos] = d + "%", this.tickLabels[p].style[a] = -l / 2 + "px") : "vertical" === this.options.orientation && (this.options.rtl ? this.tickLabels[p].style.marginRight = this.sliderElem.offsetWidth + "px" : this.tickLabels[p].style.marginLeft = this.sliderElem.offsetWidth + "px", 
                         this.tickLabelContainer.style[a] = this.sliderElem.offsetWidth / 2 * -1 + "px"));
                     }
                 }
-                var c;
                 if (this.options.range) {
                     c = this.options.formatter(this._state.value), this._setText(this.tooltipInner, c), 
                     this.tooltip.style[this.stylePos] = (t[1] + t[0]) / 2 + "%", "vertical" === this.options.orientation ? this._css(this.tooltip, "margin-" + this.stylePos, -this.tooltip.offsetHeight / 2 + "px") : this._css(this.tooltip, "margin-" + this.stylePos, -this.tooltip.offsetWidth / 2 + "px");
@@ -498,7 +494,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 }
             },
             _createHighlightRange: function(t, i) {
-                return this._isHighlightRange(t, i) ? t > i ? {
+                return this._isHighlightRange(t, i) ? i < t ? {
                     start: i,
                     size: t - i
                 } : {
@@ -585,7 +581,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             _touchmove: function(t) {
                 if (void 0 !== t.changedTouches) {
                     var i = t.changedTouches[0], e = i.pageX - this.touchX, s = i.pageY - this.touchY;
-                    this._state.inDrag || ("vertical" === this.options.orientation && e <= 5 && e >= -5 && (s >= 15 || s <= -15) ? this._mousedown(t) : s <= 5 && s >= -5 && (e >= 15 || e <= -15) && this._mousedown(t));
+                    this._state.inDrag || ("vertical" === this.options.orientation && e <= 5 && -5 <= e && (15 <= s || s <= -15) ? this._mousedown(t) : s <= 5 && -5 <= s && (15 <= e || e <= -15) && this._mousedown(t));
                 }
             },
             _adjustPercentageForRangeSliders: function(t) {
@@ -604,8 +600,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
                 if (!this._state.enabled) return !1;
                 this.touchCapable && (document.removeEventListener("touchmove", this.mousemove, !1), 
                 document.removeEventListener("touchend", this.mouseup, !1)), document.removeEventListener("mousemove", this.mousemove, !1), 
-                document.removeEventListener("mouseup", this.mouseup, !1), this._state.inDrag = !1, 
-                !1 === this._state.over && this._hideTooltip();
+                document.removeEventListener("mouseup", this.mouseup, !1), (this._state.inDrag = !1) === this._state.over && this._hideTooltip();
                 var t = this._calculateValue(!0);
                 return this._layout(), this._setDataVal(t), this._trigger("slideStop", t), !1;
             },
@@ -646,14 +641,14 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             _validateInputValue: function(t) {
                 if (isNaN(+t)) {
                     if (Array.isArray(t)) return this._validateArray(t), t;
-                    throw new Error(s.formatInvalidInputErrorMsg(t));
+                    throw new Error(s_formatInvalidInputErrorMsg(t));
                 }
                 return +t;
             },
             _validateArray: function(t) {
                 for (var i = 0; i < t.length; i++) {
                     var e = t[i];
-                    if ("number" != typeof e) throw new Error(s.formatInvalidInputErrorMsg(e));
+                    if ("number" != typeof e) throw new Error(s_formatInvalidInputErrorMsg(e));
                 }
             },
             _setDataVal: function(t) {
@@ -740,8 +735,8 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             }
         }, t && t.fn) {
             var n = void 0;
-            t.fn.slider ? (windowIsDefined && window.console.warn("bootstrap-slider.js - WARNING: $.fn.slider namespace is already bound. Use the $.fn.bootstrapSlider namespace instead."), 
-            n = "bootstrapSlider") : (t.bridget("slider", i), n = "slider"), t.bridget("bootstrapSlider", i), 
+            n = t.fn.slider ? (windowIsDefined && window.console.warn("bootstrap-slider.js - WARNING: $.fn.slider namespace is already bound. Use the $.fn.bootstrapSlider namespace instead."), 
+            "bootstrapSlider") : (t.bridget("slider", i), "slider"), t.bridget("bootstrapSlider", i), 
             t(function() {
                 t("input[data-provide=slider]")[n]();
             });

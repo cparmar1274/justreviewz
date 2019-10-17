@@ -24,11 +24,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         backgroundPosition: "center middle",
         overlay: !1,
         overlayOpacity: .2
-    }, r = {
-        CONTAINER: "px-responsive-bg-container",
-        IMAGE: "px-responsive-bg",
-        OVERLAY: "px-responsive-bg-overlay"
-    }, s = {
+    }, r_CONTAINER = "px-responsive-bg-container", r_IMAGE = "px-responsive-bg", r_OVERLAY = "px-responsive-bg-overlay", s = {
         RESIZE: "resize.px.responsiveBg"
     }, a = function() {
         function i(e, t) {
@@ -51,7 +47,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "destroy",
             value: function(t) {
-                this._unsetListeners(), t && e(this.element).removeClass(r.CONTAINER).find("> ." + r.IMAGE).remove(), 
+                this._unsetListeners(), t && e(this.element).removeClass(r_CONTAINER).find("> ." + r_IMAGE).remove(), 
                 e(this.element).removeData(n);
             }
         }, {
@@ -65,15 +61,15 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_setupMarkup",
             value: function(t) {
-                pxUtil.addClass(this.element, r.CONTAINER);
-                var n = e(this.element).find("> ." + r.IMAGE);
-                if (n.length || (n = e('<div class="' + r.IMAGE + '"></div>').appendTo(this.element)).append('<img alt="">'), 
+                pxUtil.addClass(this.element, r_CONTAINER);
+                var n = e(this.element).find("> ." + r_IMAGE);
+                if (n.length || (n = e('<div class="' + r_IMAGE + '"></div>').appendTo(this.element)).append('<img alt="">'), 
                 this.image = n.find("> img")[0], !this.image) throw new Error("Background <img> element not found!");
-                e(this.image).attr("src", t.src), !1 !== this.config.overlay ? (n.find("." + r.OVERLAY).remove(), 
-                n.prepend("string" == typeof this.config.overlay && "<" === this.config.overlay[0] ? e(this.config.overlay).addClass(r.OVERLAY).css("opacity", this.config.overlayOpacity) : e('<div class="' + r.OVERLAY + '"></div>').css({
+                e(this.image).attr("src", t.src), !1 !== this.config.overlay ? (n.find("." + r_OVERLAY).remove(), 
+                n.prepend("string" == typeof this.config.overlay && "<" === this.config.overlay[0] ? e(this.config.overlay).addClass(r_OVERLAY).css("opacity", this.config.overlayOpacity) : e('<div class="' + r_OVERLAY + '"></div>').css({
                     background: "boolean" == typeof this.config.overlay ? "#000" : this.config.overlay,
                     opacity: this.config.overlayOpacity
-                }))) : n.find("> ." + r.OVERLAY).remove();
+                }))) : n.find("> ." + r_OVERLAY).remove();
             }
         }, {
             key: "_setListeners",
@@ -98,7 +94,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         } ], [ {
             key: "_jQueryInterface",
             value: function(t) {
-                for (var o = arguments.length, r = Array(o > 1 ? o - 1 : 0), s = 1; s < o; s++) r[s - 1] = arguments[s];
+                for (var o = arguments.length, r = Array(1 < o ? o - 1 : 0), s = 1; s < o; s++) r[s - 1] = arguments[s];
                 return this.each(function() {
                     var o = e(this).data(n), s = "object" === (void 0 === t ? "undefined" : _typeof(t)) ? t : null;
                     if (o || "destroy" === t || (o = new i(this, s), e(this).data(n, o)), o && "string" == typeof t) {

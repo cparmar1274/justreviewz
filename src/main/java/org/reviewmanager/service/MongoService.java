@@ -40,7 +40,7 @@ public class MongoService {
 													// which the user is defined
 			//mongodb://admin:password1@ds255857.mlab.com:55857/heroku_4rqpl385/?authSource=db1
 			//mongodb://localhost:27017/?authSource=db1
-			MongoClientURI uri = new MongoClientURI("mongodb://localhost:27017/?authSource=db1");
+			MongoClientURI uri = new MongoClientURI("mongodb://admin:password1@ds255857.mlab.com:55857/heroku_4rqpl385");
 			mongoClient = new MongoClient(uri);
 			mongoDB = mongoClient.getDatabase(database);
 			// create Index
@@ -91,5 +91,9 @@ public class MongoService {
 		Document document = new Document();
 		document.putAll(object.toMap());
 		return document;
+	}
+	
+	public static void main(String[] args) {
+		MongoService mongo = new MongoService();
 	}
 }

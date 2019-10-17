@@ -5,8 +5,8 @@
 }(function(t, i, s, o, e) {
     "use strict";
     var h = 0, r = function() {
-        var i, s = o.userAgent, e = /msie\s\d+/i;
-        return s.search(e) > 0 && (i = e.exec(s).toString(), (i = i.split(" ")[1]) < 9) && (t("html").addClass("lt-ie9"), 
+        var s = o.userAgent, e = /msie\s\d+/i;
+        return 0 < s.search(e) && e.exec(s).toString().split(" ")[1] < 9 && (t("html").addClass("lt-ie9"), 
         !0);
     }();
     Function.prototype.bind || (Function.prototype.bind = function(t) {
@@ -28,8 +28,8 @@
         var o = Object(this), e = o.length >>> 0;
         if (0 === e) return -1;
         var h = +i || 0;
-        if (Math.abs(h) === 1 / 0 && (h = 0), h >= e) return -1;
-        for (s = Math.max(h >= 0 ? h : e - Math.abs(h), 0); s < e; ) {
+        if (Math.abs(h) === 1 / 0 && (h = 0), e <= h) return -1;
+        for (s = Math.max(0 <= h ? h : e - Math.abs(h), 0); s < e; ) {
             if (s in o && o[s] === t) return s;
             s++;
         }
@@ -105,7 +105,7 @@
             p_single_left: 0
         };
         var n, a, c, l = this.$cache.input, _ = l.prop("value");
-        n = {
+        for (c in n = {
             type: "single",
             min: 10,
             max: 100,
@@ -189,8 +189,7 @@
             disable: l.data("disable"),
             block: l.data("block"),
             extra_classes: l.data("extraClasses")
-        }).values = a.values && a.values.split(",");
-        for (c in a) a.hasOwnProperty(c) && (a[c] !== e && "" !== a[c] || delete a[c]);
+        }).values = a.values && a.values.split(","), a) a.hasOwnProperty(c) && (a[c] !== e && "" !== a[c] || delete a[c]);
         _ !== e && "" !== _ && ((_ = _.split(a.input_values_separator || h.input_values_separator || ";"))[0] && _[0] == +_[0] && (_[0] = +_[0]), 
         _[1] && _[1] == +_[1] && (_[1] = +_[1]), h && h.values && h.values.length ? (n.from = _[0] && h.values.indexOf(_[0]), 
         n.to = _[1] && h.values.indexOf(_[1])) : (n.from = _[0] && +_[0], n.to = _[1] && +_[1])), 
@@ -237,7 +236,7 @@
         },
         setTopHandler: function() {
             var t = this.options.min, i = this.options.max, s = this.options.from, o = this.options.to;
-            s > t && o === i ? this.$cache.s_from.addClass("type_last") : o < i && this.$cache.s_to.addClass("type_last");
+            t < s && o === i ? this.$cache.s_from.addClass("type_last") : o < i && this.$cache.s_to.addClass("type_last");
         },
         changeLevel: function(t) {
             switch (t) {
@@ -314,14 +313,12 @@
             this.$cache.body.on("mouseleave.irs_" + this.plugin_count, this.pointerUp.bind(this))));
         },
         pointerFocus: function(t) {
-            if (!this.target) {
-                var i, s;
-                i = (s = "single" === this.options.type ? this.$cache.single : this.$cache.from).offset().left, 
-                i += s.width() / 2 - 1, this.pointerClick("single", {
-                    preventDefault: function() {},
-                    pageX: i
-                });
-            }
+            var i, s;
+            this.target || (i = (s = "single" === this.options.type ? this.$cache.single : this.$cache.from).offset().left, 
+            i += s.width() / 2 - 1, this.pointerClick("single", {
+                preventDefault: function() {},
+                pageX: i
+            }));
         },
         pointerMove: function(t) {
             if (this.dragging) {
@@ -459,7 +456,7 @@
                   case "both_one":
                     if (this.options.from_fixed || this.options.to_fixed) break;
                     var h = this.convertToRealPercent(i), r = this.result.from_percent, n = this.result.to_percent - r, a = n / 2, c = h - a, l = h + a;
-                    c < 0 && (l = (c = 0) + n), l > 100 && (c = (l = 100) - n), this.coords.p_from_real = this.calcWithStep(c), 
+                    c < 0 && (l = (c = 0) + n), 100 < l && (c = (l = 100) - n), this.coords.p_from_real = this.calcWithStep(c), 
                     this.coords.p_from_real = this.checkDiapason(this.coords.p_from_real, this.options.from_min, this.options.from_max), 
                     this.coords.p_from_fake = this.convertToFakePercent(this.coords.p_from_real), this.coords.p_to_real = this.calcWithStep(l), 
                     this.coords.p_to_real = this.checkDiapason(this.coords.p_to_real, this.options.to_min, this.options.to_max), 
@@ -490,7 +487,7 @@
         },
         getHandleX: function() {
             var t = 100 - this.coords.p_handle, i = this.toFixed(this.coords.p_pointer - this.coords.p_gap);
-            return i < 0 ? i = 0 : i > t && (i = t), i;
+            return i < 0 ? i = 0 : t < i && (i = t), i;
         },
         calcHandlePercent: function() {
             "single" === this.options.type ? this.coords.w_handle = this.$cache.s_single.outerWidth(!1) : this.coords.w_handle = this.$cache.s_from.outerWidth(!1), 
@@ -505,8 +502,7 @@
         },
         calcLabels: function() {
             this.coords.w_rs && !this.options.hide_from_to && ("single" === this.options.type ? (this.labels.w_single = this.$cache.single.outerWidth(!1), 
-            this.labels.p_single_fake = this.labels.w_single / this.coords.w_rs * 100, this.labels.p_single_left = this.coords.p_single_fake + this.coords.p_handle / 2 - this.labels.p_single_fake / 2, 
-            this.labels.p_single_left = this.checkEdges(this.labels.p_single_left, this.labels.p_single_fake)) : (this.labels.w_from = this.$cache.from.outerWidth(!1), 
+            this.labels.p_single_fake = this.labels.w_single / this.coords.w_rs * 100, this.labels.p_single_left = this.coords.p_single_fake + this.coords.p_handle / 2 - this.labels.p_single_fake / 2) : (this.labels.w_from = this.$cache.from.outerWidth(!1), 
             this.labels.p_from_fake = this.labels.w_from / this.coords.w_rs * 100, this.labels.p_from_left = this.coords.p_from_fake + this.coords.p_handle / 2 - this.labels.p_from_fake / 2, 
             this.labels.p_from_left = this.toFixed(this.labels.p_from_left), this.labels.p_from_left = this.checkEdges(this.labels.p_from_left, this.labels.p_from_fake), 
             this.labels.w_to = this.$cache.to.outerWidth(!1), this.labels.p_to_fake = this.labels.w_to / this.coords.w_rs * 100, 
@@ -514,7 +510,7 @@
             this.labels.p_to_left = this.toFixed(this.labels.p_to_left), this.labels.p_to_left = this.checkEdges(this.labels.p_to_left, this.labels.p_to_fake), 
             this.labels.w_single = this.$cache.single.outerWidth(!1), this.labels.p_single_fake = this.labels.w_single / this.coords.w_rs * 100, 
             this.labels.p_single_left = (this.labels.p_from_left + this.labels.p_to_left + this.labels.p_to_fake) / 2 - this.labels.p_single_fake / 2, 
-            this.labels.p_single_left = this.toFixed(this.labels.p_single_left), this.labels.p_single_left = this.checkEdges(this.labels.p_single_left, this.labels.p_single_fake)));
+            this.labels.p_single_left = this.toFixed(this.labels.p_single_left)), this.labels.p_single_left = this.checkEdges(this.labels.p_single_left, this.labels.p_single_fake));
         },
         updateScene: function() {
             this.raf_id && (cancelAnimationFrame(this.raf_id), this.raf_id = null), clearTimeout(this.update_tm), 
@@ -527,11 +523,10 @@
             this.force_redraw = !0, this.coords.w_rs_old = this.coords.w_rs, this.drawShadow()), 
             this.coords.w_rs && (this.dragging || this.force_redraw || this.is_key) && ((this.old_from !== this.result.from || this.old_to !== this.result.to || this.force_redraw || this.is_key) && (this.drawLabels(), 
             this.$cache.bar[0].style.left = this.coords.p_bar_x + "%", this.$cache.bar[0].style.width = this.coords.p_bar_w + "%", 
-            "single" === this.options.type ? (this.$cache.s_single[0].style.left = this.coords.p_single_fake + "%", 
-            this.$cache.single[0].style.left = this.labels.p_single_left + "%") : (this.$cache.s_from[0].style.left = this.coords.p_from_fake + "%", 
+            "single" === this.options.type ? this.$cache.s_single[0].style.left = this.coords.p_single_fake + "%" : (this.$cache.s_from[0].style.left = this.coords.p_from_fake + "%", 
             this.$cache.s_to[0].style.left = this.coords.p_to_fake + "%", (this.old_from !== this.result.from || this.force_redraw) && (this.$cache.from[0].style.left = this.labels.p_from_left + "%"), 
-            (this.old_to !== this.result.to || this.force_redraw) && (this.$cache.to[0].style.left = this.labels.p_to_left + "%"), 
-            this.$cache.single[0].style.left = this.labels.p_single_left + "%"), this.writeToInput(), 
+            (this.old_to !== this.result.to || this.force_redraw) && (this.$cache.to[0].style.left = this.labels.p_to_left + "%")), 
+            this.$cache.single[0].style.left = this.labels.p_single_left + "%", this.writeToInput(), 
             this.old_from === this.result.from && this.old_to === this.result.to || this.is_start || (this.$cache.input.trigger("change"), 
             this.$cache.input.trigger("input")), this.old_from = this.result.from, this.old_to = this.result.to, 
             this.is_resize || this.is_update || this.is_start || this.is_finish || this.callOnChange(), 
@@ -542,25 +537,24 @@
         drawLabels: function() {
             if (this.options) {
                 var t, i, s, o, e, h = this.options.values.length, r = this.options.p_values;
-                if (!this.options.hide_from_to) if ("single" === this.options.type) h ? (t = this.decorate(r[this.result.from]), 
-                this.$cache.single.html(t)) : (o = this._prettify(this.result.from), t = this.decorate(o, this.result.from), 
-                this.$cache.single.html(t)), this.calcLabels(), this.labels.p_single_left < this.labels.p_min + 1 ? this.$cache.min[0].style.visibility = "hidden" : this.$cache.min[0].style.visibility = "visible", 
+                if (!this.options.hide_from_to) if ("single" === this.options.type) t = h ? this.decorate(r[this.result.from]) : (o = this._prettify(this.result.from), 
+                this.decorate(o, this.result.from)), this.$cache.single.html(t), this.calcLabels(), 
+                this.labels.p_single_left < this.labels.p_min + 1 ? this.$cache.min[0].style.visibility = "hidden" : this.$cache.min[0].style.visibility = "visible", 
                 this.labels.p_single_left + this.labels.p_single_fake > 100 - this.labels.p_max - 1 ? this.$cache.max[0].style.visibility = "hidden" : this.$cache.max[0].style.visibility = "visible"; else {
-                    h ? (this.options.decorate_both ? (t = this.decorate(r[this.result.from]), t += this.options.values_separator, 
+                    s = h ? (this.options.decorate_both ? (t = this.decorate(r[this.result.from]), t += this.options.values_separator, 
                     t += this.decorate(r[this.result.to])) : t = this.decorate(r[this.result.from] + this.options.values_separator + r[this.result.to]), 
-                    i = this.decorate(r[this.result.from]), s = this.decorate(r[this.result.to]), this.$cache.single.html(t), 
-                    this.$cache.from.html(i), this.$cache.to.html(s)) : (o = this._prettify(this.result.from), 
+                    i = this.decorate(r[this.result.from]), this.decorate(r[this.result.to])) : (o = this._prettify(this.result.from), 
                     e = this._prettify(this.result.to), this.options.decorate_both ? (t = this.decorate(o, this.result.from), 
                     t += this.options.values_separator, t += this.decorate(e, this.result.to)) : t = this.decorate(o + this.options.values_separator + e, this.result.to), 
-                    i = this.decorate(o, this.result.from), s = this.decorate(e, this.result.to), this.$cache.single.html(t), 
-                    this.$cache.from.html(i), this.$cache.to.html(s)), this.calcLabels();
+                    i = this.decorate(o, this.result.from), this.decorate(e, this.result.to)), this.$cache.single.html(t), 
+                    this.$cache.from.html(i), this.$cache.to.html(s), this.calcLabels();
                     var n = Math.min(this.labels.p_single_left, this.labels.p_from_left), a = this.labels.p_single_left + this.labels.p_single_fake, c = this.labels.p_to_left + this.labels.p_to_fake, l = Math.max(a, c);
                     this.labels.p_from_left + this.labels.p_from_fake >= this.labels.p_to_left ? (this.$cache.from[0].style.visibility = "hidden", 
                     this.$cache.to[0].style.visibility = "hidden", this.$cache.single[0].style.visibility = "visible", 
-                    this.result.from === this.result.to ? ("from" === this.target ? this.$cache.from[0].style.visibility = "visible" : "to" === this.target ? this.$cache.to[0].style.visibility = "visible" : this.target || (this.$cache.from[0].style.visibility = "visible"), 
-                    this.$cache.single[0].style.visibility = "hidden", l = c) : (this.$cache.from[0].style.visibility = "hidden", 
+                    l = this.result.from === this.result.to ? ("from" === this.target ? this.$cache.from[0].style.visibility = "visible" : "to" === this.target ? this.$cache.to[0].style.visibility = "visible" : this.target || (this.$cache.from[0].style.visibility = "visible"), 
+                    this.$cache.single[0].style.visibility = "hidden", c) : (this.$cache.from[0].style.visibility = "hidden", 
                     this.$cache.to[0].style.visibility = "hidden", this.$cache.single[0].style.visibility = "visible", 
-                    l = Math.max(a, c))) : (this.$cache.from[0].style.visibility = "visible", this.$cache.to[0].style.visibility = "visible", 
+                    Math.max(a, c))) : (this.$cache.from[0].style.visibility = "visible", this.$cache.to[0].style.visibility = "visible", 
                     this.$cache.single[0].style.visibility = "hidden"), n < this.labels.p_min + 1 ? this.$cache.min[0].style.visibility = "hidden" : this.$cache.min[0].style.visibility = "visible", 
                     l > 100 - this.labels.p_max - 1 ? this.$cache.max[0].style.visibility = "hidden" : this.$cache.max[0].style.visibility = "visible";
                 }
@@ -603,24 +597,24 @@
             this.has_tab_index = !this.has_tab_index;
         },
         convertToPercent: function(t, i) {
-            var s, o, e = this.options.max - this.options.min, h = e / 100;
-            return e ? (s = i ? t : t - this.options.min, o = s / h, this.toFixed(o)) : (this.no_diapason = !0, 
+            var o, e = this.options.max - this.options.min, h = e / 100;
+            return e ? (o = (i ? t : t - this.options.min) / h, this.toFixed(o)) : (this.no_diapason = !0, 
             0);
         },
         convertToValue: function(t) {
             var i, s, o = this.options.min, e = this.options.max, h = o.toString().split(".")[1], r = e.toString().split(".")[1], n = 0, a = 0;
             if (0 === t) return this.options.min;
             if (100 === t) return this.options.max;
-            h && (n = i = h.length), r && (n = s = r.length), i && s && (n = i >= s ? i : s), 
+            h && (n = i = h.length), r && (n = s = r.length), i && s && (n = s <= i ? i : s), 
             o < 0 && (o = +(o + (a = Math.abs(o))).toFixed(n), e = +(e + a).toFixed(n));
             var c, l = (e - o) / 100 * t + o, _ = this.options.step.toString().split(".")[1];
-            return _ ? l = +l.toFixed(_.length) : (l /= this.options.step, l = +(l *= this.options.step).toFixed(0)), 
+            return l = _ ? +l.toFixed(_.length) : (l /= this.options.step, +(l *= this.options.step).toFixed(0)), 
             a && (l -= a), (c = _ ? +l.toFixed(_.length) : this.toFixed(l)) < this.options.min ? c = this.options.min : c > this.options.max && (c = this.options.max), 
             c;
         },
         calcWithStep: function(t) {
             var i = Math.round(t / this.coords.p_step) * this.coords.p_step;
-            return i > 100 && (i = 100), 100 === t && (i = 100), this.toFixed(i);
+            return 100 < i && (i = 100), 100 === t && (i = 100), this.toFixed(i);
         },
         checkMinInterval: function(t, i, s) {
             var o, e, h = this.options;
@@ -637,7 +631,7 @@
         checkDiapason: function(t, i, s) {
             var o = this.convertToValue(t), e = this.options;
             return "number" != typeof i && (i = e.min), "number" != typeof s && (s = e.max), 
-            o < i && (o = i), o > s && (o = s), this.convertToPercent(o);
+            o < i && (o = i), s < o && (o = s), this.convertToPercent(o);
         },
         toFixed: function(t) {
             return +(t = t.toFixed(20));
@@ -649,8 +643,8 @@
             return t.toString().replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + this.options.prettify_separator);
         },
         checkEdges: function(t, i) {
-            return this.options.force_edges ? (t < 0 ? t = 0 : t > 100 - i && (t = 100 - i), 
-            this.toFixed(t)) : this.toFixed(t);
+            return this.options.force_edges && (t < 0 ? t = 0 : 100 - i < t && (t = 100 - i)), 
+            this.toFixed(t);
         },
         validate: function() {
             var t, i, s = this.options, o = this.result, e = s.values, h = e.length;
@@ -661,7 +655,7 @@
             "string" == typeof s.to_max && (s.to_max = +s.to_max), "string" == typeof s.grid_num && (s.grid_num = +s.grid_num), 
             s.max < s.min && (s.max = s.min), h) for (s.p_values = [], s.min = 0, s.max = h - 1, 
             s.step = 1, s.grid_num = s.max, s.grid_snap = !0, i = 0; i < h; i++) t = +e[i], 
-            isNaN(t) ? t = e[i] : (e[i] = t, t = this._prettify(t)), s.p_values.push(t);
+            t = isNaN(t) ? e[i] : (e[i] = t, this._prettify(t)), s.p_values.push(t);
             ("number" != typeof s.from || isNaN(s.from)) && (s.from = s.min), ("number" != typeof s.to || isNaN(s.to)) && (s.to = s.max), 
             "single" === s.type ? (s.from < s.min && (s.from = s.min), s.from > s.max && (s.from = s.max)) : (s.from < s.min && (s.from = s.min), 
             s.from > s.max && (s.from = s.max), s.to < s.min && (s.to = s.min), s.to > s.max && (s.to = s.max), 
@@ -697,11 +691,11 @@
         appendGrid: function() {
             if (this.options.grid) {
                 var t, i, s, o, e, h = this.options, r = h.max - h.min, n = h.grid_num, a = 0, c = 0, l = 4, _ = "";
-                for (this.calcGridMargin(), h.grid_snap ? r > 50 ? (n = 50 / h.step, a = this.toFixed(h.step / .5)) : (n = r / h.step, 
-                a = this.toFixed(h.step / (r / 100))) : a = this.toFixed(100 / n), n > 4 && (l = 3), 
-                n > 7 && (l = 2), n > 14 && (l = 1), n > 28 && (l = 0), t = 0; t < n + 1; t++) {
-                    for (s = l, (c = this.toFixed(a * t)) > 100 && (c = 100), this.coords.big[t] = c, 
-                    o = (c - a * (t - 1)) / (s + 1), i = 1; i <= s && 0 !== c; i++) _ += '<span class="irs-grid-pol small" style="left: ' + this.toFixed(c - o * i) + '%"></span>';
+                for (this.calcGridMargin(), a = h.grid_snap ? 50 < r ? (n = 50 / h.step, this.toFixed(h.step / .5)) : (n = r / h.step, 
+                this.toFixed(h.step / (r / 100))) : this.toFixed(100 / n), 4 < n && (l = 3), 7 < n && (l = 2), 
+                14 < n && (l = 1), 28 < n && (l = 0), t = 0; t < n + 1; t++) {
+                    for (s = l, 100 < (c = this.toFixed(a * t)) && (c = 100), o = ((this.coords.big[t] = c) - a * (t - 1)) / (s + 1), 
+                    i = 1; i <= s && 0 !== c; i++) _ += '<span class="irs-grid-pol small" style="left: ' + this.toFixed(c - o * i) + '%"></span>';
                     _ += '<span class="irs-grid-pol" style="left: ' + c + '%"></span>', e = this.convertToValue(c), 
                     _ += '<span class="irs-grid-text js-grid-text-' + t + '" style="left: ' + c + '%">' + (e = h.values.length ? h.p_values[e] : this._prettify(e)) + "</span>";
                 }

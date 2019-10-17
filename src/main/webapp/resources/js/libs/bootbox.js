@@ -10,37 +10,19 @@
     function n(t, e, a) {
         t.stopPropagation(), t.preventDefault(), o.isFunction(a) && !1 === a.call(e, t) || e.modal("hide");
     }
-    function r(t) {
-        var o, e = 0;
-        for (o in t) e++;
-        return e;
-    }
     function l(t, e) {
         var a = 0;
         o.each(t, function(t, o) {
             e(t, o, a++);
         });
     }
-    function i(t) {
-        var e, a;
-        if ("object" != typeof t) throw new Error("Please supply an object of options");
-        if (!t.message) throw new Error("Please specify a message");
-        return (t = o.extend({}, f, t)).buttons || (t.buttons = {}), e = t.buttons, a = r(e), 
-        l(e, function(t, n, r) {
-            if (o.isFunction(n) && (n = e[t] = {
-                callback: n
-            }), "object" !== o.type(n)) throw new Error("button with key " + t + " must be an object");
-            n.label || (n.label = t), n.className || (n.className = a <= 2 && r === a - 1 ? "btn-primary" : "btn-default");
-        }), t;
-    }
-    function c(t, o) {
-        var e = t.length, a = {};
-        if (e < 1 || e > 2) throw new Error("Invalid argument length");
-        return 2 === e || "string" == typeof t[0] ? (a[o[0]] = t[0], a[o[1]] = t[1]) : a = t[0], 
-        a;
-    }
     function s(t, e, a) {
-        return o.extend(!0, {}, t, c(e, a));
+        return o.extend(!0, {}, t, function(t, o) {
+            var e = t.length, a = {};
+            if (e < 1 || 2 < e) throw new Error("Invalid argument length");
+            return 2 === e || "string" == typeof t[0] ? (a[o[0]] = t[0], a[o[1]] = t[1]) : a = t[0], 
+            a;
+        }(e, a));
     }
     function u(t, o, e, a) {
         return b(s({
@@ -90,100 +72,117 @@
         closeButton: !0,
         show: !0,
         container: "body"
-    }, m = {};
-    m.alert = function() {
-        var t;
-        if ((t = u("alert", [ "ok" ], [ "message", "callback" ], arguments)).callback && !o.isFunction(t.callback)) throw new Error("alert requires callback property to be a function when provided");
-        return t.buttons.ok.callback = t.onEscape = function() {
-            return !o.isFunction(t.callback) || t.callback.call(this);
-        }, m.dialog(t);
-    }, m.confirm = function() {
-        var t;
-        if (t = u("confirm", [ "cancel", "confirm" ], [ "message", "callback" ], arguments), 
-        t.buttons.cancel.callback = t.onEscape = function() {
-            return t.callback.call(this, !1);
-        }, t.buttons.confirm.callback = function() {
-            return t.callback.call(this, !0);
-        }, !o.isFunction(t.callback)) throw new Error("confirm requires a callback");
-        return m.dialog(t);
-    }, m.prompt = function() {
-        var t, a, n, r, i, c, u;
-        if (r = o(d.form), a = {
-            className: "bootbox-prompt",
-            buttons: p("cancel", "confirm"),
-            value: "",
-            inputType: "text"
-        }, t = b(s(a, arguments, [ "title", "callback" ]), [ "cancel", "confirm" ]), c = t.show === e || t.show, 
-        t.message = r, t.buttons.cancel.callback = t.onEscape = function() {
-            return t.callback.call(this, null);
-        }, t.buttons.confirm.callback = function() {
-            var e;
-            switch (t.inputType) {
+    }, m = {
+        alert: function() {
+            var t;
+            if ((t = u("alert", [ "ok" ], [ "message", "callback" ], arguments)).callback && !o.isFunction(t.callback)) throw new Error("alert requires callback property to be a function when provided");
+            return t.buttons.ok.callback = t.onEscape = function() {
+                return !o.isFunction(t.callback) || t.callback.call(this);
+            }, m.dialog(t);
+        },
+        confirm: function() {
+            var t;
+            if ((t = u("confirm", [ "cancel", "confirm" ], [ "message", "callback" ], arguments)).buttons.cancel.callback = t.onEscape = function() {
+                return t.callback.call(this, !1);
+            }, t.buttons.confirm.callback = function() {
+                return t.callback.call(this, !0);
+            }, !o.isFunction(t.callback)) throw new Error("confirm requires a callback");
+            return m.dialog(t);
+        },
+        prompt: function() {
+            var t, a, n, r, i, c, u;
+            if (r = o(d.form), a = {
+                className: "bootbox-prompt",
+                buttons: p("cancel", "confirm"),
+                value: "",
+                inputType: "text"
+            }, c = (t = b(s(a, arguments, [ "title", "callback" ]), [ "cancel", "confirm" ])).show === e || t.show, 
+            t.message = r, t.buttons.cancel.callback = t.onEscape = function() {
+                return t.callback.call(this, null);
+            }, t.buttons.confirm.callback = function() {
+                var e;
+                switch (t.inputType) {
+                  case "text":
+                  case "textarea":
+                  case "email":
+                  case "select":
+                  case "date":
+                  case "time":
+                  case "number":
+                  case "password":
+                    e = i.val();
+                    break;
+
+                  case "checkbox":
+                    var a = i.find("input:checked");
+                    e = [], l(a, function(t, a) {
+                        e.push(o(a).val());
+                    });
+                }
+                return t.callback.call(this, e);
+            }, t.show = !1, !t.title) throw new Error("prompt requires a title");
+            if (!o.isFunction(t.callback)) throw new Error("prompt requires a callback");
+            if (!d.inputs[t.inputType]) throw new Error("invalid prompt type");
+            switch (i = o(d.inputs[t.inputType]), t.inputType) {
               case "text":
               case "textarea":
               case "email":
-              case "select":
               case "date":
               case "time":
               case "number":
               case "password":
-                e = i.val();
+                i.val(t.value);
+                break;
+
+              case "select":
+                var f = {};
+                if (u = t.inputOptions || [], !o.isArray(u)) throw new Error("Please pass an array of input options");
+                if (!u.length) throw new Error("prompt with select requires options");
+                l(u, function(t, a) {
+                    var n = i;
+                    if (a.value === e || a.text === e) throw new Error("given options in wrong format");
+                    a.group && (f[a.group] || (f[a.group] = o("<optgroup/>").attr("label", a.group)), 
+                    n = f[a.group]), n.append("<option value='" + a.value + "'>" + a.text + "</option>");
+                }), l(f, function(t, o) {
+                    i.append(o);
+                }), i.val(t.value);
                 break;
 
               case "checkbox":
-                var a = i.find("input:checked");
-                e = [], l(a, function(t, a) {
-                    e.push(o(a).val());
+                var C = o.isArray(t.value) ? t.value : [ t.value ];
+                if (!(u = t.inputOptions || []).length) throw new Error("prompt with checkbox requires options");
+                if (!u[0].value || !u[0].text) throw new Error("given options in wrong format");
+                i = o("<div/>"), l(u, function(e, a) {
+                    var n = o(d.inputs[t.inputType]);
+                    n.find("input").attr("value", a.value), n.find("label").append(a.text), l(C, function(t, o) {
+                        o === a.value && n.find("input").prop("checked", !0);
+                    }), i.append(n);
                 });
             }
-            return t.callback.call(this, e);
-        }, t.show = !1, !t.title) throw new Error("prompt requires a title");
-        if (!o.isFunction(t.callback)) throw new Error("prompt requires a callback");
-        if (!d.inputs[t.inputType]) throw new Error("invalid prompt type");
-        switch (i = o(d.inputs[t.inputType]), t.inputType) {
-          case "text":
-          case "textarea":
-          case "email":
-          case "date":
-          case "time":
-          case "number":
-          case "password":
-            i.val(t.value);
-            break;
-
-          case "select":
-            var f = {};
-            if (u = t.inputOptions || [], !o.isArray(u)) throw new Error("Please pass an array of input options");
-            if (!u.length) throw new Error("prompt with select requires options");
-            l(u, function(t, a) {
-                var n = i;
-                if (a.value === e || a.text === e) throw new Error("given options in wrong format");
-                a.group && (f[a.group] || (f[a.group] = o("<optgroup/>").attr("label", a.group)), 
-                n = f[a.group]), n.append("<option value='" + a.value + "'>" + a.text + "</option>");
-            }), l(f, function(t, o) {
-                i.append(o);
-            }), i.val(t.value);
-            break;
-
-          case "checkbox":
-            var C = o.isArray(t.value) ? t.value : [ t.value ];
-            if (!(u = t.inputOptions || []).length) throw new Error("prompt with checkbox requires options");
-            if (!u[0].value || !u[0].text) throw new Error("given options in wrong format");
-            i = o("<div/>"), l(u, function(e, a) {
-                var n = o(d.inputs[t.inputType]);
-                n.find("input").attr("value", a.value), n.find("label").append(a.text), l(C, function(t, o) {
-                    o === a.value && n.find("input").prop("checked", !0);
-                }), i.append(n);
-            });
+            return t.placeholder && i.attr("placeholder", t.placeholder), t.pattern && i.attr("pattern", t.pattern), 
+            t.maxlength && i.attr("maxlength", t.maxlength), r.append(i), r.on("submit", function(t) {
+                t.preventDefault(), t.stopPropagation(), n.find(".btn-primary").click();
+            }), (n = m.dialog(t)).off("shown.bs.modal"), n.on("shown.bs.modal", function() {
+                i.focus();
+            }), !0 === c && n.modal("show"), n;
         }
-        return t.placeholder && i.attr("placeholder", t.placeholder), t.pattern && i.attr("pattern", t.pattern), 
-        t.maxlength && i.attr("maxlength", t.maxlength), r.append(i), r.on("submit", function(t) {
-            t.preventDefault(), t.stopPropagation(), n.find(".btn-primary").click();
-        }), (n = m.dialog(t)).off("shown.bs.modal"), n.on("shown.bs.modal", function() {
-            i.focus();
-        }), !0 === c && n.modal("show"), n;
-    }, m.dialog = function(t) {
-        t = i(t);
+    };
+    m.dialog = function(t) {
+        t = function(t) {
+            var e, a;
+            if ("object" != typeof t) throw new Error("Please supply an object of options");
+            if (!t.message) throw new Error("Please specify a message");
+            return (t = o.extend({}, f, t)).buttons || (t.buttons = {}), e = t.buttons, a = function(t) {
+                var o, e = 0;
+                for (o in t) e++;
+                return e;
+            }(e), l(e, function(t, n, r) {
+                if (o.isFunction(n) && (n = e[t] = {
+                    callback: n
+                }), "object" !== o.type(n)) throw new Error("button with key " + t + " must be an object");
+                n.label || (n.label = t), n.className || (n.className = a <= 2 && r === a - 1 ? "btn-primary" : "btn-default");
+            }), t;
+        }(t);
         var a = o(d.dialog), r = a.find(".modal-dialog"), c = a.find(".modal-body"), s = t.buttons, u = "", p = {
             onEscape: t.onEscape
         };

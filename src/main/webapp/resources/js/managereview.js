@@ -1,10 +1,9 @@
 function format(d) {
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' + "<tr>" + "<td>Rating</td>" + "<td>" + d.totalStars + "</td>" + "</tr>" + "<tr>" + "<td>Posted By</td>" + "<td>" + d.postedBy + "</td>" + "</tr>" + "<tr>" + "<td>Email</td>" + "<td>And any further details here (images etc)...</td>" + "</tr>" + "<tr>" + "<td></td>" + '<td><button type="button" class="btn btn-success btn-sm">Reply Review</button>' + '<button type="button" class="btn btn-success btn-sm">Send Discount</button></td>' + "</tr>" + "</table>";
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;"><tr><td>Rating</td><td>' + d.totalStars + "</td></tr><tr><td>Posted By</td><td>" + d.postedBy + '</td></tr><tr><td>Email</td><td>And any further details here (images etc)...</td></tr><tr><td></td><td><button type="button" class="btn btn-success btn-sm">Reply Review</button><button type="button" class="btn btn-success btn-sm">Send Discount</button></td></tr></table>';
 }
 
 $(document).ready(function() {
-    var ctxL = document.getElementById("lineChart").getContext("2d");
-    var myLineChart = new Chart(ctxL, {
+    var ctxL = document.getElementById("lineChart").getContext("2d"), ctxP = (new Chart(ctxL, {
         type: "line",
         data: {
             labels: [ "January", "February", "March", "April", "May", "June", "July" ],
@@ -39,11 +38,9 @@ $(document).ready(function() {
             } ]
         },
         options: {
-            responsive: true
+            responsive: !0
         }
-    });
-    var ctxP = document.getElementById("pieChart").getContext("2d");
-    var myPieChart = new Chart(ctxP, {
+    }), document.getElementById("pieChart").getContext("2d")), table = (new Chart(ctxP, {
         type: "doughnut",
         data: {
             labels: [ "Positive", "Negative", "Neutral" ],
@@ -54,19 +51,18 @@ $(document).ready(function() {
             } ]
         },
         options: {
-            responsive: true
+            responsive: !0
         }
-    });
-    var table = $("#example").DataTable({
-        processing: true,
-        serverSide: true,
+    }), $("#example").DataTable({
+        processing: !0,
+        serverSide: !0,
         ajax: {
             url: "getReviews",
             dataType: "json"
         },
         columns: [ {
             className: "details-control",
-            orderable: false,
+            orderable: !1,
             data: null,
             defaultContent: ""
         }, {
@@ -78,16 +74,10 @@ $(document).ready(function() {
             data: "totalStars"
         } ],
         order: [ [ 2, "asc" ] ]
-    });
+    }));
     $("#example tbody").on("click", "td.details-control", function() {
-        var tr = $(this).closest("tr");
-        var row = table.row(tr);
-        if (row.child.isShown()) {
-            row.child.hide();
-            tr.removeClass("shown");
-        } else {
-            row.child(format(row.data())).show();
-            tr.addClass("shown");
-        }
+        var tr = $(this).closest("tr"), row = table.row(tr);
+        row.child.isShown() ? (row.child.hide(), tr.removeClass("shown")) : (row.child(format(row.data())).show(), 
+        tr.addClass("shown"));
     });
 });

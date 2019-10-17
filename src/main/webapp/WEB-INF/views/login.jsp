@@ -51,24 +51,24 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   <!-- General scripts -->
-  <script src="landing/js/angular.js?v=20190719"></script>
-  <script src="landing/js/bootstrap.js?v=20190719"></script>
-  <script src="landing/js/ui-bootstrap.js?v=20190719"></script>
-  <script src="landing/js/pixeladmin/util.js?v=20190719"></script>
-  <script src="landing/js/pixeladmin/pixeladmin.js?v=20190719"></script>
+  <script src="landing/js/angular.js?v=20190814"></script>
+  <script src="landing/js/bootstrap.js?v=20190814"></script>
+  <script src="landing/js/ui-bootstrap.js?v=20190814"></script>
+  <script src="landing/js/pixeladmin/util.js?v=20190814"></script>
+  <script src="landing/js/pixeladmin/pixeladmin.js?v=20190814"></script>
 
   <!-- Perfect scrollbar -->
-  <script src="landing/js/libs/perfect-scrollbar.jquery.js?v=20190719"></script>
-  <script src="landing/js/pixeladmin/extensions/perfect-scrollbar.jquery.js?v=20190719"></script>
-  <script src="landing/js/libs/angular-perfect-scrollbar.js?v=20190719"></script>
+  <script src="landing/js/libs/perfect-scrollbar.jquery.js?v=20190814"></script>
+  <script src="landing/js/pixeladmin/extensions/perfect-scrollbar.jquery.js?v=20190814"></script>
+  <script src="landing/js/libs/angular-perfect-scrollbar.js?v=20190814"></script>
 
   <!-- PxNavbar, PxNav and PxFooter -->
-  <script src="landing/js/pixeladmin/plugins/px-navbar.js?v=20190719"></script>
-  <script src="landing/js/pixeladmin/directives/angular-px-navbar.js?v=20190719"></script>
-  <script src="landing/js/pixeladmin/plugins/px-nav.js?v=20190719"></script>
-  <script src="landing/js/pixeladmin/directives/angular-px-nav.js?v=20190719"></script>
-  <script src="landing/js/pixeladmin/plugins/px-footer.js?v=20190719"></script>
-  <script src="landing/js/pixeladmin/directives/angular-px-footer.js?v=20190719"></script>
+  <script src="landing/js/pixeladmin/plugins/px-navbar.js?v=20190814"></script>
+  <script src="landing/js/pixeladmin/directives/angular-px-navbar.js?v=20190814"></script>
+  <script src="landing/js/pixeladmin/plugins/px-nav.js?v=20190814"></script>
+  <script src="landing/js/pixeladmin/directives/angular-px-nav.js?v=20190814"></script>
+  <script src="landing/js/pixeladmin/plugins/px-footer.js?v=20190814"></script>
+  <script src="landing/js/pixeladmin/directives/angular-px-footer.js?v=20190814"></script>
   
 <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js'></script>
 <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js'></script>
@@ -78,10 +78,10 @@
   <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
   <!-- Application -->
-  <script src="landing/public/js/app.js?v=20190719"></script>
-  <script src="landing/public/js/config.js?v=20190719"></script>
-  <script src="landing/public/js/directives.js?v=20190719"></script>
-  <script src="landing/public/js/controllers/main.js?v=20190719"></script>
+  <script src="landing/public/js/app.js?v=20190814"></script>
+  <script src="landing/public/js/config.js?v=20190814"></script>
+  <script src="landing/public/js/directives.js?v=20190814"></script>
+  <script src="landing/public/js/controllers/main.js?v=20190814"></script>
 
 </body>
 </html>

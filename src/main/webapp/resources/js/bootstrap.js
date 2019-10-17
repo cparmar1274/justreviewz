@@ -1,27 +1,25 @@
-+function(t) {
+!function(t) {
     "use strict";
-    function e() {
-        var t = document.createElement("bootstrap"), e = {
-            WebkitTransition: "webkitTransitionEnd",
-            MozTransition: "transitionend",
-            OTransition: "oTransitionEnd otransitionend",
-            transition: "transitionend"
-        };
-        for (var i in e) if (void 0 !== t.style[i]) return {
-            end: e[i]
-        };
-        return !1;
-    }
     t.fn.emulateTransitionEnd = function(e) {
         var i = !1, o = this;
-        t(this).one("bsTransitionEnd", function() {
+        return t(this).one("bsTransitionEnd", function() {
             i = !0;
-        });
-        return setTimeout(function() {
+        }), setTimeout(function() {
             i || t(o).trigger(t.support.transition.end);
         }, e), this;
     }, t(function() {
-        t.support.transition = e(), t.support.transition && (t.event.special.bsTransitionEnd = {
+        t.support.transition = function() {
+            var t = document.createElement("bootstrap"), e = {
+                WebkitTransition: "webkitTransitionEnd",
+                MozTransition: "transitionend",
+                OTransition: "oTransitionEnd otransitionend",
+                transition: "transitionend"
+            };
+            for (var i in e) if (void 0 !== t.style[i]) return {
+                end: e[i]
+            };
+            return !1;
+        }(), t.support.transition && (t.event.special.bsTransitionEnd = {
             bindType: t.support.transition.end,
             delegateType: t.support.transition.end,
             handle: function(e) {
@@ -78,7 +76,7 @@
         return o && o.length ? o : e.parent();
     }
     function i(i) {
-        i && 3 === i.which || (t(o).remove(), t(n).each(function() {
+        i && 3 === i.which || (t(".dropdown-backdrop").remove(), t(n).each(function() {
             var o = t(this), n = e(o), s = {
                 relatedTarget: this
             };
@@ -86,7 +84,7 @@
             i.isDefaultPrevented() || (o.attr("aria-expanded", "false"), n.removeClass("open").trigger(t.Event("hidden.bs.dropdown", s)))));
         }));
     }
-    var o = ".dropdown-backdrop", n = '[data-toggle="dropdown"]', s = function(e) {
+    var n = '[data-toggle="dropdown"]', s = function(e) {
         t(e).on("click.bs.dropdown", this.toggle);
     };
     s.VERSION = "3.3.7", s.prototype.toggle = function(o) {
@@ -113,7 +111,7 @@
                 var r = s.find(".dropdown-menu li:not(.disabled):visible a");
                 if (r.length) {
                     var l = r.index(i.target);
-                    38 == i.which && l > 0 && l--, 40 == i.which && l < r.length - 1 && l++, ~l || (l = 0), 
+                    38 == i.which && 0 < l && l--, 40 == i.which && l < r.length - 1 && l++, ~l || (l = 0), 
                     r.eq(l).trigger("focus");
                 }
             }
@@ -595,9 +593,7 @@
         var t = this.$element, e = this.options;
         return t.attr("data-original-title") || ("function" == typeof e.title ? e.title.call(t[0]) : e.title);
     }, e.prototype.getUID = function(t) {
-        do {
-            t += ~~(1e6 * Math.random());
-        } while (document.getElementById(t));
+        for (;t += ~~(1e6 * Math.random()), document.getElementById(t); ) ;
         return t;
     }, e.prototype.tip = function() {
         if (!this.$tip && (this.$tip = t(this.options.template), 1 != this.$tip.length)) throw new Error(this.type + " `template` option must consist of exactly 1 top-level element!");
@@ -643,8 +639,7 @@
         trigger: "click",
         content: "",
         template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-    }), e.prototype = t.extend({}, t.fn.tooltip.Constructor.prototype), e.prototype.constructor = e, 
-    e.prototype.getDefaults = function() {
+    }), ((e.prototype = t.extend({}, t.fn.tooltip.Constructor.prototype)).constructor = e).prototype.getDefaults = function() {
         return e.DEFAULTS;
     }, e.prototype.setContent = function() {
         var t = this.tip(), e = this.getTitle(), i = this.getContent();
@@ -717,7 +712,7 @@
         var e = this, i = this.getItemIndex(this.$active = this.$element.find(".item.active"));
         if (!(t > this.$items.length - 1 || t < 0)) return this.sliding ? this.$element.one("slid.bs.carousel", function() {
             e.to(t);
-        }) : i == t ? this.pause().cycle() : this.slide(t > i ? "next" : "prev", this.$items.eq(t));
+        }) : i == t ? this.pause().cycle() : this.slide(i < t ? "next" : "prev", this.$items.eq(t));
     }, i.prototype.pause = function(e) {
         return e || (this.paused = !0), this.$element.find(".next, .prev").length && t.support.transition && (this.$element.trigger(t.support.transition.end), 
         this.cycle(!0)), this.interval = clearInterval(this.interval), this;
@@ -790,8 +785,8 @@
         var n = this.$target.scrollTop(), s = this.$element.offset(), a = this.$target.height();
         if (null != i && "top" == this.affixed) return n < i && "top";
         if ("bottom" == this.affixed) return null != i ? !(n + this.unpin <= s.top) && "bottom" : !(n + a <= t - o) && "bottom";
-        var r = null == this.affixed, l = r ? n : s.top, h = r ? a : e;
-        return null != i && n <= i ? "top" : null != o && l + h >= t - o && "bottom";
+        var r = null == this.affixed, l = r ? n : s.top;
+        return null != i && n <= i ? "top" : null != o && t - o <= l + (r ? a : e) && "bottom";
     }, i.prototype.getPinnedOffset = function() {
         if (this.pinnedOffset) return this.pinnedOffset;
         this.$element.removeClass(i.RESET).addClass("affix");
@@ -859,7 +854,7 @@
         });
     }, e.prototype.process = function() {
         var t, e = this.$scrollElement.scrollTop() + this.options.offset, i = this.getScrollHeight(), o = this.options.offset + i - this.$scrollElement.height(), n = this.offsets, s = this.targets, a = this.activeTarget;
-        if (this.scrollHeight != i && this.refresh(), e >= o) return a != (t = s[s.length - 1]) && this.activate(t);
+        if (this.scrollHeight != i && this.refresh(), o <= e) return a != (t = s[s.length - 1]) && this.activate(t);
         if (a && e < n[0]) return this.activeTarget = null, this.clear();
         for (t = n.length; t--; ) a != s[t] && e >= n[t] && (void 0 === n[t + 1] || e < n[t + 1]) && this.activate(s[t]);
     }, e.prototype.activate = function(e) {

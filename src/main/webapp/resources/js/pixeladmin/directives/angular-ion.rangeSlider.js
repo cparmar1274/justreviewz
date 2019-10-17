@@ -1,10 +1,5 @@
 function ionRangeSliderDirective(n, e) {
     "use strict";
-    function t(n) {
-        return "irsType" === n ? "type" : n.replace(/[A-Z]/g, function(n) {
-            return "_" + n.toLowerCase();
-        });
-    }
     var o = [ "min", "max", "from", "to", "disable" ], r = [ "irsType", "step", "minInterval", "maxInterval", "dragInterval", "values", "fromFixed", "fromMin", "fromMax", "fromShadow", "toFixed", "toMin", "toMax", "toShadow", "prettifyEnabled", "prettifySeparator", "prettify", "forceEdges", "keyboard", "keyboardStep", "grid", "gridMargin", "gridNum", "gridSnap", "hideMinMax", "hideFromTo", "prefix", "postfix", "maxPostfix", "decorateBoth", "valuesSeparator", "inputValuesSeparator" ], i = [ "onStart", "onChange", "onFinish", "onUpdate" ];
     return {
         restrict: "E",
@@ -22,7 +17,11 @@ function ionRangeSliderDirective(n, e) {
             o.forEach(function(n) {
                 void 0 !== a[n] && (c[n] = a[n]);
             }), r.forEach(function(n) {
-                void 0 !== f[n] && (c[t(n)] = e(f[n])(a.$parent));
+                void 0 !== f[n] && (c[function(n) {
+                    return "irsType" === n ? "type" : n.replace(/[A-Z]/g, function(n) {
+                        return "_" + n.toLowerCase();
+                    });
+                }(n)] = e(f[n])(a.$parent));
             }), i.forEach(function(n) {
                 void 0 !== f[n] && (c[n] = e(f[n])(a.$parent));
             });

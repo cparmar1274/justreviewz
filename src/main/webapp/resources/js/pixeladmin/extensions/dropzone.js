@@ -17,7 +17,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             a;
         }
     }), e.fn.dropzone = function(s) {
-        for (var o = arguments.length, a = Array(o > 1 ? o - 1 : 0), n = 1; n < o; n++) a[n - 1] = arguments[n];
+        for (var o = arguments.length, a = Array(1 < o ? o - 1 : 0), n = 1; n < o; n++) a[n - 1] = arguments[n];
         var i = void 0, d = this.each(function() {
             var o = e(this).data("dropzone"), n = "object" === (void 0 === s ? "undefined" : _typeof(s)) ? s : null;
             if (o || (o = new r(this, n), e(this).data("dropzone", o)), "string" == typeof s) {

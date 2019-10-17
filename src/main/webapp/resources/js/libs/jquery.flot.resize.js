@@ -1,8 +1,7 @@
 !function(e, t, i) {
-    "$:nomunge";
     function n(i) {
         !0 === s && (s = i || 1);
-        for (var u = r.length - 1; u >= 0; u--) {
+        for (var u = r.length - 1; 0 <= u; u--) {
             var c = e(r[u]);
             if (c[0] == t || c.is(":visible")) {
                 var d = c.width(), f = c.height(), g = c.data(m);
@@ -24,7 +23,7 @@
         },
         teardown: function() {
             if (!o[d] && this[u]) return !1;
-            for (var t = e(this), i = r.length - 1; i >= 0; i--) if (r[i] == this) {
+            for (var t = e(this), i = r.length - 1; 0 <= i; i--) if (r[i] == this) {
                 r.splice(i, 1);
                 break;
             }
@@ -35,31 +34,27 @@
                 var o = e(this), s = o.data(m) || {};
                 s.w = n !== i ? n : o.width(), s.h = r !== i ? r : o.height(), a.apply(this, arguments);
             }
-            if (!o[d] && this[u]) return !1;
+            return !(!o[d] && this[u]) && (e.isFunction(t) ? (a = t, n) : (a = t.handler, void (t.handler = n)));
             var a;
-            if (e.isFunction(t)) return a = t, n;
-            a = t.handler, t.handler = n;
         }
     }, t.requestAnimationFrame || (t.requestAnimationFrame = t.webkitRequestAnimationFrame || t.mozRequestAnimationFrame || t.oRequestAnimationFrame || t.msRequestAnimationFrame || function(e, i) {
         return t.setTimeout(function() {
             e(new Date().getTime());
         }, o[c]);
     }), t.cancelAnimationFrame || (t.cancelAnimationFrame = t.webkitCancelRequestAnimationFrame || t.mozCancelRequestAnimationFrame || t.oCancelRequestAnimationFrame || t.msCancelRequestAnimationFrame || clearTimeout);
-}(jQuery, this), function(e) {
-    jQuery.plot.plugins.push({
-        init: function(e) {
-            function t() {
-                var t = e.getPlaceholder();
-                0 != t.width() && 0 != t.height() && (e.resize(), e.setupGrid(), e.draw());
-            }
-            e.hooks.bindEvents.push(function(e, i) {
-                e.getPlaceholder().resize(t);
-            }), e.hooks.shutdown.push(function(e, i) {
-                e.getPlaceholder().unbind("resize", t);
-            });
-        },
-        options: {},
-        name: "resize",
-        version: "1.0"
-    });
-}();
+}(jQuery, this), jQuery.plot.plugins.push({
+    init: function(e) {
+        function t() {
+            var t = e.getPlaceholder();
+            0 != t.width() && 0 != t.height() && (e.resize(), e.setupGrid(), e.draw());
+        }
+        e.hooks.bindEvents.push(function(e, i) {
+            e.getPlaceholder().resize(t);
+        }), e.hooks.shutdown.push(function(e, i) {
+            e.getPlaceholder().unbind("resize", t);
+        });
+    },
+    options: {},
+    name: "resize",
+    version: "1.0"
+});

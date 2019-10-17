@@ -15,11 +15,7 @@ var _createClass = function() {
     };
 }(), PxFooter = function(t) {
     "use strict";
-    var e = "pxFooter", n = t.fn[e], i = {
-        CONTENT: "px-content",
-        BOTTOM: "px-footer-bottom",
-        FIXED: "px-footer-fixed"
-    }, o = {
+    var e = "pxFooter", n = t.fn[e], i_CONTENT = "px-content", i_BOTTOM = "px-footer-bottom", i_FIXED = "px-footer-fixed", o = {
         RESIZE: "resize.px.footer",
         SCROLL: "scroll.px.footer",
         NAV_EXPANDED: "expanded.px.nav",
@@ -36,14 +32,14 @@ var _createClass = function() {
             value: function() {
                 this.parent === document.body && (this._curScreenSize = window.PixelAdmin.getScreenSize(), 
                 this._updateBodyMinHeight());
-                var e = t(this.element.parentNode).find("> ." + i.CONTENT)[0];
-                pxUtil.hasClass(this.element, i.BOTTOM) || pxUtil.hasClass(this.element, i.FIXED) ? e.style.paddingBottom = t(this.element).outerHeight() + 20 + "px" : e.style.paddingBottom = e.setAttribute("style", (e.getAttribute("style") || "").replace(/\s*padding-bottom:\s*\d+px\s*;?/i));
+                var e = t(this.element.parentNode).find("> ." + i_CONTENT)[0];
+                pxUtil.hasClass(this.element, i_BOTTOM) || pxUtil.hasClass(this.element, i_FIXED) ? e.style.paddingBottom = t(this.element).outerHeight() + 20 + "px" : e.style.paddingBottom = e.setAttribute("style", (e.getAttribute("style") || "").replace(/\s*padding-bottom:\s*\d+px\s*;?/i));
             }
         }, {
             key: "destroy",
             value: function() {
                 this._unsetListeners(), t(this.element).removeData("px.footer"), t(document.body).css("min-height", "");
-                var e = t(this.element.parentNode).find("> ." + i.CONTENT)[0];
+                var e = t(this.element.parentNode).find("> ." + i_CONTENT)[0];
                 e.style.paddingBottom = e.setAttribute("style", (e.getAttribute("style") || "").replace(/\s*padding-bottom:\s*\d+px\s*;?/i));
             }
         }, {
@@ -55,7 +51,7 @@ var _createClass = function() {
         }, {
             key: "_updateBodyMinHeight",
             value: function() {
-                document.body.style.minHeight && (document.body.style.minHeight = null), "lg" !== this._curScreenSize && "xl" !== this._curScreenSize || !pxUtil.hasClass(this.element, i.BOTTOM) || t(document.body).height() >= document.body.scrollHeight || (document.body.style.minHeight = document.body.scrollHeight + "px");
+                document.body.style.minHeight && (document.body.style.minHeight = null), "lg" !== this._curScreenSize && "xl" !== this._curScreenSize || !pxUtil.hasClass(this.element, i_BOTTOM) || t(document.body).height() >= document.body.scrollHeight || (document.body.style.minHeight = document.body.scrollHeight + "px");
             }
         }, {
             key: "_setListeners",

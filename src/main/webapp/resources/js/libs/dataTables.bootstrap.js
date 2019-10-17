@@ -20,17 +20,17 @@
         var c, u, p, f = new s.Api(a), b = a.oClasses, m = a.oLanguage.oPaginate, g = a.oLanguage.oAria.paginate || {}, x = 0, w = function(t, n) {
             var s, i, o, p;
             for (s = 0, i = n.length; s < i; s++) if (p = n[s], e.isArray(p)) w(t, p); else {
-                switch (c = "", u = "", p) {
+                switch (u = c = "", p) {
                   case "ellipsis":
                     c = "&#x2026;", u = "disabled";
                     break;
 
                   case "first":
-                    c = m.sFirst, u = p + (d > 0 ? "" : " disabled");
+                    c = m.sFirst, u = p + (0 < d ? "" : " disabled");
                     break;
 
                   case "previous":
-                    c = m.sPrevious, u = p + (d > 0 ? "" : " disabled");
+                    c = m.sPrevious, u = p + (0 < d ? "" : " disabled");
                     break;
 
                   case "next":

@@ -40,27 +40,6 @@
         function s(o, e, s) {
             var n = function(t, i, o, e) {
                 return Math.sqrt((o - t) * (o - t) + (e - i) * (e - i));
-            }, p = function(t, i, o, e, s, a, p) {
-                if (!p || (p = function(t, i, o, e, s, a) {
-                    if (void 0 !== o) return {
-                        x: o,
-                        y: i
-                    };
-                    if (void 0 !== e) return {
-                        x: t,
-                        y: e
-                    };
-                    var n, p = -1 / ((a - e) / (s - o));
-                    return {
-                        x: n = (s * (t * p - i + e) + o * (t * -p + i - a)) / (p * (s - o) + e - a),
-                        y: p * n - p * t + i
-                    };
-                }(t, i, o, e, s, a)).x >= Math.min(o, s) && p.x <= Math.max(o, s) && p.y >= Math.min(e, a) && p.y <= Math.max(e, a)) {
-                    var r = e - a, l = s - o, d = o * a - e * s;
-                    return Math.abs(r * t + l * i + d) / Math.sqrt(r * r + l * l);
-                }
-                var c = n(t, i, o, e), x = n(t, i, s, a);
-                return c > x ? x : c;
             };
             if (s) i.showTooltip(s, a.tooltipOptions.snap ? s : e); else if (a.plotOptions.series.lines.show && !0 === a.tooltipOptions.lines) {
                 var r = a.plotOptions.grid.mouseActiveRadius, l = {
@@ -76,7 +55,28 @@
                         }, h = {
                             x: o.data[r][0],
                             y: o.data[r][1]
-                        }, u = p(o.xaxis.p2c(e.x), o.yaxis.p2c(e.y), o.xaxis.p2c(x.x), o.yaxis.p2c(x.y), o.xaxis.p2c(h.x), o.yaxis.p2c(h.y), !1);
+                        }, u = function(t, i, o, e, s, a, p) {
+                            if (!p || (p = function(t, i, o, e, s, a) {
+                                if (void 0 !== o) return {
+                                    x: o,
+                                    y: i
+                                };
+                                if (void 0 !== e) return {
+                                    x: t,
+                                    y: e
+                                };
+                                var n, p = -1 / ((a - e) / (s - o));
+                                return {
+                                    x: n = (s * (t * p - i + e) + o * (t * -p + i - a)) / (p * (s - o) + e - a),
+                                    y: p * n - p * t + i
+                                };
+                            }(t, i, o, e, s, a)).x >= Math.min(o, s) && p.x <= Math.max(o, s) && p.y >= Math.min(e, a) && p.y <= Math.max(e, a)) {
+                                var r = e - a, l = s - o, d = o * a - e * s;
+                                return Math.abs(r * t + l * i + d) / Math.sqrt(r * r + l * l);
+                            }
+                            var c = n(t, i, o, e), x = n(t, i, s, a);
+                            return x < c ? x : c;
+                        }(o.xaxis.p2c(e.x), o.yaxis.p2c(e.y), o.xaxis.p2c(x.x), o.yaxis.p2c(x.y), o.xaxis.p2c(h.x), o.yaxis.p2c(h.y), !1);
                         if (u < l.distance) {
                             var m = n(x.x, x.y, e.x, e.y) < n(e.x, e.y, h.x, h.y) ? s : r, y = (o.datapoints.pointsize, 
                             [ e.x, x.y + (h.y - x.y) * ((e.x - x.x) / (h.x - x.x)) ]);
@@ -100,15 +100,13 @@
         var a = this, n = t.plot.plugins.length;
         if (this.plotPlugins = [], n) for (var p = 0; p < n; p++) this.plotPlugins.push(t.plot.plugins[p].name);
         i.hooks.bindEvents.push(function(i, n) {
-            if (a.plotOptions = i.getOptions(), "boolean" == typeof a.plotOptions.tooltip && (a.plotOptions.tooltipOpts.show = a.plotOptions.tooltip, 
+            a.plotOptions = i.getOptions(), "boolean" == typeof a.plotOptions.tooltip && (a.plotOptions.tooltipOpts.show = a.plotOptions.tooltip, 
             a.plotOptions.tooltip = a.plotOptions.tooltipOpts, delete a.plotOptions.tooltipOpts), 
-            !1 !== a.plotOptions.tooltip.show && void 0 !== a.plotOptions.tooltip.show) {
-                a.tooltipOptions = a.plotOptions.tooltip, a.tooltipOptions.$compat ? (a.wfunc = "width", 
-                a.hfunc = "height") : (a.wfunc = "innerWidth", a.hfunc = "innerHeight");
-                a.getDomElement();
-                t(i.getPlaceholder()).bind("plothover", s), a.tooltipOptions.clickTips && t(i.getPlaceholder()).bind("plotclick", e), 
-                a.clickmode = !1, t(n).bind("mousemove", o);
-            }
+            !1 !== a.plotOptions.tooltip.show && void 0 !== a.plotOptions.tooltip.show && (a.tooltipOptions = a.plotOptions.tooltip, 
+            a.tooltipOptions.$compat ? (a.wfunc = "width", a.hfunc = "height") : (a.wfunc = "innerWidth", 
+            a.hfunc = "innerHeight"), a.getDomElement(), t(i.getPlaceholder()).bind("plothover", s), 
+            a.tooltipOptions.clickTips && t(i.getPlaceholder()).bind("plotclick", e), a.clickmode = !1, 
+            t(n).bind("mousemove", o));
         }), i.hooks.shutdown.push(function(i, a) {
             t(i.getPlaceholder()).unbind("plothover", s), t(i.getPlaceholder()).unbind("plotclick", e), 
             i.removeTooltip(), t(a).unbind("mousemove", o);
@@ -149,9 +147,9 @@
     }, o.prototype.stringFormat = function(t, i) {
         var o, e, s, a, n, p = /%s/, r = /%c/, l = /%lx/, d = /%ly/, c = /%x\.{0,1}(\d{0,})/, x = /%y\.{0,1}(\d{0,})/;
         if (void 0 !== i.series.threshold ? (o = i.datapoint[0], e = i.datapoint[1], s = i.datapoint[2]) : void 0 !== i.series.curvedLines ? (o = i.datapoint[0], 
-        e = i.datapoint[1]) : void 0 !== i.series.lines && i.series.lines.steps ? (o = i.series.datapoints.points[2 * i.dataIndex], 
-        e = i.series.datapoints.points[2 * i.dataIndex + 1], s = "") : (o = i.series.data[i.dataIndex][0], 
-        e = i.series.data[i.dataIndex][1], s = i.series.data[i.dataIndex][2]), null === i.series.label && i.series.originSeries && (i.series.label = i.series.originSeries.label), 
+        e = i.datapoint[1]) : s = void 0 !== i.series.lines && i.series.lines.steps ? (o = i.series.datapoints.points[2 * i.dataIndex], 
+        e = i.series.datapoints.points[2 * i.dataIndex + 1], "") : (o = i.series.data[i.dataIndex][0], 
+        e = i.series.data[i.dataIndex][1], i.series.data[i.dataIndex][2]), null === i.series.label && i.series.originSeries && (i.series.label = i.series.originSeries.label), 
         "function" == typeof t && (t = t(i.series.label, o, e, i)), "boolean" == typeof t && !t) return "";
         if (s && (t = t.replace("%ct", s)), void 0 !== i.series.percent ? a = i.series.percent : void 0 !== i.series.percents && (a = i.series.percents[i.dataIndex]), 
         "number" == typeof a && (t = this.adjustValPrecision(/%p\.{0,1}(\d{0,})/, t, a)), 
@@ -189,11 +187,10 @@
         return null !== i.match(t) && "" !== RegExp.$1 && (e = RegExp.$1, o = o.toFixed(e), 
         i = i.replace(t, o)), i;
     }, o.prototype.hasAxisLabel = function(i, o) {
-        return -1 !== t.inArray("axisLabels", this.plotPlugins) && void 0 !== o.series[i].options.axisLabel && o.series[i].options.axisLabel.length > 0;
+        return -1 !== t.inArray("axisLabels", this.plotPlugins) && void 0 !== o.series[i].options.axisLabel && 0 < o.series[i].options.axisLabel.length;
     }, o.prototype.hasRotatedXAxisTicks = function(i) {
         return -1 !== t.inArray("tickRotor", this.plotPlugins) && void 0 !== i.series.xaxis.rotatedTicks;
-    };
-    t.plot.plugins.push({
+    }, t.plot.plugins.push({
         init: function(t) {
             new o(t);
         },

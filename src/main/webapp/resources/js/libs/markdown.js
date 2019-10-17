@@ -20,35 +20,12 @@
             var a = this[i].slice(), c = this[n].slice();
             this[n].unshift(t);
             var o = this.processInline(l.substr(t.length)), h = o[o.length - 1];
-            this[n].shift();
-            return h instanceof r ? (o.pop(), [ l.length - h.len_after, [ e ].concat(o) ]) : (this[i] = a, 
+            return this[n].shift(), h instanceof r ? (o.pop(), [ l.length - h.len_after, [ e ].concat(o) ]) : (this[i] = a, 
             this[n] = c, [ t.length, t ]);
         };
     }
-    function l(e) {
-        for (var t = e.split(""), r = [ "" ], n = !1; t.length; ) {
-            var i = t.shift();
-            switch (i) {
-              case " ":
-                n ? r[r.length - 1] += i : r.push("");
-                break;
-
-              case "'":
-              case '"':
-                n = !n;
-                break;
-
-              case "\\":
-                i = t.shift();
-
-              default:
-                r[r.length - 1] += i;
-            }
-        }
-        return r;
-    }
     function s(e) {
-        return d(e) && e.length > 1 && "object" == typeof e[1] && !d(e[1]) ? e[1] : void 0;
+        return d(e) && 1 < e.length && "object" == typeof e[1] && !d(e[1]) ? e[1] : void 0;
     }
     function c(e) {
         return e.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -60,90 +37,6 @@
         var i = "";
         for (var l in r) i += " " + l + '="' + c(r[l]) + '"';
         return "img" == t || "br" == t || "hr" == t ? "<" + t + i + "/>" : "<" + t + i + ">" + n.join("") + "</" + t + ">";
-    }
-    function h(e, t, r) {
-        var n;
-        r = r || {};
-        var i = e.slice(0);
-        "function" == typeof r.preprocessTreeNode && (i = r.preprocessTreeNode(i, t));
-        var l = s(i);
-        if (l) {
-            i[1] = {};
-            for (n in l) i[1][n] = l[n];
-            l = i[1];
-        }
-        if ("string" == typeof i) return i;
-        switch (i[0]) {
-          case "header":
-            i[0] = "h" + i[1].level, delete i[1].level;
-            break;
-
-          case "bulletlist":
-            i[0] = "ul";
-            break;
-
-          case "numberlist":
-            i[0] = "ol";
-            break;
-
-          case "listitem":
-            i[0] = "li";
-            break;
-
-          case "para":
-            i[0] = "p";
-            break;
-
-          case "markdown":
-            i[0] = "html", l && delete l.references;
-            break;
-
-          case "code_block":
-            i[0] = "pre", n = l ? 2 : 1;
-            var a = [ "code" ];
-            a.push.apply(a, i.splice(n, i.length - n)), i[n] = a;
-            break;
-
-          case "inlinecode":
-            i[0] = "code";
-            break;
-
-          case "img":
-            i[1].src = i[1].href, delete i[1].href;
-            break;
-
-          case "linebreak":
-            i[0] = "br";
-            break;
-
-          case "link":
-            i[0] = "a";
-            break;
-
-          case "link_ref":
-            if (i[0] = "a", !(c = t[l.ref])) return l.original;
-            delete l.ref, l.href = c.href, c.title && (l.title = c.title), delete l.original;
-            break;
-
-          case "img_ref":
-            i[0] = "img";
-            var c = t[l.ref];
-            if (!c) return l.original;
-            delete l.ref, l.src = c.href, c.title && (l.title = c.title), delete l.original;
-        }
-        if (n = 1, l) {
-            for (var o in i[1]) {
-                n = 2;
-                break;
-            }
-            1 === n && i.splice(n, 1);
-        }
-        for (;n < i.length; ++n) i[n] = h(i[n], t, r);
-        return i;
-    }
-    function u(e) {
-        for (var t = s(e) ? 2 : 1; t < e.length; ) "string" == typeof e[t] ? t + 1 < e.length && "string" == typeof e[t + 1] ? e[t] += e.splice(t + 1, 1)[0] : ++t : (u(e[t]), 
-        ++t);
     }
     var f = e.Markdown = function(e) {
         switch (typeof e) {
@@ -170,13 +63,94 @@
         "string" == typeof e && (e = this.parse(e, t));
         var n = s(e), i = {};
         n && n.references && (i = n.references);
-        var l = h(e, i, r);
-        return u(l), l;
+        var l = function h(e, t, r) {
+            var n;
+            r = r || {};
+            var i = e.slice(0);
+            "function" == typeof r.preprocessTreeNode && (i = r.preprocessTreeNode(i, t));
+            var l = s(i);
+            if (l) {
+                for (n in i[1] = {}, l) i[1][n] = l[n];
+                l = i[1];
+            }
+            if ("string" == typeof i) return i;
+            switch (i[0]) {
+              case "header":
+                i[0] = "h" + i[1].level, delete i[1].level;
+                break;
+
+              case "bulletlist":
+                i[0] = "ul";
+                break;
+
+              case "numberlist":
+                i[0] = "ol";
+                break;
+
+              case "listitem":
+                i[0] = "li";
+                break;
+
+              case "para":
+                i[0] = "p";
+                break;
+
+              case "markdown":
+                i[0] = "html", l && delete l.references;
+                break;
+
+              case "code_block":
+                i[0] = "pre", n = l ? 2 : 1;
+                var a = [ "code" ];
+                a.push.apply(a, i.splice(n, i.length - n)), i[n] = a;
+                break;
+
+              case "inlinecode":
+                i[0] = "code";
+                break;
+
+              case "img":
+                i[1].src = i[1].href, delete i[1].href;
+                break;
+
+              case "linebreak":
+                i[0] = "br";
+                break;
+
+              case "link":
+                i[0] = "a";
+                break;
+
+              case "link_ref":
+                if (i[0] = "a", !(c = t[l.ref])) return l.original;
+                delete l.ref, l.href = c.href, c.title && (l.title = c.title), delete l.original;
+                break;
+
+              case "img_ref":
+                i[0] = "img";
+                var c = t[l.ref];
+                if (!c) return l.original;
+                delete l.ref, l.src = c.href, c.title && (l.title = c.title), delete l.original;
+            }
+            if (n = 1, l) {
+                for (var o in i[1]) {
+                    n = 2;
+                    break;
+                }
+                1 === n && i.splice(n, 1);
+            }
+            for (;n < i.length; ++n) i[n] = h(i[n], t, r);
+            return i;
+        }(e, i, r);
+        return function u(e) {
+            for (var t = s(e) ? 2 : 1; t < e.length; ) "string" == typeof e[t] ? t + 1 < e.length && "string" == typeof e[t + 1] ? e[t] += e.splice(t + 1, 1)[0] : ++t : (u(e[t]), 
+            ++t);
+        }(l), l;
     };
     var g = f.mk_block = function(e, n, i) {
         1 == arguments.length && (n = "\n\n");
         var l = new String(e);
-        return l.trailing = n, l.inspect = r, l.toSource = t, void 0 != i && (l.lineNumber = i), 
+        return l.trailing = n, l.inspect = r, l.toSource = t, null != i && (l.lineNumber = i), 
         l;
     };
     f.prototype.split_blocks = function(e, t) {
@@ -190,7 +164,7 @@
         if ("__call__" in r) return r.__call__.call(this, e, t);
         for (var i = 0; i < n.length; i++) {
             var l = r[n[i]].call(this, e, t);
-            if (l) return (!d(l) || l.length > 0 && !d(l[0])) && this.debug(n[i], "didn't return a proper array"), 
+            if (l) return (!d(l) || 0 < l.length && !d(l[0])) && this.debug(n[i], "didn't return a proper array"), 
             l;
         }
         return [];
@@ -273,15 +247,15 @@
                 function r(e, t, r, n) {
                     if (t) e.push([ "para" ].concat(r)); else {
                         var i = e[e.length - 1] instanceof Array && "para" == e[e.length - 1][0] ? e[e.length - 1] : e;
-                        n && e.length > 1 && r.unshift(n);
+                        n && 1 < e.length && r.unshift(n);
                         for (var l = 0; l < r.length; l++) {
                             var s = r[l];
-                            "string" == typeof s && i.length > 1 && "string" == typeof i[i.length - 1] ? i[i.length - 1] += s : i.push(s);
+                            "string" == typeof s && 1 < i.length && "string" == typeof i[i.length - 1] ? i[i.length - 1] += s : i.push(s);
                         }
                     }
                 }
                 function n(e, t) {
-                    for (var r = new RegExp("^(" + c + "{" + e + "}.*?\\n?)*$"), n = new RegExp("^" + c + "{" + e + "}", "gm"), i = []; t.length > 0 && r.exec(t[0]); ) {
+                    for (var r = new RegExp("^(" + c + "{" + e + "}.*?\\n?)*$"), n = new RegExp("^" + c + "{" + e + "}", "gm"), i = []; 0 < t.length && r.exec(t[0]); ) {
                         var l = t.shift(), s = l.replace(n, "");
                         i.push(g(s, l.trailing, l.lineNumber));
                     }
@@ -328,7 +302,7 @@
                             }
                             k.length && (r(u, d, this.processInline(k), y), d = !1, k = "");
                             var S = n(p.length, c);
-                            S.length > 0 && (v(p, i, this), u.push.apply(u, this.toTree(S, [])));
+                            0 < S.length && (v(p, i, this), u.push.apply(u, this.toTree(S, [])));
                             var A = c[0] && c[0].valueOf() || "";
                             if (!A.match(a) && !A.match(/^ /)) break;
                             l = c.shift();
@@ -383,15 +357,12 @@
         }
     }, f.dialects.Gruber.inline = {
         __oneElement__: function(e, t, r) {
-            var n;
-            if (t = t || this.dialect.inline.__patterns__, !(n = new RegExp("([\\s\\S]*?)(" + (t.source || t) + ")").exec(e))) return [ e.length, e ];
-            if (n[1]) return [ n[1].length, n[1] ];
-            var i;
-            return n[2] in this.dialect.inline && (i = this.dialect.inline[n[2]].call(this, e.substr(n.index), n, r || [])), 
-            i = i || [ n[2].length, n[2] ];
+            var n, i;
+            return t = t || this.dialect.inline.__patterns__, (n = new RegExp("([\\s\\S]*?)(" + (t.source || t) + ")").exec(e)) ? n[1] ? [ n[1].length, n[1] ] : (n[2] in this.dialect.inline && (i = this.dialect.inline[n[2]].call(this, e.substr(n.index), n, r || [])), 
+            i || [ n[2].length, n[2] ]) : [ e.length, e ];
         },
         __call__: function(e, t) {
-            for (var r, n = []; e.length > 0; ) r = this.dialect.inline.__oneElement__.call(this, e, t, n), 
+            for (var r, n = []; 0 < e.length; ) r = this.dialect.inline.__oneElement__.call(this, e, t, n), 
             e = e.substr(r.shift()), v(r, function(e) {
                 "string" == typeof e && "string" == typeof n[n.length - 1] ? n[n.length - 1] += e : n.push(e);
             });
@@ -423,7 +394,7 @@
         "[": function(e) {
             var t = String(e), r = f.DialectHelpers.inline_until_char.call(this, e.substr(1), "]");
             if (!r) return [ 1, "[" ];
-            var n, i, l = 1 + r[0], s = r[1], a = (e = e.substr(l)).match(/^\s*\([ \t]*([^"']*)(?:[ \t]+(["'])(.*?)\2)?[ \t]*\)/);
+            var i, l = 1 + r[0], s = r[1], a = (e = e.substr(l)).match(/^\s*\([ \t]*([^"']*)(?:[ \t]+(["'])(.*?)\2)?[ \t]*\)/);
             if (a) {
                 var c = a[1];
                 if (l += a[0].length, c && "<" == c[0] && ">" == c[c.length - 1] && (c = c.substring(1, c.length - 1)), 
@@ -435,17 +406,17 @@
                   case ")":
                     0 == --o && (l -= c.length - h, c = c.substring(0, h));
                 }
-                return c = this.dialect.inline.__call__.call(this, c, /\\/)[0], i = {
-                    href: c || ""
-                }, void 0 !== a[3] && (i.title = a[3]), n = [ "link", i ].concat(s), [ l, n ];
+                return i = {
+                    href: (c = this.dialect.inline.__call__.call(this, c, /\\/)[0]) || ""
+                }, void 0 !== a[3] && (i.title = a[3]), [ l, [ "link", i ].concat(s) ];
             }
-            return (a = e.match(/^\s*\[(.*?)\]/)) ? (l += a[0].length, i = {
+            return (a = e.match(/^\s*\[(.*?)\]/)) ? [ l += a[0].length, [ "link_ref", i = {
                 ref: (a[1] || String(s)).toLowerCase(),
                 original: t.substr(0, l)
-            }, n = [ "link_ref", i ].concat(s), [ l, n ]) : 1 == s.length && "string" == typeof s[0] ? (i = {
+            } ].concat(s) ] : 1 == s.length && "string" == typeof s[0] ? [ l, [ "link_ref", i = {
                 ref: s[0].toLowerCase(),
                 original: t.substr(0, l)
-            }, n = [ "link_ref", i, s[0] ], [ l, n ]) : [ 1, "[" ];
+            }, s[0] ] ] : [ 1, "[" ];
         },
         "<": function(e) {
             var t;
@@ -479,11 +450,11 @@
         t = t.join("|"), e.__patterns__ = t;
         var i = e.__call__;
         e.__call__ = function(e, r) {
-            return void 0 != r ? i.call(this, e, r) : i.call(this, e, t);
+            return null != r ? i.call(this, e, r) : i.call(this, e, t);
         };
     }, f.DialectHelpers = {}, f.DialectHelpers.inline_until_char = function(e, t) {
         for (var r = 0, n = []; ;) {
-            if (e.charAt(r) == t) return r++, [ r, n ];
+            if (e.charAt(r) == t) return [ ++r, n ];
             if (r >= e.length) return null;
             var i = this.dialect.inline.__oneElement__.call(this, e.substr(r));
             r += i[0], n.push.apply(n, i.slice(1));
@@ -497,13 +468,34 @@
         };
     }, f.buildBlockOrder(f.dialects.Gruber.block), f.buildInlinePatterns(f.dialects.Gruber.inline), 
     f.dialects.Maruku = f.subclassDialect(f.dialects.Gruber), f.dialects.Maruku.processMetaHash = function(e) {
-        for (var t = l(e), r = {}, n = 0; n < t.length; ++n) if (/^#/.test(t[n])) r.id = t[n].substring(1); else if (/^\./.test(t[n])) r.class ? r.class = r.class + t[n].replace(/./, " ") : r.class = t[n].substring(1); else if (/\=/.test(t[n])) {
+        for (var t = function(e) {
+            for (var t = e.split(""), r = [ "" ], n = !1; t.length; ) {
+                var i = t.shift();
+                switch (i) {
+                  case " ":
+                    n ? r[r.length - 1] += i : r.push("");
+                    break;
+
+                  case "'":
+                  case '"':
+                    n = !n;
+                    break;
+
+                  case "\\":
+                    i = t.shift();
+
+                  default:
+                    r[r.length - 1] += i;
+                }
+            }
+            return r;
+        }(e), r = {}, n = 0; n < t.length; ++n) if (/^#/.test(t[n])) r.id = t[n].substring(1); else if (/^\./.test(t[n])) r.class ? r.class = r.class + t[n].replace(/./, " ") : r.class = t[n].substring(1); else if (/\=/.test(t[n])) {
             var i = t[n].split(/\=/);
             r[i[0]] = i[1];
         }
         return r;
     }, f.dialects.Maruku.block.document_meta = function(e, t) {
-        if (!(e.lineNumber > 1) && e.match(/^(?:\w+:.*\n)*\w+:.*$/)) {
+        if (!(1 < e.lineNumber) && e.match(/^(?:\w+:.*\n)*\w+:.*$/)) {
             s(this.tree) || this.tree.splice(1, 0, {});
             var r = e.split(/\n/);
             for (p in r) {
@@ -519,13 +511,11 @@
             if ("" === r[1]) {
                 var l = this.tree[this.tree.length - 1];
                 if (n = s(l), "string" == typeof l) return;
-                n || (n = {}, l.splice(1, 0, n));
-                for (a in i) n[a] = i[a];
+                for (a in n || (n = {}, l.splice(1, 0, n)), i) n[a] = i[a];
                 return [];
             }
             var c = e.replace(/\n.*$/, ""), o = this.processBlock(c, []);
-            (n = s(o[0])) || (n = {}, o[0].splice(1, 0, n));
-            for (a in i) n[a] = i[a];
+            for (a in (n = s(o[0])) || (n = {}, o[0].splice(1, 0, n)), i) n[a] = i[a];
             return o;
         }
     }, f.dialects.Maruku.block.definition_list = function(e, t) {
@@ -571,8 +561,7 @@
         var i = e.match(/^\{:\s*((?:\\\}|[^\}])*)\s*\}/);
         if (!i) return [ 2, "{:" ];
         var l = this.dialect.processMetaHash(i[1]), a = s(n);
-        a || (a = {}, n.splice(1, 0, a));
-        for (var c in l) a[c] = l[c];
+        for (var c in a || (a = {}, n.splice(1, 0, a)), l) a[c] = l[c];
         return [ i[0].length, "" ];
     }, f.dialects.Maruku.inline.__escape__ = /^\\[\\`\*_{}\[\]()#\+.!\-|:]/, f.buildBlockOrder(f.dialects.Maruku.block), 
     f.buildInlinePatterns(f.dialects.Maruku.inline);

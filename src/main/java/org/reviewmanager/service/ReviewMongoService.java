@@ -25,6 +25,7 @@ import org.reviewmanager.pojo.LabelValue;
 import org.reviewmanager.pojo.ProductObject;
 import org.reviewmanager.pojo.PromotionCounterObject;
 import org.reviewmanager.pojo.PromotionObject;
+import org.reviewmanager.pojo.QueryAnswers;
 import org.reviewmanager.pojo.QueryObject;
 import org.reviewmanager.pojo.ReviewObject;
 import org.reviewmanager.pojo.SearchBusinessObject;
@@ -149,9 +150,20 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		recentService.addQueryObject(queryObject);
 
 		UpdateResult data = mongoService.addObject(RMUtil.QUERY_INDEX, searchDoc, document);
+
 		reportResult.put("result", data.toString());
 		reportResult.put("updateOfExisting", data.getUpsertedId());
+		reportResult.put("historicAnswer", this.updateHistoricAnswer(queryObject));
 		return reportResult;
+	}
+
+	private UpdateResult updateHistoricAnswer(QueryObject queryObject) {
+		QueryAnswers queryAnswers = new QueryAnswers(queryObject);
+		BasicDBObject queryAnswer = new BasicDBObject();
+		queryAnswer.append("queryId", queryAnswers.getQueryId()).append("answerByName", queryAnswers.getAnswerByName())
+				.append("answerByEmail", queryAnswers.getAnswerByEmail())
+				.append("answerText", queryAnswers.getAnswerText());
+		return mongoService.addObject(RMUtil.QUERY_ANSWERS, queryAnswer, queryAnswer);
 	}
 
 	/*
@@ -173,6 +185,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		for (Document searchHit : cursor) {
 			try {
 				object = RMUtil.gson.fromJson(searchHit.toJson(), QueryObject.class);
+				object.setQueryAnswers(this.getPublicQueryAnswers(object));
 				queryObjects.add(object);
 			} catch (Exception ex) {
 				System.out.println("Error Serializing :" + searchHit.toString());
@@ -181,6 +194,24 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		reportResult.put("result", queryObjects);
 		reportResult.put("total", queryObjects.size());
 		return reportResult;
+	}
+
+	private List<QueryAnswers> getPublicQueryAnswers(QueryObject queryObject) {
+		BasicDBObject document = new BasicDBObject();
+		document.append("queryId", queryObject.getQueryId());
+		List<Document> cursor = mongoService.getObject(RMUtil.QUERY_ANSWERS, document,
+				new BasicDBObject().append("answerDate", -1));
+		QueryAnswers object = null;
+		List<QueryAnswers> queryAnswers = new ArrayList<>();
+		for (Document searchHit : cursor) {
+			try {
+				object = RMUtil.gson.fromJson(searchHit.toJson(), QueryAnswers.class);
+				queryAnswers.add(object);
+			} catch (Exception ex) {
+				System.out.println("Error Serializing :" + searchHit.toString());
+			}
+		}
+		return queryAnswers;
 	}
 
 	/*
@@ -257,7 +288,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 			List<Document> cursor = mongoService.getObject(RMUtil.USER_INDEX, searchQuery, new BasicDBObject());
 
 			for (Document searchHit : cursor) {
-				jsonData = gson.fromJson(searchHit.toString(), JsonObject.class);
+				jsonData = gson.fromJson(searchHit.toJson(), JsonObject.class);
 				clientID = String.valueOf(searchHit.get("clientId"));
 			}
 			newUser = RMUtil.getUserObject(jsonData);
@@ -290,7 +321,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		BusinessObject searchReviewObj = null;
 		Gson gson = new Gson();
 		for (Document searchHit : cursor) {
-			searchReviewObj = gson.fromJson(searchHit.toString(), BusinessObject.class);
+			searchReviewObj = gson.fromJson(searchHit.toJson(), BusinessObject.class);
 			searchReview.add(searchReviewObj);
 		}
 		reportResult.put("result", searchReview);
@@ -316,7 +347,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		BusinessObject searchReviewObj = null;
 		Gson gson = new Gson();
 		for (Document searchHit : cursor) {
-			searchReviewObj = gson.fromJson(searchHit.toString(), BusinessObject.class);
+			searchReviewObj = gson.fromJson(searchHit.toJson(), BusinessObject.class);
 			searchReview.add(searchReviewObj);
 		}
 		reportResult.put("result", searchReview);
@@ -430,7 +461,7 @@ public class ReviewMongoService implements ReviewServiceInterface {
 		BasicDBObject searchQuery = new BasicDBObject().append("clientId", clientId);
 		List<Document> cursor = mongoService.getObject(RMUtil.TRENDING_INDEX, searchQuery, new BasicDBObject());
 		for (Document dbObject : cursor) {
-			trending = gson.fromJson(dbObject.toString(), Trending.class);
+			trending = gson.fromJson(dbObject.toJson(), Trending.class);
 		}
 
 		reportResult.put("result", trending);
@@ -887,20 +918,23 @@ public class ReviewMongoService implements ReviewServiceInterface {
 	 */
 	@Override
 	public Map<String, Object> searchBusiness(String query, String type) {
-		 this.setHeaderAuthorization();
+		this.setHeaderAuthorization();
 		Map<String, Object> businesses = new HashMap<>();
-		 businesses.putAll(restTemplate.exchange("https://api.yelp.com/v3/businesses/search?term="
-		 + query + "&location=" + type,
-		 HttpMethod.GET, new HttpEntity<>("parameters", headers),
-		 Map.class).getBody());
+		businesses.putAll(
+				restTemplate.exchange("https://api.yelp.com/v3/businesses/search?term=" + query + "&location=" + type,
+						HttpMethod.GET, new HttpEntity<>("parameters", headers), Map.class).getBody());
 
-		/*List<Document> data = mongoService.getObject(RMUtil.ONBOARDED_BUSINESS,
-				new BasicDBObject().append("clientName", new BasicDBObject("$regex", query).append("$options", "i")),
-				new BasicDBObject());
-		List<SearchBusinessObject> searchResults = new ArrayList<>();
-		for (Document object : data)
-			searchResults.add(RMUtil.gson.fromJson(object.toJson(), SearchBusinessObject.class));
-		businesses.put("businesses", searchResults);*/
+		/*
+		 * List<Document> data =
+		 * mongoService.getObject(RMUtil.ONBOARDED_BUSINESS, new
+		 * BasicDBObject().append("clientName", new BasicDBObject("$regex",
+		 * query).append("$options", "i")), new BasicDBObject());
+		 * List<SearchBusinessObject> searchResults = new ArrayList<>(); for
+		 * (Document object : data)
+		 * searchResults.add(RMUtil.gson.fromJson(object.toJson(),
+		 * SearchBusinessObject.class)); businesses.put("businesses",
+		 * searchResults);
+		 */
 		return businesses;
 	}
 

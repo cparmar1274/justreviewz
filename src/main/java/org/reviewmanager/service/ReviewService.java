@@ -92,6 +92,7 @@ public class ReviewService {
 		return reportIncidentService.getDashboardObject(username);
 	}
 
+
 	@Cacheable("justreviewz_treadingdata")
 	public Map<String, Object> getTrendingData(String username) {
 		return reportIncidentService.getTrendingData(username);

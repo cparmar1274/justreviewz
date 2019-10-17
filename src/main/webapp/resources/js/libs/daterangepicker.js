@@ -37,12 +37,9 @@
         "string" == typeof i.locale.applyLabel && (this.locale.applyLabel = i.locale.applyLabel), 
         "string" == typeof i.locale.cancelLabel && (this.locale.cancelLabel = i.locale.cancelLabel), 
         "string" == typeof i.locale.weekLabel && (this.locale.weekLabel = i.locale.weekLabel), 
-        "string" == typeof i.locale.customRangeLabel)) {
-            (m = document.createElement("textarea")).innerHTML = i.locale.customRangeLabel;
-            f = m.value;
-            this.locale.customRangeLabel = f;
-        }
-        if (this.container.addClass(this.locale.direction), "string" == typeof i.startDate && (this.startDate = t(i.startDate, this.locale.format)), 
+        "string" == typeof i.locale.customRangeLabel) && ((m = document.createElement("textarea")).innerHTML = i.locale.customRangeLabel, 
+        f = m.value, this.locale.customRangeLabel = f), this.container.addClass(this.locale.direction), 
+        "string" == typeof i.startDate && (this.startDate = t(i.startDate, this.locale.format)), 
         "string" == typeof i.endDate && (this.endDate = t(i.endDate, this.locale.format)), 
         "string" == typeof i.minDate && (this.minDate = t(i.minDate, this.locale.format)), 
         "string" == typeof i.maxDate && (this.maxDate = t(i.maxDate, this.locale.format)), 
@@ -65,7 +62,7 @@
         "boolean" == typeof i.linkedCalendars && (this.linkedCalendars = i.linkedCalendars), 
         "function" == typeof i.isInvalidDate && (this.isInvalidDate = i.isInvalidDate), 
         "function" == typeof i.isCustomDate && (this.isCustomDate = i.isCustomDate), "boolean" == typeof i.alwaysShowCalendars && (this.alwaysShowCalendars = i.alwaysShowCalendars), 
-        0 != this.locale.firstDay) for (var n = this.locale.firstDay; n > 0; ) this.locale.daysOfWeek.push(this.locale.daysOfWeek.shift()), 
+        0 != this.locale.firstDay) for (var n = this.locale.firstDay; 0 < n; ) this.locale.daysOfWeek.push(this.locale.daysOfWeek.shift()), 
         n--;
         var r, o, h;
         if (void 0 === i.startDate && void 0 === i.endDate && e(this.element).is("input[type=text]")) {
@@ -178,11 +175,10 @@
         },
         renderCalendar: function(a) {
             var i = "left" == a ? this.leftCalendar : this.rightCalendar, s = i.month.month(), n = i.month.year(), r = i.month.hour(), o = i.month.minute(), h = i.month.second(), l = t([ n, s ]).daysInMonth(), c = t([ n, s, 1 ]), d = t([ n, s, l ]), m = t(c).subtract(1, "month").month(), f = t(c).subtract(1, "month").year(), p = t([ f, m ]).daysInMonth(), u = c.day();
-            (i = []).firstDay = c, i.lastDay = d;
-            for (k = 0; k < 6; k++) i[k] = [];
+            for ((i = []).firstDay = c, i.lastDay = d, k = 0; k < 6; k++) i[k] = [];
             var g = p - u + this.locale.firstDay + 1;
-            g > p && (g -= 7), u == this.locale.firstDay && (g = p - 6);
-            for (var D = t([ f, m, g, 12, o, h ]), k = 0, y = 0, v = 0; k < 42; k++, y++, D = t(D).add(24, "hour")) k > 0 && y % 7 == 0 && (y = 0, 
+            p < g && (g -= 7), u == this.locale.firstDay && (g = p - 6);
+            for (var D = t([ f, m, g, 12, o, h ]), k = 0, y = 0, v = 0; k < 42; k++, y++, D = t(D).add(24, "hour")) 0 < k && y % 7 == 0 && (y = 0, 
             v++), i[v][y] = D.clone().hour(r).minute(o).second(h), D.hour(12), this.minDate && i[v][y].format("YYYY-MM-DD") == this.minDate.format("YYYY-MM-DD") && i[v][y].isBefore(this.minDate) && "left" == a && (i[v][y] = this.minDate.clone()), 
             this.maxDate && i[v][y].format("YYYY-MM-DD") == this.maxDate.format("YYYY-MM-DD") && i[v][y].isAfter(this.maxDate) && "right" == a && (i[v][y] = this.maxDate.clone());
             "left" == a ? this.leftCalendar.calendar = i : this.rightCalendar.calendar = i;
@@ -212,10 +208,10 @@
                 C && !O.isBefore(C) || (C = O);
             }
             for (v = 0; v < 6; v++) {
-                Y += "<tr>", this.showWeekNumbers ? Y += '<td class="week">' + i[v][0].week() + "</td>" : this.showISOWeekNumbers && (Y += '<td class="week">' + i[v][0].isoWeek() + "</td>");
-                for (y = 0; y < 7; y++) {
+                for (Y += "<tr>", this.showWeekNumbers ? Y += '<td class="week">' + i[v][0].week() + "</td>" : this.showISOWeekNumbers && (Y += '<td class="week">' + i[v][0].isoWeek() + "</td>"), 
+                y = 0; y < 7; y++) {
                     var N = [];
-                    i[v][y].isSame(new Date(), "day") && N.push("today"), i[v][y].isoWeekday() > 5 && N.push("weekend"), 
+                    i[v][y].isSame(new Date(), "day") && N.push("today"), 5 < i[v][y].isoWeekday() && N.push("weekend"), 
                     i[v][y].month() != i[1][1].month() && N.push("off"), this.minDate && i[v][y].isBefore(this.minDate, "day") && N.push("off", "disabled"), 
                     C && i[v][y].isAfter(C, "day") && N.push("off", "disabled"), this.isInvalidDate(i[v][y]) && N.push("off", "disabled"), 
                     i[v][y].format("YYYY-MM-DD") == this.startDate.format("YYYY-MM-DD") && N.push("active", "start-date"), 
@@ -223,7 +219,8 @@
                     null != this.endDate && i[v][y] > this.startDate && i[v][y] < this.endDate && N.push("in-range");
                     var R = this.isCustomDate(i[v][y]);
                     !1 !== R && ("string" == typeof R ? N.push(R) : Array.prototype.push.apply(N, R));
-                    for (var j = "", H = !1, k = 0; k < N.length; k++) j += N[k] + " ", "disabled" == N[k] && (H = !0);
+                    var j = "", H = !1;
+                    for (k = 0; k < N.length; k++) j += N[k] + " ", "disabled" == N[k] && (H = !0);
                     H || (j += "available"), Y += '<td class="' + j.replace(/^\s+|\s+$/g, "") + '" data-title="r' + v + "c" + y + '">' + i[v][y].date() + "</td>";
                 }
                 Y += "</tr>";
@@ -248,21 +245,20 @@
                 e = '<select class="hourselect">';
                 for (var o = this.timePicker24Hour ? 0 : 1, h = this.timePicker24Hour ? 23 : 12, l = o; l <= h; l++) {
                     var c = l;
-                    this.timePicker24Hour || (c = a.hour() >= 12 ? 12 == l ? 12 : l + 12 : 12 == l ? 0 : l);
+                    this.timePicker24Hour || (c = 12 <= a.hour() ? 12 == l ? 12 : l + 12 : 12 == l ? 0 : l);
                     var d = a.clone().hour(c), m = !1;
                     i && d.minute(59).isBefore(i) && (m = !0), s && d.minute(0).isAfter(s) && (m = !0), 
                     c != a.hour() || m ? e += m ? '<option value="' + l + '" disabled="disabled" class="disabled">' + l + "</option>" : '<option value="' + l + '">' + l + "</option>" : e += '<option value="' + l + '" selected="selected">' + l + "</option>";
                 }
-                e += "</select> ", e += ': <select class="minuteselect">';
-                for (l = 0; l < 60; l += this.timePickerIncrement) {
-                    var f = l < 10 ? "0" + l : l, d = a.clone().minute(l), m = !1;
+                for (e += "</select> ", e += ': <select class="minuteselect">', l = 0; l < 60; l += this.timePickerIncrement) {
+                    var f = l < 10 ? "0" + l : l;
+                    d = a.clone().minute(l), m = !1;
                     i && d.second(59).isBefore(i) && (m = !0), s && d.second(0).isAfter(s) && (m = !0), 
                     a.minute() != l || m ? e += m ? '<option value="' + l + '" disabled="disabled" class="disabled">' + f + "</option>" : '<option value="' + l + '">' + f + "</option>" : e += '<option value="' + l + '" selected="selected">' + f + "</option>";
                 }
                 if (e += "</select> ", this.timePickerSeconds) {
-                    e += ': <select class="secondselect">';
-                    for (l = 0; l < 60; l++) {
-                        var f = l < 10 ? "0" + l : l, d = a.clone().second(l), m = !1;
+                    for (e += ': <select class="secondselect">', l = 0; l < 60; l++) {
+                        f = l < 10 ? "0" + l : l, d = a.clone().second(l), m = !1;
                         i && d.isBefore(i) && (m = !0), s && d.isAfter(s) && (m = !0), a.second() != l || m ? e += m ? '<option value="' + l + '" disabled="disabled" class="disabled">' + f + "</option>" : '<option value="' + l + '">' + f + "</option>" : e += '<option value="' + l + '" selected="selected">' + f + "</option>";
                     }
                     e += "</select> ";
@@ -272,7 +268,7 @@
                     var p = "", u = "";
                     i && a.clone().hour(12).minute(0).second(0).isBefore(i) && (p = ' disabled="disabled" class="disabled"'), 
                     s && a.clone().hour(0).minute(0).second(0).isAfter(s) && (u = ' disabled="disabled" class="disabled"'), 
-                    a.hour() >= 12 ? e += '<option value="AM"' + p + '>AM</option><option value="PM" selected="selected"' + u + ">PM</option>" : e += '<option value="AM" selected="selected"' + p + '>AM</option><option value="PM"' + u + ">PM</option>", 
+                    12 <= a.hour() ? e += '<option value="AM"' + p + '>AM</option><option value="PM" selected="selected"' + u + ">PM</option>" : e += '<option value="AM" selected="selected"' + p + '>AM</option><option value="PM"' + u + ">PM</option>", 
                     e += "</select>";
                 }
                 this.container.find(".calendar." + t + " .calendar-time div").html(e);
@@ -357,7 +353,7 @@
         },
         clickRange: function(t) {
             var e = t.target.getAttribute("data-range-key");
-            if (this.chosenLabel = e, e == this.locale.customRangeLabel) this.showCalendars(); else {
+            if ((this.chosenLabel = e) == this.locale.customRangeLabel) this.showCalendars(); else {
                 var a = this.ranges[e];
                 this.startDate = a[0], this.endDate = a[1], this.timePicker || (this.startDate.startOf("day"), 
                 this.endDate.endOf("day")), this.alwaysShowCalendars || this.hideCalendars(), this.clickApply();
@@ -390,8 +386,7 @@
                 var a = e(t.target).attr("data-title"), i = a.substr(1, 1), s = a.substr(3, 1), n = e(t.target).parents(".calendar").hasClass("left") ? this.leftCalendar.calendar[i][s] : this.rightCalendar.calendar[i][s];
                 if (this.endDate || n.isBefore(this.startDate, "day")) {
                     if (this.timePicker) {
-                        h = parseInt(this.container.find(".left .hourselect").val(), 10);
-                        this.timePicker24Hour || ("PM" === (l = this.container.find(".left .ampmselect").val()) && h < 12 && (h += 12), 
+                        h = parseInt(this.container.find(".left .hourselect").val(), 10), this.timePicker24Hour || ("PM" === (l = this.container.find(".left .ampmselect").val()) && h < 12 && (h += 12), 
                         "AM" === l && 12 === h && (h = 0));
                         var r = parseInt(this.container.find(".left .minuteselect").val(), 10), o = this.timePickerSeconds ? parseInt(this.container.find(".left .secondselect").val(), 10) : 0;
                         n = n.clone().hour(h).minute(r).second(o);
@@ -404,7 +399,7 @@
                             var l = this.container.find(".right .ampmselect").val();
                             "PM" === l && h < 12 && (h += 12), "AM" === l && 12 === h && (h = 0);
                         }
-                        var r = parseInt(this.container.find(".right .minuteselect").val(), 10), o = this.timePickerSeconds ? parseInt(this.container.find(".right .secondselect").val(), 10) : 0;
+                        r = parseInt(this.container.find(".right .minuteselect").val(), 10), o = this.timePickerSeconds ? parseInt(this.container.find(".right .secondselect").val(), 10) : 0;
                         n = n.clone().hour(h).minute(r).second(o);
                     }
                     this.setEndDate(n.clone()), this.autoApply && (this.calculateChosenLabel(), this.clickApply());

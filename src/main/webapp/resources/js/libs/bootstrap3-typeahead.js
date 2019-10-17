@@ -55,7 +55,7 @@
             return this.$menu.hide(), this.shown = !1, this;
         },
         lookup: function(e) {
-            if (this.query = void 0 !== e && null !== e ? e : this.$element.val() || this.$element.text() || "", 
+            if (this.query = null != e ? e : this.$element.val() || this.$element.text() || "", 
             this.query.length < this.options.minLength && !this.options.showHintOnFocus) return this.shown ? this.hide() : this;
             var s = t.proxy(function() {
                 t.isFunction(this.source) ? this.source(this.query, t.proxy(this.process, this)) : this.source && this.process(this.source);
@@ -66,7 +66,7 @@
             var s = this;
             return e = t.grep(e, function(t) {
                 return s.matcher(t);
-            }), (e = this.sorter(e)).length || this.options.addItem ? (e.length > 0 ? this.$element.data("active", e[0]) : this.$element.data("active", null), 
+            }), (e = this.sorter(e)).length || this.options.addItem ? (0 < e.length ? this.$element.data("active", e[0]) : this.$element.data("active", null), 
             this.options.addItem && e.push(this.options.addItem), "all" == this.options.items ? this.render(e).show() : this.render(e.slice(0, this.options.items)).show()) : this.shown ? this.hide() : this;
         },
         matcher: function(t) {
@@ -82,14 +82,14 @@
         highlighter: function(e) {
             var s, i, o, n, h = t("<div></div>"), a = this.query, r = e.toLowerCase().indexOf(a.toLowerCase()), u = a.length;
             if (0 === u) return h.text(e).html();
-            for (;r > -1; ) s = e.substr(0, r), i = e.substr(r, u), o = e.substr(r + u), n = t("<strong></strong>").text(i), 
+            for (;-1 < r; ) s = e.substr(0, r), i = e.substr(r, u), o = e.substr(r + u), n = t("<strong></strong>").text(i), 
             h.append(document.createTextNode(s)).append(n), r = (e = o).toLowerCase().indexOf(a.toLowerCase());
             return h.append(document.createTextNode(e)).html();
         },
         render: function(e) {
             var s = this, i = this, o = !1, n = [], h = s.options.separator;
             return t.each(e, function(t, s) {
-                t > 0 && s[h] !== e[t - 1][h] && n.push({
+                0 < t && s[h] !== e[t - 1][h] && n.push({
                     __type: "divider"
                 }), !s[h] || 0 !== t && s[h] === e[t - 1][h] || n.push({
                     __type: "category",
@@ -208,7 +208,7 @@
         var i = arguments;
         return "string" == typeof s && "getActive" == s ? this.data("active") : this.each(function() {
             var o = t(this), n = o.data("typeahead"), h = "object" == typeof s && s;
-            n || o.data("typeahead", n = new e(this, h)), "string" == typeof s && n[s] && (i.length > 1 ? n[s].apply(n, Array.prototype.slice.call(i, 1)) : n[s]());
+            n || o.data("typeahead", n = new e(this, h)), "string" == typeof s && n[s] && (1 < i.length ? n[s].apply(n, Array.prototype.slice.call(i, 1)) : n[s]());
         });
     }, t.fn.typeahead.defaults = {
         source: [],

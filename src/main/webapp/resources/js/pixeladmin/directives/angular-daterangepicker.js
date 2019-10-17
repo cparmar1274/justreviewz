@@ -1,10 +1,5 @@
 function daterangepickerDirective(e) {
     "use strict";
-    function a(e) {
-        return e.replace(/^on([A-Z])/, function(e, a) {
-            return a.toLowerCase();
-        });
-    }
     var t = [ "startDate", "endDate", "minDate", "maxDate", "dateLimit", "ranges", "locale", "singleDatePicker" ], n = [ "showDropdowns", "showWeekNumbers", "showISOWeekNumbers", "timePicker", "timePickerIncrement", "timePicker24Hour", "timePickerSeconds", "showCustomRangeLabel", "alwaysShowCalendars", "opens", "drops", "buttonClasses", "applyClass", "cancelClass", "autoApply", "linkedCalendars", "isInvalidDate", "isCustomDate", "autoUpdateInput", "parentEl" ], r = [ "onShow", "onHide", "onShowCalendar", "onHideCalendar", "onApply", "onCancel" ];
     return {
         restrict: "A",
@@ -41,7 +36,11 @@ function daterangepickerDirective(e) {
             n.forEach(function(a) {
                 void 0 !== c[a] && (p[a] = e(c[a])(i.$parent));
             }), r.forEach(function(t) {
-                c[t] && (u[a(t)] = e(c[t])(i.$parent));
+                c[t] && (u[function(e) {
+                    return e.replace(/^on([A-Z])/, function(e, a) {
+                        return a.toLowerCase();
+                    });
+                }(t)] = e(c[t])(i.$parent));
             });
             var k = u.hide || function() {};
             u.hide = function() {

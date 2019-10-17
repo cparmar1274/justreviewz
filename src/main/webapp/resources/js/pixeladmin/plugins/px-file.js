@@ -15,11 +15,7 @@ var _createClass = function() {
     };
 }(), PxFile = function(e) {
     "use strict";
-    var t = "pxFile", n = e.fn[t], i = {
-        BROWSE: "px-file-browse",
-        CLEAR: "px-file-clear",
-        HAS_VALUE: "px-file-has-value"
-    }, r = {
+    var t = "pxFile", n = e.fn[t], i_BROWSE = "px-file-browse", i_CLEAR = "px-file-clear", i_HAS_VALUE = "px-file-has-value", r = {
         CLICK: "click.px.file",
         CHANGE: "change.px.file"
     }, o = function() {
@@ -45,7 +41,7 @@ var _createClass = function() {
             key: "update",
             value: function() {
                 var t = (this.input.value || "").replace(/\\/g, "/").split("/").pop();
-                t ? e(this.control).text(t) : this.control.innerHTML = this.placeholder, pxUtil[t ? "addClass" : "removeClass"](this.element, i.HAS_VALUE);
+                t ? e(this.control).text(t) : this.control.innerHTML = this.placeholder, pxUtil[t ? "addClass" : "removeClass"](this.element, i_HAS_VALUE);
             }
         }, {
             key: "destroy",
@@ -76,16 +72,16 @@ var _createClass = function() {
             key: "_setListeners",
             value: function() {
                 var t = this;
-                e(this.element).find("." + i.BROWSE).on(this.constructor.Event.CLICK, function(n) {
+                e(this.element).find("." + i_BROWSE).on(this.constructor.Event.CLICK, function(n) {
                     t._rejectEvent(n), t.browse(), e(t.input).trigger("focus");
-                }), e(this.element).find("." + i.CLEAR).on(this.constructor.Event.CLICK, function(n) {
+                }), e(this.element).find("." + i_CLEAR).on(this.constructor.Event.CLICK, function(n) {
                     t._rejectEvent(n), t.clear(), e(t.input).trigger("focus");
                 }), e(this.input).on(this.constructor.Event.CHANGE, e.proxy(this.update, this));
             }
         }, {
             key: "_unsetListeners",
             value: function() {
-                e(this.element).find("." + i.BROWSE).off(".px.file"), e(this.element).find("." + i.CLEAR).off(".px.file"), 
+                e(this.element).find("." + i_BROWSE).off(".px.file"), e(this.element).find("." + i_CLEAR).off(".px.file"), 
                 e(this.input).off(".px.file");
             }
         } ], [ {

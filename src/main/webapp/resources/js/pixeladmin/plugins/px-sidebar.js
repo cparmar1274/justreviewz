@@ -19,10 +19,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
     };
 }(), PxSidebar = function(t) {
     "use strict";
-    var e = "pxSidebar", n = "px.sidebar", i = "." + n, r = t.fn[e], o = {
-        NAVBAR_FIXED: "px-navbar-fixed",
-        LEFT: "px-sidebar-left"
-    }, s = {
+    var e = "pxSidebar", n = "px.sidebar", i = "." + n, r = t.fn[e], o_NAVBAR_FIXED = "px-navbar-fixed", o_LEFT = "px-sidebar-left", s = {
         RESIZE: "resize" + i,
         SCROLL: "scroll" + i,
         CLICK_DATA_API: "click.px.sidebar.data-api",
@@ -30,11 +27,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         EXPANDED: "expanded" + i,
         COLLAPSE: "collapse" + i,
         COLLAPSED: "collapsed" + i
-    }, l = {
-        DATA_TOGGLE: '[data-toggle="sidebar"]',
-        CONTENT: ".px-sidebar-content",
-        NAVBAR_HEADER: ".navbar-header"
-    }, a = {
+    }, l_DATA_TOGGLE = '[data-toggle="sidebar"]', l_CONTENT = ".px-sidebar-content", l_NAVBAR_HEADER = ".navbar-header", a = {
         width: null,
         enableScrollbar: !0,
         desktopMode: [ "lg", "xl" ],
@@ -42,7 +35,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
     }, c = function() {
         function r(e, n) {
             _classCallCheck(this, r), this.uniqueId = pxUtil.generateUniqueId(), this.element = e, 
-            this.$content = t(e).find(l.CONTENT), this.parent = e.parentNode, this.config = this._getConfig(n), 
+            this.$content = t(e).find(l_CONTENT), this.parent = e.parentNode, this.config = this._getConfig(n), 
             this._isRtl = "rtl" === t("html").attr("dir"), this._setWidth(), this._setScrollbar(), 
             this._checkMode(), this._setListeners();
         }
@@ -55,12 +48,12 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "update",
             value: function() {
-                var e = t(this.parent).find(this.config.navbarSelector + " " + l.NAVBAR_HEADER);
+                var e = t(this.parent).find(this.config.navbarSelector + " " + l_NAVBAR_HEADER);
                 if (e.length) {
                     var n = e.height();
-                    if (pxUtil.hasClass(this.parent, o.NAVBAR_FIXED) || !this._positioning) this.element.style.top = n + "px"; else {
+                    if (pxUtil.hasClass(this.parent, o_NAVBAR_FIXED) || !this._positioning) this.element.style.top = n + "px"; else {
                         var i = document.documentElement && document.documentElement.scrollTop || document.body.scrollTop || 0;
-                        this.element.style.top = i > n ? "0px" : n - i + "px";
+                        this.element.style.top = n < i ? "0px" : n - i + "px";
                     }
                 }
                 this.config.enableScrollbar && this.$content.perfectScrollbar("update");
@@ -73,8 +66,8 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_setWidth",
             value: function() {
-                var e = parseInt(this.config.width || t(this.element).width(), 10), n = void 0;
-                n = this._isRtl ? pxUtil.hasClass(this.element, o.LEFT) ? "right" : "left" : pxUtil.hasClass(this.element, o.LEFT) ? "left" : "right", 
+                var n, e = parseInt(this.config.width || t(this.element).width(), 10);
+                n = this._isRtl ? pxUtil.hasClass(this.element, o_LEFT) ? "right" : "left" : pxUtil.hasClass(this.element, o_LEFT) ? "left" : "right", 
                 this.element.style.width = e + "px", this.element.style[n] = "-" + e + "px";
             }
         }, {
@@ -99,7 +92,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_triggerEvent",
             value: function(e, n) {
-                var i = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {};
+                var i = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : {};
                 t(this.element).trigger(t.Event(this.constructor.Event[e], {
                     target: n
                 }), [ i ]);
@@ -107,7 +100,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
         }, {
             key: "_triggerPreventableEvent",
             value: function(e, n) {
-                var i = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {}, r = t.Event(this.constructor.Event[e], {
+                var i = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : {}, r = t.Event(this.constructor.Event[e], {
                     target: n
                 });
                 return t(this.element).trigger(r, [ i ]), !r.isDefaultPrevented();
@@ -165,7 +158,7 @@ var _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator 
             }
         } ]), r;
     }();
-    return t(document).on(s.CLICK_DATA_API, l.DATA_TOGGLE, function(e) {
+    return t(document).on(s.CLICK_DATA_API, l_DATA_TOGGLE, function(e) {
         e.preventDefault();
         var i = this.getAttribute("data-target"), r = i ? t(i)[0] : null;
         r && (t(r).data(n) || c._jQueryInterface.call(t(r), t(this).data()), c._jQueryInterface.call(t(r), "toggle"));

@@ -1,12 +1,5 @@
 (function() {
-    var e, t, i, n, r, s, o, l, a, u = [].slice, p = function(e, t) {
-        function i() {
-            this.constructor = e;
-        }
-        for (var n in t) c.call(t, n) && (e[n] = t[n]);
-        return i.prototype = t.prototype, e.prototype = new i(), e.__super__ = t.prototype, 
-        e;
-    }, c = {}.hasOwnProperty;
+    var e, t, i, n, r, s, o, l, a, u = [].slice, c = {}.hasOwnProperty;
     l = function() {}, t = function() {
         function e() {}
         return e.prototype.addEventListener = e.prototype.on, e.prototype.on = function(e, t) {
@@ -52,7 +45,13 @@
             this.init();
         }
         var r, s;
-        return p(n, t), n.prototype.Emitter = t, n.prototype.events = [ "drop", "dragstart", "dragend", "dragenter", "dragover", "dragleave", "addedfile", "addedfiles", "removedfile", "thumbnail", "error", "errormultiple", "processing", "processingmultiple", "uploadprogress", "totaluploadprogress", "sending", "sendingmultiple", "success", "successmultiple", "canceled", "canceledmultiple", "complete", "completemultiple", "reset", "maxfilesexceeded", "maxfilesreached", "queuecomplete" ], 
+        return function(e, t) {
+            function i() {
+                this.constructor = e;
+            }
+            for (var n in t) c.call(t, n) && (e[n] = t[n]);
+            i.prototype = t.prototype, e.prototype = new i(), e.__super__ = t.prototype;
+        }(n, t), n.prototype.Emitter = t, n.prototype.events = [ "drop", "dragstart", "dragend", "dragenter", "dragover", "dragleave", "addedfile", "addedfiles", "removedfile", "thumbnail", "error", "errormultiple", "processing", "processingmultiple", "uploadprogress", "totaluploadprogress", "sending", "sendingmultiple", "success", "successmultiple", "canceled", "canceledmultiple", "complete", "completemultiple", "reset", "maxfilesexceeded", "maxfilesreached", "queuecomplete" ], 
         n.prototype.defaultOptions = {
             url: null,
             method: "post",
@@ -116,8 +115,7 @@
             fallback: function() {
                 var e, t, i, r, s, o;
                 for (this.element.className = this.element.className + " dz-browser-not-supported", 
-                t = 0, i = (s = this.element.getElementsByTagName("div")).length; t < i; t++) /(^| )dz-message($| )/.test((e = s[t]).className) && (r = e, 
-                e.className = "dz-message");
+                t = 0, i = (s = this.element.getElementsByTagName("div")).length; t < i; t++) /(^| )dz-message($| )/.test((e = s[t]).className) && ((r = e).className = "dz-message");
                 return r || (r = n.createElement('<div class="dz-message"><span></span></div>'), 
                 this.element.appendChild(r)), (o = r.getElementsByTagName("span")[0]) && (null != o.textContent ? o.textContent = this.options.dictFallbackMessage : null != o.innerText && (o.innerText = this.options.dictFallbackMessage)), 
                 this.element.appendChild(this.getFallbackForm());
@@ -130,10 +128,10 @@
                     srcWidth: e.width,
                     srcHeight: e.height
                 }, s = e.width / e.height, null == t && null == i ? (t = r.srcWidth, i = r.srcHeight) : null == t ? t = i * s : null == i && (i = t / s), 
-                t = Math.min(t, r.srcWidth), i = Math.min(i, r.srcHeight), o = t / i, r.srcWidth > t || r.srcHeight > i) if ("crop" === n) s > o ? (r.srcHeight = e.height, 
+                o = (t = Math.min(t, r.srcWidth)) / (i = Math.min(i, r.srcHeight)), r.srcWidth > t || r.srcHeight > i) if ("crop" === n) o < s ? (r.srcHeight = e.height, 
                 r.srcWidth = r.srcHeight * o) : (r.srcWidth = e.width, r.srcHeight = r.srcWidth / o); else {
                     if ("contain" !== n) throw new Error("Unknown resizeMethod '" + n + "'");
-                    s > o ? i = t / s : t = i * s;
+                    o < s ? i = t / s : t = i * s;
                 }
                 return r.srcX = (e.width - r.srcWidth) / 2, r.srcY = (e.height - r.srcHeight) / 2, 
                 r.trgWidth = t, r.trgHeight = i, r;
@@ -241,10 +239,8 @@
             addedfiles: l
         }, r = function() {
             var e, t, i, n, r, s, o;
-            for (s = arguments[0], e = 0, i = (r = 2 <= arguments.length ? u.call(arguments, 1) : []).length; e < i; e++) {
-                n = r[e];
-                for (t in n) o = n[t], s[t] = o;
-            }
+            for (s = arguments[0], e = 0, i = (r = 2 <= arguments.length ? u.call(arguments, 1) : []).length; e < i; e++) for (t in n = r[e]) o = n[t], 
+            s[t] = o;
             return s;
         }, n.prototype.getAcceptedFiles = function() {
             var e, t, i, n, r;
@@ -276,7 +272,7 @@
                 return function() {
                     return e.hiddenFileInput && e.hiddenFileInput.parentNode.removeChild(e.hiddenFileInput), 
                     e.hiddenFileInput = document.createElement("input"), e.hiddenFileInput.setAttribute("type", "file"), 
-                    (null == e.options.maxFiles || e.options.maxFiles > 1) && e.hiddenFileInput.setAttribute("multiple", "multiple"), 
+                    (null == e.options.maxFiles || 1 < e.options.maxFiles) && e.hiddenFileInput.setAttribute("multiple", "multiple"), 
                     e.hiddenFileInput.className = "dz-hidden-input", null != e.options.acceptedFiles && e.hiddenFileInput.setAttribute("accept", e.options.acceptedFiles), 
                     null != e.options.capture && e.hiddenFileInput.setAttribute("capture", e.options.capture), 
                     e.hiddenFileInput.style.visibility = "hidden", e.hiddenFileInput.style.position = "absolute", 
@@ -369,7 +365,7 @@
             this.hiddenFileInput = null), delete this.element.dropzone, n.instances.splice(n.instances.indexOf(this), 1);
         }, n.prototype.updateTotalUploadProgress = function() {
             var e, t, i, n, r, s, o;
-            if (s = 0, r = 0, this.getActiveFiles().length) {
+            if (r = s = 0, this.getActiveFiles().length) {
                 for (t = 0, i = (n = this.getActiveFiles()).length; t < i; t++) s += (e = n[t]).upload.bytesSent, 
                 r += e.upload.total;
                 o = 100 * s / r;
@@ -396,8 +392,7 @@
             var e, t, i, n, r, s, o;
             for (o = [], i = 0, n = (s = this.listeners).length; i < n; i++) e = s[i], o.push(function() {
                 var i, n;
-                i = e.events, n = [];
-                for (t in i) r = i[t], n.push(e.element.addEventListener(t, r, !1));
+                for (t in n = [], i = e.events) r = i[t], n.push(e.element.addEventListener(t, r, !1));
                 return n;
             }());
             return o;
@@ -405,8 +400,7 @@
             var e, t, i, n, r, s, o;
             for (o = [], i = 0, n = (s = this.listeners).length; i < n; i++) e = s[i], o.push(function() {
                 var i, n;
-                i = e.events, n = [];
-                for (t in i) r = i[t], n.push(e.element.removeEventListener(t, r, !1));
+                for (t in n = [], i = e.events) r = i[t], n.push(e.element.removeEventListener(t, r, !1));
                 return n;
             }());
             return o;
@@ -422,10 +416,10 @@
                 return e.classList.add("dz-clickable");
             }), this.setupEventListeners();
         }, n.prototype.filesize = function(e) {
-            var t, i, n, r, s, o, l, a;
-            if (s = 0, o = "b", e > 0) {
+            var i, n, r, s, o, l, a;
+            if (o = "b", (s = 0) < e) {
                 for (i = n = 0, r = (a = [ "tb", "gb", "mb", "kb", "b" ]).length; n < r; i = ++n) if (l = a[i], 
-                t = Math.pow(this.options.filesizeBase, 4 - i) / 10, e >= t) {
+                Math.pow(this.options.filesizeBase, 4 - i) / 10 <= e) {
                     s = e / Math.pow(this.options.filesizeBase, 4 - i), o = l;
                     break;
                 }
@@ -449,7 +443,7 @@
             return r;
         }, n.prototype._addFilesFromItems = function(e) {
             var t, i, n, r, s;
-            for (s = [], n = 0, r = e.length; n < r; n++) null != (i = e[n]).webkitGetAsEntry && (t = i.webkitGetAsEntry()) ? t.isFile ? s.push(this.addFile(i.getAsFile())) : t.isDirectory ? s.push(this._addFilesFromDirectory(t, t.name)) : s.push(void 0) : null != i.getAsFile && (null == i.kind || "file" === i.kind) ? s.push(this.addFile(i.getAsFile())) : s.push(void 0);
+            for (s = [], n = 0, r = e.length; n < r; n++) null != (i = e[n]).webkitGetAsEntry && (t = i.webkitGetAsEntry()) ? t.isFile ? s.push(this.addFile(i.getAsFile())) : t.isDirectory ? s.push(this._addFilesFromDirectory(t, t.name)) : s.push(void 0) : null == i.getAsFile || null != i.kind && "file" !== i.kind ? s.push(void 0) : s.push(this.addFile(i.getAsFile()));
             return s;
         }, n.prototype._addFilesFromDirectory = function(e, t) {
             var i, n, r;
@@ -459,7 +453,7 @@
                 return function() {
                     return i.readEntries(function(i) {
                         var n, s, o;
-                        if (i.length > 0) {
+                        if (0 < i.length) {
                             for (s = 0, o = i.length; s < o; s++) (n = i[s]).isFile ? n.file(function(i) {
                                 if (!e.options.ignoreHiddenFiles || "." !== i.name.substring(0, 1)) return i.fullPath = t + "/" + i.name, 
                                 e.addFile(i);
@@ -480,12 +474,11 @@
                 bytesSent: 0,
                 filename: this._renameFile(e)
             }, this.files.push(e), e.status = n.ADDED, this.emit("addedfile", e), this._enqueueThumbnail(e), 
-            this.accept(e, function(t) {
-                return function(i) {
-                    return i ? (e.accepted = !1, t._errorProcessing([ e ], i)) : (e.accepted = !0, t.options.autoQueue && t.enqueueFile(e)), 
-                    t._updateMaxFilesReachedClass();
-                };
-            }(this));
+            this.accept(e, (t = this, function(i) {
+                return i ? (e.accepted = !1, t._errorProcessing([ e ], i)) : (e.accepted = !0, t.options.autoQueue && t.enqueueFile(e)), 
+                t._updateMaxFilesReachedClass();
+            }));
+            var t;
         }, n.prototype.enqueueFiles = function(e) {
             var t, i, n;
             for (i = 0, n = e.length; i < n; i++) t = e[i], this.enqueueFile(t);
@@ -505,13 +498,12 @@
                 };
             }(this), 0);
         }, n.prototype._processThumbnailQueue = function() {
-            var e;
+            var e, t;
             if (!this._processingThumbnail && 0 !== this._thumbnailQueue.length) return this._processingThumbnail = !0, 
-            e = this._thumbnailQueue.shift(), this.createThumbnail(e, this.options.thumbnailWidth, this.options.thumbnailHeight, this.options.thumbnailMethod, !0, function(t) {
-                return function(i) {
-                    return t.emit("thumbnail", e, i), t._processingThumbnail = !1, t._processThumbnailQueue();
-                };
-            }(this));
+            e = this._thumbnailQueue.shift(), this.createThumbnail(e, this.options.thumbnailWidth, this.options.thumbnailHeight, this.options.thumbnailMethod, !0, (t = this, 
+            function(i) {
+                return t.emit("thumbnail", e, i), t._processingThumbnail = !1, t._processThumbnailQueue();
+            }));
         }, n.prototype.removeFile = function(e) {
             if (e.status === n.UPLOADING && this.cancelUpload(e), this.files = a(this.files, e), 
             this.emit("removedfile", e), 0 === this.files.length) return this.emit("reset");
@@ -529,16 +521,11 @@
                 };
             }(this));
         }, n.prototype.createThumbnail = function(e, t, i, n, r, s) {
-            var o;
-            return o = new FileReader(), o.onload = function(l) {
-                return function() {
-                    e.dataURL = o.result;
-                    {
-                        if ("image/svg+xml" !== e.type) return l.createThumbnailFromUrl(e, t, i, n, r, s);
-                        null != s && s(o.result);
-                    }
-                };
-            }(this), o.readAsDataURL(e);
+            var o, l;
+            return (o = new FileReader()).onload = (l = this, function() {
+                if (e.dataURL = o.result, "image/svg+xml" !== e.type) return l.createThumbnailFromUrl(e, t, i, n, r, s);
+                null != s && s(o.result);
+            }), o.readAsDataURL(e);
         }, n.prototype.createThumbnailFromUrl = function(e, t, i, n, r, s, l) {
             var a;
             return a = document.createElement("img"), l && (a.crossOrigin = l), a.onload = function(l) {
@@ -553,8 +540,8 @@
                     }), u(function(r) {
                         var u, p, c, d, h, m, f, g;
                         switch (e.width = a.width, e.height = a.height, f = l.options.resize.call(l, e, t, i, n), 
-                        u = document.createElement("canvas"), p = u.getContext("2d"), u.width = f.trgWidth, 
-                        u.height = f.trgHeight, r > 4 && (u.width = f.trgHeight, u.height = f.trgWidth), 
+                        p = (u = document.createElement("canvas")).getContext("2d"), u.width = f.trgWidth, 
+                        u.height = f.trgHeight, 4 < r && (u.width = f.trgHeight, u.height = f.trgWidth), 
                         r) {
                           case 2:
                             p.translate(u.width, 0), p.scale(-1, 1);
@@ -590,8 +577,7 @@
             }(this), null != s && (a.onerror = s), a.src = e.dataURL;
         }, n.prototype.processQueue = function() {
             var e, t, i, n;
-            if (t = this.options.parallelUploads, i = this.getUploadingFiles().length, e = i, 
-            !(i >= t) && (n = this.getQueuedFiles()).length > 0) {
+            if (!((t = this.options.parallelUploads) <= (e = i = this.getUploadingFiles().length)) && 0 < (n = this.getQueuedFiles()).length) {
                 if (this.options.uploadMultiple) return this.processFiles(n.slice(0, t - i));
                 for (;e < t; ) {
                     if (!n.length) return;
@@ -630,8 +616,9 @@
         }, n.prototype.uploadFiles = function(e) {
             var t, i, o, l, a, u, p, c, d, h, m, f, g, v, y, F, b, w, E, z, k, C, x, L, A, T, S, M, _, D, I, U, R, N, P, O;
             for (O = new XMLHttpRequest(), g = 0, b = e.length; g < b; g++) (o = e[g]).xhr = O;
-            C = s(this.options.method, e), N = s(this.options.url, e), O.open(C, N, !0), O.timeout = s(this.options.timeout, e), 
-            O.withCredentials = !!this.options.withCredentials, I = null, a = function(t) {
+            for (u in C = s(this.options.method, e), N = s(this.options.url, e), O.open(C, N, !0), 
+            O.timeout = s(this.options.timeout, e), O.withCredentials = !!this.options.withCredentials, 
+            I = null, a = function(t) {
                 return function() {
                     var i, n, r;
                     for (r = [], i = 0, n = e.length; i < n; i++) o = e[i], r.push(t._errorProcessing(e, I || t.options.dictResponseError.replace("{{statusCode}}", O.status), O));
@@ -668,18 +655,15 @@
                 Accept: "application/json",
                 "Cache-Control": "no-cache",
                 "X-Requested-With": "XMLHttpRequest"
-            }, this.options.headers && r(c, this.options.headers);
-            for (u in c) (p = c[u]) && O.setRequestHeader(u, p);
-            if (l = new FormData(), this.options.params) {
-                T = this.options.params;
-                for (y in T) P = T[y], l.append(y, P);
-            }
+            }, this.options.headers && r(c, this.options.headers), c) (p = c[u]) && O.setRequestHeader(u, p);
+            if (l = new FormData(), this.options.params) for (y in T = this.options.params) P = T[y], 
+            l.append(y, P);
             for (v = 0, w = e.length; v < w; v++) o = e[v], this.emit("sending", o, O, l);
             if (this.options.uploadMultiple && this.emit("sendingmultiple", e, O, l), "FORM" === this.element.tagName) for (F = 0, 
-            E = (S = this.element.querySelectorAll("input, textarea, select, button")).length; F < E; F++) if (h = S[F], 
-            m = h.getAttribute("name"), f = h.getAttribute("type"), "SELECT" === h.tagName && h.hasAttribute("multiple")) for (k = 0, 
+            E = (S = this.element.querySelectorAll("input, textarea, select, button")).length; F < E; F++) if (m = (h = S[F]).getAttribute("name"), 
+            f = h.getAttribute("type"), "SELECT" === h.tagName && h.hasAttribute("multiple")) for (k = 0, 
             z = (M = h.options).length; k < z; k++) (L = M[k]).selected && l.append(m, L.value); else (!f || "checkbox" !== (_ = f.toLowerCase()) && "radio" !== _ || h.checked) && l.append(m, h.value);
-            for (t = 0, U = [], d = x = 0, D = e.length - 1; 0 <= D ? x <= D : x >= D; d = 0 <= D ? ++x : --x) i = function(i) {
+            for (U = [], d = x = t = 0, D = e.length - 1; 0 <= D ? x <= D : D <= x; d = 0 <= D ? ++x : --x) i = function(i) {
                 return function(n, r, s) {
                     return function(n) {
                         if (l.append(r, n, s), ++t === e.length) return i.submitRequest(O, l, e);
@@ -725,7 +709,7 @@
     }, e.dataURItoBlob = function(e) {
         var t, i, n, r, s, o, l;
         for (i = atob(e.split(",")[1]), o = e.split(",")[0].split(":")[1].split(";")[0], 
-        t = new ArrayBuffer(i.length), r = new Uint8Array(t), n = s = 0, l = i.length; 0 <= l ? s <= l : s >= l; n = 0 <= l ? ++s : --s) r[n] = i.charCodeAt(n);
+        t = new ArrayBuffer(i.length), r = new Uint8Array(t), n = s = 0, l = i.length; 0 <= l ? s <= l : l <= s; n = 0 <= l ? ++s : --s) r[n] = i.charCodeAt(n);
         return new Blob([ t ], {
             type: o
         });
@@ -739,7 +723,7 @@
         });
     }, e.createElement = function(e) {
         var t;
-        return t = document.createElement("div"), t.innerHTML = e, t.childNodes[0];
+        return (t = document.createElement("div")).innerHTML = e, t.childNodes[0];
     }, e.elementInside = function(e, t) {
         if (e === t) return !0;
         for (;e = e.parentNode; ) if (e === t) return !0;
@@ -756,7 +740,7 @@
             try {
                 for (r = 0, o = e.length; r < o; r++) i = e[r], n.push(this.getElement(i, t));
             } catch (e) {
-                e, n = null;
+                n = null;
             }
         } else if ("string" == typeof e) for (n = [], s = 0, l = (a = document.querySelectorAll(e)).length; s < l; s++) i = a[s], 
         n.push(i); else null != e.nodeType && (n = [ e ]);
@@ -767,8 +751,7 @@
     }, e.isValidFile = function(e, t) {
         var i, n, r, s, o;
         if (!t) return !0;
-        for (t = t.split(","), i = (s = e.type).replace(/\/.*$/, ""), n = 0, r = t.length; n < r; n++) if (o = t[n], 
-        "." === (o = o.trim()).charAt(0)) {
+        for (t = t.split(","), i = (s = e.type).replace(/\/.*$/, ""), n = 0, r = t.length; n < r; n++) if ("." === (o = (o = t[n]).trim()).charAt(0)) {
             if (-1 !== e.name.toLowerCase().indexOf(o.toLowerCase(), e.name.length - o.length)) return !0;
         } else if (/\/\*$/.test(o)) {
             if (i === o.replace(/\/.*$/, "")) return !0;
@@ -785,8 +768,8 @@
         var t, i, n, r, s, o, l, a;
         for (e.naturalWidth, s = e.naturalHeight, (t = document.createElement("canvas")).width = 1, 
         t.height = s, (i = t.getContext("2d")).drawImage(e, 0, 0), n = i.getImageData(1, 0, 1, s).data, 
-        a = 0, r = s, o = s; o > a; ) 0 === n[4 * (o - 1) + 3] ? r = o : a = o, o = r + a >> 1;
-        return 0 === (l = o / s) ? 1 : l;
+        a = 0, o = r = s; a < o; ) 0 === n[4 * (o - 1) + 3] ? r = o : a = o, o = r + a >> 1;
+        return 0 == (l = o / s) ? 1 : l;
     }, o = function(e, t, i, n, r, o, l, a, u, p) {
         var c;
         return c = s(t), e.drawImage(t, i, n, r, o, l, a, u, p / c);
@@ -795,11 +778,10 @@
         return e.KEY_STR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", 
         e.encode64 = function(e) {
             var t, i, n, r, s, o, l, a, u;
-            for (u = "", t = void 0, i = void 0, n = "", r = void 0, s = void 0, o = void 0, 
-            l = "", a = 0; ;) if (t = e[a++], i = e[a++], n = e[a++], r = t >> 2, s = (3 & t) << 4 | i >> 4, 
-            o = (15 & i) << 2 | n >> 6, l = 63 & n, isNaN(i) ? o = l = 64 : isNaN(n) && (l = 64), 
+            for (o = s = r = i = t = void 0, l = n = u = "", a = 0; r = (t = e[a++]) >> 2, s = (3 & t) << 4 | (i = e[a++]) >> 4, 
+            o = (15 & i) << 2 | (n = e[a++]) >> 6, l = 63 & n, isNaN(i) ? o = l = 64 : isNaN(n) && (l = 64), 
             u = u + this.KEY_STR.charAt(r) + this.KEY_STR.charAt(s) + this.KEY_STR.charAt(o) + this.KEY_STR.charAt(l), 
-            t = i = n = "", r = s = o = l = "", !(a < e.length)) break;
+            t = i = n = "", r = s = o = l = "", a < e.length; ) ;
             return u;
         }, e.restore = function(e, t) {
             var i, n, r;
@@ -816,31 +798,26 @@
             }
             return [];
         }, e.insertExif = function(e, t) {
-            var i, n, r, s, o, l;
-            return s = e.replace("data:image/jpeg;base64,", ""), r = this.decode64(s), l = r.indexOf(255, 3), 
-            o = r.slice(0, l), n = r.slice(l), i = o, i = i.concat(t), i = i.concat(n);
+            var n, r, s, o, l;
+            return s = e.replace("data:image/jpeg;base64,", ""), l = (r = this.decode64(s)).indexOf(255, 3), 
+            o = r.slice(0, l), n = r.slice(l), o.concat(t).concat(n);
         }, e.slice2Segments = function(e) {
             var t, i, n, r;
-            for (i = 0, r = []; ;) {
-                if (255 === e[i] & 218 === e[i + 1]) break;
-                if (255 === e[i] & 216 === e[i + 1] ? i += 2 : (t = i + (256 * e[i + 2] + e[i + 3]) + 2, 
-                n = e.slice(i, t), r.push(n), i = t), i > e.length) break;
-            }
+            for (i = 0, r = []; !(255 === e[i] & 218 === e[i + 1]) && (255 === e[i] & 216 === e[i + 1] ? i += 2 : (t = i + (256 * e[i + 2] + e[i + 3]) + 2, 
+            n = e.slice(i, t), r.push(n), i = t), !(i > e.length)); ) ;
             return r;
         }, e.decode64 = function(e) {
-            var t, i, n, r, s, o, l, a, u;
-            for ("", i = void 0, n = void 0, r = "", s = void 0, o = void 0, l = void 0, a = "", 
-            u = 0, t = [], /[^A-Za-z0-9\+\/\=]/g.exec(e) && console.warning("There were invalid base64 characters in the input text.\nValid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\nExpect errors in decoding."), 
-            e = e.replace(/[^A-Za-z0-9\+\/\=]/g, ""); ;) if (s = this.KEY_STR.indexOf(e.charAt(u++)), 
-            o = this.KEY_STR.indexOf(e.charAt(u++)), l = this.KEY_STR.indexOf(e.charAt(u++)), 
-            a = this.KEY_STR.indexOf(e.charAt(u++)), i = s << 2 | o >> 4, n = (15 & o) << 4 | l >> 2, 
-            r = (3 & l) << 6 | a, t.push(i), 64 !== l && t.push(n), 64 !== a && t.push(r), i = n = r = "", 
-            s = o = l = a = "", !(u < e.length)) break;
+            var t, i, n, r, o, l, a, u;
+            for (l = o = n = i = void 0, a = r = "", u = 0, t = [], /[^A-Za-z0-9\+\/\=]/g.exec(e) && console.warning("There were invalid base64 characters in the input text.\nValid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\nExpect errors in decoding."), 
+            e = e.replace(/[^A-Za-z0-9\+\/\=]/g, ""); i = this.KEY_STR.indexOf(e.charAt(u++)) << 2 | (o = this.KEY_STR.indexOf(e.charAt(u++))) >> 4, 
+            n = (15 & o) << 4 | (l = this.KEY_STR.indexOf(e.charAt(u++))) >> 2, r = (3 & l) << 6 | (a = this.KEY_STR.indexOf(e.charAt(u++))), 
+            t.push(i), 64 !== l && t.push(n), 64 !== a && t.push(r), i = n = r = "", o = l = a = "", 
+            u < e.length; ) ;
             return t;
         }, e;
     }(), r = function(e, t) {
         var i, n, r, s, o, l, a, u, p;
-        if (r = !1, p = !0, n = e.document, u = n.documentElement, i = n.addEventListener ? "addEventListener" : "attachEvent", 
+        if (p = !(r = !1), n = e.document, u = n.documentElement, i = n.addEventListener ? "addEventListener" : "attachEvent", 
         a = n.addEventListener ? "removeEventListener" : "detachEvent", l = n.addEventListener ? "" : "on", 
         s = function(i) {
             if ("readystatechange" !== i.type || "complete" === n.readyState) return ("load" === i.type ? e : n)[a](l + i.type, s, !1), 
@@ -849,7 +826,7 @@
             try {
                 u.doScroll("left");
             } catch (e) {
-                return e, void setTimeout(o, 50);
+                return void setTimeout(o, 50);
             }
             return s("poll");
         }, "complete" !== n.readyState) {

@@ -5,11 +5,6 @@ function bootstrapSliderDirective(e, t) {
             return "_" + e.toLowerCase();
         });
     }
-    function r(e) {
-        return e.replace(/^on([A-Z])/, function(e, t) {
-            return t.toLowerCase();
-        });
-    }
     var i = [ "value", "min", "max", "step", "range", "scale", "ticksLabels", "ticks", "rangeHighlights", "enabled" ], a = {
         min: "num",
         max: "num",
@@ -38,12 +33,6 @@ function bootstrapSliderDirective(e, t) {
             enabled: "="
         },
         link: function(e, s, c) {
-            function u(e) {
-                var t = void 0;
-                return "[object Array]" === Object.prototype.toString.call(e) ? (t = [ parseFloat(e[0]), parseFloat(e[1]) ], 
-                isNaN(t[0]) && (t[0] = 0), isNaN(t[1]) && (t[1] = 0)) : (t = parseFloat(e), isNaN(t) && (t = 0)), 
-                t;
-            }
             function f(e) {
                 return m !== [].concat(e).join(",");
             }
@@ -69,7 +58,11 @@ function bootstrapSliderDirective(e, t) {
             o.forEach(function(r) {
                 void 0 !== c[r] && (h[n(r)] = t(c[r])(e.$parent));
             }), l.forEach(function(n) {
-                c[n] && (v[r(n)] = t(c[n])(e.$parent));
+                c[n] && (v[function(e) {
+                    return e.replace(/^on([A-Z])/, function(e, t) {
+                        return t.toLowerCase();
+                    });
+                }(n)] = t(c[n])(e.$parent));
             });
             var y = v.change || function() {};
             v.change = function() {
@@ -79,7 +72,12 @@ function bootstrapSliderDirective(e, t) {
                     d(a), e.value = a, y.apply(t, r);
                 });
             }, p(), b(e.$parent, $.fn.slider.bind(g)), e.$watch("value", function(e) {
-                f(e) && (d(e), g.slider("setValue", u(e)));
+                f(e) && (d(e), g.slider("setValue", function(e) {
+                    var t = void 0;
+                    return "[object Array]" === Object.prototype.toString.call(e) ? (t = [ parseFloat(e[0]), parseFloat(e[1]) ], 
+                    isNaN(t[0]) && (t[0] = 0), isNaN(t[1]) && (t[1] = 0)) : (t = parseFloat(e), isNaN(t) && (t = 0)), 
+                    t;
+                }(e)));
             }, !0), e.$watch("enabled", function(e) {
                 g.slider(e ? "enable" : "disable");
             }), i.filter(function(e) {
